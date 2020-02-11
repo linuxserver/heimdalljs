@@ -1,17 +1,7 @@
 <template>
   <div class="list-item">
     <div class="icon"><img class="app-icon" :src="'http://heimdallmaster.test/storage/' + this.icon"></div>
-    <div class="name">
-      {{ this.application.title }}
-      <span class="tags">Tags: dashboard, dev, work</span>
-      <a :href="this.application.url">url</a>
-    </div>
-    <div class="pinned">
-      Active
-      <q-icon
-        :name="this.application.pinned === '1' ? 'check_box' : 'check_box_outline_blank'"
-      />
-    </div>
+    <div class="name">{{ this.application.title }}<span class="tags">dashboard, dev, work</span></div>
     <div class="actions">
       <q-btn size="12px" unelevated color="primary">Edit</q-btn>
       <q-btn size="12px" unelevated color="grey-2" text-color="black">Delete</q-btn>
@@ -68,11 +58,6 @@ export default {
               font-weight: normal;
               font-size: 12px;
               color: #9c9c9c;
-            }
-            a {
-              text-transform: uppercase;
-              color: #9c9c9c;
-              font-size: 10px;
             }
         }
         .pinned {
