@@ -1,0 +1,144 @@
+// app global css in SCSS form
+#q-app {
+    background: #ececec;
+}
+#app {
+    background-image: url('../statics/bg1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+}
+.q-layout__section--marginal {
+    background: #19465073;
+}
+.q-item.q-router-link--active {
+    background:rgba(0,0,0,0.04);
+}
+
+.item-container {
+	//width: 340px;
+	//transition: width .35s ease-in-out;	
+	position: relative;
+	.item-edit {
+		color: white;
+		position: absolute;
+		bottom: 20px;
+		left: 8px;
+		width: 30px;
+		height: 30px;
+		background: rgba(0,0,0,0.7);
+		border-radius: 50%;
+		text-align: center;
+		line-height: 30px;
+		display: none;
+    }
+    .item {
+        width: 280px;
+        height: 90px;
+        margin: 20px;
+        flex: 0 0 280px;
+        background-image:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.25));
+        border-radius: 6px;
+        padding: 15px;
+        padding-right: 55px;
+        //border: 2px solid rgba(0,0,0,0.4);
+        //box-shadow: 0 0 15px 1px rgba(35, 35, 35, 0.44);
+        color: white;
+        overflow: hidden;
+        position: relative;
+        transition: all .35s ease-in-out;
+        outline: 1px solid transparent;
+        display: flex;
+        align-items: center;
+        border: 1px solid #333333;
+        border: 1px solid rgb(74, 74, 74);
+        border: 1px solid rgba(76, 76, 76, 0.4);
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        &:after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            position: absolute;
+            right: -48px;
+            top: 0px;
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 40px 0px rgba(0,0,0,0.2);
+        }
+        .link {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            text-align: right;
+            line-height: 90px;
+            color: white;
+            font-size: 24px;
+            z-index: 1;
+            padding-right: 10px;
+        }
+        .title {
+            font-size: 16px;
+        }
+        .details {
+            width: 100%;
+        }
+        .app-icon {
+            max-width: 60px;
+            margin-right: 15px;
+        }    
+    }
+    
+}
+.svg-inline--fa {
+    display: inline-block;
+    font-size: inherit;
+    height: 1em;
+    overflow: visible;
+    vertical-align: -.125em;
+}
+
+#app {
+    .q-page {
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        position: relative;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+}
+.q-drawer {
+    .q-item__label--header {
+        font-size: 22px;
+        padding: 12px 20px;
+        border-bottom: 1px solid #00000014;
+    }
+}
+
+.q-item {
+    padding: 13px 16px;
+    border-bottom: 1px solid #0000000a;
+}
+
+.add-new {
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto 0;
+    border: 1px solid #00000014;
+    .item {
+        padding: 30px;
+        flex: 1;
+    }
+}
+
+.page-container {
+    width: 100%;
+}
+.alt-header {
+    background: #849090;
+}
