@@ -56,6 +56,7 @@ export default {
           .app-icon {
             max-width: 60px;
             display: block;
+            border-radius: 50%;
           }
         }
         .name {

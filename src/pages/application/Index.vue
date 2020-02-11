@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import AppItem from 'components/AppItem'
 
 export default {
@@ -31,13 +30,10 @@ export default {
 
   data () {
     return {
-      applications: null
+      applications: this.$store.state.tiles.all
     }
   },
   mounted () {
-    axios
-      .get('http://heimdallbackend.test', { crossdomain: true })
-      .then(response => (this.applications = response.data.all_apps))
   }
 }
 </script>

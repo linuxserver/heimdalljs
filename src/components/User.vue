@@ -1,7 +1,7 @@
 <template>
   <div class="list-item">
     <div class="icon"><img class="app-icon" :src="'http://heimdallmaster.test/storage/' + this.icon"></div>
-    <div class="name">{{ this.application.title }}<span class="tags">dashboard, dev, work</span></div>
+    <div class="name">{{ this.user.username }}<span class="tags">dashboard, dev, work</span></div>
     <div class="actions">
       <q-btn size="12px" unelevated color="primary">Edit</q-btn>
       <q-btn size="12px" unelevated color="grey-2" text-color="black">Delete</q-btn>
@@ -12,16 +12,16 @@
 <script>
 
 export default {
-  name: 'AppItem',
+  name: 'User',
 
-  props: ['application'],
+  props: ['user'],
 
   components: {
   },
 
   data () {
     return {
-      icon: this.application.icon || '../img/heimdall-icon-small.png'
+      icon: this.user.avatar || '../img/heimdall-icon-small.png'
     }
   }
 }
@@ -41,6 +41,7 @@ export default {
         color: #000000b5;
         font-weight: bold;
         margin: 5px 0;
+        min-height: 92px;
         .icon {
           padding:15px 30px;
           .app-icon {
