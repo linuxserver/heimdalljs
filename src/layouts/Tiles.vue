@@ -45,7 +45,9 @@
       bordered
       content-class="bg-grey-1"
     > <span @click="rightDrawerOpen = !rightDrawerOpen" class="close">Close</span>
-      some stuff
+      <div v-if="tile">
+        tiles
+      </div>
     </q-drawer>
 
     <q-page-container>
@@ -69,6 +71,7 @@ export default {
     return {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
+      tile: false,
       version: version
     }
   }

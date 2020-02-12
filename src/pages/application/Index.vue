@@ -1,11 +1,11 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <div class="add-new">
+      <!--<div class="add-new">
         <div class="item">Docker Container</div>
         <div class="item">Application</div>
         <div class="item">Link</div>
-      </div>
+      </div>-->
       <div class="list-items">
         <app-item
           v-for="application in applications"
@@ -28,9 +28,14 @@ export default {
     AppItem
   },
 
+  computed: {
+    applications: function () {
+      return this.$store.state.tiles.all
+    }
+  },
+
   data () {
     return {
-      applications: this.$store.state.tiles.all
     }
   },
   mounted () {

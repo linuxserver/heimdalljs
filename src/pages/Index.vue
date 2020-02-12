@@ -9,7 +9,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import Tile from 'components/Tile'
 
 export default {
@@ -19,15 +18,17 @@ export default {
     Tile
   },
 
+  computed: {
+    applications: function () {
+      return this.$store.state.tiles.active
+    }
+  },
+
   data () {
     return {
-      applications: null
     }
   },
   mounted () {
-    axios
-      .get('http://heimdallbackend.test', { crossdomain: true })
-      .then(response => (this.applications = response.data.apps))
   }
 }
 </script>

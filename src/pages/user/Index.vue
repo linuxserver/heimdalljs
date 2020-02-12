@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex">
     <div class="page-container">
       <div class="list-items">
         <user
@@ -21,9 +21,14 @@ export default {
   components: {
     User
   },
+  computed: {
+    users: function () {
+      return this.$store.state.users.all
+    }
+  },
+
   data () {
     return {
-      users: this.$store.state.users.all
     }
   }
 }
