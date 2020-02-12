@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export function getApps (context) {
   axios
-    .get('http://heimdallbackend.test', { crossdomain: true })
+    .get(process.env.BACKEND_LOCATION, { crossdomain: true })
     .then((response) => {
       // console.log(response.data)
       context.commit('all', response.data.all_apps)
