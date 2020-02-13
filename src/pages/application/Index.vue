@@ -1,7 +1,8 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <h1>Application Management</h1>
+      <div class="bg"></div>
+      <div class="options"></div>
       <!--<div class="add-new">
         <div class="item">Docker Container</div>
         <div class="item">Application</div>
@@ -29,10 +30,9 @@ export default {
     AppItem
   },
 
+  props: ['applications'],
+
   computed: {
-    applications: function () {
-      return this.$store.state.tiles.all
-    }
   },
 
   data () {
@@ -43,3 +43,23 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.bg {
+  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 300px;
+  position:fixed;
+  top: 75px;
+  left: 0;
+  right: 0;
+}
+.options {
+  height: 100px;
+  margin: 0 -40px;
+}
+</style>
+<style lang="scss" scoped>
+.list-items {
+}
+</style>

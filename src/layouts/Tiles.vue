@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lhr lpR fFf">
+  <q-layout view="lHh Lpr lFf">
     <q-header class="alt-header" bordered>
       <q-toolbar>
         <q-btn
@@ -12,19 +12,26 @@
         />
 
         <q-toolbar-title>
-          Heimdall
+          Application Management
         </q-toolbar-title>
 
-        <div>v{{ this.version }}</div>
+        <q-select
+          filled
+          v-model="selectedapp"
+          use-input
+          clearable
+          input-debounce="0"
+          :options="options"
+          option-value="id"
+          option-label="title"
+          map-options
+          emit-value
+          label="Search..."
+          @filter="filterFn"
+        >
+        </q-select>
 
-        <q-btn
-          flat
-          dense
-          round
-          @click="rightDrawerOpen = !rightDrawerOpen"
-          icon="menu"
-          aria-label="Menu"
-        />
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="primary" @click="showBack()">Add New</q-btn>
 
       </q-toolbar>
     </q-header>
@@ -51,7 +58,7 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view :applications="applications" />
     </q-page-container>
   </q-layout>
 </template>
@@ -67,12 +74,39 @@ export default {
     MenuList
   },
 
+  computed: {
+    allapplications: function () {
+      return this.$store.state.tiles.all
+    },
+    applications: function () {
+      if (this.selectedapp !== null) {
+        return this.allapplications.filter(v => v.id === this.selectedapp)
+      } else if (this.options === null) {
+        return this.allapplications
+      } else {
+        return this.options
+      }
+    }
+  },
+
   data () {
     return {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
       tile: false,
-      version: version
+      version: version,
+      selectedapp: null,
+      options: null
+    }
+  },
+  methods: {
+    filterFn (val, update, abort) {
+      update(() => {
+        // this.selectedapp = null
+        const needle = val.toLowerCase()
+        // console.log('needle: ' + needle)
+        this.options = this.allapplications.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
+      })
     }
   }
 }
