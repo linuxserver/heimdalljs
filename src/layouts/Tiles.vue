@@ -16,7 +16,8 @@
         </q-toolbar-title>
 
         <q-select
-          filled
+          outlined
+          color="grey"
           v-model="selectedapp"
           use-input
           clearable
@@ -58,7 +59,10 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view :applications="applications" />
+      <router-view
+        :applications="applications"
+        :allapps="applications"
+      />
     </q-page-container>
   </q-layout>
 </template>
