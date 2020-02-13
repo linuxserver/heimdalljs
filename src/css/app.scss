@@ -1,4 +1,7 @@
 // app global css in SCSS form
+h1 {
+    font-size: 32px;
+}
 #q-app {
     background: #ececec;
 }
@@ -14,7 +17,9 @@
 .q-item.q-router-link--active {
     background:rgba(0,0,0,0.04);
 }
-
+.q-toolbar {
+    min-height: 75px;
+}
 .item-container {
 	//width: 340px;
 	//transition: width .35s ease-in-out;	
@@ -116,6 +121,9 @@
         font-size: 22px;
         padding: 12px 20px;
         border-bottom: 1px solid #00000014;
+        min-height: 77px;
+        align-items: center;
+        display: flex;
     }
 }
 
@@ -141,7 +149,8 @@
     padding: 0 40px;
 }
 .alt-header {
-    background: #849090;
+    background: #ececec;
+    color: #505050;
 }
 
 div.create {
@@ -223,7 +232,7 @@ div.create {
             font-weight: normal;
             i {
                 font-size: 24px;
-                color: #000;
+                color: #505050;
             }
         }
         .actions {
@@ -261,7 +270,7 @@ div.create {
     .list-item-back {
       background-color: #eaeaea;
       min-height: 92px;
-      color: #000;
+      color: #505050;
       transform: rotateX(180deg);
       padding: 20px;
       .close {

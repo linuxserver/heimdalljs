@@ -1,6 +1,7 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
+      <h1>Application Management</h1>
       <!--<div class="add-new">
         <div class="item">Docker Container</div>
         <div class="item">Application</div>
