@@ -159,7 +159,10 @@ div.create {
 	flex-wrap: wrap;
 	.input {
 		width: 28%;
-		margin: 20px;
+        margin: 20px;
+        &.double {
+            width: calc(56% + 40px);
+        }
 		label:not(.switch) {
 			width: 100%;
 			font-size: 13px;
@@ -269,8 +272,14 @@ div.create {
       min-height: 92px;
       color: #505050;
       transform: rotateX(180deg);
-      padding: 20px;
-      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.10);
+      padding: 5px 20px;
+      justify-content: center;
+      .confirmation {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
       .close {
         position: absolute;
         top: 10px;
@@ -322,5 +331,35 @@ div.create {
     border-color: #3d8ad8;
 }
 .q-field--outlined {
-    background: #e6e6e6;
+    background: #f7f7f7;
+}
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding-left: 35px;
+    color: #505050;
+    background: #ececec;
+    .actions {
+        display: flex;
+        height: 100%;
+        .q-btn__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: #5050509e;
+            line-height: 1.6;
+            i {
+                font-size: 24px;
+                color: #505050;
+            }
+
+        }
+        .q-btn {
+            border-left: 1px solid #ccc;
+        }
+    }
 }

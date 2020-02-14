@@ -1,5 +1,5 @@
 <template>
-  <section class="item-container ui-sortable-handle" data-id="3">
+  <section class="item-container ui-sortable-handle" :data-id="this.$attrs.id">
     <div class="item" :style="'background-color: ' + this.$attrs.colour">
       <img class="app-icon" :src="'http://heimdallmaster.test/storage/' + this.icon">
       <div class="details">

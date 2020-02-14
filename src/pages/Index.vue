@@ -14,13 +14,19 @@ import Tile from 'components/Tile'
 export default {
   name: 'PageIndex',
 
+  props: ['filter'],
+
   components: {
     Tile
   },
 
   computed: {
     applications: function () {
-      return this.$store.state.tiles.active
+      if (this.filter === null) {
+        return this.$store.state.tiles.active
+      } else {
+        return this.$store.state.tiles.active.filter(a => a.tags.map(b => b.id).includes(this.filter))
+      }
     }
   },
 

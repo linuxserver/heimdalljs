@@ -5,3 +5,7 @@ export function all (state, data) {
 export function active (state, data) {
   state.active = data
 }
+
+export function possibleapps (state, data) {
+  state.possibleapps = data
+}

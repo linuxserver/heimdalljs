@@ -46,10 +46,10 @@ export default {
 
   computed: {
     tiles () {
-      return this.$store.state.tiles.all.length
+      return this.$store.state.tiles.active.length
     },
     active_tiles () {
-      return this.$store.state.tiles.active.length
+      return this.$store.state.tiles.all.length
     },
     users () {
       return this.$store.state.users.all.length

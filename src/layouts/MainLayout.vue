@@ -15,7 +15,21 @@
           Heimdall
         </q-toolbar-title>
 
-        <div>v{{ this.version }}</div>
+          <q-chip
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === null }"
+            @click="setFilter(null)"
+          >All</q-chip>
+          <q-chip
+            v-for="tag in tags"
+            :key="tag.id"
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === tag.id }"
+            @click="setFilter(tag.id)"
+          >{{ tag.title }}</q-chip>
+
       </q-toolbar>
     </q-header>
 
@@ -28,7 +42,7 @@
     </q-drawer>
 
     <q-page-container id="app">
-      <router-view />
+      <router-view :filter="filter" />
     </q-page-container>
   </q-layout>
 </template>
@@ -44,11 +58,32 @@ export default {
     MenuList
   },
 
+  computed: {
+    tags () {
+      return this.$store.state.tags.all
+    }
+  },
+
   data () {
     return {
       leftDrawerOpen: false,
-      version: version
+      version: version,
+      filter: null
+    }
+  },
+
+  methods: {
+    setFilter (tag) {
+      this.filter = tag
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+  .q-chip {
+    background: #dadada26;
+    &.active {
+      background: #dadada;
+    }
+  }
+</style>
