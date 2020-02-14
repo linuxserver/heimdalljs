@@ -1,11 +1,11 @@
-const {User} = require('../models/index')
+const { User } = require('../models/index')
 
 test('Creates a user', async () => {
   await User.create({
     username: 'admin',
     email: 'admin@example.com',
-    password: 'admin',
-  });
+    password: 'admin'
+  })
 
   expect((await User.findAll()).length).toBe(1)
 })
