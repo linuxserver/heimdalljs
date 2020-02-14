@@ -2,7 +2,7 @@
  * Passport for authentication
  */
 const { Strategy } = require('passport-jwt')
-const { User } = require('../models/index')
+const { User } = require('./models/index')
 
 module.exports = passport => {
   passport.use(new Strategy({
