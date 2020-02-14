@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:migrate": "sequelize-cli db:migrate",
+    "pretest": "NODE_ENV=test npm run db:migrate",
+    "test": "jest",
+    "posttest": "rm test.db"
   },
   "author": "Alex Phillips <ahp118@gmail.com>",
   "license": "ISC",
@@ -19,5 +22,9 @@
     "passport-jwt": "^4.0.0",
     "sequelize": "^5.21.4",
     "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "sequelize-cli": "^5.5.1"
   }
 }

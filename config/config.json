@@ -4,7 +4,8 @@
     "password": null,
     "database": "database_development",
     "host": "127.0.0.1",
-    "dialect": "mysql",
+    "dialect": "sqlite",
+    "storage": "dev.db",
     "operatorsAliases": false
   },
   "test": {
@@ -12,7 +13,8 @@
     "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
-    "dialect": "mysql",
+    "dialect": "sqlite",
+    "storage": "test.db",
     "operatorsAliases": false
   },
   "production": {
