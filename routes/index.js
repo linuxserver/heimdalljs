@@ -39,8 +39,29 @@ router.post('/login', async (req, res, next) => {
   })
 })
 
-router.get('/ping', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
-  return res.json(req.user)
+router.get('/ping', async (req, res, next) => {
+  if (!req.user) {
+    // If unauthenticated, check to make sure we have a user at all
+    const userCount = await User.count({
+      where: {}
+    })
+
+    if (userCount === 0) {
+      return res.json({
+        status: 'setup'
+      })
+    }
+
+    return res.json({
+      status: 'unauthorized',
+      data: 'You are either not logged in or do not have access to this data'
+    })
+  }
+
+  return res.json({
+    status: 'ok',
+    data: req.user
+  })
 })
 
 module.exports = router
