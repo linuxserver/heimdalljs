@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node ./bin/www",
+    "server": "npm run db:migrate && node ./bin/www",
     "db:migrate": "npx sequelize-cli db:migrate",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
