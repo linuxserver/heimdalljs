@@ -25,6 +25,13 @@ class User extends Model {
   verifyPassword (check) {
     return bcrypt.compareSync(check, this.password)
   }
+
+  toJSON () {
+    const retval = this.get()
+    delete retval.password
+
+    return retval
+  }
 }
 
 module.exports = User

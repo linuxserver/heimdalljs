@@ -60,7 +60,7 @@ router.get('/ping', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: req.user
+    data: req.user.toJSON()
   })
 })
 
