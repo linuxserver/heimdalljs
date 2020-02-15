@@ -14,7 +14,8 @@ class User extends Model {
         set (val) {
           this.setDataValue('password', bcrypt.hashSync(val, 10))
         }
-      }
+      },
+      settings: DataTypes.TEXT
     }, {
       sequelize,
       underscored: true,
