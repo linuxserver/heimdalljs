@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "node ./bin/www",
-    "db:migrate": "sequelize-cli db:migrate",
+    "db:migrate": "npx sequelize-cli db:migrate",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
     "posttest": "rm test.db"
