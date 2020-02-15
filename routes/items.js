@@ -30,16 +30,20 @@ router.post('/', async (req, res, next) => {
   return res.json(item.toJSON())
 })
 
-router.put('/', async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json([])
   }
 
   const item = await Item.findOne({
     where: {
-      id: req.body.id
+      id: req.params.id
     }
   })
+
+  if (!item) {
+    return res.status(404).json([])
+  }
 
   await item.update(req.body)
 
