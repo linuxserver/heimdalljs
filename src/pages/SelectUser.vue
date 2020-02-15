@@ -58,7 +58,7 @@
                 />
               </template>
             </q-input>
-            <q-btn unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
+            <q-btn @click="login" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
           </div>
         </q-card>
       </q-page>
@@ -119,7 +119,13 @@ export default {
 
   methods: {
     selectUser () {
-      this.$store.dispatch('app/setUser', this.users[this.selecteduser])
+      this.$store.dispatch('app/setUser', this.selecteduser)
+    },
+    login () {
+      this.$store.dispatch('app/login', {
+        username: this.selecteduser.username,
+        password: this.password
+      })
     }
   },
 

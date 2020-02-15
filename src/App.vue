@@ -1,10 +1,10 @@
 <template>
   <div id="q-app">
-    <div v-if="user === null">
-      <select-user></select-user>
-    </div>
-    <div v-else-if="status !== 'setup'">
-      <router-view />
+    <div v-if="status !== 'setup'">
+      <div v-if="user === null">
+        <select-user></select-user>
+      </div>
+      <router-view v-else />
     </div>
     <div v-else>
       <setup></setup>
