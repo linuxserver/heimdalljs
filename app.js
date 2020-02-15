@@ -5,6 +5,7 @@ const logger = require('morgan')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const itemsRouter = require('./routes/items')
 
 const app = express()
 
@@ -36,5 +37,6 @@ app.use(cors())
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
+app.use('/items', itemsRouter)
 
 module.exports = app
