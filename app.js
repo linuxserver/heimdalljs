@@ -1,3 +1,4 @@
+const env = process.env.NODE_ENV || 'development'
 const express = require('express')
 // const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -33,7 +34,10 @@ app.use(auth.authorize)
  * Handle CORS
  */
 const cors = require('cors')
-app.use(cors())
+app.use(cors({
+  credentials: true,
+  ...env === 'development' && { origin: 'http://localhost:8080' }
+}))
 
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
