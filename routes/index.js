@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 router.post('/login', async (req, res, next) => {
   const user = await User.findOne({
     where: {
-      email: req.body.email
+      username: req.body.username
     }
   })
 
@@ -22,7 +22,7 @@ router.post('/login', async (req, res, next) => {
 
   const payload = {
     id: user.id,
-    email: user.email,
+    username: user.username,
     updated: user.updatedAt.toString()
   }
 
