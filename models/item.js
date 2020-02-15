@@ -34,6 +34,10 @@ class Item extends Model {
       paranoid: true
     })
   }
+
+  toJSON () {
+    return this.get()
+  }
 }
 
 module.exports = Item
