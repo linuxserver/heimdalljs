@@ -7,8 +7,7 @@
     "server": "npm run db:migrate && node ./bin/www",
     "db:migrate": "npx sequelize-cli db:migrate",
     "pretest": "NODE_ENV=test npm run db:migrate",
-    "test": "jest",
-    "posttest": "rm test.db"
+    "test": "jest"
   },
   "author": "Alex Phillips <ahp118@gmail.com>",
   "license": "ISC",

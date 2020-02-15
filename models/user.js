@@ -23,6 +23,12 @@ class User extends Model {
     })
   }
 
+  static associate (models) {
+    this.hasMany(models.Item, {
+      foreignKey: 'user_id'
+    })
+  }
+
   verifyPassword (check) {
     return bcrypt.compareSync(check, this.password)
   }
