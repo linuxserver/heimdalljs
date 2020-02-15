@@ -4,7 +4,6 @@ const { User } = require('../models/index')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-  // res.render('index', { title: 'Express' })
   const users = await User.findAll()
 
   if (!users.length) {
@@ -14,7 +13,7 @@ router.get('/', async (req, res, next) => {
     })
   }
 
-  return res.json(users)
+  return res.json(users.map(user => user.toJSON()))
 })
 
 router.post('/', async (req, res, next) => {
@@ -40,7 +39,7 @@ router.post('/', async (req, res, next) => {
 
   const user = await User.create(req.body)
 
-  return res.json(user)
+  return res.json(user.toJSON())
 })
 
 router.put('/', async (req, res, next) => {
