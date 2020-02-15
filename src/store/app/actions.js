@@ -16,6 +16,17 @@ export function setupUser (context, data) {
     .post(process.env.BACKEND_LOCATION + 'users', data)
     .then((response) => {
       // console.log(response.data)
-      context.commit('step', 2)
+      // context.commit('step', 2)
+      ping(context)
     })
+}
+
+export function setUser (context, user) {
+  // console.log(data)
+  context.commit('setUser', user)
+}
+
+export function logout (context) {
+  // console.log(data)
+  context.commit('logout')
 }

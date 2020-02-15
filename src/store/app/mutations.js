@@ -5,3 +5,11 @@ export function ping (state, data) {
 export function step (state, data) {
   state.setup.step = data
 }
+
+export function setUser (state, user) {
+  state.user = user
+}
+
+export function logout (state) {
+  state.user = null
+}

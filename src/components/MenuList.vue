@@ -1,4 +1,5 @@
 <template>
+<div>
   <q-list>
     <q-item-label header class="text-grey-8">Navigation</q-item-label>
     <EssentialLink
@@ -32,6 +33,11 @@
       link="/settings"
     />
   </q-list>
+  <div class="toolbar fixed-bottom">
+    <span @click="logout">Logout</span>
+    left Drawer toolbar
+  </div>
+</div>
 </template>
 
 <script>
@@ -66,6 +72,12 @@ export default {
 
   data () {
     return {
+    }
+  },
+
+  methods: {
+    logout: function () {
+      this.$store.dispatch('app/logout')
     }
   }
 }

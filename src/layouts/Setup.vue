@@ -60,7 +60,7 @@
         </q-stepper-navigation>
       </q-step>
 
-      <q-step
+      <!--<q-step
         :name="2"
         title="Check which features can be enabled"
         icon="apps"
@@ -87,7 +87,7 @@
           <q-btn color="primary" label="Finish" />
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
-      </q-step>
+      </q-step>-->
     </q-stepper>
   </div>
       </q-page>
@@ -133,5 +133,6 @@ export default {
 <style lang="scss" scoped>
 .q-field--outlined {
   margin-top: 20px;
+  background: #f1f1f1;
 }
 </style>

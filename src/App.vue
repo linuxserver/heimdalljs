@@ -1,6 +1,9 @@
 <template>
   <div id="q-app">
-    <div v-if="status !== 'setup'">
+    <div v-if="user === null">
+      <select-user></select-user>
+    </div>
+    <div v-else-if="status !== 'setup'">
       <router-view />
     </div>
     <div v-else>
@@ -10,17 +13,22 @@
 </template>
 
 <script>
+import SelectUser from './pages/SelectUser'
 import Setup from './layouts/Setup'
 export default {
   name: 'App',
 
   components: {
-    Setup
+    Setup,
+    SelectUser
   },
 
   computed: {
     status () {
       return this.$store.state.app.status
+    },
+    user () {
+      return this.$store.state.app.user
     }
   },
 
@@ -29,6 +37,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.user)
     this.$store.dispatch('app/ping')
     // this.$store.dispatch('tiles/getApps')
     // this.$store.dispatch('tags/getTags')

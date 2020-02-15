@@ -14,21 +14,22 @@
         <q-toolbar-title>
           Heimdall
         </q-toolbar-title>
-
-          <q-chip
-            icon="bookmark"
-            clickable
-            :class="{ active: filter === null }"
-            @click="setFilter(null)"
-          >All</q-chip>
-          <q-chip
-            v-for="tag in tags"
-            :key="tag.id"
-            icon="bookmark"
-            clickable
-            :class="{ active: filter === tag.id }"
-            @click="setFilter(tag.id)"
-          >{{ tag.title }}</q-chip>
+          <div v-if="user !== null">
+            <q-chip
+              icon="bookmark"
+              clickable
+              :class="{ active: filter === null }"
+              @click="setFilter(null)"
+            >All</q-chip>
+            <q-chip
+              v-for="tag in tags"
+              :key="tag.id"
+              icon="bookmark"
+              clickable
+              :class="{ active: filter === tag.id }"
+              @click="setFilter(tag.id)"
+            >{{ tag.title }}</q-chip>
+          </div>
 
       </q-toolbar>
     </q-header>
@@ -61,6 +62,9 @@ export default {
   computed: {
     tags () {
       return this.$store.state.tags.all
+    },
+    user () {
+      return this.$store.state.app.user
     }
   },
 
