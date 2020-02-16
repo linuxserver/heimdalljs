@@ -19,13 +19,19 @@ class Item extends Model {
         allowNull: false
       },
       description: DataTypes.STRING,
-      pinned: {
+      active: {
         type: DataTypes.BOOLEAN,
         default: false
       },
       order: {
         type: DataTypes.INTEGER,
         default: 0
+      },
+      applicationType: {
+        type: DataTypes.STRING
+      },
+      config: {
+        type: DataTypes.TEXT
       }
     }, {
       sequelize,

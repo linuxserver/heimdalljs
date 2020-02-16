@@ -34,13 +34,19 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      pinned: {
+      active: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
       order: {
         type: Sequelize.INTEGER,
         defaultValue: 0
+      },
+      applicationType: {
+        type: Sequelize.STRING
+      },
+      config: {
+        type: Sequelize.TEXT
       },
       created_at: {
         allowNull: false,
