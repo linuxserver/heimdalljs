@@ -3,6 +3,10 @@
 const { Model } = require('sequelize')
 const bcrypt = require('bcrypt')
 
+const ADMIN = 0
+const USER = 1
+const READ_ONLY = 2
+
 class User extends Model {
   static init (sequelize, DataTypes) {
     return super.init({
@@ -15,7 +19,8 @@ class User extends Model {
           this.setDataValue('password', bcrypt.hashSync(val, 10))
         }
       },
-      settings: DataTypes.TEXT
+      settings: DataTypes.TEXT,
+      level: DataTypes.TINYINT
     }, {
       sequelize,
       underscored: true,
@@ -31,6 +36,18 @@ class User extends Model {
     this.belongsToMany(models.Tag, {
       through: 'user_tags'
     })
+  }
+
+  static get ADMIN () {
+    return ADMIN
+  }
+
+  static get USER () {
+    return USER
+  }
+
+  static get READ_ONLY () {
+    return READ_ONLY
   }
 
   verifyPassword (check) {

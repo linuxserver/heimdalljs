@@ -24,6 +24,10 @@ router.post('/', async (req, res, next) => {
     return res.status(403).json([])
   }
 
+  if (usersCount > 0 && req.user.level !== User.ADMIN) {
+    delete req.body.level
+  }
+
   const existing = await User.findOne({
     where: {
       email: req.body.email
@@ -45,6 +49,11 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json([])
+  }
+
+  // Only admins can alter user levels
+  if (req.user.level !== User.ADMIN) {
+    delete req.body.level
   }
 
   if (req.body.currentPassword) {
