@@ -30,8 +30,13 @@ class Item extends Model {
     }, {
       sequelize,
       underscored: true,
-      tableName: 'items',
-      paranoid: true
+      tableName: 'items'
+    })
+  }
+
+  static associate (models) {
+    this.belongsToMany(models.Tag, {
+      through: 'item_tags'
     })
   }
 
