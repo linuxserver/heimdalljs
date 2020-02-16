@@ -41,7 +41,7 @@ export default {
     this.$store.dispatch('app/ping')
     // this.$store.dispatch('tiles/getApps')
     // this.$store.dispatch('tags/getTags')
-    // this.$store.dispatch('tiles/getPossibleApps')
+    this.$store.dispatch('tiles/getPossibleApps')
     // this.$store.dispatch('users/getUsers')
   }
 }

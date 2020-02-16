@@ -5,14 +5,21 @@ export function ping (context) {
   console.log(Cookies.getAll())
   axios
     .get(process.env.BACKEND_LOCATION + 'ping', {
-      crossdomain: true,
-      withCredentials: true
+      crossdomain: true
     }).then((response) => {
       console.log(response.data)
       context.commit('ping', response.data.status)
       if (response.data.status === 'ok') {
         context.commit('setUser', response.data.data)
       }
+    }).catch(function () {
+      Notify.create({
+        type: 'negative',
+        message: `Could not connect to backend server.`,
+        progress: true,
+        position: 'top',
+        timeout: 1500
+      })
     })
 }
 
@@ -23,8 +30,8 @@ export function setupUser (context, data) {
     .post(process.env.BACKEND_LOCATION + 'users', data)
     .then((response) => {
       // console.log(response.data)
-      // context.commit('step', 2)
-      ping(context)
+      context.commit('step', 2)
+      // ping(context)
     })
 }
 

@@ -1,8 +1,8 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <div class="bg"></div>
-      <!--<div class="add-new">
+      <!--<div class="bg"></div>
+      <div class="add-new">
         <div class="item">Docker Container</div>
         <div class="item">Application</div>
         <div class="item">Link</div>
@@ -15,26 +15,19 @@
           indicator-color="primary"
           align="justify"
           active-bg-color="shadow-3"
-          class="bg-grey-2 shadow-2"
+          class="bg-grey-2"
         >
-          <q-tab name="userapps" label="Applications" />
-          <q-tab v-if="$q.screen.gt.sm" name="tags" label="Tags" />
-          <q-tab v-if="$q.screen.gt.sm" name="allapps" label="All Applications" />
-          <q-btn-dropdown v-if="$q.screen.lt.md" auto-close stretch flat label="More...">
-            <q-list>
-              <q-item clickable @click="tab = 'tags'">
-                <q-item-section>Tags</q-item-section>
-              </q-item>
-
-              <q-item clickable @click="tab = 'allapps'">
-                <q-item-section>All Applications</q-item-section>
-              </q-item>
-            </q-list>
-          </q-btn-dropdown>
+          <q-tab name="userapps" :label="this.$t('applications')" />
+          <q-tab v-if="$q.screen.gt.sm" name="tags" :label="this.$t('tags')" />
         </q-tabs>
         <q-tab-panels v-model="tab" animated>
           <q-tab-panel name="userapps">
+            <div class="no-items" v-if="applications.length < 1">
+              {{ this.$t('no_apps') }}
+              <q-btn style="margin-top:30px;" @click="create = true" unelevated color="cyan-8">Add New</q-btn>
+            </div>
             <app-item
+              v-else
               v-for="application in applications"
               :key="application.id"
               :application="application"
@@ -47,37 +40,47 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </q-tab-panel>
 
-          <q-tab-panel name="allapps">
-            <app-item
-              v-for="application in allapps"
-              :key="application.id"
-              :application="application"
-            >
-            </app-item>
-          </q-tab-panel>
         </q-tab-panels>
       </div>
     </div>
+
+    <q-dialog v-model="create">
+      <edit-tile :application="createapp"></edit-tile>
+    </q-dialog>
+
   </q-page>
 </template>
 
 <script>
+import EditTile from 'components/EditTile'
 import AppItem from 'components/AppItem'
 
 export default {
   name: 'PageIndex',
 
   components: {
-    AppItem
+    AppItem,
+    EditTile
   },
 
   props: ['applications', 'allapps'],
 
   computed: {
+    createapp () {
+      return {
+        color: '',
+        applicationtype: '',
+        title: '',
+        tags: [],
+        url: '',
+        icon: 'statics/img/heimdall-icon-small.png'
+      }
+    }
   },
 
   data () {
     return {
+      create: false,
       tab: 'userapps'
     }
   },

@@ -32,7 +32,7 @@
         >
         </q-select>
 
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="primary" @click="showBack()">Add New</q-btn>
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="cyan-8" @click="showBack()">Add New</q-btn>
 
       </q-toolbar>
     </q-header>

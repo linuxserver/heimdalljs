@@ -60,21 +60,37 @@
         </q-stepper-navigation>
       </q-step>
 
-      <!--<q-step
+      <q-step
         :name="2"
-        title="Check which features can be enabled"
+        title="Select default settings"
         icon="apps"
         :done="step > 2"
       >
-        An ad group contains one or more ads which target a shared set of keywords.
+        <q-select
+          outlined
+          :options="languages"
+          :label="this.$t('select_language')"
+          option-value="value"
+          option-label="label"
+          v-model="language"
+        ></q-select>
+
+        <q-select
+          outlined
+          :options="username_options"
+          :label="this.$t('show_usernames')"
+          option-value="value"
+          option-label="label"
+          v-model="showusername"
+        ></q-select>
 
         <q-stepper-navigation>
-          <q-btn @click="step = 3" color="primary" label="Continue" />
+          <q-btn @click="saveSettings" color="primary" label="Continue" />
           <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
 
-      <q-step
+      <!--<q-step
         :name="3"
         title="Create an ad"
         icon="add_comment"
@@ -114,7 +130,29 @@ export default {
       isPwd: true,
       username: '',
       email: '',
-      password: ''
+      password: '',
+      showusername: null,
+      username_options: [
+        {
+          label: this.$t('username_yes'),
+          value: 'yes'
+        },
+        {
+          label: this.$t('username_no'),
+          value: 'no'
+        }
+      ],
+      language: null,
+      languages: [
+        {
+          value: 'en-us',
+          label: 'English (US)'
+        },
+        {
+          value: 'en-gb',
+          label: 'English (British)'
+        }
+      ]
     }
   },
 
@@ -126,6 +164,14 @@ export default {
         email: this.email,
         password: this.password
       })
+    },
+    saveSettings () {
+      /* this.$store.dispatch('app/setupSettings', {
+        id: 1,
+        username: this.username,
+        email: this.email,
+        password: this.password
+      }) */
     }
   }
 }

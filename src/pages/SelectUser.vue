@@ -140,7 +140,7 @@ export default {
   }
   .avatar-container {
     padding: 30px;
-    background: #ccc;
+    background: radial-gradient(ellipse at center, #47918a 0%, #0b3161 100%);
     img {
       display: block;
     }

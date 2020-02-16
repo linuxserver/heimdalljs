@@ -2,19 +2,34 @@
 // so you can safely delete all default props below
 
 export default {
+  select_language: 'Select language',
+  show_usernames: 'Show usernames',
+  username_yes: 'Yes (Select from list of users)',
+  username_no: 'No (Username must by typed)',
   failed: 'Action failed',
   success: 'Action was successful',
   dashboard: 'Dashboard',
+  application: 'Application',
   applications: 'Applications',
   user_management: 'User Management',
   proxy_management: 'Proxy Management',
   settings: 'Settings',
   app: 'app',
   apps: 'apps',
+  tag: 'tag',
+  tags: 'tags',
   user: 'user',
   users: 'users',
   proxy: 'proxy',
   proxies: 'proxies',
   item: 'item',
-  items: 'items'
+  items: 'items',
+  no_apps: 'There are currently no applications',
+  // Edit / Create tiles
+  application_name: 'Application name',
+  application_type: 'Application type',
+  colour: 'Color',
+  url: 'URL',
+  Tags: 'Tags',
+  optional: 'Optional'
 }

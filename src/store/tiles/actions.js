@@ -27,3 +27,13 @@ export function getPossibleApps (context, force = false) {
     context.commit('possibleapps', possibleapps.apps)
   }
 }
+
+export function save (context, data) {
+  axios
+    .post(process.env.BACKEND_LOCATION + 'items', data)
+    .then((response) => {
+      // console.log(response.data)
+      // context.commit('all', response.data.all_apps)
+      // context.commit('active', response.data.apps)
+    })
+}
