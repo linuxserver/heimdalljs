@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('uses', 'level', {
+    await queryInterface.addColumn('users', 'level', {
       type: Sequelize.TINYINT,
       after: 'settings',
       defaultValue: 1
