@@ -1,8 +1,7 @@
-const { User, Item, Tag } = require('../models/index')
+const { User, Item } = require('../models/index')
 
 beforeAll(async () => {
   await User.destroy({ where: {} })
-  await Tag.destroy({ where: {} })
 })
 
 test('Creates a user', async () => {
@@ -69,72 +68,4 @@ test('User delete cascade', async () => {
 
   const items = await Item.findAll()
   expect(items.length).toBe(0)
-})
-
-test('Add new tag', async () => {
-  const tag = await Tag.create({
-    name: 'test tag'
-  })
-
-  expect((await Tag.findAll()).length).toBe(1)
-})
-
-test('Tag to user', async () => {
-  const user = await User.create({
-    username: 'taguser',
-    email: 'taguser@example.com',
-    password: 'password'
-  })
-
-  const tag = await Tag.findOne({
-    where: {
-      name: 'test tag'
-    }
-  })
-
-  await user.addTags(tag)
-
-  expect((await user.getTags()).length).toBe(1)
-})
-
-test('Delete association keeps tag', async () => {
-  const tag = await Tag.findOne({
-    where: {
-      name: 'test tag'
-    }
-  })
-
-  const user = await User.findOne({
-    where: {
-      username: 'taguser'
-    }
-  })
-
-  user.removeTags(tag)
-
-  expect((await Tag.findAll()).length).toBe(1)
-})
-
-test('Tag to item', async () => {
-  const user = await User.findOne({
-    where: {
-      username: 'taguser'
-    }
-  })
-
-  const item = await Item.create({
-    user_id: user.id,
-    title: 'lsio',
-    url: 'https://linuxserver.io'
-  })
-
-  const tag = await Tag.findOne({
-    where: {
-      name: 'test tag'
-    }
-  })
-
-  await item.addTags(tag)
-
-  expect((await item.getTags()).length).toBe(1)
 })

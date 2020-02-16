@@ -32,10 +32,6 @@ class User extends Model {
     this.hasMany(models.Item, {
       foreignKey: 'user_id'
     })
-
-    this.belongsToMany(models.Tag, {
-      through: 'user_tags'
-    })
   }
 
   static get ADMIN () {

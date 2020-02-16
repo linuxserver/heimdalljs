@@ -40,12 +40,6 @@ class Item extends Model {
     })
   }
 
-  static associate (models) {
-    this.belongsToMany(models.Tag, {
-      through: 'item_tags'
-    })
-  }
-
   toJSON () {
     return this.get()
   }
