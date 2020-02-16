@@ -8,39 +8,17 @@
         <div class="item">Link</div>
       </div>-->
       <div class="list-items">
-        <q-tabs
-          v-model="tab"
-          inline-label
-          :breakpoint="0"
-          indicator-color="primary"
-          align="justify"
-          active-bg-color="shadow-3"
-          class="bg-grey-2"
+        <div class="no-items" v-if="applications.length < 1">
+          {{ this.$t('no_apps') }}
+          <q-btn style="margin-top:30px;" @click="create = true" unelevated color="cyan-8">Add New</q-btn>
+        </div>
+        <app-item
+          v-else
+          v-for="application in applications"
+          :key="application.id"
+          :application="application"
         >
-          <q-tab name="userapps" :label="this.$t('applications')" />
-          <q-tab v-if="$q.screen.gt.sm" name="tags" :label="this.$t('tags')" />
-        </q-tabs>
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="userapps">
-            <div class="no-items" v-if="applications.length < 1">
-              {{ this.$t('no_apps') }}
-              <q-btn style="margin-top:30px;" @click="create = true" unelevated color="cyan-8">Add New</q-btn>
-            </div>
-            <app-item
-              v-else
-              v-for="application in applications"
-              :key="application.id"
-              :application="application"
-            >
-            </app-item>
-          </q-tab-panel>
-
-          <q-tab-panel name="tags">
-            <div class="text-h6">Tags</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-
-        </q-tab-panels>
+        </app-item>
       </div>
     </div>
 
@@ -80,8 +58,7 @@ export default {
 
   data () {
     return {
-      create: false,
-      tab: 'userapps'
+      create: false
     }
   },
   mounted () {
