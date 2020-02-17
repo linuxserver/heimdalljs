@@ -6,6 +6,7 @@
   "scripts": {
     "server": "npm run db:migrate && node ./bin/www",
     "db:migrate": "npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest"
   },
