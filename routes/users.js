@@ -27,7 +27,7 @@ router.get('/', async (req, res, next) => {
       id: user.id,
       username: user.username,
       avatar: user.avatar,
-      publicPage: user.publicPage
+      publicPage: _.get(user.options, 'publicPage', false)
     }))
   })
 })
