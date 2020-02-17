@@ -4,6 +4,7 @@ export default function () {
     user: null,
     setup: {
       step: 1
-    }
+    },
+    users: null
   }
 }

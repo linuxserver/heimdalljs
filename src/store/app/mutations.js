@@ -13,3 +13,7 @@ export function setUser (state, user) {
 export function logout (state) {
   state.user = null
 }
+
+export function users (state, data) {
+  state.users = data
+}

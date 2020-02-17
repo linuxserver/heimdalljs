@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="alt-header" bordered>
+    <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
         <q-btn
           flat
@@ -15,8 +15,10 @@
           Application Management
         </q-toolbar-title>
 
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="cyan-8" @click="showBack()">Add New</q-btn>
+        <div class="searchbox">
         <q-select
-          outlined
+          borderless
           color="grey"
           v-model="selectedapp"
           use-input
@@ -31,9 +33,7 @@
           @filter="filterFn"
         >
         </q-select>
-
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="cyan-8" @click="showBack()">Add New</q-btn>
-
+        </div>
       </q-toolbar>
     </q-header>
 

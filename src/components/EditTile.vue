@@ -75,6 +75,7 @@
                   :options="possibletags"
                   use-input
                   new-value-mode="add-unique"
+                  emit-value
                   use-chips
                   @filter="filterFn"
                 />
@@ -154,13 +155,13 @@ export default {
 
   data () {
     return {
-      color: this.application.colour,
-      applicationtype: this.application.appid,
+      color: this.application.color,
+      applicationtype: this.application.applicationType,
       title: this.application.title,
-      tags: this.application.tags,
+      tags: JSON.parse(this.application.tags),
       url: this.application.url,
       icon: this.application.icon || '../img/heimdall-icon-small.png',
-      possibletags: this.application.tags
+      possibletags: JSON.parse(this.application.tags)
     }
   },
 
@@ -169,9 +170,9 @@ export default {
       // check if new or edit
       this.$store.dispatch('tiles/save', {
         color: this.color,
-        applicationtype: this.applicationtype,
+        applicationType: this.applicationtype.appid,
         title: this.title,
-        tags: this.tags,
+        tags: JSON.stringify(this.tags),
         url: this.url,
         icon: this.icon
       })
@@ -182,7 +183,8 @@ export default {
           this.possibletags = this.application.tags || []
         } else {
           const needle = val.toLowerCase()
-          this.possibletags = this.application.tags.filter(
+          let tags = this.application.tags || []
+          this.possibletags = tags.filter(
             v => v.toLowerCase().indexOf(needle) > -1
           )
         }

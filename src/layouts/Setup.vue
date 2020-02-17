@@ -62,7 +62,7 @@
 
       <q-step
         :name="2"
-        title="Select default settings"
+        :title="this.$t('select_system_defaults')"
         icon="apps"
         :done="step > 2"
       >
@@ -90,9 +90,9 @@
         </q-stepper-navigation>
       </q-step>
 
-      <!--<q-step
+      <q-step
         :name="3"
-        title="Create an ad"
+        :title="this.$t('select_system_defaults')"
         icon="add_comment"
       >
         Try out different ad text to see what brings in the most customers, and learn how to
@@ -103,7 +103,7 @@
           <q-btn color="primary" label="Finish" />
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
-      </q-step>-->
+      </q-step>
     </q-stepper>
   </div>
       </q-page>

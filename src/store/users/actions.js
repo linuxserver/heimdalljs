@@ -5,7 +5,7 @@ export function getUsers (context) {
     .get(process.env.BACKEND_LOCATION + 'users', { crossdomain: true })
     .then((response) => {
       // console.log(response.data)
-      context.commit('all', response.data)
+      context.commit('all', response.data.result)
     })
 }
 

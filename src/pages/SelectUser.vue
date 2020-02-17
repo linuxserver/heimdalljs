@@ -20,10 +20,11 @@
           </div>
           <div class="sign-in-container">
             <q-select
+              v-if="show_usernames"
               outlined
               v-model="selecteduser"
               :options="users"
-              label="Select user"
+              :label="this.$t('select_user')"
               color="teal"
               clearable
               option-value="id"
@@ -45,11 +46,13 @@
                 </q-item>
               </template>
             </q-select>
+            <q-input v-else v-model="username" :label="this.$t('username')" outlined>
+            </q-input>
             <div class="public-option" v-if="hasPublic">
               <q-btn @click="selectUser" unelevated color="cyan-5" style="width: 50%;" class="">View public page</q-btn>
               <span class="or"><span>or</span></span>
             </div>
-            <q-input v-model="password" label="Password" outlined :type="isPwd ? 'password' : 'text'">
+            <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
               <template v-slot:append>
                 <q-icon
                   :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -79,20 +82,10 @@ export default {
   computed: {
     users () {
       // replace with vuex stor eventually
-      return [
-        {
-          id: 1,
-          username: 'admin',
-          avatar: null,
-          public: true
-        },
-        {
-          id: 2,
-          username: 'kode',
-          avatar: null,
-          public: false
-        }
-      ]
+      return this.$store.state.app.users
+    },
+    show_usernames () {
+      return this.$store.state.app.users !== null
     },
     mainIcon () {
       if (this.icon !== null) {
@@ -112,6 +105,7 @@ export default {
     return {
       icon: null,
       selecteduser: null,
+      username: null,
       password: '',
       isPwd: true
     }
@@ -122,8 +116,9 @@ export default {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
     login () {
+      let username = (this.show_usernames === true) ? this.selecteduser.username : this.username
       this.$store.dispatch('app/login', {
-        username: this.selecteduser.username,
+        username: username,
         password: this.password
       })
     }

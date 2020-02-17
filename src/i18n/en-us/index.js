@@ -3,9 +3,14 @@
 
 export default {
   select_language: 'Select language',
+  select_system_defaults: 'Select system defaults',
+  select_personal_settings: 'Select personal settings',
   show_usernames: 'Show usernames',
   username_yes: 'Yes (Select from list of users)',
   username_no: 'No (Username must by typed)',
+  select_user: 'Select user',
+  username: 'Username',
+  password: 'Password',
   failed: 'Action failed',
   success: 'Action was successful',
   dashboard: 'Dashboard',

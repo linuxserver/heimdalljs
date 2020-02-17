@@ -56,7 +56,7 @@ export default {
       return this.$store.state.tags.all
     },
     taglist () {
-      return this.tags.map(a => a.title).join()
+      return [] // this.tags.map(a => a.title).join()
     },
     preview () {
       return {
@@ -72,8 +72,8 @@ export default {
     return {
       edit: false,
       showback: false,
-      color: this.application.colour,
-      applicationtype: this.application.appid,
+      color: this.application.color,
+      applicationtype: this.application.applicationType,
       title: this.application.title,
       tags: this.application.tags,
       url: this.application.url,

@@ -1,9 +1,16 @@
 // app global css in SCSS form
+
+$grey1: #e6e8e8;
+$darkborder: #cbccce;
+
+body {
+  color: #585858;
+}
 h1 {
     font-size: 32px;
 }
 #q-app {
-    background: #ececec;
+    background: $grey1;
 }
 #app {
     background-image: url('../statics/bg1.jpg');
@@ -15,7 +22,7 @@ h1 {
     background: #19465073;
 }
 .q-item.q-router-link--active {
-    background:rgba(0,0,0,0.04);
+    background:rgba(0,0,0,0.02);
 }
 .q-toolbar {
     min-height: 75px;
@@ -115,19 +122,40 @@ h1 {
     }
 }
 .q-drawer {
-    .q-item__label--header {
-        font-size: 22px;
-        padding: 12px 20px;
-        border-bottom: 1px solid #00000014;
-        min-height: 77px;
-        align-items: center;
-        display: flex;
-    }
+  .q-item__label--header {
+    font-size: 22px;
+    padding: 12px 20px;
+    border-bottom: 1px solid #00000014;
+    min-height: 77px;
+    align-items: center;
+    display: flex;
+  }
+  .q-item__label {
+    font-weight: bold;
+  }
+  .q-item {
+    padding: 18px 16px;
+  }
+  .q-item__label + .q-item__label {
+    margin-top: 2px;
+    color: #9c9c9c;
+    font-weight: normal;
+  }
+  .q-icon, .material-icons {
+    background: $grey1;
+    padding: 20px;
+    border-radius: 50%;
+  }
+  .q-drawer--left.q-drawer--bordered {
+    border-right: 1px solid $darkborder;
+  }
 }
 
-.q-item {
-    padding: 13px 16px;
-    border-bottom: 1px solid #0000000a;
+.searchbox {
+  width: 220px;
+  margin-left: 30px;
+  border-left: 1px solid $darkborder;
+  padding-left: 30px;
 }
 
 .add-new {
@@ -147,7 +175,7 @@ h1 {
     padding: 0 40px;
 }
 .alt-header {
-    background: #ececec;
+    background: $grey1;
     color: #505050;
 }
 
@@ -351,7 +379,7 @@ div.create {
     height: 60px;
     padding-left: 35px;
     color: #505050;
-    background: #ececec;
+    background: $grey1;
     .actions {
         display: flex;
         height: 100%;
@@ -384,7 +412,7 @@ div.create {
 }
 .bigtab {
     &:first-child {
-        border-right: 1px solid #ececec;
+        border-right: 1px solid $grey1;
     }
     .q-tab__label {
         line-height: 67px;

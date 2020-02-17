@@ -2,12 +2,13 @@ import axios from 'axios'
 import { LocalStorage } from 'quasar'
 
 export function getApps (context) {
+  console.log('get apps')
   axios
-    .get(process.env.BACKEND_LOCATION, { crossdomain: true })
+    .get(process.env.BACKEND_LOCATION + 'items', { crossdomain: true })
     .then((response) => {
       // console.log(response.data)
-      context.commit('all', response.data.all_apps)
-      context.commit('active', response.data.apps)
+      context.commit('all', response.data.result)
+      context.commit('active', response.data.result.filter(a => a.active === 'true'))
     })
 }
 
