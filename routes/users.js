@@ -7,7 +7,7 @@ const _ = require('lodash')
 router.get('/', async (req, res, next) => {
   const showUsers = await Setting.findOne({ where: { key: 'show_usernames' } })
   if (!showUsers || showUsers.value !== 'yes') {
-    return res.status(403).json({
+    return res.json({
       status: 'ok',
       result: null
     })
