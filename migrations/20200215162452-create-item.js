@@ -42,7 +42,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         defaultValue: 0
       },
-      applicationType: {
+      application_type: {
         type: Sequelize.STRING
       },
       config: {
