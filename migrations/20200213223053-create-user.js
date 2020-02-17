@@ -27,6 +27,14 @@ module.exports = {
       settings: {
         type: Sequelize.TEXT
       },
+      level: {
+        type: Sequelize.TINYINT,
+        defaultValue: 1
+      },
+      publicPage: {
+        type: Sequelize.BOOLEAN,
+        default: false
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

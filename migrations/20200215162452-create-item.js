@@ -48,6 +48,9 @@ module.exports = {
       config: {
         type: Sequelize.TEXT
       },
+      tags: {
+        type: Sequelize.TEXT
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
