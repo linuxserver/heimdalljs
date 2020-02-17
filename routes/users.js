@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const { User } = require('../models/index')
+const { User, Setting } = require('../models/index')
 const _ = require('lodash')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-  if (_.get(req.user, 'settings.show_users', false) === false) {
+  const showUsers = await Setting.findOne({ where: { key: 'show_usernames' } })
+  if (!showUsers || showUsers.value !== 'yes') {
     return res.status(403).json({
-      status: 'error',
-      result: 'unauthorized'
+      status: 'ok',
+      result: null
     })
   }
 
