@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
   if (_.get(req.user, 'settings.show_users', false) === false) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -17,13 +17,13 @@ router.get('/', async (req, res, next) => {
   if (!users.length) {
     return res.json({
       status: 'ok',
-      data: []
+      result: []
     })
   }
 
   return res.json({
     status: 'ok',
-    data: users.map(user => ({
+    result: users.map(user => ({
       id: user.id,
       username: user.username,
       avatar: user.avatar,
@@ -39,7 +39,7 @@ router.post('/', async (req, res, next) => {
   if (usersCount !== 0 && !req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -56,7 +56,7 @@ router.post('/', async (req, res, next) => {
   if (existing) {
     return res.status(400).json({
       stattus: 'error',
-      data: 'Email already exists'
+      result: 'Email already exists'
     })
   }
 
@@ -64,7 +64,7 @@ router.post('/', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: user.toJSON()
+    result: user.toJSON()
   })
 })
 
@@ -72,7 +72,7 @@ router.put('/', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -85,7 +85,7 @@ router.put('/', async (req, res, next) => {
     if (!req.user.verifyPassword(req.body.currentPassword)) {
       return res.status(400).json({
         status: 'error',
-        data: 'Incorrect password'
+        result: 'Incorrect password'
       })
     }
   } else {

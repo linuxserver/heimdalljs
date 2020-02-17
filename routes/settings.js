@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: settings
+    result: settings
   })
 })
 
@@ -16,7 +16,7 @@ router.put('/', async (req, res, next) => {
   if (!req.user || req.user.level !== User.ADMIN) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -32,7 +32,7 @@ router.put('/', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: null
+    result: null
   })
 })
 

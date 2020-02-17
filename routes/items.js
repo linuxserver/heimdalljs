@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: items.map(item => item.toJSON())
+    result: items.map(item => item.toJSON())
   })
 })
 
@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -38,7 +38,7 @@ router.post('/', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: item.toJSON()
+    result: item.toJSON()
   })
 })
 
@@ -46,7 +46,7 @@ router.put('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -59,14 +59,14 @@ router.put('/:id', async (req, res, next) => {
   if (!item) {
     return res.status(404).json({
       status: 'error',
-      data: null
+      result: null
     })
   }
 
   if (item.userId !== req.user.id) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -74,7 +74,7 @@ router.put('/:id', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: item.toJSON()
+    result: item.toJSON()
   })
 })
 
@@ -82,7 +82,7 @@ router.delete('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -95,14 +95,14 @@ router.delete('/:id', async (req, res, next) => {
   if (!item) {
     return res.status(404).json({
       status: 'error',
-      data: null
+      result: null
     })
   }
 
   if (item.userId !== req.user.id) {
     return res.status(403).json({
       status: 'error',
-      data: 'unauthorized'
+      result: 'unauthorized'
     })
   }
 
@@ -110,7 +110,7 @@ router.delete('/:id', async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    data: null
+    result: null
   })
 })
 
