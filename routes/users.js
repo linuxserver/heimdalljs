@@ -1,19 +1,35 @@
 const express = require('express')
 const router = express.Router()
 const { User } = require('../models/index')
+const _ = require('lodash')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
+  if (_.get(req.user, 'settings.show_users', false) === false) {
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
+  }
+
   const users = await User.findAll()
 
   if (!users.length) {
     return res.json({
-      error: true,
-      message: 'no users'
+      status: 'ok',
+      data: []
     })
   }
 
-  return res.json(users.map(user => user.toJSON()))
+  return res.json({
+    status: 'ok',
+    data: users.map(user => ({
+      id: user.id,
+      username: user.username,
+      avatar: user.avatar,
+      publicPage: user.publicPage
+    }))
+  })
 })
 
 router.post('/', async (req, res, next) => {
@@ -21,7 +37,10 @@ router.post('/', async (req, res, next) => {
 
   // Do we want to prevent user registration unless logged in?
   if (usersCount !== 0 && !req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   if (usersCount > 0 && req.user.level !== User.ADMIN) {
@@ -36,19 +55,25 @@ router.post('/', async (req, res, next) => {
 
   if (existing) {
     return res.status(400).json({
-      success: false,
-      message: 'Email already exists'
+      stattus: 'error',
+      data: 'Email already exists'
     })
   }
 
   const user = await User.create(req.body)
 
-  return res.json(user.toJSON())
+  return res.json({
+    status: 'ok',
+    data: user.toJSON()
+  })
 })
 
 router.put('/', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   // Only admins can alter user levels
@@ -59,7 +84,8 @@ router.put('/', async (req, res, next) => {
   if (req.body.currentPassword) {
     if (!req.user.verifyPassword(req.body.currentPassword)) {
       return res.status(400).json({
-        message: 'Incorrect password'
+        status: 'error',
+        data: 'Incorrect password'
       })
     }
   } else {
@@ -69,7 +95,9 @@ router.put('/', async (req, res, next) => {
 
   await req.user.update(req.body)
 
-  return res.json([])
+  return res.json({
+    status: 'ok'
+  })
 })
 
 module.exports = router
