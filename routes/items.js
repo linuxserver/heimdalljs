@@ -5,7 +5,10 @@ const { Item } = require('../models/index')
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   const items = await Item.findAll({
@@ -14,12 +17,18 @@ router.get('/', async (req, res, next) => {
     }
   })
 
-  return res.json(items.map(item => item.toJSON()))
+  return res.json({
+    status: 'ok',
+    data: items.map(item => item.toJSON())
+  })
 })
 
 router.post('/', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   const item = await Item.create({
@@ -27,12 +36,18 @@ router.post('/', async (req, res, next) => {
     userId: req.user.id
   })
 
-  return res.json(item.toJSON())
+  return res.json({
+    status: 'ok',
+    data: item.toJSON()
+  })
 })
 
 router.put('/:id', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   const item = await Item.findOne({
@@ -42,21 +57,33 @@ router.put('/:id', async (req, res, next) => {
   })
 
   if (!item) {
-    return res.status(404).json([])
+    return res.status(404).json({
+      status: 'error',
+      data: null
+    })
   }
 
   if (item.userId !== req.user.id) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   await item.update(req.body)
 
-  return res.json(item.toJSON())
+  return res.json({
+    status: 'ok',
+    data: item.toJSON()
+  })
 })
 
 router.delete('/:id', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   const item = await Item.findOne({
@@ -66,16 +93,25 @@ router.delete('/:id', async (req, res, next) => {
   })
 
   if (!item) {
-    return res.status(404).json([])
+    return res.status(404).json({
+      status: 'error',
+      data: null
+    })
   }
 
   if (item.userId !== req.user.id) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   await item.destroy()
 
-  return res.json([])
+  return res.json({
+    status: 'ok',
+    data: null
+  })
 })
 
 module.exports = router

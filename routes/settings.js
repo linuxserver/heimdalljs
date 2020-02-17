@@ -6,12 +6,18 @@ const { User, Setting } = require('../models/index')
 router.get('/', async (req, res, next) => {
   const settings = await Setting.findAll()
 
-  return res.json(settings)
+  return res.json({
+    status: 'ok',
+    data: settings
+  })
 })
 
 router.put('/', async (req, res, next) => {
   if (!req.user || req.user.level !== User.ADMIN) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   for (const key in req.body) {
@@ -24,7 +30,10 @@ router.put('/', async (req, res, next) => {
     })
   }
 
-  return res.json([])
+  return res.json({
+    status: 'ok',
+    data: null
+  })
 })
 
 module.exports = router

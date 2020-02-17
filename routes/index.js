@@ -17,7 +17,10 @@ router.post('/login', async (req, res, next) => {
   })
 
   if (!user || !user.verifyPassword(req.body.password)) {
-    return res.status(403).json([])
+    return res.status(403).json({
+      status: 'error',
+      data: 'unauthorized'
+    })
   }
 
   const payload = {
@@ -34,8 +37,11 @@ router.post('/login', async (req, res, next) => {
   })
 
   return res.json({
-    ...user.toJSON(),
-    token: token
+    status: 'ok',
+    data: {
+      ...user.toJSON(),
+      token: token
+    }
   })
 })
 
@@ -48,7 +54,8 @@ router.get('/ping', async (req, res, next) => {
 
     if (userCount === 0) {
       return res.json({
-        status: 'setup'
+        status: 'setup',
+        data: null
       })
     }
 
