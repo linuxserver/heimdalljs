@@ -3,6 +3,7 @@ const express = require('express')
 // const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const path = require('path')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -40,6 +41,7 @@ app.use(cors({
   ...env === 'development' && { origin: 'http://localhost:8080' }
 }))
 
+app.use(express.static(path.join(__dirname, './dist/spa/')))
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)

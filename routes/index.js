@@ -3,6 +3,12 @@ const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
 const config = require('../config/config')
+const path = require('path')
+
+/* GET home page. */
+router.get('/', (req, res, next) => {
+  res.sendfile(path.join(__dirname, '../dist/spa/index.html'))
+})
 
 router.post('/login', async (req, res, next) => {
   const user = await User.findOne({
