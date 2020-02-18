@@ -18,7 +18,7 @@
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
     "build": "npx quasar build",
-    "install": "node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed"
+    "setup": "node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
