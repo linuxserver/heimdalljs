@@ -18,7 +18,7 @@ export function getPossibleApps (context, force = false) {
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios
-      .get('https://apps.heimdall.site/list', { crossdomain: true })
+      .get('https://apps.heimdall.site/list', { crossdomain: true, withCredentials: false })
       .then((response) => {
         // console.log(response.data)
         context.commit('possibleapps', response.data.apps)

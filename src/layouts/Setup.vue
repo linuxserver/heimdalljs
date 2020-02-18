@@ -100,7 +100,7 @@
         your ads, find out how to tell if they're running and how to resolve approval issues.
 
         <q-stepper-navigation>
-          <q-btn color="primary" label="Finish" />
+          <q-btn @click="saveUserSettings" color="primary" label="Finish" />
           <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
@@ -166,12 +166,12 @@ export default {
       })
     },
     saveSettings () {
-      /* this.$store.dispatch('app/setupSettings', {
-        id: 1,
-        username: this.username,
-        email: this.email,
-        password: this.password
-      }) */
+      this.$store.dispatch('app/setDefaults', {
+        language: this.language,
+        show_usernames: this.showusername
+      })
+    },
+    saveUserSettings () {
     }
   }
 }
