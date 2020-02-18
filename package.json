@@ -17,7 +17,8 @@
     "db:seed": "npx sequelize-cli db:seed:all",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
-    "build": "npx quasar build"
+    "build": "npx quasar build",
+    "install": "node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -29,6 +30,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "~4.16.1",
+    "inquirer": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "morgan": "~1.9.1",
