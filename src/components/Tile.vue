@@ -1,7 +1,7 @@
 <template>
   <section class="item-container ui-sortable-handle" :data-id="this.$attrs.id">
     <div class="item" :style="'background-color: ' + this.application.color + '; color: ' + textColor + ''">
-      <img class="app-icon" :src="'http://heimdallmaster.test/storage/' + this.icon">
+      <img class="app-icon" :src="this.icon">
       <div class="details">
         <div class="title white">{{ application.title }}</div>
       </div>

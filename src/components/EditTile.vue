@@ -150,6 +150,12 @@ export default {
         icon: this.icon,
         url: this.url
       }
+    },
+    tagsParse () {
+      if (this.application.tags === null) {
+        return []
+      }
+      return JSON.parse(this.application.tags)
     }
   },
 
@@ -158,10 +164,10 @@ export default {
       color: this.application.color,
       applicationtype: this.application.applicationType,
       title: this.application.title,
-      tags: JSON.parse(this.application.tags),
+      tags: this.tagsParse,
       url: this.application.url,
       icon: this.application.icon || '../img/heimdall-icon-small.png',
-      possibletags: JSON.parse(this.application.tags)
+      possibletags: this.tagsParse
     }
   },
 

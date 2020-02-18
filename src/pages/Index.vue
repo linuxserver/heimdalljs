@@ -4,6 +4,7 @@
       v-for="application in applications"
       :key="application.id"
       v-bind="application"
+      :application="application"
     />
   </q-page>
 </template>

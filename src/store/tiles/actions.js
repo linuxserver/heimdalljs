@@ -8,7 +8,7 @@ export function getApps (context) {
     .then((response) => {
       // console.log(response.data)
       context.commit('all', response.data.result)
-      context.commit('active', response.data.result.filter(a => a.active === 'true'))
+      context.commit('active', response.data.result.filter(a => a.active === true))
     })
 }
 
@@ -36,5 +36,12 @@ export function save (context, data) {
       // console.log(response.data)
       // context.commit('all', response.data.all_apps)
       // context.commit('active', response.data.apps)
+    })
+}
+
+export function active (context, data) {
+  return axios
+    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, {
+      active: data.active
     })
 }
