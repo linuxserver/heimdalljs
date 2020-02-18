@@ -2,11 +2,7 @@ const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
-
-/* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' })
-})
+const config = require('../config/config')
 
 router.post('/login', async (req, res, next) => {
   const user = await User.findOne({
@@ -31,7 +27,7 @@ router.post('/login', async (req, res, next) => {
   /**
    * @TODO: centralize signing token into config
    */
-  const token = jwt.sign(payload, 'CHANGE_ME', {
+  const token = jwt.sign(payload, config.jwtSecret, {
     expiresIn: 36000
   })
 

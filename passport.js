@@ -3,10 +3,11 @@
  */
 const { Strategy } = require('passport-jwt')
 const { User } = require('./models/index')
+const config = require('./config/config')
 
 module.exports = passport => {
   passport.use(new Strategy({
-    secretOrKey: 'CHANGE_ME',
+    secretOrKey: config.jwtSecret,
     jwtFromRequest (req) {
       let token = null
 
