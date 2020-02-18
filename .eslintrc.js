@@ -13,6 +13,7 @@ module.exports = {
   extends: [
     // https://eslint.vuejs.org/rules/#priority-a-essential-error-prevention
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
+    'standard',
     'plugin:vue/essential',
     '@vue/standard'
   ],
@@ -48,6 +49,9 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
+    "no-var": 1,
+    "prefer-const": 1,
+    "prefer-arrow-callback": 1,
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

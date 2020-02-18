@@ -6,16 +6,36 @@
   "cordovaId": "site.heimdall.app",
   "capacitorId": "",
   "author": "KodeStar <kodestar@gmail.com>",
+  "contributors": [
+    "Alex Phillips <ahp118@gmail.com>"
+  ],
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
-    "test": "echo \"No test specified\" && exit 0"
+    "server": "npm run db:migrate && node ./bin/www",
+    "db:migrate": "npx sequelize-cli db:migrate",
+    "db:seed": "npx sequelize-cli db:seed:all",
+    "pretest": "NODE_ENV=test npm run db:migrate",
+    "test": "jest"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.18.1",
     "quasar": "^1.9.2",
-    "vue-i18n": "^8.0.0"
+    "vue-i18n": "^8.0.0",
+    "bcrypt": "^3.0.8",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "morgan": "~1.9.1",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "sequelize": "^5.21.4",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "@quasar/app": "^1.5.6",
@@ -24,7 +44,14 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^5.0.0"
+    "eslint-plugin-vue": "^5.0.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.1.0",
+    "sequelize-cli": "^5.5.1"
   },
   "engines": {
     "node": ">= 10.18.1",
