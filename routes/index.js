@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
 const config = require('../config/config')
 const path = require('path')
+const Speakeasy = require('speakeasy')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -11,6 +12,14 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/login', async (req, res, next) => {
+  if (req.user) {
+    // User is already logged in
+    return res.json({
+      status: 'ok',
+      result: null
+    })
+  }
+
   const user = await User.findOne({
     where: {
       username: req.body.username
@@ -20,8 +29,30 @@ router.post('/login', async (req, res, next) => {
   if (!user || !user.verifyPassword(req.body.password)) {
     return res.status(403).json({
       status: 'error',
-      result: 'unauthorized'
+      result: 'Invalid username or password'
     })
+  }
+
+  if (user.multifactorEnabled && !req.body.totp) {
+    return res.json({
+      status: 'multifactor'
+    })
+  }
+
+  if (user.multifactorEnabled && req.body.totp) {
+    const valid = Speakeasy.totp.verify({
+      secret: user.totpSecret,
+      encoding: 'base32',
+      token: req.body.totp,
+      window: 0
+    })
+
+    if (!valid) {
+      return res.status(403).json({
+        status: 'error',
+        result: 'Invalid multi-factor code'
+      })
+    }
   }
 
   const payload = {
