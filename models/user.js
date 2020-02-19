@@ -20,7 +20,9 @@ class User extends Model {
         }
       },
       settings: DataTypes.TEXT,
-      level: DataTypes.TINYINT
+      level: DataTypes.TINYINT,
+      totpSecret: DataTypes.STRING,
+      multifactorEnabled: DataTypes.BOOLEAN
     }, {
       sequelize,
       underscored: true,

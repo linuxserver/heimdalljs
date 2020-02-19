@@ -61,6 +61,8 @@
                 />
               </template>
             </q-input>
+            <q-input v-if="loginStatus === 'multifactor'" v-model="totp" :label="this.$t('totp')" outlined>
+            </q-input>
             <q-btn @click="login" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
           </div>
         </q-card>
@@ -98,6 +100,10 @@ export default {
         return true
       }
       return false
+    },
+    loginStatus () {
+      console.log(this.$store.state.app.loginStatus)
+      return this.$store.state.app.loginStatus
     }
   },
 
@@ -107,6 +113,7 @@ export default {
       selecteduser: null,
       username: null,
       password: '',
+      totp: null,
       isPwd: true
     }
   },
@@ -115,11 +122,13 @@ export default {
     selectUser () {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
-    login () {
+
+    async login () {
       const username = (this.show_usernames === true) ? this.selecteduser.username : this.username
       this.$store.dispatch('app/login', {
         username: username,
-        password: this.password
+        password: this.password,
+        totp: this.totp || ''
       })
     }
   },

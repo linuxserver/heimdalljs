@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const { User, Setting } = require('../models/index')
 const _ = require('lodash')
+const Speakeasy = require('speakeasy')
+const QRCode = require('qrcode')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -94,7 +96,43 @@ router.put('/', async (req, res, next) => {
     delete req.body.password
   }
 
-  await req.user.update(req.body)
+  // ALWAYS DELETE totp, this should only be set by the server
+  delete req.body.totpSecret
+
+  // Begin process to set up and confirm multi-factor authentication
+  if (req.user.multifactorEnabled === false && req.body.multifactorEnabled === true) {
+    if (!req.user.totpSecret) {
+      const secret = Speakeasy.generateSecret()
+      const qrcode = await QRCode.toDataURL(secret.otpauth_url)
+
+      req.user.update({
+        totp: secret.base32
+      })
+
+      return res.json({
+        status: 'confirm totp',
+        qrcode: qrcode
+      })
+    } else if (req.body.totp) {
+      if (Speakeasy.totp.verify({
+        secret: req.user.totpSecret,
+        encoding: 'base32',
+        token: req.body.totp,
+        window: 0
+      })) {
+        req.user.update({ multifactorEnabled: true })
+
+        return res.json({
+          status: 'ok'
+        })
+      }
+    }
+  } else if (req.user.multifactorEnabled === true && req.body.multifactorEnabled === false) {
+    req.user.update({
+      multifactorEnabled: false,
+      totpSecret: null
+    })
+  }
 
   return res.json({
     status: 'ok'
