@@ -177,11 +177,11 @@ export default {
     async onSubmit (evt) {
       const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
       const formData = new FormData()
-      formData.set('color', this.color)
-      formData.set('applicationType', applicationType)
-      formData.set('title', this.title)
-      formData.set('tags', this.tags)
-      formData.set('url', this.url)
+      formData.append('color', this.color)
+      formData.append('applicationType', applicationType)
+      formData.append('title', this.title)
+      formData.append('tags', this.tags)
+      formData.append('url', this.url)
       formData.append('icon', this.icon)
       try {
         await this.$store.dispatch('tiles/save', formData)
