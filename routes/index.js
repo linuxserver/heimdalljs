@@ -29,7 +29,7 @@ router.post('/login', async (req, res, next) => {
   if (!user || !user.verifyPassword(req.body.password)) {
     return res.status(403).json({
       status: 'error',
-      result: 'Invalid username or password'
+      result: 'invalid_user'
     })
   }
 
@@ -50,7 +50,7 @@ router.post('/login', async (req, res, next) => {
     if (!valid) {
       return res.status(403).json({
         status: 'error',
-        result: 'Invalid multi-factor code'
+        result: 'invalid_code'
       })
     }
   }
@@ -93,7 +93,7 @@ router.get('/ping', async (req, res, next) => {
 
     return res.json({
       status: 'unauthorized',
-      result: 'You are either not logged in or do not have access to this data'
+      result: 'not_logged_in'
     })
   }
 
