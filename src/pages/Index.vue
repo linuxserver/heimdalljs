@@ -1,6 +1,11 @@
 <template>
   <q-page class="flex flex-center">
+    <div class="noapps" v-if="applications.length === 0">
+      There are currently no apps
+      <q-btn style="margin-top: 20px;" unelevated color="cyan-8" to="/item">Manage apps</q-btn>
+    </div>
     <Tile
+      v-else
       v-for="application in applications"
       :key="application.id"
       v-bind="application"
@@ -39,3 +44,23 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .noapps {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 360px;
+    margin: 30px;
+    padding: 30px;
+    height: 100%;
+    max-height: 200px;
+    min-height: 200px;
+    background: #00000075;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 4px solid #ffffffd4;
+  }
+</style>

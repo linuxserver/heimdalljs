@@ -116,7 +116,7 @@ export default {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
     login () {
-      let username = (this.show_usernames === true) ? this.selecteduser.username : this.username
+      const username = (this.show_usernames === true) ? this.selecteduser.username : this.username
       this.$store.dispatch('app/login', {
         username: username,
         password: this.password

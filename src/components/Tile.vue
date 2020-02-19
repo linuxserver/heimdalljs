@@ -22,16 +22,16 @@ export default {
 
   computed: {
     textColor () {
-      let bgColor = this.application.color
-      let lightColor = '#ffffff'
-      let darkColor = '#000000'
-      let color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor
-      let alpha = (bgColor.charAt(0) === '#') ? bgColor.substring(7, 9) : bgColor.substring(6, 8)
-      let r = parseInt(color.substring(0, 2), 16) // hexToR
-      let g = parseInt(color.substring(2, 4), 16) // hexToG
-      let b = parseInt(color.substring(4, 6), 16) // hexToB
-      let a = parseFloat(parseInt((parseInt(alpha, 16) / 255) * 1000) / 1000)
-      let brightness = r * 0.299 + g * 0.587 + b * 0.114 + (1 - a) * 255
+      const bgColor = this.application.color
+      const lightColor = '#ffffff'
+      const darkColor = '#000000'
+      const color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor
+      const alpha = (bgColor.charAt(0) === '#') ? bgColor.substring(7, 9) : bgColor.substring(6, 8)
+      const r = parseInt(color.substring(0, 2), 16) // hexToR
+      const g = parseInt(color.substring(2, 4), 16) // hexToG
+      const b = parseInt(color.substring(4, 6), 16) // hexToB
+      const a = parseFloat(parseInt((parseInt(alpha, 16) / 255) * 1000) / 1000)
+      const brightness = r * 0.299 + g * 0.587 + b * 0.114 + (1 - a) * 255
       return brightness > 186 ? darkColor : lightColor
     }
   },

@@ -86,7 +86,6 @@
 
         <q-stepper-navigation>
           <q-btn @click="saveSettings" color="primary" label="Continue" />
-          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />
         </q-stepper-navigation>
       </q-step>
 
@@ -95,13 +94,10 @@
         :title="this.$t('select_system_defaults')"
         icon="add_comment"
       >
-        Try out different ad text to see what brings in the most customers, and learn how to
-        enhance your ads using features like ad extensions. If you run into any problems with
-        your ads, find out how to tell if they're running and how to resolve approval issues.
+        Setup is complete!
 
         <q-stepper-navigation>
-          <q-btn @click="saveUserSettings" color="primary" label="Finish" />
-          <q-btn flat @click="step = 2" color="primary" label="Back" class="q-ml-sm" />
+          <q-btn @click="finish" color="primary" label="Finish" />
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -167,9 +163,12 @@ export default {
     },
     saveSettings () {
       this.$store.dispatch('app/setDefaults', {
-        language: this.language,
-        show_usernames: this.showusername
+        language: this.language.value,
+        show_usernames: this.showusername.value
       })
+    },
+    finish () {
+      this.$store.dispatch('app/setupComplete')
     },
     saveUserSettings () {
     }

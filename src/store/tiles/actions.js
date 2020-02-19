@@ -13,8 +13,8 @@ export function getApps (context) {
 }
 
 export function getPossibleApps (context, force = false) {
-  let key = 'heimdall.possibleapps'
-  let possibleapps = LocalStorage.getItem(key)
+  const key = 'heimdall.possibleapps'
+  const possibleapps = LocalStorage.getItem(key)
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios

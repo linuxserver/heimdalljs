@@ -189,7 +189,7 @@ export default {
           this.possibletags = this.application.tags || []
         } else {
           const needle = val.toLowerCase()
-          let tags = this.application.tags || []
+          const tags = this.application.tags || []
           this.possibletags = tags.filter(
             v => v.toLowerCase().indexOf(needle) > -1
           )
