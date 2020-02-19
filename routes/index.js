@@ -77,7 +77,21 @@ router.post('/login', async (req, res, next) => {
   })
 })
 
-router.get('/ping', async (req, res, next) => {
+router.get('/auth', async (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: 'unauthorized',
+      result: null
+    })
+  }
+
+  return res.json({
+    status: 'ok',
+    result: req.user.toJSON()
+  })
+})
+
+router.get('/status', async (req, res, next) => {
   if (!req.user) {
     // If unauthenticated, check to make sure we have a user at all
     const userCount = await User.count({
@@ -90,16 +104,11 @@ router.get('/ping', async (req, res, next) => {
         result: null
       })
     }
-
-    return res.json({
-      status: 'unauthorized',
-      result: 'not_logged_in'
-    })
   }
 
   return res.json({
     status: 'ok',
-    result: req.user.toJSON()
+    result: null
   })
 })
 
