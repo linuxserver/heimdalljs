@@ -1,9 +1,10 @@
 <template>
         <q-card style="width: calc(100% - 60px); max-width: 900px; background: #fcfcfc;">
+          <q-form @submit="onSubmit" class="">
         <div class="popup-header">
           <div class="text-h6">Application</div>
           <div class="actions">
-            <q-btn @click="save" flat>
+            <q-btn type="submit" flat>
               <q-icon name="save" />
               Save
             </q-btn>
@@ -87,8 +88,7 @@
                       <img style="width: 140px" :src="icon" />
                     </div>
                     <div class="upload-btn-wrapper">
-                        <button class="btn">Upload a file </button>
-                        <input type="file" id="upload" name="file">
+                       <q-file outlined ref="icon" v-model="icon" label="Icon" />
                     </div>
                 </div>
             </div>
@@ -110,7 +110,7 @@
         <div class="popup-header">
           <div class="text-h6"></div>
           <div class="actions">
-            <q-btn @click="save" flat>
+            <q-btn type="submit" flat>
               <q-icon name="save" />
               Save
             </q-btn>
@@ -120,7 +120,7 @@
             </q-btn>
           </div>
         </div>
-
+          </q-form>
       </q-card>
 
 </template>
@@ -166,23 +166,29 @@ export default {
       title: this.application.title,
       tags: this.tagsParse,
       url: this.application.url,
-      icon: this.application.icon || '../img/heimdall-icon-small.png',
-      possibletags: this.tagsParse
+      icon: null,
+      possibletags: this.tagsParse,
+      submitEmpty: false,
+      submitResult: []
     }
   },
 
   methods: {
-    save: function () {
-      // check if new or edit
+    async onSubmit (evt) {
       const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
-      this.$store.dispatch('tiles/save', {
-        color: this.color,
-        applicationType: applicationType,
-        title: this.title,
-        tags: JSON.stringify(this.tags),
-        url: this.url,
-        icon: this.icon
-      })
+      const formData = new FormData()
+      formData.append('icon', this.icon)
+      formData.append('color', this.color)
+      formData.append('applicationType', applicationType)
+      formData.append('title', this.title)
+      formData.append('tags', this.tags)
+      formData.append('url', this.url)
+      try {
+        await this.$store.dispatch('tiles/save', formData)
+        console.log('added')
+      } catch (e) {
+        console.log(e)
+      }
     },
     filterFn (val, update) {
       update(() => {

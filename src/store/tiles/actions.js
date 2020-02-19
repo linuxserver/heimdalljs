@@ -30,12 +30,11 @@ export function getPossibleApps (context, force = false) {
 }
 
 export function save (context, data) {
-  axios
-    .post(process.env.BACKEND_LOCATION + 'items', data)
-    .then((response) => {
-      // console.log(response.data)
-      // context.commit('all', response.data.all_apps)
-      // context.commit('active', response.data.apps)
+  return axios
+    .post(process.env.BACKEND_LOCATION + 'items', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
 }
 
