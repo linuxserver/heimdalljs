@@ -78,22 +78,33 @@ export function setUser (context, user) {
 
 export async function firelogin (context, data) {
   const response = await axios.post(process.env.BACKEND_LOCATION + 'login', data)
-  // console.log(response.data)
-  Cookies.set('jwt', response.data.result.token, {
-    expires: 3600
-  })
+  if (response.data.result && response.data.result.token) {
+    Cookies.set('jwt', response.data.result.token, {
+      expires: 3600
+    })
+  }
+
   return response
 }
 
 export async function login (context, data) {
   // console.log(data)
   try {
-    await firelogin(context, data)
+    const response = await firelogin(context, data)
+    switch (response.data.status) {
+      case 'ok':
+        ping(context)
+        context.commit('setLoginStatus', 'logged_in')
+        break
+      case 'multifactor':
+        context.commit('setLoginStatus', 'multifactor')
+        break
+    }
     ping(context)
   } catch (e) {
     Notify.create({
       type: 'negative',
-      message: `Could not log in.`,
+      message: e.response.data.result,
       progress: true,
       position: 'top',
       timeout: 1500
