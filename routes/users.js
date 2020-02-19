@@ -59,7 +59,7 @@ router.post('/', async (req, res, next) => {
   if (existing) {
     return res.status(400).json({
       stattus: 'error',
-      result: 'Email already exists'
+      result: 'email_exists'
     })
   }
 
@@ -88,7 +88,7 @@ router.put('/', async (req, res, next) => {
     if (!req.user.verifyPassword(req.body.currentPassword)) {
       return res.status(400).json({
         status: 'error',
-        result: 'Incorrect password'
+        result: 'incorrect_password'
       })
     }
   } else {
