@@ -29,13 +29,22 @@ export function getPossibleApps (context, force = false) {
   }
 }
 
-export function save (context, data) {
-  return axios
-    .post(process.env.BACKEND_LOCATION + 'items', data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+export function save (context, id, data) {
+  if (id === null) {
+    return axios
+      .post(process.env.BACKEND_LOCATION + 'items', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  } else {
+    return axios
+      .put(process.env.BACKEND_LOCATION + 'items/' + id, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  }
 }
 
 export function active (context, data) {

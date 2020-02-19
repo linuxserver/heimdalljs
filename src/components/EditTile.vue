@@ -161,6 +161,7 @@ export default {
 
   data () {
     return {
+      id: this.application.id,
       color: this.application.color,
       applicationtype: this.application.applicationType || null,
       title: this.application.title,
@@ -184,7 +185,7 @@ export default {
       formData.append('url', this.url)
       formData.append('icon', this.icon)
       try {
-        await this.$store.dispatch('tiles/save', formData)
+        await this.$store.dispatch('tiles/save', this.id, formData)
         console.log('added')
       } catch (e) {
         console.log(e)

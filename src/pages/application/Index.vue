@@ -46,6 +46,7 @@ export default {
   computed: {
     createapp () {
       return {
+        id: null,
         color: '',
         applicationtype: '',
         title: '',
