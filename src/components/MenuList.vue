@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="fit">
   <q-list>
     <q-tabs
       v-model="tab"
@@ -119,3 +119,13 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .leftbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    bottom: 0;
+    background: rgba(0,0,0,0.15);
+  }
+</style>

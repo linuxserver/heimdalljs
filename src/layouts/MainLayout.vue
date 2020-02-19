@@ -37,7 +37,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       bordered
-      content-class="bg-grey-1"
+      content-class=""
     >
       <menu-list></menu-list>
     </q-drawer>

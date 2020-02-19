@@ -162,7 +162,7 @@ export default {
   data () {
     return {
       color: this.application.color,
-      applicationtype: this.application.applicationType,
+      applicationtype: this.application.applicationType || null,
       title: this.application.title,
       tags: this.tagsParse,
       url: this.application.url,
@@ -174,9 +174,10 @@ export default {
   methods: {
     save: function () {
       // check if new or edit
+      const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
       this.$store.dispatch('tiles/save', {
         color: this.color,
-        applicationType: this.applicationtype.appid,
+        applicationType: applicationType,
         title: this.title,
         tags: JSON.stringify(this.tags),
         url: this.url,
