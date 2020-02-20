@@ -2,6 +2,7 @@ export default function () {
   return {
     all: [],
     active: [],
-    possibleapps: []
+    possibleapps: [],
+    create: false
   }
 }

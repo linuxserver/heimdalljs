@@ -54,12 +54,24 @@ export default {
         url: '',
         icon: 'statics/img/heimdall-icon-small.png'
       }
+    },
+    create: {
+      get () {
+        return this.$store.state.tiles.create
+      },
+      set (val) {
+        this.$store.commit('tiles/create', val)
+      }
     }
   },
 
   data () {
     return {
-      create: false
+    }
+  },
+  methods: {
+    addApp: function () {
+      this.$store.commit('tiles/create', true)
     }
   },
   mounted () {

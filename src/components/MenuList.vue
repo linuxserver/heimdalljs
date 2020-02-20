@@ -9,8 +9,8 @@
       align="justify"
       narrow-indicator
     >
-      <q-tab class="bigtab" name="user" label="User" />
-      <q-tab class="bigtab" name="admin" label="Admin" />
+      <q-route-tab class="bigtab" to="/" name="user" label="User" />
+      <q-route-tab class="bigtab" to="/admin" name="admin" label="Admin" />
     </q-tabs>
 
     <q-separator />
@@ -27,13 +27,13 @@
           :title="this.$t('applications')"
           :caption="this.active_tiles + ' ' + (this.active_tiles === 1 ? this.$t('app') : this.$t('apps'))"
           icon="apps"
-          link="/item"
+          link="/user/item"
         />
         <EssentialLink
           :title="this.$t('settings')"
           :caption="this.settings + ' ' + (this.settings === 1 ? this.$t('setting') : this.$t('settings'))"
           icon="settings"
-          link="/settings"
+          link="/user/settings"
         />
 
       </q-tab-panel>
@@ -43,25 +43,25 @@
           :title="this.$t('applications')"
           :caption="this.active_tiles + ' ' + (this.active_tiles === 1 ? this.$t('app') : this.$t('apps'))"
           icon="apps"
-          link="/item"
+          link="/admin"
         />
         <EssentialLink
           :title="this.$t('user_management')"
           :caption="this.users + ' ' + (this.users === 1 ? this.$t('user') : this.$t('users'))"
           icon="contacts"
-          link="/user"
+          link="/admin/user"
         />
         <EssentialLink
           :title="this.$t('proxy_management')"
           :caption="this.proxies + ' ' + (this.proxies === 1 ? this.$t('proxy') : this.$t('proxies'))"
           icon="account_tree"
-          link="/proxy"
+          link="/admin/proxy"
         />
         <EssentialLink
           :title="this.$t('settings')"
           :caption="this.settings + ' ' + (this.settings === 1 ? this.$t('setting') : this.$t('settings'))"
           icon="settings"
-          link="/settings"
+          link="/admin/settings"
         />
 
       </q-tab-panel>

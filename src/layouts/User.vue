@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lhr lpR fFf">
-    <q-header class="alt-header" bordered>
+  <q-layout view="lHh Lpr lFf">
+    <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
         <q-btn
           flat
@@ -12,20 +12,28 @@
         />
 
         <q-toolbar-title>
-          Heimdall
+          User Management
         </q-toolbar-title>
 
-        <div>v{{ this.version }}</div>
-
-        <q-btn
-          flat
-          dense
-          round
-          @click="rightDrawerOpen = !rightDrawerOpen"
-          icon="menu"
-          aria-label="Menu"
-        />
-
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="cyan-8" @click="createNew">Add New</q-btn>
+        <div class="searchbox">
+        <q-select
+          borderless
+          color="grey"
+          v-model="selecteduser"
+          use-input
+          clearable
+          input-debounce="0"
+          :options="options"
+          option-value="id"
+          option-label="title"
+          map-options
+          emit-value
+          label="Search..."
+          @filter="filterFn"
+        >
+        </q-select>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -38,18 +46,11 @@
       <MenuList></MenuList>
     </q-drawer>
 
-    <q-drawer
-      v-model="rightDrawerOpen"
-      side="right"
-      overlay
-      bordered
-      content-class="bg-grey-1"
-    > <span @click="rightDrawerOpen = !rightDrawerOpen" class="close">Close</span>
-      some stuff
-    </q-drawer>
-
     <q-page-container>
-      <router-view />
+      <router-view
+        :users="users"
+        :allusers="users"
+      />
     </q-page-container>
   </q-layout>
 </template>
@@ -65,12 +66,45 @@ export default {
     MenuList
   },
 
+  computed: {
+    allusers: function () {
+      return this.$store.state.users.all
+    },
+    users: function () {
+      if (this.selecteduser !== null) {
+        return this.allusers.filter(v => v.id === this.selecteduser)
+      } else if (this.options === null) {
+        return this.allusers
+      } else {
+        return this.options
+      }
+    }
+  },
+
   data () {
     return {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
-      version: version
+      version: version,
+      selecteduser: null,
+      options: null
     }
+  },
+
+  methods: {
+    createNew () {
+      this.$store.commit('users/create', true)
+    },
+    filterFn (val, update, abort) {
+      update(() => {
+        // this.selecteduser = null
+        const needle = val.toLowerCase()
+        // console.log('needle: ' + needle)
+        this.options = this.allusers.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
+      })
+    }
+
   }
+
 }
 </script>

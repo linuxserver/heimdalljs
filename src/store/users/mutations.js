@@ -4,3 +4,7 @@ export function all (state, data) {
 
 export function saveUser (state, data) {
 }
+
+export function create (state, data) {
+  state.create = data
+}

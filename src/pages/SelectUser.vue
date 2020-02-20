@@ -11,7 +11,7 @@
     </q-header>
 
     <q-page-container id="app">
-
+      <q-form @submit="onSubmit" class="">
       <q-page class="flex flex-center" style="padding: 30px;">
         <q-card class="user-signin">
           <div class="avatar-container flex flex-center">
@@ -63,11 +63,11 @@
             </q-input>
             <q-input v-if="loginStatus === 'multifactor'" v-model="totp" :label="this.$t('totp')" outlined>
             </q-input>
-            <q-btn @click="login" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
+            <q-btn type="submit" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
           </div>
         </q-card>
       </q-page>
-
+      </q-form>
     </q-page-container>
   </q-layout>
 
@@ -122,14 +122,24 @@ export default {
     selectUser () {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
-
-    async login () {
+    async onSubmit (evt) {
       const username = (this.show_usernames === true) ? this.selecteduser.username : this.username
-      this.$store.dispatch('app/login', {
-        username: username,
-        password: this.password,
-        totp: this.totp || ''
-      })
+      try {
+        await this.$store.dispatch('app/login', {
+          username: username,
+          password: this.password,
+          totp: this.totp || ''
+        })
+        console.log('logged in')
+      } catch (e) {
+        this.$q.notify({
+          type: 'negative',
+          message: this.$t(e.response.data.result),
+          progress: true,
+          position: 'top',
+          timeout: 1500
+        })
+      }
     }
   },
 

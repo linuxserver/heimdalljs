@@ -9,3 +9,7 @@ export function active (state, data) {
 export function possibleapps (state, data) {
   state.possibleapps = data
 }
+
+export function create (state, data) {
+  state.create = data
+}

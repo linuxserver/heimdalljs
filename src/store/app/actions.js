@@ -1,42 +1,37 @@
 import axios from 'axios'
 import { Notify, Cookies, LocalStorage } from 'quasar'
 
-export function ping (context) {
-  // console.log(Cookies.getAll())
-  // console.log('ping')
-  // console.log(process.env.BACKEND_LOCATION + 'ping')
+export async function status (context) {
   // Check to see if we are in setup
   const setup = LocalStorage.getItem('heimdall_setup')
   if (setup !== null) {
-    context.commit('ping', 'setup')
+    context.commit('status', 'setup')
     context.commit('step', setup)
     return false
   }
 
-  axios
-    .get(process.env.BACKEND_LOCATION + 'ping', {
-      crossdomain: true
-    }).then((response) => {
-      // console.log(response.data)
-      context.commit('ping', response.data.status)
-
-      if (response.data.status === 'setup') {
-        context.commit('step', 1)
-      }
-
-      if (response.data.status === 'ok') {
+  try {
+    const response = await axios.get(process.env.BACKEND_LOCATION + 'status')
+    context.commit('status', response.data.status)
+    if (response.data.status === 'setup') {
+      context.commit('step', 1)
+    }
+    // see if already logged in
+    if (response.data.status === 'ok') {
+      if (response.data.result !== null) {
+        context.commit('setLoginStatus', 'logged_in')
         context.commit('setUser', response.data.result)
-        context.dispatch('tiles/getApps', null, { root: true })
       }
-    }).catch(() => {
-      Notify.create({
-        type: 'negative',
-        message: `Could not connect to backend server. ` + process.env.BACKEND_LOCATION + 'ping',
-        progress: true,
-        position: 'top',
-        timeout: 1500
-      })
+    }
+  } catch (e) {
+    Notify.create({
+      type: 'negative',
+      message: `Could not connect to backend server. ` + process.env.BACKEND_LOCATION + 'ping',
+      progress: true,
+      position: 'top',
+      timeout: 1500
     })
+  }
 }
 
 export async function setupUser (context, data) {
@@ -68,7 +63,19 @@ export async function setDefaults (context, data) {
 export function setupComplete (context) {
   LocalStorage.remove('heimdall_setup')
   console.log('finish')
-  ping(context)
+  status(context)
+}
+
+export async function auth (context) {
+  try {
+    const response = await axios.get(process.env.BACKEND_LOCATION + 'auth')
+    if (response.data.status === 'ok') {
+      context.commit('setUser', response.data.result)
+      context.dispatch('tiles/getApps', null, { root: true })
+    }
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export function setUser (context, user) {
@@ -89,27 +96,19 @@ export async function firelogin (context, data) {
 
 export async function login (context, data) {
   // console.log(data)
-  try {
-    const response = await firelogin(context, data)
-    switch (response.data.status) {
-      case 'ok':
-        ping(context)
-        context.commit('setLoginStatus', 'logged_in')
-        break
-      case 'multifactor':
-        context.commit('setLoginStatus', 'multifactor')
-        break
-    }
-    ping(context)
-  } catch (e) {
-    Notify.create({
-      type: 'negative',
-      message: e.response.data.result,
-      progress: true,
-      position: 'top',
-      timeout: 1500
-    })
+  const response = await firelogin(context, data)
+  console.log(response)
+  switch (response.data.status) {
+    case 'ok':
+      auth(context)
+      context.commit('setLoginStatus', 'logged_in')
+      break
+    case 'multifactor':
+      context.commit('setLoginStatus', 'multifactor')
+      break
   }
+  // ping(context)
+  return response
 }
 
 export function logout (context) {

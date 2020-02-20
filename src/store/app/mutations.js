@@ -1,6 +1,6 @@
 import { LocalStorage } from 'quasar'
 
-export function ping (state, data) {
+export function status (state, data) {
   state.status = data
 }
 

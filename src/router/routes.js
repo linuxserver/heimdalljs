@@ -8,28 +8,43 @@ const routes = [
     ]
   },
   {
-    path: '/item',
+    path: '/user/item',
     component: () => import('layouts/Tiles.vue'),
     children: [
       { path: '', component: () => import('pages/application/Index.vue') }
     ]
   },
   {
-    path: '/user',
+    path: '/user/settings',
+    component: () => import('layouts/User.vue'),
+    children: [
+      { path: '', component: () => import('pages/settings/Index.vue') }
+    ]
+  },
+
+  {
+    path: '/admin',
+    component: () => import('layouts/Tiles.vue'),
+    children: [
+      { path: '', component: () => import('pages/application/Index.vue') }
+    ]
+  },
+  {
+    path: '/admin/user',
     component: () => import('layouts/User.vue'),
     children: [
       { path: '', component: () => import('pages/user/Index.vue') }
     ]
   },
   {
-    path: '/settings',
+    path: '/admin/settings',
     component: () => import('layouts/User.vue'),
     children: [
       { path: '', component: () => import('pages/settings/Index.vue') }
     ]
   },
   {
-    path: '/proxy',
+    path: '/admin/proxy',
     component: () => import('layouts/User.vue'),
     children: [
       { path: '', component: () => import('pages/proxy/Index.vue') }
