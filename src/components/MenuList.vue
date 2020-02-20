@@ -1,21 +1,28 @@
 <template>
-<div class="fit">
+<q-scroll-area class="fit">
   <q-list>
     <q-tabs
-      v-model="tab"
+      v-model="activetab"
       class="text-grey"
       active-color="primary"
       indicator-color="primary"
       align="justify"
       narrow-indicator
     >
-      <q-route-tab class="bigtab" to="/" name="user" label="User" />
-      <q-route-tab class="bigtab" to="/admin" name="admin" label="Admin" />
+      <q-tab class="bigtab" name="user" label="User" />
+      <q-tab class="bigtab" name="admin" label="Admin" />
     </q-tabs>
-
     <q-separator />
 
-    <q-tab-panels v-model="tab" animated>
+    <div class="user_account">
+      <img class="bg-image" :src="icon" />
+      <q-avatar size="120px" class="">
+        <img :src="icon">
+      </q-avatar>
+    </div>
+
+   <q-separator />
+    <q-tab-panels v-model="activetab" animated>
       <q-tab-panel name="user">
         <EssentialLink
           :title="this.$t('dashboard')"
@@ -27,13 +34,13 @@
           :title="this.$t('applications')"
           :caption="this.active_tiles + ' ' + (this.active_tiles === 1 ? this.$t('app') : this.$t('apps'))"
           icon="apps"
-          link="/user/item"
+          link="/account"
         />
         <EssentialLink
           :title="this.$t('settings')"
           :caption="this.settings + ' ' + (this.settings === 1 ? this.$t('setting') : this.$t('settings'))"
           icon="settings"
-          link="/user/settings"
+          link="/account/settings"
         />
 
       </q-tab-panel>
@@ -73,7 +80,7 @@
     <span @click="logout">Logout</span>
     left Drawer toolbar
   </div>
-</div>
+</q-scroll-area>
 </template>
 
 <script>
@@ -85,6 +92,8 @@ export default {
   components: {
     EssentialLink
   },
+
+  props: ['settab'],
 
   computed: {
     tiles () {
@@ -103,12 +112,20 @@ export default {
     settings () {
       // return this.$store.state.users.all.length
       return 3
+    },
+    activetab: {
+      get () {
+        return this.$store.state.app.tab
+      },
+      set (val) {
+        this.$store.commit('app/tab', val)
+      }
     }
   },
 
   data () {
     return {
-      tab: 'user'
+      icon: 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     }
   },
 

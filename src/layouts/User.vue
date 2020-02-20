@@ -43,7 +43,7 @@
       bordered
       content-class=""
     >
-      <MenuList></MenuList>
+      <MenuList settab="admin"></MenuList>
     </q-drawer>
 
     <q-page-container>

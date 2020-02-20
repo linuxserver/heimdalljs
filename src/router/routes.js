@@ -8,14 +8,14 @@ const routes = [
     ]
   },
   {
-    path: '/user/item',
+    path: '/account',
     component: () => import('layouts/Tiles.vue'),
     children: [
       { path: '', component: () => import('pages/application/Index.vue') }
     ]
   },
   {
-    path: '/user/settings',
+    path: '/account/settings',
     component: () => import('layouts/User.vue'),
     children: [
       { path: '', component: () => import('pages/settings/Index.vue') }

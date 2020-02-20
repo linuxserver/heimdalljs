@@ -26,3 +26,7 @@ export function logout (state) {
 export function users (state, data) {
   state.users = data
 }
+
+export function tab (state, data) {
+  state.tab = data
+}

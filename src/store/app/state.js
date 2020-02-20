@@ -6,6 +6,7 @@ export default function () {
     setup: {
       step: 1
     },
-    users: null
+    users: null,
+    tab: 'user'
   }
 }

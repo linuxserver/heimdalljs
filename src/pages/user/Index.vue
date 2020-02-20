@@ -43,6 +43,10 @@ export default {
 
   },
 
+  mounted () {
+    this.$store.commit('app/tab', 'admin')
+  },
+
   data () {
     return {
     }
