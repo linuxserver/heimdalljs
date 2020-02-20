@@ -151,8 +151,8 @@ body.desktop .q-hoverable:hover > .q-focus-helper {
     display: flex;
   }
   .q-item__label {
-    font-weight: bold;
-    color: #ffffffb0;
+    font-weight: normal;
+    color: #ffffffbd;
   }
   .q-item {
     padding: 20px 35px;
@@ -163,10 +163,19 @@ body.desktop .q-hoverable:hover > .q-focus-helper {
     font-weight: normal;
   }
   .q-icon, .material-icons {
-      color: #fff;
+      color: #ffffff8c;
   }
   .q-drawer--left.q-drawer--bordered {
     border-right: 1px solid $darkborder;
+  }
+
+  .q-router-link--exact-active {
+    .material-icons {
+        color: #fff;
+    }
+    .q-item__label {
+        color: #fff;
+    }
   }
 }
 

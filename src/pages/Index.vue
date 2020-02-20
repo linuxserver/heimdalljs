@@ -2,7 +2,7 @@
   <q-page class="flex flex-center">
     <div class="noapps" v-if="applications.length === 0">
       There are currently no apps
-      <q-btn style="margin-top: 20px;" unelevated color="cyan-8" to="/item">Manage apps</q-btn>
+      <q-btn style="margin-top: 20px;" unelevated color="cyan-8" to="/account">Manage apps</q-btn>
     </div>
     <Tile
       v-else
