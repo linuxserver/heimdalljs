@@ -13,7 +13,7 @@ router.get('/', async (req, res, next) => {
   if (req.user.level === User.ADMIN) {
     return res.json({
       status: 'ok',
-      result: res.json(users.map(user => user.toJSON()))
+      result: users.map(user => user.toJSON())
     })  
   }
 
