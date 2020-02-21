@@ -118,12 +118,3 @@ export function logout (context) {
   })
   context.commit('logout')
 }
-
-export function getUsers (context) {
-  axios
-    .get(process.env.BACKEND_LOCATION + 'users', { crossdomain: true })
-    .then((response) => {
-      // console.log(response.data)
-      context.commit('users', response.data.result)
-    })
-}

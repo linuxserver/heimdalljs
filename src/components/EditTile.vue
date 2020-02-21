@@ -184,8 +184,12 @@ export default {
       formData.append('tags', this.tags)
       formData.append('url', this.url)
       formData.append('icon', this.icon)
+      const data = {
+        id: this.id,
+        tile: formData
+      }
       try {
-        await this.$store.dispatch('tiles/save', this.id, formData)
+        await this.$store.dispatch('tiles/save', data)
         console.log('added')
       } catch (e) {
         console.log(e)

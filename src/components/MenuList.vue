@@ -1,5 +1,5 @@
 <template>
-<q-scroll-area class="fit">
+<q-scroll-area style="height: calc(100% - 72px) !important" class="fit">
   <q-list>
     <q-tabs
       v-model="activetab"
@@ -76,9 +76,19 @@
     </q-tab-panels>
 
   </q-list>
-  <div class="toolbar fixed-bottom">
-    <span @click="logout">Logout</span>
-    left Drawer toolbar
+
+  <div @click="logout" class="toolbar fixed-bottom">
+    <q-item class="logout">
+      <q-item-section avatar>
+        <q-icon name="logout" />
+      </q-item-section>
+
+      <q-item-section>
+        <q-item-label>Logout</q-item-label>
+        <q-item-label caption>{{ username }}</q-item-label>
+      </q-item-section>
+    </q-item>
+
   </div>
 </q-scroll-area>
 </template>
@@ -113,6 +123,9 @@ export default {
       // return this.$store.state.users.all.length
       return 3
     },
+    username () {
+      return this.$store.state.app.user.username
+    },
     activetab: {
       get () {
         return this.$store.state.app.tab
@@ -131,6 +144,7 @@ export default {
 
   methods: {
     logout: function () {
+      console.log('logout')
       this.$store.dispatch('app/logout')
     }
   }
@@ -144,5 +158,18 @@ export default {
     width: 70px;
     bottom: 0;
     background: rgba(0,0,0,0.15);
+  }
+  .logout {
+    border-top: 1px solid #ffffff12;
+    position: relative;
+    cursor: pointer;
+    &:after {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      border-top: 1px solid #00000040;
+    }
   }
 </style>

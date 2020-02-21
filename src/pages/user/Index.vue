@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <div class="list-items">
+      <div class="list-users">
         <user
           v-for="user in users"
           :key="user.id"
@@ -10,11 +10,7 @@
         </user>
       </div>
     </div>
-
-    <q-dialog v-model="create">
-      <edit-user :application="createuser"></edit-user>
-    </q-dialog>
-
+    <edit-user :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-user>
   </q-page>
 </template>
 
@@ -43,6 +39,12 @@ export default {
 
   },
 
+  methods: {
+    closecreate () {
+      this.$store.commit('users/create', false)
+    }
+  },
+
   mounted () {
     this.$store.commit('app/tab', 'admin')
   },
@@ -53,3 +55,14 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .list-users {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .list-user {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px;
+  }
+</style>

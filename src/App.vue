@@ -38,11 +38,11 @@ export default {
   },
   mounted () {
     console.log(this.user)
-    this.$store.dispatch('app/ping')
+    this.$store.dispatch('app/status')
     // this.$store.dispatch('tiles/getApps')
     // this.$store.dispatch('tags/getTags')
     // this.$store.dispatch('tiles/getPossibleApps')
-    this.$store.dispatch('app/getUsers')
+    this.$store.dispatch('users/getUsers')
   }
 }
 </script>

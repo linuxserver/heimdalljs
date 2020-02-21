@@ -29,17 +29,17 @@ export function getPossibleApps (context, force = false) {
   }
 }
 
-export function save (context, id, data) {
-  if (id === null) {
+export function save (context, data) {
+  if (data.id === null) {
     return axios
-      .post(process.env.BACKEND_LOCATION + 'items', data, {
+      .post(process.env.BACKEND_LOCATION + 'items', data.tile, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
   } else {
     return axios
-      .put(process.env.BACKEND_LOCATION + 'items/' + id, data, {
+      .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.tile, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

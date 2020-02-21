@@ -14,9 +14,7 @@
       <q-form @submit="onSubmit" class="">
       <q-page class="flex flex-center" style="padding: 30px;">
         <q-card class="user-signin">
-          <div class="avatar-container flex flex-center">
-            <q-avatar size="124px" color="orange" v-html="mainIcon">
-            </q-avatar>
+          <div class="avatar-container flex flex-center" v-html="mainIcon">
           </div>
           <div class="sign-in-container">
             <q-select
@@ -37,7 +35,7 @@
                 >
                   <q-item-section avatar>
                     <q-avatar size="24px">
-                      <img :src="scope.opt.avatar || 'statics/heimdall-icon-small.png'" />
+                      <img :src="scope.opt.avatar || 'statics/heimdall-logo-white.svg'" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
@@ -84,16 +82,16 @@ export default {
   computed: {
     users () {
       // replace with vuex stor eventually
-      return this.$store.state.app.users
+      return this.$store.state.users.all
     },
     show_usernames () {
       return this.$store.state.app.users !== null
     },
     mainIcon () {
       if (this.icon !== null) {
-        return '<img src="' + this.icon + '" />'
+        return '<img class="avatar" src="' + this.icon + '" />'
       }
-      return '<img src="statics/heimdall-icon-small.png" />'
+      return '<img class="avatar" src="statics/heimdall-logo-white.svg" />'
     },
     hasPublic () {
       if (this.selecteduser !== null && this.selecteduser.public === true) {
@@ -136,7 +134,7 @@ export default {
           type: 'negative',
           message: this.$t(e.response.data.result),
           progress: true,
-          position: 'top',
+          position: 'bottom',
           timeout: 1500
         })
       }
@@ -147,7 +145,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .public-option {
     display: flex;
     margin-bottom: 25px;
@@ -155,10 +153,13 @@ export default {
   .avatar-container {
     padding: 30px;
     background: radial-gradient(ellipse at center, #47918a 0%, #0b3161 100%);
-    img {
-      display: block;
-    }
   }
+  .avatar {
+    display: block;
+    height: 140px!important;
+    width: auto;
+  }
+
   .user-signin {
     width: 100%;
     max-width: 400px;

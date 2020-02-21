@@ -242,7 +242,7 @@ div.create {
         perspective: 1000px;
         min-height: 92px;
         transition: all 0.6s;
-        position: relative;
+        // position: relative;
         &.edit {
           z-index: 5;
           .list-item-inner {
@@ -438,7 +438,7 @@ div.create {
         background: none;
     }
     .q-tab--active {
-        background: #ffffff0a;
+        background: #ffffff21;
         .q-tab__label {
             color: #fff;
         }

@@ -1,5 +1,5 @@
 <template>
-  <div class="list-item" :class="{ edit: this.edit }">
+  <div class="list-user" :class="{ edit: this.edit }">
     <div class="list-item-inner">
       <div class="list-item-front">
 
@@ -36,8 +36,8 @@ export default {
   },
   methods: {
     showBack: function () {
-      this.edit = true
-      this.showback = true
+      this.$store.commit('users/edit', this.user)
+      this.$store.commit('users/create', true)
     },
     hideBack: function () {
       this.edit = false

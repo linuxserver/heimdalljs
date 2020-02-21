@@ -1,6 +1,6 @@
 <template>
-        <q-card style="width: calc(100% - 60px); max-width: 900px; background: #fcfcfc;">
-          <q-form @submit="onSubmit" class="">
+        <div class="userdetails fit" style="background: #fcfcfc;">
+          <q-form @submit="onSubmit" class="fit">
         <div class="popup-header">
           <div class="text-h6">User</div>
           <div class="actions">
@@ -8,24 +8,54 @@
               <q-icon name="save" />
               Save
             </q-btn>
-            <q-btn flat v-close-popup>
+            <q-btn flat @click="closeCreate">
               <q-icon name="block" />
               Cancel
             </q-btn>
           </div>
         </div>
-        <q-separator />
+        <q-scroll-area
+            style="height: calc(100% - 150px);"
+          >
+
         <q-card-section class="q-pt-none">
 
-          <div id="create" class="create">
+            <div id="create" style="height: 1500px;" class="create">
 
-        </div>
+              <div class="input">
+                <q-input
+                  outlined
+                  v-model="username"
+                  :label="this.$t('username')"
+                >
+                </q-input>
+              </div>
+
+              <div class="input">
+                <q-input
+                  outlined
+                  v-model="email"
+                  :label="this.$t('email')"
+                >
+                </q-input>
+              </div>
+
+            <div class="input">
+            <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
+              <template v-slot:append>
+                <q-icon
+                  :name="isPwd ? 'visibility_off' : 'visibility'"
+                  class="cursor-pointer"
+                  @click="isPwd = !isPwd"
+                />
+              </template>
+            </q-input>
+            </div>
+
+            </div>
 
         </q-card-section>
-
-            <div id="sapconfig"></div>
-
-        <q-separator />
+        </q-scroll-area>
         <div class="popup-header">
           <div class="text-h6"></div>
           <div class="actions">
@@ -33,60 +63,89 @@
               <q-icon name="save" />
               Save
             </q-btn>
-            <q-btn flat v-close-popup>
+            <q-btn flat @click="closeCreate">
               <q-icon name="block" />
               Cancel
             </q-btn>
           </div>
         </div>
           </q-form>
-      </q-card>
+      </div>
 
 </template>
 
 <script>
 export default {
-  name: 'EdiUser',
+  name: 'EditUser',
 
-  props: ['user'],
+  props: [],
 
   components: {
   },
 
   computed: {
+    user () {
+      return this.$store.state.users.edit
+    }
   },
 
   data () {
     return {
-      id: this.application.id,
-      color: this.application.color,
-      applicationtype: this.application.applicationType || null,
-      title: this.application.title,
-      tags: this.tagsParse,
-      url: this.application.url,
+      id: null,
       icon: null,
-      possibletags: this.tagsParse,
-      submitEmpty: false,
-      submitResult: []
+      email: null,
+      username: null,
+      password: '',
+      totp: null,
+      isPwd: true
+    }
+  },
+
+  watch: {
+    user: function (newdata, olddata) {
+      // console.log(newdata)
+      this.id = newdata.id
+      this.icon = newdata.icon
+      this.email = newdata.email
+      this.username = newdata.username
+      this.password = newdata.password
+      this.totp = newdata.totp
     }
   },
 
   methods: {
     async onSubmit (evt) {
-      const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
-      const formData = new FormData()
-      formData.append('color', this.color)
-      formData.append('applicationType', applicationType)
-      formData.append('title', this.title)
-      formData.append('tags', this.tags)
-      formData.append('url', this.url)
-      formData.append('icon', this.icon)
+      /* const formData = new FormData()
+      formData.append('email', this.email)
+      formData.append('username', this.username)
+      formData.append('password', this.password) */
+      const formData = {
+        email: this.email,
+        username: this.username,
+        password: this.password
+      }
+      const data = {
+        id: this.id,
+        user: formData
+      }
       try {
-        await this.$store.dispatch('tiles/save', this.id, formData)
+        await this.$store.dispatch('users/save', data)
+        await this.$store.dispatch('users/getUsers')
+        this.$store.commit('users/create', false)
         console.log('added')
       } catch (e) {
-        console.log(e)
+        this.$q.notify({
+          type: 'negative',
+          message: this.$t(e.response.data.result),
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
       }
+    },
+    closeCreate () {
+      this.$store.dispatch('users/clear')
+      this.$emit('closecreate')
     },
     filterFn (val, update) {
       update(() => {
@@ -105,3 +164,23 @@ export default {
 
 }
 </script>
+<style lang="scss">
+  .userdetails {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: all 0.3s;
+    z-index: 2;
+    &.active {
+      transform: translateX(0);
+    }
+    .q-form {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+</style>
