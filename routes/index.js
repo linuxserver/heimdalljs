@@ -106,7 +106,7 @@ router.get('/status', async (req, res, next) => {
     }
   }
 
-  const status = req.user.toJSON() || null
+  const status = req.user ? req.user.toJSON() : null
 
   return res.json({
     status: 'ok',
