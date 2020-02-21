@@ -3,6 +3,13 @@
 $grey1: #e6e8e8;
 $darkborder: #cbccce;
 
+.text-brand {
+    color: #5e3267;
+}
+.bg-brand {
+    background: #5e3267;
+}
+
 body {
   color: #585858;
 }
@@ -443,9 +450,15 @@ div.create {
             color: #fff;
         }
     }
-    .q-avatar {
+    .user-avatar {
         box-shadow: 0 0 30px 15px #5e3267;
     }
+}
+.q-tab--active .q-tab__indicator {
+    color: #ffffff6e !important;
+}
+
+.user-avatar {
     .q-avatar__content {
         position: relative;
         background: #86658d;
@@ -460,9 +473,8 @@ div.create {
         }
     }
 }
-.q-tab--active .q-tab__indicator {
-    color: #ffffff6e !important;
-}
+
+
 .bigtab {
     &:first-child {
         // border-right: 1px solid $grey1;

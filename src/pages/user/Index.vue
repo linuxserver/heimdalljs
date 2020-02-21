@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <div class="list-users">
+      <div class="list-users flex-center fit">
         <user
           v-for="user in users"
           :key="user.id"

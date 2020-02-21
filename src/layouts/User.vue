@@ -15,7 +15,7 @@
           User Management
         </q-toolbar-title>
 
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="cyan-8" @click="createNew">Add New</q-btn>
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand" @click="createNew">Add New</q-btn>
         <div class="searchbox">
         <q-select
           borderless

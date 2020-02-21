@@ -16,7 +16,7 @@
 
     <div class="user_account">
       <img class="bg-image" :src="icon" />
-      <q-avatar size="120px" class="">
+      <q-avatar size="120px" class="user-avatar">
         <img :src="icon">
       </q-avatar>
     </div>

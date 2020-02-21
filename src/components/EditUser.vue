@@ -20,7 +20,7 @@
 
         <q-card-section class="q-pt-none">
 
-            <div id="create" style="height: 1500px;" class="create">
+            <div id="create" class="create">
 
               <div class="input">
                 <q-input
