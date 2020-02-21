@@ -60,9 +60,4 @@ export default {
     display: flex;
     flex-wrap: wrap;
   }
-  .list-user {
-    width: 100%;
-    max-width: 400px;
-    margin: 20px;
-  }
 </style>

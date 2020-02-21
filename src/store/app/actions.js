@@ -64,6 +64,7 @@ export function setupComplete (context) {
   LocalStorage.remove('heimdall_setup')
   console.log('finish')
   status(context)
+  context.dispatch('users/getUsers', null, { root: true })
 }
 
 export async function auth (context) {
