@@ -7,6 +7,16 @@ const QRCode = require('qrcode')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
+
+  const users = await User.findAll()
+
+  if (req.user.level === User.ADMIN) {
+    return res.json({
+      status: 'ok',
+      result: users
+    })  
+  }
+
   const showUsers = await Setting.findOne({ where: { key: 'show_usernames' } })
   if (!showUsers || showUsers.value !== 'yes') {
     return res.json({
@@ -14,8 +24,6 @@ router.get('/', async (req, res, next) => {
       result: null
     })
   }
-
-  const users = await User.findAll()
 
   if (!users.length) {
     return res.json({
