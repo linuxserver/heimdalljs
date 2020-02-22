@@ -160,7 +160,7 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
 
     if (req.user.avatar) {
       try {
-        fs.unlinkSync(req.user.avatar)
+        fs.unlinkSync(path.join(config.uploadDir, req.user.avatar))
       } catch (e) { }
     }
 
