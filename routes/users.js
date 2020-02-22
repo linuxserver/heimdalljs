@@ -114,7 +114,10 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
     delete req.body.password
   }
 
-  // ALWAYS DELETE totp, this should only be set by the server
+  /**
+   * This is just a security precaution.
+   * ALWAYS DELETE totp, this should only be set by the server.
+   */
   delete req.body.totpSecret
 
   // Begin process to set up and confirm multi-factor authentication
