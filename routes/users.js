@@ -75,12 +75,13 @@ router.post('/', upload.single('avatar'), async (req, res, next) => {
     })
   }
 
-  const user = await User.create({
-    ...req.body,
-    ...req.file && req.file.filename && {
-      avatar: path.join(req.file.destination, `${req.file.filename}${path.extname(req.file.originalname)}`)
-    }
-  })
+  if (req.file) {
+    const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
+    req.body.avatar = `/avatars/${newAvatar}`
+  }
+
+  const user = await User.create(req.body)
 
   return res.json({
     status: 'ok',
@@ -155,17 +156,17 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
 
   if (req.file) {
     const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
-    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(req.file.destination, newAvatar))
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
 
     if (req.user.avatar) {
       try {
-        fs.unlinkSync(path.join(config.uploadDir, req.user.avatar))
+        fs.unlinkSync(req.user.avatar)
       } catch (e) { }
     }
 
     await req.user.update({
       ...req.body,
-      avatar: newAvatar
+      avatar: `/avatars/${newAvatar}`
     })
   }
 

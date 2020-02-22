@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const path = require('path')
 const config = require('./config/config')
+const fs = require('fs')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -42,7 +43,15 @@ app.use(cors({
   ...env === 'development' && { origin: 'http://localhost:8080' }
 }))
 
-console.log(config.uploadDir)
+// Create upload directories
+for (const subdir of [
+  'avatars',
+  'icons',
+  'backgrounds'
+]) {
+  fs.mkdirSync(path.resolve(path.join(config.uploadDir, subdir)), { recursive: true })
+}
+
 app.use(express.static(path.join(__dirname, './dist/spa/')))
 app.use(express.static(config.uploadDir))
 app.use('/', indexRouter)
