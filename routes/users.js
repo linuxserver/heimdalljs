@@ -118,7 +118,7 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
   delete req.body.totpSecret
 
   // Begin process to set up and confirm multi-factor authentication
-  if (req.user.multifactorEnabled === false && req.body.multifactorEnabled === true) {
+  if (req.user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
     if (!req.user.totpSecret) {
       const secret = Speakeasy.generateSecret()
       const qrcode = await QRCode.toDataURL(secret.otpauth_url)
@@ -145,7 +145,7 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
         })
       }
     }
-  } else if (req.user.multifactorEnabled === true && req.body.multifactorEnabled === false) {
+  } else if (req.user.multifactorEnabled === true && !!req.body.multifactorEnabled === false) {
     req.user.update({
       multifactorEnabled: false,
       totpSecret: null
