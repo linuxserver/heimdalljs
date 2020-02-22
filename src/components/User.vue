@@ -9,7 +9,8 @@
       <div class="name">{{ this.user.username }}</div>
       <span class="email">{{ this.user.email }}</span>
       <div class="extra">
-        <span class="mfa"><span>2FA</span><q-icon class="mfaicon" :name="mfaicon"></q-icon></span>
+        <span class="chip"><span>{{ level }}</span></span>
+        <span v-if="user.multifactorEnabled === true" class="chip"><span>2FA</span><q-icon class="mfaicon" :name="mfaicon"></q-icon></span>
       </div>
     </div>
     <div class="actions">
@@ -32,6 +33,14 @@ export default {
     avatar () {
       const user = this.$store.state.users.all.find(o => o.id === this.user.id)
       return (user.avatar !== null) ? process.env.BACKEND_LOCATION + user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+    },
+    level () {
+      let level = 'User'
+      switch (this.user.level) {
+        case 0: level = 'Admin'; break
+        case 2: level = 'Read Only'; break
+      }
+      return level
     }
   },
 
@@ -93,7 +102,7 @@ export default {
       .extra {
         margin-top: 5px;
       }
-      .mfa {
+      .chip {
         background: #86658d;
         padding: 1px 5px;
         border-radius: 4px;
@@ -102,6 +111,9 @@ export default {
         align-items: center;
         font-weight: bold;
         text-transform: uppercase;
+        margin: 3px 8px 3px 0;
+        font-size: 10px;
+        height: 23px;
       }
       .mfaicon {
         font-size: 17px;

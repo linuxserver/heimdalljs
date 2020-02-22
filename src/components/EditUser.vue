@@ -8,7 +8,7 @@
         <q-card-section class="q-pt-none">
 
             <div id="create" class="create">
-              <div class="user-details">
+              <div class="user-details flex flex-center">
               <img class="user-image" :src="this.setavatar" />
               <q-file outlined v-model="avatar" :label="this.$t('avatar')">
                 <template v-slot:prepend>
@@ -44,9 +44,15 @@
             </q-input>
 
               <q-btn
+                v-if="this.multifactorEnabled === false"
                 name="multifactorEnabled"
                 @click="enablesMfa"
               >Enable MFA</q-btn>
+              <q-btn
+                v-else
+                name="multifactorEnabled"
+                @click="disableMfa"
+              >Disable MFA</q-btn>
 
               </div>
 
@@ -68,14 +74,17 @@
           </q-form>
         <q-dialog v-model="showqrcode">
           <div style="background: #fff; padding: 20px;">
-          <img :src="qrcode" />
-          <q-input
-            outlined
-            v-model="topt"
-            :label="this.$t('topt')"
-          >
-          </q-input>
-          <q-btn @click="sendTotp">Register</q-btn>
+            <h5 style="margin-top: 0">{{ $t('mfa_header') }}</h5>
+            <p v-html="$t('mfa_above_qr', aboveqr)"></p>
+            <div class="flex flex-center"><img :src="qrcode" /></div>
+            <p v-html="$t('mfa_below_qr')"></p>
+            <q-input
+              outlined
+              v-model="totp"
+              :label="this.$t('code')"
+            >
+            </q-input>
+            <q-btn @click="sendTotp">Submit</q-btn>
           </div>
         </q-dialog>
 
@@ -117,7 +126,11 @@ export default {
       actions: false,
       multifactorEnabled: false,
       qrcode: null,
-      showqrcode: null
+      showqrcode: null,
+      aboveqr: {
+        link1: '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
+        link2: '<a href="https://authy.com/">Authy</a>'
+      }
     }
   },
 
@@ -129,6 +142,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
+      this.multifactorEnabled = newdata.multifactorEnabled
     },
     create: function (newdata, olddata) {
       if (newdata === true) {
@@ -162,9 +176,19 @@ export default {
         this.qrcode = save.data.qrcode
       }
     },
+    async disableMfa () {
+      const formData = new FormData()
+      formData.append('multifactorEnabled', false)
+      const data = {
+        id: this.id,
+        user: formData
+      }
+      await this.$store.dispatch('users/save', data)
+      // console.log(save)
+    },
     async sendTotp () {
       const formData = new FormData()
-      formData.append('totp', this.topt)
+      formData.append('totp', this.totp)
       const data = {
         id: this.id,
         user: formData
@@ -251,7 +275,7 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    width: 80px;
+    width: 70px;
     background: #724c7a;
     transform: translateX(80px);
     transition: all 0.3s;
@@ -265,20 +289,28 @@ export default {
       .q-btn__content {
         font-size: 11px;
         i {
-          font-size: 28px;
+          font-size: 22px;
         }
       }
     }
   }
   .user-details {
     margin: 0 20px;
+    width: 100%;
+    max-width: 320px;
+  }
+  .user-options {
+    width: 100%;
+    max-width: 320px;
   }
   .user-image {
     max-width: 200px;
     height: auto;
+    background: #724c7a;
+    padding: 6px;
   }
   .userform {
-    padding: 0 80px 0 0;
+    padding: 0 70px 0 0;
     overflow: hidden;
   }
   .create {

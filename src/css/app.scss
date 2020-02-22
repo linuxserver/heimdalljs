@@ -458,7 +458,7 @@ div.create {
         }
     }
     .user-avatar {
-        box-shadow: 0 0 30px 15px #5e3267;
+        box-shadow: 0 0 30px 15px #00000038;
     }
 }
 .q-tab--active .q-tab__indicator {
@@ -468,7 +468,16 @@ div.create {
 .user-avatar {
     .q-avatar__content {
         position: relative;
-        background: #86658d;
+        background: inherit;
+        &:before {
+            content: "";
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: #ffffff1f;
+            position: absolute;
+        }
         img {
             width: auto;
             height: 100%;

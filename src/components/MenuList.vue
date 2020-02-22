@@ -26,19 +26,19 @@
       <q-tab-panel name="user">
         <EssentialLink
           :title="this.$t('dashboard')"
-          :caption="this.tiles + ' ' + (this.tiles === 1 ? this.$t('app') : this.$t('apps'))"
+          :caption="this.tiles + ' ' + this.$tc('app', this.tiles)"
           icon="dashboard"
           link="/"
         />
         <EssentialLink
           :title="this.$t('applications')"
-          :caption="this.active_tiles + ' ' + (this.active_tiles === 1 ? this.$t('app') : this.$t('apps'))"
+          :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
           icon="apps"
           link="/account"
         />
         <EssentialLink
           :title="this.$t('settings')"
-          :caption="this.settings + ' ' + (this.settings === 1 ? this.$t('setting') : this.$t('settings'))"
+          :caption="this.settings + ' ' + this.$tc('setting', this.settings)"
           icon="settings"
           link="/account/settings"
         />
@@ -48,25 +48,25 @@
       <q-tab-panel name="admin">
         <EssentialLink
           :title="this.$t('applications')"
-          :caption="this.active_tiles + ' ' + (this.active_tiles === 1 ? this.$t('app') : this.$t('apps'))"
+          :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
           icon="apps"
           link="/admin"
         />
         <EssentialLink
           :title="this.$t('user_management')"
-          :caption="this.users + ' ' + (this.users === 1 ? this.$t('user') : this.$t('users'))"
+          :caption="this.users + ' ' + this.$tc('user', this.users)"
           icon="contacts"
           link="/admin/user"
         />
         <EssentialLink
           :title="this.$t('proxy_management')"
-          :caption="this.proxies + ' ' + (this.proxies === 1 ? this.$t('proxy') : this.$t('proxies'))"
+          :caption="this.proxies + ' ' + this.$tc('proxy', this.proxies)"
           icon="account_tree"
           link="/admin/proxy"
         />
         <EssentialLink
           :title="this.$t('settings')"
-          :caption="this.settings + ' ' + (this.settings === 1 ? this.$t('setting') : this.$t('settings'))"
+          :caption="this.settings + ' ' + this.$tc('setting', this.settings)"
           icon="settings"
           link="/admin/settings"
         />
@@ -84,7 +84,7 @@
       </q-item-section>
 
       <q-item-section>
-        <q-item-label>Logout</q-item-label>
+        <q-item-label>{{ $t('logout') }}</q-item-label>
         <q-item-label caption>{{ username }}</q-item-label>
       </q-item-section>
     </q-item>
