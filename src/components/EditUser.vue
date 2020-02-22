@@ -66,8 +66,17 @@
 
         </div>
           </q-form>
-        <q-dialog v-model="qrcode">
+        <q-dialog v-model="showqrcode">
+          <div style="background: #fff; padding: 20px;">
           <img :src="qrcode" />
+          <q-input
+            outlined
+            v-model="topt"
+            :label="this.$t('topt')"
+          >
+          </q-input>
+          <q-btn @click="sendTotp">Register</q-btn>
+          </div>
         </q-dialog>
 
       </div>
@@ -107,7 +116,8 @@ export default {
       isPwd: true,
       actions: false,
       multifactorEnabled: false,
-      qrcode: null
+      qrcode: null,
+      showqrcode: null
     }
   },
 
@@ -128,6 +138,13 @@ export default {
       } else {
         // this.actions = false
       }
+    },
+    qrcode: function (newdata, olddata) {
+      if (newdata !== null) {
+        this.showqrcode = true
+      } else {
+        this.showqrcode = false
+      }
     }
   },
 
@@ -140,8 +157,29 @@ export default {
         user: formData
       }
       const save = await this.$store.dispatch('users/save', data)
-      if (save.response.data.status === 'confirm totp') {
-        this.qrcode = save.response.data.qrcode
+      // console.log(save)
+      if (save.data.status === 'confirm totp') {
+        this.qrcode = save.data.qrcode
+      }
+    },
+    async sendTotp () {
+      const formData = new FormData()
+      formData.append('totp', this.topt)
+      const data = {
+        id: this.id,
+        user: formData
+      }
+      const save = await this.$store.dispatch('users/save', data)
+      // console.log(save)
+      if (save.data.status === 'ok') {
+        this.showqrcode = false
+        this.$q.notify({
+          type: 'positive',
+          message: 'MFA Enabled',
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
       }
     },
     async onSubmit (evt) {
