@@ -1,6 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const { Item } = require('../models/index')
+const multer = require('multer')
+const upload = multer({ dest: require('../config/config').uploadDir })
+const path = require('path')
+const fs = require('fs')
+const config = require('../config/config')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -23,12 +28,18 @@ router.get('/', async (req, res, next) => {
   })
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', upload.single('icon'), async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
       result: 'unauthorized'
     })
+  }
+
+  if (req.file) {
+    const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newIcon))
+    req.body.icon = `/icons/${newIcon}`
   }
 
   const item = await Item.create({
@@ -42,7 +53,7 @@ router.post('/', async (req, res, next) => {
   })
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', upload.single('icon'), async (req, res, next) => {
   if (!req.user) {
     return res.status(403).json({
       status: 'error',
@@ -68,6 +79,18 @@ router.put('/:id', async (req, res, next) => {
       status: 'error',
       result: 'unauthorized'
     })
+  }
+
+  if (req.file) {
+    const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newIcon))
+    req.body.icon = `/icons/${newIcon}`
+
+    if (item.icon) {
+      try {
+        fs.unlinkSync(path.join(config.uploadDir, item.icon))
+      } catch (e) { }
+    }
   }
 
   await item.update(req.body)
