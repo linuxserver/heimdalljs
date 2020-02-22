@@ -10,7 +10,7 @@ const config = require('../config/config')
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', upload.single('icon'), async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -55,7 +55,7 @@ router.post('/', upload.single('icon'), async (req, res, next) => {
 
 router.put('/:id', upload.single('icon'), async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -75,7 +75,7 @@ router.put('/:id', upload.single('icon'), async (req, res, next) => {
   }
 
   if (item.userId !== req.user.id) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -103,7 +103,7 @@ router.put('/:id', upload.single('icon'), async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -123,7 +123,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 
   if (item.userId !== req.user.id) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
