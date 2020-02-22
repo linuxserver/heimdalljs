@@ -2,12 +2,19 @@
 
 $grey1: #e6e8e8;
 $darkborder: #cbccce;
+$brand: #5e3267;
 
 .text-brand {
     color: #5e3267;
 }
 .bg-brand {
     background: #5e3267;
+}
+.text-brand2 {
+    color: #724c7a;
+}
+.bg-brand2 {
+    background: #724c7a;
 }
 
 body {
@@ -23,7 +30,7 @@ h1 {
     background-image: url('../statics/bg1.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: bottom;
+    background-position: center;
 }
 .q-layout__section--marginal {
     background: #19465073;

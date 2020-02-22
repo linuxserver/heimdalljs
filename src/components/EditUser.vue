@@ -1,26 +1,19 @@
 <template>
         <div class="userdetails fit" style="background: #fcfcfc;">
-          <q-form @submit="onSubmit" class="fit">
-        <div class="popup-header">
-          <div class="text-h6">User</div>
-          <div class="actions">
-            <q-btn type="submit" flat>
-              <q-icon name="save" />
-              Save
-            </q-btn>
-            <q-btn flat @click="closeCreate">
-              <q-icon name="block" />
-              Cancel
-            </q-btn>
-          </div>
-        </div>
+          <q-form @submit="onSubmit" class="fit userform">
         <q-scroll-area
-            style="height: calc(100% - 150px);"
+            style="height: 100%;"
           >
 
         <q-card-section class="q-pt-none">
 
             <div id="create" class="create">
+
+              <q-file outlined v-model="avatar">
+                <template v-slot:prepend>
+                  <q-icon name="attach_file" />
+                </template>
+              </q-file>
 
               <div class="input">
                 <q-input
@@ -56,9 +49,7 @@
 
         </q-card-section>
         </q-scroll-area>
-        <div class="popup-header">
-          <div class="text-h6"></div>
-          <div class="actions">
+        <div class="useractions" :class="{ active: actions }">
             <q-btn type="submit" flat>
               <q-icon name="save" />
               Save
@@ -67,7 +58,7 @@
               <q-icon name="block" />
               Cancel
             </q-btn>
-          </div>
+
         </div>
           </q-form>
       </div>
@@ -86,18 +77,22 @@ export default {
   computed: {
     user () {
       return this.$store.state.users.edit
+    },
+    create () {
+      return this.$store.state.users.create
     }
   },
 
   data () {
     return {
       id: null,
-      icon: null,
+      avatar: null,
       email: null,
       username: null,
       password: '',
       totp: null,
-      isPwd: true
+      isPwd: true,
+      actions: false
     }
   },
 
@@ -105,25 +100,35 @@ export default {
     user: function (newdata, olddata) {
       // console.log(newdata)
       this.id = newdata.id
-      this.icon = newdata.icon
+      this.avatar = newdata.avatar
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
       this.totp = newdata.totp
+    },
+    create: function (newdata, olddata) {
+      if (newdata === true) {
+        setTimeout(function () {
+          this.actions = true
+        }.bind(this), 350)
+      } else {
+        this.actions = false
+      }
     }
   },
 
   methods: {
     async onSubmit (evt) {
-      /* const formData = new FormData()
+      const formData = new FormData()
       formData.append('email', this.email)
       formData.append('username', this.username)
-      formData.append('password', this.password) */
-      const formData = {
+      formData.append('password', this.password)
+      formData.append('avatar', this.avatar)
+      /* const formData = {
         email: this.email,
         username: this.username,
         password: this.password
-      }
+      } */
       const data = {
         id: this.id,
         user: formData
@@ -165,6 +170,37 @@ export default {
 }
 </script>
 <style lang="scss">
+  .useractions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background: #724c7a;
+    transform: translateX(80px);
+    transition: all 0.3s;
+    color: white;
+    padding: 10px 0;
+    &.active {
+      transform: translateX(0);
+    }
+    button {
+      padding: 10px 0;
+      .q-btn__content {
+        font-size: 11px;
+        i {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+  .userform {
+    padding: 0 80px 0 0;
+    overflow: hidden;
+  }
+  .create {
+    padding: 30px 0;
+  }
   .userdetails {
     position: absolute;
     top: 0;

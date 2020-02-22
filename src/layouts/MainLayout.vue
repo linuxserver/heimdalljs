@@ -42,7 +42,7 @@
       <menu-list></menu-list>
     </q-drawer>
 
-    <q-page-container id="app">
+    <q-page-container :style="background" id="app">
       <router-view :filter="filter" />
     </q-page-container>
   </q-layout>
@@ -72,7 +72,9 @@ export default {
     return {
       leftDrawerOpen: false,
       version: version,
-      filter: null
+      filter: null,
+      // background: '',
+      background: 'background-image: url(statics/bg/bg11.jpg)'
     }
   },
 

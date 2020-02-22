@@ -9,6 +9,7 @@ export default {
   username_yes: 'Yes (Select from list of users)',
   username_no: 'No (Username must by typed)',
   select_user: 'Select user',
+  email: 'Email',
   username: 'Username',
   password: 'Password',
   failed: 'Action failed',

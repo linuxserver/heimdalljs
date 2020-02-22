@@ -27,16 +27,16 @@ export function save (context, data) {
     console.log(data)
     return axios
       .post(process.env.BACKEND_LOCATION + 'users', data.user, {
-        /* headers: {
+        headers: {
           'Content-Type': 'multipart/form-data'
-        } */
+        }
       })
   } else {
     return axios
       .put(process.env.BACKEND_LOCATION + 'users', data.user, {
-        /* headers: {
+        headers: {
           'Content-Type': 'multipart/form-data'
-        } */
+        }
       })
   }
 }
