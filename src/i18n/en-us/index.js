@@ -10,6 +10,7 @@ export default {
   username_no: 'No (Username must by typed)',
   select_user: 'Select user',
   email: 'Email',
+  avatar: 'Avatar',
   username: 'Username',
   password: 'Password',
   failed: 'Action failed',

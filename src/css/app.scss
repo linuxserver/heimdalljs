@@ -473,14 +473,22 @@ div.create {
             width: auto;
             height: 100%;
             top: 50%;
-            transform: translateY(-50%);
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
             display: block;
             position: absolute;
-            padding: 6px;
         }
     }
 }
-
+.avatar-resize {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    overflow: hidden;
+    border-radius: 50%;
+}
 
 .bigtab {
     &:first-child {
@@ -501,7 +509,7 @@ div.create {
     align-items: center;
     height: 175px;
     .bg-image {
-        filter: grayscale(100%) blur(20px) opacity(15%) ;
+        filter: grayscale(100%) opacity(9%) ;
         position: absolute;
         top: 50%;
         left: 0;
@@ -514,3 +522,4 @@ div.create {
         cursor: pointer;
     }
 }
+

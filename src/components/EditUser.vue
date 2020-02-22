@@ -8,32 +8,31 @@
         <q-card-section class="q-pt-none">
 
             <div id="create" class="create">
-
-              <q-file outlined v-model="avatar">
+              <div class="user-details">
+              <img class="user-image" :src="this.setavatar" />
+              <q-file outlined v-model="avatar" :label="this.$t('avatar')">
                 <template v-slot:prepend>
                   <q-icon name="attach_file" />
                 </template>
               </q-file>
 
-              <div class="input">
+              </div>
+              <div class="user-options">
+
                 <q-input
                   outlined
                   v-model="username"
                   :label="this.$t('username')"
                 >
                 </q-input>
-              </div>
 
-              <div class="input">
                 <q-input
                   outlined
                   v-model="email"
                   :label="this.$t('email')"
                 >
                 </q-input>
-              </div>
 
-            <div class="input">
             <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
               <template v-slot:append>
                 <q-icon
@@ -43,7 +42,13 @@
                 />
               </template>
             </q-input>
-            </div>
+
+              <q-btn
+                name="multifactorEnabled"
+                @click="enablesMfa"
+              >Enable MFA</q-btn>
+
+              </div>
 
             </div>
 
@@ -61,6 +66,10 @@
 
         </div>
           </q-form>
+        <q-dialog v-model="qrcode">
+          <img :src="qrcode" />
+        </q-dialog>
+
       </div>
 
 </template>
@@ -80,7 +89,11 @@ export default {
     },
     create () {
       return this.$store.state.users.create
+    },
+    setavatar () {
+      return (this.user.avatar !== null) ? process.env.BACKEND_LOCATION + this.user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     }
+
   },
 
   data () {
@@ -92,7 +105,9 @@ export default {
       password: '',
       totp: null,
       isPwd: true,
-      actions: false
+      actions: false,
+      multifactorEnabled: false,
+      qrcode: null
     }
   },
 
@@ -104,7 +119,6 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
-      this.totp = newdata.totp
     },
     create: function (newdata, olddata) {
       if (newdata === true) {
@@ -112,12 +126,24 @@ export default {
           this.actions = true
         }.bind(this), 350)
       } else {
-        this.actions = false
+        // this.actions = false
       }
     }
   },
 
   methods: {
+    async enablesMfa () {
+      const formData = new FormData()
+      formData.append('multifactorEnabled', true)
+      const data = {
+        id: this.id,
+        user: formData
+      }
+      const save = await this.$store.dispatch('users/save', data)
+      if (save.response.data.status === 'confirm totp') {
+        this.qrcode = save.response.data.qrcode
+      }
+    },
     async onSubmit (evt) {
       const formData = new FormData()
       formData.append('email', this.email)
@@ -136,7 +162,16 @@ export default {
       try {
         await this.$store.dispatch('users/save', data)
         await this.$store.dispatch('users/getUsers')
+        await this.$store.dispatch('app/status')
         this.$store.commit('users/create', false)
+        this.$q.notify({
+          type: 'positive',
+          message: 'Updated',
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
+
         console.log('added')
       } catch (e) {
         this.$q.notify({
@@ -148,9 +183,12 @@ export default {
         })
       }
     },
-    closeCreate () {
-      this.$store.dispatch('users/clear')
-      this.$emit('closecreate')
+    async closeCreate () {
+      this.actions = false
+      setTimeout(function () {
+        this.$store.dispatch('users/clear')
+        this.$emit('closecreate')
+      }.bind(this), 300)
     },
     filterFn (val, update) {
       update(() => {
@@ -193,6 +231,13 @@ export default {
         }
       }
     }
+  }
+  .user-details {
+    margin: 0 20px;
+  }
+  .user-image {
+    max-width: 200px;
+    height: auto;
   }
   .userform {
     padding: 0 80px 0 0;

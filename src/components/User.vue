@@ -1,8 +1,8 @@
 <template>
   <div class="list-user" :class="{ edit: this.edit }">
     <div class="icon">
-      <q-avatar size="75px" class="user-avatar">
-        <img :src="icon">
+      <q-avatar size="76px" class="user-avatar">
+        <div class="avatar-resize"><img :src="avatar"></div>
       </q-avatar>
     </div>
     <div class="details">
@@ -28,11 +28,17 @@ export default {
   components: {
   },
 
+  computed: {
+    avatar () {
+      const user = this.$store.state.users.all.find(o => o.id === this.user.id)
+      return (user.avatar !== null) ? process.env.BACKEND_LOCATION + user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+    }
+  },
+
   data () {
     return {
       edit: false,
       showback: false,
-      icon: 'https://apps.heimdall.site/img/heimdall-logo-white.svg',
       // mfaicon: 'check_box_outline_blank'
       mfaicon: 'check_box'
     }

@@ -15,9 +15,9 @@
     <q-separator />
 
     <div class="user_account">
-      <img class="bg-image" :src="icon" />
+      <img class="bg-image" :src="avatar" />
       <q-avatar size="120px" class="user-avatar">
-        <img :src="icon">
+        <div class="avatar-resize"><img :src="avatar"></div>
       </q-avatar>
     </div>
 
@@ -126,6 +126,10 @@ export default {
     username () {
       return this.$store.state.app.user.username
     },
+    avatar () {
+      const user = this.$store.state.app.user
+      return (user.avatar !== null) ? process.env.BACKEND_LOCATION + user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+    },
     activetab: {
       get () {
         return this.$store.state.app.tab
@@ -138,7 +142,8 @@ export default {
 
   data () {
     return {
-      icon: 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      // icon: 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      // icon: 'https://miro.medium.com/fit/c/256/256/1*zJL5iHVD0ch1smshxAKfyw.jpeg'
     }
   },
 
