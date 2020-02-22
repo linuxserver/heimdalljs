@@ -62,14 +62,14 @@ router.post('/', async (req, res, next) => {
 
   const existing = await User.findOne({
     where: {
-      email: req.body.email
+      username: req.body.username
     }
   })
 
   if (existing) {
     return res.status(400).json({
       status: 'error',
-      result: 'email_exists'
+      result: 'username_exists'
     })
   }
 
