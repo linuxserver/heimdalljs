@@ -7,6 +7,8 @@ const QRCode = require('qrcode')
 const path = require('path')
 const multer = require('multer')
 const upload = multer({ dest: require('../config/config').uploadDir })
+const fs = require('fs')
+const config = require('../config/config')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -151,12 +153,21 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
     return res.json({ status: 'ok' })
   }
 
-  req.user.update({
-    ...req.body,
-    ...req.file && req.file.filename && {
-      avatar: path.join(req.file.destination, `${req.file.filename}${path.extname(req.file.originalname)}`)
+  if (req.file) {
+    const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(req.file.destination, newAvatar))
+
+    if (req.user.avatar) {
+      try {
+        fs.unlinkSync(path.join(config.uploadDir, req.user.avatar))
+      } catch (e) { }
     }
-  })
+
+    await req.user.update({
+      ...req.body,
+      avatar: newAvatar
+    })
+  }
 
   return res.json({
     status: 'ok'

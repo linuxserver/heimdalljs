@@ -42,6 +42,7 @@ app.use(cors({
   ...env === 'development' && { origin: 'http://localhost:8080' }
 }))
 
+console.log(config.uploadDir)
 app.use(express.static(path.join(__dirname, './dist/spa/')))
 app.use(express.static(config.uploadDir))
 app.use('/', indexRouter)
