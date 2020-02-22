@@ -45,7 +45,7 @@ router.get('/', async (req, res, next) => {
   })
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', upload.single('avatar'), async (req, res, next) => {
   const usersCount = await User.count()
 
   // Do we want to prevent user registration unless logged in?
@@ -73,7 +73,12 @@ router.post('/', async (req, res, next) => {
     })
   }
 
-  const user = await User.create(req.body)
+  const user = await User.create({
+    ...req.body,
+    ...req.file && req.file.filename && {
+      avatar: path.join(req.file.destination, `${req.file.filename}${path.extname(req.file.originalname)}`)
+    }
+  })
 
   return res.json({
     status: 'ok',
@@ -104,10 +109,6 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
   } else {
     // If we didn't pass up the current password, don't submit a new password
     delete req.body.password
-  }
-
-  if (req.avatar && req.avatar.filename) {
-    req.body.avatar = path.combine(req.avatar.destination, req.avatar.filename)
   }
 
   // ALWAYS DELETE totp, this should only be set by the server
@@ -146,9 +147,16 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
       multifactorEnabled: false,
       totpSecret: null
     })
-  } else {
-    req.user.update(req.body)
+
+    return res.json({ status: 'ok' })
   }
+
+  req.user.update({
+    ...req.body,
+    ...req.file && req.file.filename && {
+      avatar: path.join(req.file.destination, `${req.file.filename}${path.extname(req.file.originalname)}`)
+    }
+  })
 
   return res.json({
     status: 'ok'
