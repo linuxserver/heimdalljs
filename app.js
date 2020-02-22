@@ -4,6 +4,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const path = require('path')
+const config = require('./config/config')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -42,6 +43,7 @@ app.use(cors({
 }))
 
 app.use(express.static(path.join(__dirname, './dist/spa/')))
+app.use(express.static(config.uploadDir))
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)

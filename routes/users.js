@@ -4,17 +4,19 @@ const { User, Setting } = require('../models/index')
 const _ = require('lodash')
 const Speakeasy = require('speakeasy')
 const QRCode = require('qrcode')
+const path = require('path')
+const multer = require('multer')
+const upload = multer({ dest: require('../config/config').uploadDir })
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
-
   const users = await User.findAll()
 
   if (req.user.level === User.ADMIN) {
     return res.json({
       status: 'ok',
       result: users.map(user => user.toJSON())
-    })  
+    })
   }
 
   const showUsers = await Setting.findOne({ where: { key: 'show_usernames' } })
@@ -66,7 +68,7 @@ router.post('/', async (req, res, next) => {
 
   if (existing) {
     return res.status(400).json({
-      stattus: 'error',
+      status: 'error',
       result: 'email_exists'
     })
   }
@@ -79,9 +81,9 @@ router.post('/', async (req, res, next) => {
   })
 })
 
-router.put('/', async (req, res, next) => {
+router.put('/', upload.single('avatar'), async (req, res, next) => {
   if (!req.user) {
-    return res.status(403).json({
+    return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
     })
@@ -102,6 +104,10 @@ router.put('/', async (req, res, next) => {
   } else {
     // If we didn't pass up the current password, don't submit a new password
     delete req.body.password
+  }
+
+  if (req.avatar && req.avatar.filename) {
+    req.body.avatar = path.combine(req.avatar.destination, req.avatar.filename)
   }
 
   // ALWAYS DELETE totp, this should only be set by the server
@@ -140,6 +146,8 @@ router.put('/', async (req, res, next) => {
       multifactorEnabled: false,
       totpSecret: null
     })
+  } else {
+    req.user.update(req.body)
   }
 
   return res.json({
