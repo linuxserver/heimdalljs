@@ -119,35 +119,38 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
    * ALWAYS DELETE totp, this should only be set by the server.
    */
   delete req.body.totpSecret
-
+  console.log(req.body)
   // Begin process to set up and confirm multi-factor authentication
   if (req.user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
-    if (!req.user.totpSecret) {
-      const secret = Speakeasy.generateSecret()
-      const qrcode = await QRCode.toDataURL(secret.otpauth_url)
+    const secret = Speakeasy.generateSecret()
+    const qrcode = await QRCode.toDataURL(secret.otpauth_url)
 
-      req.user.update({
-        totp: secret.base32
-      })
+    req.user.update({
+      totpSecret: secret.base32
+    })
+
+    return res.json({
+      status: 'confirm totp',
+      qrcode: qrcode
+    })
+  } else if (req.user.multifactorEnabled === false && req.body.totp) {
+    if (Speakeasy.totp.verify({
+      secret: req.user.totpSecret,
+      encoding: 'base32',
+      token: parseInt(req.body.totp, 10),
+      window: 0
+    })) {
+      req.user.update({ multifactorEnabled: true })
 
       return res.json({
-        status: 'confirm totp',
-        qrcode: qrcode
+        status: 'ok'
       })
-    } else if (req.body.totp) {
-      if (Speakeasy.totp.verify({
-        secret: req.user.totpSecret,
-        encoding: 'base32',
-        token: req.body.totp,
-        window: 0
-      })) {
-        req.user.update({ multifactorEnabled: true })
-
-        return res.json({
-          status: 'ok'
-        })
-      }
     }
+
+    return res.json({
+      status: 'error',
+      result: 'invalid_totp'
+    })
   } else if (req.user.multifactorEnabled === true && !!req.body.multifactorEnabled === false) {
     req.user.update({
       multifactorEnabled: false,
