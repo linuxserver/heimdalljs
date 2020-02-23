@@ -4,7 +4,7 @@ export default function () {
     create: false,
     edit: {
       id: null,
-      icon: null,
+      avatar: null,
       email: null,
       username: null,
       password: '',

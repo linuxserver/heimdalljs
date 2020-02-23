@@ -17,6 +17,7 @@ export default {
   success: 'Action was successful',
   dashboard: 'Dashboard',
   application: 'Application | Applications',
+  application_management: 'Application Management',
   user_management: 'User Management',
   proxy_management: 'Proxy Management',
   settings: 'Settings',
@@ -28,7 +29,8 @@ export default {
   logout: 'Logout',
   no_apps: 'There are currently no applications',
   mfa_header: 'Set up two factor authentication using TOTP',
-  mfa_above_qr: 'To activate, scan the QR code with  your authentication app. If you don\'t have one, we recommend either {link1} or {link2}.',
+  mfa_intro: 'Enabling this option will allow you to use an authentication app that supports TOTP Codes, if you don\'t already have one, we recommend either {link1} or {link2}.',
+  mfa_above_qr: 'To activate, scan the QR code with  your authentication app.',
   mfa_below_qr: 'After scanning the code, enter the six didget code from your app to verify the setup.',
   code: 'Code',
   // Edit / Create tiles

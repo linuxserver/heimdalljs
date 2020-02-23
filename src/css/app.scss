@@ -164,12 +164,17 @@ body.desktop .q-hoverable:hover > .q-focus-helper {
     align-items: center;
     display: flex;
   }
+  .q-expansion-item--expanded {
+      .q-expansion-item__container > .q-item--clickable {
+        background: #ffffff21;
+      }
+  }
   .q-item__label {
     font-weight: normal;
     color: #ffffffbd;
   }
   .q-item {
-    padding: 20px 35px;
+    padding: 20px 20px;
   }
   .q-item__label + .q-item__label {
     margin-top: 2px;
@@ -404,6 +409,7 @@ div.create {
 
 .q-field--outlined .q-field__control:before {
     border: 1px solid rgba(0, 0, 0, 0.1);
+    background: #f7f7f7;
 }
 .q-field--outlined .q-field__control:hover:before {
     border-color: #3d8ad8;
@@ -412,7 +418,6 @@ div.create {
     border-color: #3d8ad8;
 }
 .q-field--outlined {
-    background: #f7f7f7;
 }
 .popup-header {
     display: flex;
@@ -464,7 +469,9 @@ div.create {
 .q-tab--active .q-tab__indicator {
     color: #ffffff6e !important;
 }
-
+.q-item__section--avatar {
+    min-width: 46px;
+}
 .user-avatar {
     .q-avatar__content {
         position: relative;

@@ -7,6 +7,9 @@ export default function () {
       step: 1
     },
     users: null,
-    tab: 'user'
+    tab: 'user',
+    admin_apps: false,
+    admin_users: false,
+    admin_proxies: false
   }
 }

@@ -34,7 +34,7 @@ import EditTile from 'components/EditTile'
 import AppItem from 'components/AppItem'
 
 export default {
-  name: 'PageIndex',
+  name: 'Settings',
 
   components: {
     AppItem,

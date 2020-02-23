@@ -1,58 +1,159 @@
 <template>
-        <div class="userdetails fit" style="background: #fcfcfc;">
+        <div class="userdetails fit">
           <q-form @submit="onSubmit" class="fit userform">
         <q-scroll-area
             style="height: 100%;"
           >
 
-        <q-card-section class="q-pt-none">
+        <q-card-section class="">
 
             <div id="create" class="create">
-              <div class="user-details flex flex-center">
-              <img class="user-image" :src="this.setavatar" />
-              <q-file outlined v-model="avatar" :label="this.$t('avatar')">
-                <template v-slot:prepend>
-                  <q-icon name="attach_file" />
-                </template>
-              </q-file>
+              <div class="user-details">
+
+                <q-list style="width:100%" separator>
+                  <q-item
+                    clickable
+                    v-ripple
+                    :active="tab === 'general'"
+                    @click="tab = 'general'"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="account_circle" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Profile</q-item-label>
+                      <q-item-label caption>Update your profile details</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    clickable
+                    v-ripple
+                    :active="tab === 'mfa'"
+                    @click="tab = 'mfa'"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="lock" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Multi-factor Authentication</q-item-label>
+                      <q-item-label caption>Increase the security on your account</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    clickable
+                    v-ripple
+                    :active="tab === 'search'"
+                    @click="tab = 'search'"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="search" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Homepage search</q-item-label>
+                      <q-item-label caption>Configure search on the homepage</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-item
+                    clickable
+                    v-ripple
+                    :active="tab === 'background'"
+                    @click="tab = 'background'"
+                  >
+                    <q-item-section avatar>
+                      <q-icon name="image" />
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Background Image</q-item-label>
+                      <q-item-label caption>Select background on homepage</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                </q-list>
 
               </div>
               <div class="user-options">
+                <q-tab-panels v-model="tab" animated class="">
+                  <q-tab-panel name="general">
+                    <img class="user-image" :src="this.setavatar" />
+                    <q-file outlined v-model="avatar" :label="this.$t('avatar')">
+                      <template v-slot:prepend>
+                        <q-icon name="attach_file" />
+                      </template>
+                    </q-file>
 
-                <q-input
-                  outlined
-                  v-model="username"
-                  :label="this.$t('username')"
-                >
-                </q-input>
+                    <q-input
+                      outlined
+                      v-model="username"
+                      :label="this.$t('username')"
+                    >
+                    </q-input>
 
-                <q-input
-                  outlined
-                  v-model="email"
-                  :label="this.$t('email')"
-                >
-                </q-input>
+                    <q-input
+                      outlined
+                      v-model="email"
+                      :label="this.$t('email')"
+                    >
+                    </q-input>
 
-            <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
-              <template v-slot:append>
-                <q-icon
-                  :name="isPwd ? 'visibility_off' : 'visibility'"
-                  class="cursor-pointer"
-                  @click="isPwd = !isPwd"
-                />
-              </template>
-            </q-input>
+                    <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
+                      <template v-slot:append>
+                        <q-icon
+                          :name="isPwd ? 'visibility_off' : 'visibility'"
+                          class="cursor-pointer"
+                          @click="isPwd = !isPwd"
+                        />
+                      </template>
+                    </q-input>
 
-              <q-btn
-                v-if="this.multifactorEnabled === false"
-                name="multifactorEnabled"
-                @click="enablesMfa"
-              >Enable MFA</q-btn>
-              <q-btn
-                v-else
-                name="multifactorEnabled"
-                @click="disableMfa"
-              >Disable MFA</q-btn>
+                  </q-tab-panel>
+
+                  <q-tab-panel name="mfa">
+                    <h5 style="margin-top: 0">{{ $t('mfa_header') }}</h5>
+                    <p v-html="$t('mfa_intro', mfalinks)"></p>
+
+                    <div v-if="showqrcode">
+                        <div class="qr-section">
+                          <img :src="qrcode" />
+
+                          <div>
+                        <p v-html="$t('mfa_above_qr')"></p>
+                        <p v-html="$t('mfa_below_qr')"></p>
+                        <q-input
+                          outlined
+                          v-model="totp"
+                          :label="this.$t('code')"
+                        >
+                        </q-input>
+                        <q-btn @click="sendTotp">Submit</q-btn>
+
+                          </div>
+                        </div>
+                    </div>
+
+                    <div v-if="showqrcode !== true">
+                    <q-btn
+                      v-if="this.multifactorEnabled === false"
+                      name="multifactorEnabled"
+                      @click="enablesMfa"
+                    >Enable MFA</q-btn>
+                    <q-btn
+                      v-else
+                      name="multifactorEnabled"
+                      @click="disableMfa"
+                    >Disable MFA</q-btn>
+                    </div>
+
+                  </q-tab-panel>
+
+                  <q-tab-panel name="search">
+                    <div class="text-h6">Search</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+                  <q-tab-panel name="background">
+                    <div class="text-h6">Background</div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  </q-tab-panel>
+                </q-tab-panels>
 
               </div>
 
@@ -72,10 +173,10 @@
 
         </div>
           </q-form>
-        <q-dialog v-model="showqrcode">
+        <!--<q-dialog v-model="showqrcode">
           <div style="background: #fff; padding: 20px;">
             <h5 style="margin-top: 0">{{ $t('mfa_header') }}</h5>
-            <p v-html="$t('mfa_above_qr', aboveqr)"></p>
+            <p v-html="$t('mfa_above_qr')"></p>
             <div class="flex flex-center"><img :src="qrcode" /></div>
             <p v-html="$t('mfa_below_qr')"></p>
             <q-input
@@ -86,7 +187,7 @@
             </q-input>
             <q-btn @click="sendTotp">Submit</q-btn>
           </div>
-        </q-dialog>
+        </q-dialog>-->
 
       </div>
 
@@ -127,7 +228,8 @@ export default {
       multifactorEnabled: false,
       qrcode: null,
       showqrcode: null,
-      aboveqr: {
+      tab: 'general',
+      mfalinks: {
         link1: '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
         link2: '<a href="https://authy.com/">Authy</a>'
       }
@@ -270,6 +372,12 @@ export default {
 }
 </script>
 <style lang="scss">
+.qr-section {
+  display: flex;
+  img {
+    margin-right: 40px;
+  }
+}
   .useractions {
     position: absolute;
     right: 0;
@@ -298,10 +406,30 @@ export default {
     margin: 0 20px;
     width: 100%;
     max-width: 320px;
+    .q-list {
+      background: #f3f4f4;
+      box-shadow: 0 0 10px #0000000f;
+      border-radius: 4px;
+      border-top: 1px solid #fdfdfd;
+      border-bottom: 1px solid #d2d2d2;
+    }
+    .q-item {
+      min-height: 65px;
+    }
   }
   .user-options {
-    width: 100%;
-    max-width: 320px;
+    flex: 1;
+    margin: 0 20px;
+    .q-tab-panels {
+      background: #f3f4f4;
+      box-shadow: 0 0 10px #0000000f;
+      border-radius: 4px;
+      border-top: 1px solid #fdfdfd;
+      border-bottom: 1px solid #d2d2d2;
+      .q-tab-panel {
+        padding: 25px 40px;
+      }
+    }
   }
   .user-image {
     max-width: 200px;
@@ -310,13 +438,14 @@ export default {
     padding: 6px;
   }
   .userform {
-    padding: 0 70px 0 0;
+    padding: 0 75px 0 0;
     overflow: hidden;
   }
   .create {
     padding: 30px 0;
   }
   .userdetails {
+    background: #e6e8e8;
     position: absolute;
     top: 0;
     left: 0;

@@ -31,7 +31,7 @@
           link="/"
         />
         <EssentialLink
-          :title="this.$t('applications')"
+          :title="this.$tc('application')"
           :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
           icon="apps"
           link="/account"
@@ -46,30 +46,70 @@
       </q-tab-panel>
 
       <q-tab-panel name="admin">
+        <q-expansion-item
+          group="admin"
+          icon="apps"
+          :label="this.$tc('application_management')"
+          :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
+          v-model="admin_apps"
+        >
+        <div class="sub-menu">
         <EssentialLink
-          :title="this.$t('applications')"
+          :title="this.$tc('application')"
           :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
           icon="apps"
-          link="/admin"
-        />
-        <EssentialLink
-          :title="this.$t('user_management')"
-          :caption="this.users + ' ' + this.$tc('user', this.users)"
-          icon="contacts"
-          link="/admin/user"
-        />
-        <EssentialLink
-          :title="this.$t('proxy_management')"
-          :caption="this.proxies + ' ' + this.$tc('proxy', this.proxies)"
-          icon="account_tree"
-          link="/admin/proxy"
+          link="/admin/application"
         />
         <EssentialLink
           :title="this.$t('settings')"
           :caption="this.settings + ' ' + this.$tc('setting', this.settings)"
           icon="settings"
-          link="/admin/settings"
+          link="/admin/application/settings"
         />
+        </div>
+        </q-expansion-item>
+
+        <q-expansion-item
+          group="admin"
+          icon="supervised_user_circle"
+          :label="this.$tc('user_management')"
+          :caption="this.users + ' ' + this.$tc('user', this.users)"
+          v-model="admin_users"
+        >
+        <div class="sub-menu">
+        <EssentialLink
+          icon="supervised_user_circle"
+          :title="this.$tc('user', 0)"
+          link="/admin/user"
+        />
+        <EssentialLink
+          :title="this.$t('settings')"
+          icon="settings"
+          link="/admin/user/settings"
+        />
+        </div>
+        </q-expansion-item>
+
+        <q-expansion-item
+          group="admin"
+          icon="account_tree"
+          :label="this.$tc('proxy_management')"
+          :caption="this.proxies + ' ' + this.$tc('app', this.proxies)"
+          v-model="admin_proxies"
+        >
+        <div class="sub-menu">
+        <EssentialLink
+          icon="account_tree"
+          :title="this.$tc('proxy_management')"
+          link="/admin/proxy"
+        />
+        <EssentialLink
+          icon="settings"
+          :title="this.$t('settings')"
+          link="/admin/proxy/settings"
+        />
+        </div>
+        </q-expansion-item>
 
       </q-tab-panel>
 
@@ -137,6 +177,33 @@ export default {
       set (val) {
         this.$store.commit('app/tab', val)
       }
+    },
+    activemenu () {
+      return this.$store.state.app.menu
+    },
+    admin_apps: {
+      get () {
+        return this.$store.state.app.admin_apps
+      },
+      set (val) {
+        this.$store.commit('app/adminApps', val)
+      }
+    },
+    admin_users: {
+      get () {
+        return this.$store.state.app.admin_users
+      },
+      set (val) {
+        this.$store.commit('app/adminUsers', val)
+      }
+    },
+    admin_proxies: {
+      get () {
+        return this.$store.state.app.admin_proxies
+      },
+      set (val) {
+        this.$store.commit('app/adminProxies', val)
+      }
     }
   },
 
@@ -175,6 +242,39 @@ export default {
       left: 0;
       right: 0;
       border-top: 1px solid #00000040;
+    }
+  }
+  .sub-menu {
+    background: #ffffff0a;
+    padding: 0;
+    box-shadow: inset 0 0 10px #0000005c;
+    .q-item__label {
+      color: #fff6;
+      text-transform: capitalize;
+    }
+    .q-item__section--side > .q-icon {
+      font-size: 18px;
+      color: #fff6;
+    }
+    .q-item {
+      padding: 10px 20px;
+      color: #fffc;
+    }
+    .q-item.q-router-link--active {
+      background: none;
+      .q-item__label {
+        font-weight: bold;
+        color: #ffffffb8;
+      }
+      .q-item__section--side > .q-icon {
+        color: #ffffffb8;
+      }
+
+    }
+  }
+  .q-drawer {
+    .q-expansion-item__border {
+      display: none;
     }
   }
 </style>

@@ -23,17 +23,19 @@ const routes = [
   },
 
   {
-    path: '/admin',
+    path: '/admin/application',
     component: () => import('layouts/Tiles.vue'),
     children: [
-      { path: '', component: () => import('pages/application/Index.vue') }
+      { path: '', component: () => import('pages/application/Index.vue') },
+      { path: 'settings', component: () => import('pages/application/Settings.vue') }
     ]
   },
   {
     path: '/admin/user',
     component: () => import('layouts/User.vue'),
     children: [
-      { path: '', component: () => import('pages/user/Index.vue') }
+      { path: '', component: () => import('pages/user/Index.vue') },
+      { path: 'settings', component: () => import('pages/user/Index.vue') }
     ]
   },
   {
@@ -47,7 +49,8 @@ const routes = [
     path: '/admin/proxy',
     component: () => import('layouts/User.vue'),
     children: [
-      { path: '', component: () => import('pages/proxy/Index.vue') }
+      { path: '', component: () => import('pages/proxy/Index.vue') },
+      { path: 'settings', component: () => import('pages/proxy/Index.vue') }
     ]
   }
 ]

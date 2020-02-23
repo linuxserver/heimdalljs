@@ -30,3 +30,13 @@ export function users (state, data) {
 export function tab (state, data) {
   state.tab = data
 }
+
+export function adminApps (state, data) {
+  state.admin_apps = data
+}
+export function adminUsers (state, data) {
+  state.admin_users = data
+}
+export function adminProxies (state, data) {
+  state.admin_proxies = data
+}
