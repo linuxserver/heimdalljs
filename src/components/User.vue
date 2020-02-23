@@ -1,7 +1,7 @@
 <template>
   <div class="list-user" :class="{ edit: this.edit }">
     <div class="icon">
-      <q-avatar size="76px" class="user-avatar">
+      <q-avatar size="76px" class="user-avatar bg-grey-4">
         <div class="avatar-resize"><img :src="avatar"></div>
       </q-avatar>
     </div>
