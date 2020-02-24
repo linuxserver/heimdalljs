@@ -119,7 +119,7 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
    * ALWAYS DELETE totp, this should only be set by the server.
    */
   delete req.body.totpSecret
-  console.log(req.body)
+
   // Begin process to set up and confirm multi-factor authentication
   if (req.user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
     const secret = Speakeasy.generateSecret()
