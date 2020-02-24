@@ -72,7 +72,7 @@ import MenuList from 'components/MenuList'
 import { version } from '../../package.json'
 
 export default {
-  name: 'UserLayout',
+  name: 'TilesLayout',
 
   components: {
     MenuList

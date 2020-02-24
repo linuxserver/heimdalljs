@@ -53,3 +53,11 @@ export function active (context, data) {
       active: data.active
     })
 }
+
+export function clear (context) {
+  context.commit('edit', {
+    id: null,
+    icon: null,
+    url: null
+  })
+}

@@ -3,6 +3,11 @@ export default function () {
     all: [],
     active: [],
     possibleapps: [],
-    create: false
+    create: false,
+    edit: {
+      id: null,
+      icon: null,
+      url: null
+    }
   }
 }

@@ -13,3 +13,7 @@ export function possibleapps (state, data) {
 export function create (state, data) {
   state.create = data
 }
+
+export function edit (state, data) {
+  state.edit = data
+}

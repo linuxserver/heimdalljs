@@ -16,9 +16,11 @@
 
     <div class="user_account">
       <img class="bg-image" :src="avatar" />
-      <q-avatar size="120px" class="user-avatar">
-        <div class="avatar-resize"><img :src="avatar"></div>
-      </q-avatar>
+      <div class="menu-avatar">
+        <q-avatar size="120px" class="user-avatar">
+          <div class="avatar-resize"><img :src="avatar"></div>
+        </q-avatar>
+      </div>
       <div class="drawer-user-details">
         <div class="name">{{ username }}</div>
         <div @click="logout" class="logout">Logout</div>
@@ -236,7 +238,7 @@ export default {
       color: #fff6;
     }
     .q-item {
-      padding: 10px 20px;
+      padding: 10px 28px;
       color: #fffc;
     }
     .q-item.q-router-link--active {

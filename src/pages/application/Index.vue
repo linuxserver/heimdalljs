@@ -21,10 +21,7 @@
         </app-item>
       </div>
     </div>
-
-    <q-dialog v-model="create">
-      <edit-tile :application="createapp"></edit-tile>
-    </q-dialog>
+    <edit-tile :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-tile>
 
   </q-page>
 </template>
@@ -72,6 +69,9 @@ export default {
   methods: {
     addApp: function () {
       this.$store.commit('tiles/create', true)
+    },
+    closecreate () {
+      this.$store.commit('tiles/create', false)
     }
   },
   mounted () {

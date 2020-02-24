@@ -44,7 +44,7 @@ export function save (context, data) {
 export function clear (context) {
   context.commit('edit', {
     id: null,
-    icon: null,
+    avatar: null,
     email: null,
     username: null,
     password: '',

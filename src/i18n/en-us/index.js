@@ -38,6 +38,7 @@ export default {
   application_name: 'Application name',
   application_type: 'Application type',
   colour: 'Color',
+  upload_file: 'Upload File',
   url: 'URL',
   Tags: 'Tags',
   optional: 'Optional',
