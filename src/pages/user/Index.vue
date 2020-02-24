@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex">
     <div class="page-container">
-      <div class="list-users flex-center fit">
+      <div class="list-users fit">
         <user
           v-for="user in users"
           :key="user.id"
@@ -60,5 +60,7 @@ export default {
   .list-users {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 40px 0;
   }
 </style>

@@ -4,82 +4,63 @@
         <q-scroll-area
             style="height: 100%;"
           >
-
-        <q-card-section class="">
-
-            <div id="create" class="create">
+            <div id="create" class="create fit">
               <div class="user-details">
+                  <div class="changephoto">
+                    Change Image
+                    <q-icon class="changephoto" size="30px" name="photo_camera" />
+                  </div>
+                    <q-avatar size="220px" style="background: #c1c1c1;" class="user-avatar">
+                      <div class="avatar-resize"><img :src="this.setavatar"></div>
+                    </q-avatar>
 
-                <q-list style="width:100%" separator>
-                  <q-item
-                    clickable
-                    v-ripple
-                    :active="tab === 'general'"
-                    @click="tab = 'general'"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="account_circle" />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Profile</q-item-label>
-                      <q-item-label caption>Update your profile details</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item
-                    clickable
-                    v-ripple
-                    :active="tab === 'mfa'"
-                    @click="tab = 'mfa'"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="lock" />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Multi-factor Authentication</q-item-label>
-                      <q-item-label caption>Increase the security on your account</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item
-                    clickable
-                    v-ripple
-                    :active="tab === 'search'"
-                    @click="tab = 'search'"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="search" />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Homepage search</q-item-label>
-                      <q-item-label caption>Configure search on the homepage</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                  <q-item
-                    clickable
-                    v-ripple
-                    :active="tab === 'background'"
-                    @click="tab = 'background'"
-                  >
-                    <q-item-section avatar>
-                      <q-icon name="image" />
-                    </q-item-section>
-                    <q-item-section>
-                      <q-item-label>Background Image</q-item-label>
-                      <q-item-label caption>Select background on homepage</q-item-label>
-                    </q-item-section>
-                  </q-item>
+                    <div v-if="changeavatar">
+                      <q-file outlined v-model="avatar" :label="this.$t('avatar')">
+                        <template v-slot:prepend>
+                          <q-icon name="attach_file" />
+                        </template>
+                      </q-file>
+                    </div>
 
-                </q-list>
+                    <div class="name">{{ user.username }}</div>
+                    <div class="email">{{ user.email }}</div>
 
               </div>
               <div class="user-options">
+                <q-tabs
+                  v-model="tab"
+                  indicator-color="purple"
+                  align="justify"
+                  inline-label
+                >
+                  <q-tab
+                    clickable
+                    v-ripple
+                    name="general"
+                    label="Profile"
+                  />
+                  <q-tab
+                    clickable
+                    v-ripple
+                    name="mfa"
+                    label="Security"
+                  />
+                  <q-tab
+                    clickable
+                    v-ripple
+                    name="search"
+                    label="Homepage search"
+                  />
+                  <q-tab
+                    clickable
+                    v-ripple
+                    name="background"
+                    label="Background Image"
+                  />
+                </q-tabs>
+
                 <q-tab-panels v-model="tab" animated class="">
                   <q-tab-panel name="general">
-                    <img class="user-image" :src="this.setavatar" />
-                    <q-file outlined v-model="avatar" :label="this.$t('avatar')">
-                      <template v-slot:prepend>
-                        <q-icon name="attach_file" />
-                      </template>
-                    </q-file>
 
                     <q-input
                       outlined
@@ -118,6 +99,7 @@
                           <div>
                         <p v-html="$t('mfa_above_qr')"></p>
                         <p v-html="$t('mfa_below_qr')"></p>
+                        <p v-html="$t('mfa_no_qr', { code: mfacode })"></p>
                         <q-input
                           outlined
                           v-model="totp"
@@ -159,7 +141,6 @@
 
             </div>
 
-        </q-card-section>
         </q-scroll-area>
         <div class="useractions" :class="{ active: actions }">
             <q-btn type="submit" flat>
@@ -229,6 +210,8 @@ export default {
       qrcode: null,
       showqrcode: null,
       tab: 'general',
+      changeavatar: false,
+      mfacode: null,
       mfalinks: {
         link1: '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
         link2: '<a href="https://authy.com/">Authy</a>'
@@ -276,6 +259,7 @@ export default {
       // console.log(save)
       if (save.data.status === 'confirm totp') {
         this.qrcode = save.data.qrcode
+        this.mfacode = '<strong>' + save.data.code + '</strong>'
       }
     },
     async disableMfa () {
@@ -347,11 +331,11 @@ export default {
         })
       }
     },
-    async closeCreate () {
+    closeCreate () {
       this.actions = false
-      setTimeout(function () {
+      setTimeout(async function () {
+        await this.$emit('closecreate')
         this.$store.dispatch('users/clear')
-        this.$emit('closecreate')
       }.bind(this), 300)
     },
     filterFn (val, update) {
@@ -372,12 +356,24 @@ export default {
 }
 </script>
 <style lang="scss">
-.qr-section {
-  display: flex;
-  img {
-    margin-right: 40px;
+  .qr-section {
+    display: flex;
+    img {
+      margin-right: 40px;
+    }
   }
-}
+  .changephoto {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background: #0002;
+    color: white;
+    top: 230px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    height: 50px;
+  }
   .useractions {
     position: absolute;
     right: 0;
@@ -402,33 +398,45 @@ export default {
       }
     }
   }
+
   .user-details {
-    margin: 0 20px;
+    margin: 0;
+    padding: 40px;
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
+    text-align: center;
+    position: relative;
     .q-list {
-      background: #f3f4f4;
-      box-shadow: 0 0 10px #0000000f;
-      border-radius: 4px;
-      border-top: 1px solid #fdfdfd;
-      border-bottom: 1px solid #d2d2d2;
     }
-    .q-item {
-      min-height: 65px;
+    .q-avatar {
+      margin-bottom: 15px;
+    }
+    .name {
+      margin: 0px 0;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .email {
+      font-size: 12px;
+      color: #a7a7a7;
+    }
+    .level {
+
     }
   }
   .user-options {
     flex: 1;
-    margin: 0 20px;
+    margin: 0;
+    min-height: calc(100vh - 76px);
+    background: #f3f4f4;
     .q-tab-panels {
       background: #f3f4f4;
-      box-shadow: 0 0 10px #0000000f;
-      border-radius: 4px;
-      border-top: 1px solid #fdfdfd;
-      border-bottom: 1px solid #d2d2d2;
       .q-tab-panel {
-        padding: 25px 40px;
+        padding: 40px 40px;
       }
+    }
+    .q-tab {
+      min-height: 70px;
     }
   }
   .user-image {
@@ -442,7 +450,6 @@ export default {
     overflow: hidden;
   }
   .create {
-    padding: 30px 0;
   }
   .userdetails {
     background: #e6e8e8;
@@ -462,5 +469,8 @@ export default {
       flex-direction: column;
       justify-content: space-between;
     }
+    /* .scroll > .absolute {
+      height: 100%;
+    } */
   }
 </style>

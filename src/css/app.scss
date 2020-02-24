@@ -3,6 +3,7 @@
 $grey1: #e6e8e8;
 $darkborder: #cbccce;
 $brand: #5e3267;
+$brand2: #724c7a;
 
 .text-brand {
     color: #5e3267;
@@ -16,7 +17,9 @@ $brand: #5e3267;
 .bg-brand2 {
     background: #724c7a;
 }
-
+.flex-center {
+    align-content: center;
+}
 body {
   color: #585858;
 }
@@ -465,10 +468,22 @@ div.create {
     .user-avatar {
         box-shadow: 0 0 30px 15px #00000038;
     }
+    .q-tab--active .q-tab__indicator {
+        color: #ffffff6e !important;
+    }
+    
 }
-.q-tab--active .q-tab__indicator {
-    color: #ffffff6e !important;
+.page-container, .userdetails {
+    a {
+        color: $brand2;
+        font-weight: bold;
+        text-decoration: none;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
+
 .q-item__section--avatar {
     min-width: 46px;
 }
@@ -517,13 +532,25 @@ div.create {
 }
 
 .user_account {
-    padding: 20px;
+    padding: 0px;
     position: relative;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 175px;
+    .drawer-user-details {
+        display: flex;
+        flex-direction: column;
+        width: calc(42% - 20px);
+        margin-left: 20px;
+        align-items: center;
+        .name {
+            color: #ffffffd1;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    }
     .bg-image {
         filter: grayscale(100%) opacity(9%) ;
         position: absolute;
@@ -539,3 +566,11 @@ div.create {
     }
 }
 
+.logout {
+    position: relative;
+    cursor: pointer;
+    padding: 2px 6px;
+    background: #fff3;
+    color: white;
+    border-radius: 4px;
+}

@@ -1,5 +1,5 @@
 <template>
-<q-scroll-area style="height: calc(100% - 72px) !important" class="fit">
+<q-scroll-area style="" class="fit">
   <q-list>
     <q-tabs
       v-model="activetab"
@@ -19,6 +19,10 @@
       <q-avatar size="120px" class="user-avatar">
         <div class="avatar-resize"><img :src="avatar"></div>
       </q-avatar>
+      <div class="drawer-user-details">
+        <div class="name">{{ username }}</div>
+        <div @click="logout" class="logout">Logout</div>
+      </div>
     </div>
 
    <q-separator />
@@ -56,13 +60,11 @@
         <div class="sub-menu">
         <EssentialLink
           :title="this.$tc('application')"
-          :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
           icon="apps"
           link="/admin/application"
         />
         <EssentialLink
           :title="this.$t('settings')"
-          :caption="this.settings + ' ' + this.$tc('setting', this.settings)"
           icon="settings"
           link="/admin/application/settings"
         />
@@ -117,19 +119,6 @@
 
   </q-list>
 
-  <div @click="logout" class="toolbar fixed-bottom">
-    <q-item class="logout">
-      <q-item-section avatar>
-        <q-icon name="logout" />
-      </q-item-section>
-
-      <q-item-section>
-        <q-item-label>{{ $t('logout') }}</q-item-label>
-        <q-item-label caption>{{ username }}</q-item-label>
-      </q-item-section>
-    </q-item>
-
-  </div>
 </q-scroll-area>
 </template>
 
@@ -165,6 +154,9 @@ export default {
     },
     username () {
       return this.$store.state.app.user.username
+    },
+    email () {
+      return this.$store.state.app.user.email
     },
     avatar () {
       const user = this.$store.state.app.user
@@ -230,19 +222,6 @@ export default {
     width: 70px;
     bottom: 0;
     background: rgba(0,0,0,0.15);
-  }
-  .logout {
-    border-top: 1px solid #ffffff12;
-    position: relative;
-    cursor: pointer;
-    &:after {
-      content: "";
-      position: absolute;
-      top: -2px;
-      left: 0;
-      right: 0;
-      border-top: 1px solid #00000040;
-    }
   }
   .sub-menu {
     background: #ffffff0a;
