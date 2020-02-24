@@ -70,7 +70,6 @@
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
 
-            <div class="input">
                 <q-input
                   outlined
                   v-model="title"
@@ -78,8 +77,6 @@
                   class="my-input"
                 >
                 </q-input>
-            </div>
-            <div class="input">
                 <q-select
                 outlined
                 :options="possibleapps"
@@ -89,9 +86,6 @@
                 :label="this.$t('application_type')"
                 v-model="applicationtype"
                 ></q-select>
-            </div>
-
-            <div class="input" style="position: relative;">
                 <q-input
                   outlined
                   v-model="color"
@@ -106,9 +100,6 @@
                     </q-icon>
                   </template>
                 </q-input>
-            </div>
-
-            <div class="input">
                 <q-input
                   outlined
                   v-model="url"
@@ -116,9 +107,7 @@
                   :label="this.$t('url')"
                 >
                 </q-input>
-            </div>
 
-            <div class="input double">
                 <q-select
                   :label="this.$t('Tags')"
                   outlined
@@ -131,9 +120,6 @@
                   use-chips
                   @filter="filterFn"
                 />
-            </div>
-
-            <div class="input">
                 <div class="icon-container">
                     <div id="appimage">
                       <img style="width: 140px" :src="icon" />
@@ -142,7 +128,6 @@
                        <q-file outlined ref="icon" v-model="icon" label="Icon" />
                     </div>
                 </div>
-            </div>
 
             <div class="input">
               <label>Preview</label>
