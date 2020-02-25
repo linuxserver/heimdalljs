@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout v-if="user.level === 0" view="lHh Lpr lFf">
     <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
         <q-btn
@@ -69,6 +69,9 @@ export default {
   computed: {
     allusers: function () {
       return this.$store.state.users.all
+    },
+    user () {
+      return this.$store.state.app.user
     },
     users: function () {
       if (this.selecteduser !== null) {

@@ -10,7 +10,7 @@
       narrow-indicator
     >
       <q-tab class="bigtab" name="user" label="User" />
-      <q-tab class="bigtab" name="admin" label="Admin" />
+      <q-tab v-if="user.level === 0" class="bigtab" name="admin" label="Admin" />
     </q-tabs>
     <q-separator />
 
@@ -51,7 +51,7 @@
 
       </q-tab-panel>
 
-      <q-tab-panel name="admin">
+      <q-tab-panel v-if="user.level === 0" name="admin">
         <q-expansion-item
           group="admin"
           icon="apps"
@@ -157,6 +157,9 @@ export default {
     username () {
       return this.$store.state.app.user.username
     },
+    user () {
+      return this.$store.state.app.user
+    },
     email () {
       return this.$store.state.app.user.email
     },
@@ -166,9 +169,15 @@ export default {
     },
     activetab: {
       get () {
+        if (this.user.level !== 0) {
+          return 'user'
+        }
         return this.$store.state.app.tab
       },
       set (val) {
+        if (this.user.level !== 0) {
+          val = 'user'
+        }
         this.$store.commit('app/tab', val)
       }
     },

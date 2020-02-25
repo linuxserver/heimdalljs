@@ -1,6 +1,6 @@
 <template>
   <section class="item-container ui-sortable-handle" :class="{ preview: preview }" :data-id="this.$attrs.id">
-    <div class="item" :style="'background-color: ' + this.application.color + '; color: ' + textColor + ''">
+    <div class="item" :style="'background-color: ' + bgColor + '; color: ' + textColor + ''">
       <img class="app-icon" :src="this.application.icon">
       <div class="details">
         <div class="title white">{{ application.title }}</div>
@@ -33,6 +33,12 @@ export default {
       const a = parseFloat(parseInt((parseInt(alpha, 16) / 255) * 1000) / 1000)
       const brightness = r * 0.299 + g * 0.587 + b * 0.114 + (1 - a) * 255
       return brightness > 186 ? darkColor : lightColor
+    },
+    bgColor () {
+      if (this.application.color !== 'null' && this.application.color !== null) {
+        return this.application.color
+      }
+      return '#222222'
     },
     preview () {
       return this.application.preview

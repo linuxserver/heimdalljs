@@ -73,8 +73,8 @@ export default {
       leftDrawerOpen: false,
       version: version,
       filter: null,
-      // background: '',
-      background: 'background-image: url(statics/bg/bg11.jpg)'
+      background: ''
+      // background: 'background-image: url(statics/bg/bg11.jpg)'
     }
   },
 
