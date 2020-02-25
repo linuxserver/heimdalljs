@@ -49,8 +49,10 @@ export function save (context, data) {
 
 export function active (context, data) {
   return axios
-    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, {
-      active: data.active
+    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     })
 }
 

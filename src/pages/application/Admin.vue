@@ -75,8 +75,8 @@ export default {
     }
   },
   mounted () {
-    // this.$store.commit('app/tab', 'admin')
-    // this.$store.commit('app/adminApps', true)
+    this.$store.commit('app/tab', 'admin')
+    this.$store.commit('app/adminApps', true)
   }
 }
 </script>

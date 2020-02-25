@@ -9,7 +9,8 @@
     <div class="pinned">
       Active
       <q-icon
-        :name="this.application.pinned === '1' ? 'check_box' : 'check_box_outline_blank'"
+        @click="toggleActive"
+        :name="this.application.active === true ? 'check_box' : 'check_box_outline_blank'"
       />
     </div>
     <div class="actions">
@@ -65,6 +66,16 @@ export default {
     },
     hideBack: function () {
       this.showback = false
+    },
+    async toggleActive () {
+      const formData = new FormData()
+      formData.append('active', this.application.active === false)
+      const data = {
+        id: this.application.id,
+        data: formData
+      }
+      await this.$store.dispatch('tiles/active', data)
+      this.$store.dispatch('tiles/getApps')
     }
   }
 }

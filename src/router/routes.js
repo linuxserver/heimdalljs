@@ -26,7 +26,7 @@ const routes = [
     path: '/admin/application',
     component: () => import('layouts/Tiles.vue'),
     children: [
-      { path: '', component: () => import('pages/application/Index.vue') },
+      { path: '', component: () => import('pages/application/Admin.vue') },
       { path: 'settings', component: () => import('pages/application/Settings.vue') }
     ]
   },
