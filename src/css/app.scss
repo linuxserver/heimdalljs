@@ -115,7 +115,11 @@ h1 {
             margin-right: 15px;
         }    
     }
-    
+  &.preview {
+    .item {
+      margin: 20px 0;
+    }
+  } 
 }
 .svg-inline--fa {
     display: inline-block;
@@ -596,9 +600,9 @@ div.create {
     align-items: center;
     background: #00000059;
     color: #ffffffd1;
-    top: 90px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     z-index: 5;
     width: 120px;
     height: 120px;
@@ -607,6 +611,7 @@ div.create {
     font-weight: bold;
     font-size: 12px;
     text-transform: uppercase;
+    line-height: 1.4;
   }
   .useractions {
     position: absolute;
@@ -615,12 +620,12 @@ div.create {
     bottom: 0;
     width: 70px;
     background: #724c7a;
-    transform: translateX(80px);
+    transform: translateX(0);
     transition: all 0.3s;
     color: white;
     padding: 10px 0;
-    &.active {
-      transform: translateX(0);
+    &.inactive {
+      transform: translateX(80px);
     }
     button {
       padding: 10px 0;
@@ -640,6 +645,13 @@ div.create {
     max-width: 340px;
     text-align: center;
     position: relative;
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      button {
+        margin-bottom: 10px;
+      }
+    }
     .q-list {
     }
     .q-avatar {

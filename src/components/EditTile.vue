@@ -4,13 +4,14 @@
       <q-scroll-area style="height: 100%;">
         <div id="create" class="create fit">
           <div class="user-details">
-            <div @click="changeavatar = !changeavatar" class="changephoto">
-              <q-icon size="30px" name="photo_camera" />
-              Change Image
+            <div class="buttons">
+              <q-btn unelevated @click="applicationdialog = true" color="grey-5">Application</q-btn>
+              <q-btn unelevated @click="websitedialog = true" color="grey-5">Website</q-btn>
+              <q-btn unelevated color="grey-5">Docker</q-btn>
             </div>
-            <q-avatar size="220px" style="background: #c1c1c1;" class="user-avatar">
-              <div class="avatar-resize"><img :src="this.seticon"></div>
-            </q-avatar>
+            <tile
+              :application="preview"
+            ></tile>
 
             <div v-if="changeicon">
               <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
@@ -45,25 +46,19 @@
                 clickable
                 v-ripple
                 name="general"
-                label="Profile"
+                label="General"
+              />
+              <q-tab
+                clickable
+                v-ripple
+                name="image"
+                label="Look"
               />
               <q-tab
                 clickable
                 v-ripple
                 name="mfa"
                 label="Security"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="search"
-                label="Homepage search"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="background"
-                label="Background Image"
               />
             </q-tabs>
 
@@ -73,19 +68,43 @@
                 <q-input
                   outlined
                   v-model="title"
-                  :label="this.$t('application_name')"
+                  :label="this.$t('title')"
                   class="my-input"
                 >
                 </q-input>
+                <q-input
+                  outlined
+                  v-model="url"
+                  class="my-input"
+                  :label="this.$t('url')"
+                >
+                </q-input>
+
+                <q-input
+                  v-model="description"
+                  outlined
+                  type="textarea"
+                />
                 <q-select
-                outlined
-                :options="possibleapps"
-                option-value="appid"
-                option-label="name"
-                map-options
-                :label="this.$t('application_type')"
-                v-model="applicationtype"
-                ></q-select>
+                  :label="this.$t('Tags')"
+                  outlined
+                  v-model="tags"
+                  multiple
+                  :options="possibletags"
+                  use-input
+                  new-value-mode="add-unique"
+                  emit-value
+                  use-chips
+                  @filter="filterFn"
+                />
+
+              </q-tab-panel>
+
+              <q-tab-panel name="mfa">
+
+              </q-tab-panel>
+
+              <q-tab-panel name="image">
                 <q-input
                   outlined
                   v-model="color"
@@ -100,55 +119,12 @@
                     </q-icon>
                   </template>
                 </q-input>
-                <q-input
-                  outlined
-                  v-model="url"
-                  class="my-input"
-                  :label="this.$t('url')"
-                >
-                </q-input>
-
-                <q-select
-                  :label="this.$t('Tags')"
-                  outlined
-                  v-model="tags"
-                  multiple
-                  :options="possibletags"
-                  use-input
-                  new-value-mode="add-unique"
-                  emit-value
-                  use-chips
-                  @filter="filterFn"
-                />
                 <div class="icon-container">
-                    <div id="appimage">
-                      <img style="width: 140px" :src="icon" />
-                    </div>
                     <div class="upload-btn-wrapper">
                        <q-file outlined ref="icon" v-model="icon" label="Icon" />
                     </div>
                 </div>
 
-            <div class="input">
-              <label>Preview</label>
-              <tile
-                :application="preview"
-              ></tile>
-            </div>
-
-              </q-tab-panel>
-
-              <q-tab-panel name="mfa">
-
-              </q-tab-panel>
-
-              <q-tab-panel name="search">
-                <div class="text-h6">Search</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </q-tab-panel>
-              <q-tab-panel name="background">
-                <div class="text-h6">Background</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </q-tab-panel>
             </q-tab-panels>
 
@@ -166,6 +142,64 @@
         </q-btn>
       </div>
     </q-form>
+    <q-dialog v-model="applicationdialog">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Select Application</div>
+        </q-card-section>
+
+        <q-card-section style="width: 500px;" class="q-pt-none">
+          <q-select
+            outlined
+            :options="possibleapps"
+            option-value="appid"
+            option-label="name"
+            map-options
+            :label="this.$t('application_type')"
+            v-model="applicationtype"
+          ></q-select>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn unelevated label="Set" @click="setApplication" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="websitedialog">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Enter website address</div>
+        </q-card-section>
+        <q-card-section style="width: 500px;" class="q-pt-none">
+          <q-input
+            outlined
+            v-model="website"
+            :label="this.$t('website')"
+          ></q-input>
+          <q-btn flat label="Lookup" @click="getWebsiteData" color="primary" />
+
+          <div class="iconlist" v-if="websitedata">
+            <div
+              class="icon"
+              :class="{ selected: key === selectedwebsiteimage }"
+              v-for="(icon, key) in websitedata.icons"
+              :key="key"
+              @click="selectWebsiteImage(key)"
+            >
+              <img :src="icon" />
+            </div>
+          </div>
+
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -200,8 +234,9 @@ export default {
       return {
         color: this.color || '#222222',
         title: this.title,
-        icon: this.icon,
-        url: this.url
+        icon: this.seticon,
+        url: this.url,
+        preview: true
       }
     },
     tagsParse () {
@@ -211,6 +246,7 @@ export default {
       return JSON.parse(this.application.tags)
     },
     seticon () {
+      if (this.icon) return this.icon
       return (this.application.icon !== null) ? process.env.BACKEND_LOCATION + this.application.icon : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     }
   },
@@ -224,12 +260,19 @@ export default {
       tags: null,
       url: null,
       icon: null,
+      description: '',
       actions: false,
       possibletags: this.tagsParse,
       submitEmpty: false,
       submitResult: [],
       changeicon: false,
-      tab: 'general'
+      tab: 'general',
+      applicationdialog: false,
+      websitedialog: false,
+      dockerdialog: false,
+      websitedata: null,
+      selectedwebsiteimage: null,
+      website: null
     }
   },
 
@@ -279,6 +322,20 @@ export default {
         }
       })
     },
+    setApplication () {
+      this.title = this.applicationtype.name
+      this.description = this.applicationtype.description
+      this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
+    },
+    setWebsite () {
+      this.title = this.websitedata.title
+      this.description = this.websitedata.description
+      this.icon = this.websitedata.icons[this.selectedwebsiteimage]
+      this.url = this.website
+    },
+    selectWebsiteImage (key) {
+      this.selectedwebsiteimage = key
+    },
     closeCreate () {
       this.actions = false
       setTimeout(async function () {
@@ -287,15 +344,24 @@ export default {
       }.bind(this), 300)
     },
 
-    async getIcons () {
+    async getWebsiteData () {
       try {
-        const html = await fetch('https://cors-anywhere.herokuapp.com/' + this.url)
+        const websitedata = {}
+        const html = await fetch('https://cors-anywhere.herokuapp.com/' + this.website)
         // console.log(html)
         const parser = new DOMParser()
         const document = parser.parseFromString(await html.text(), 'text/html')
 
         const links = document.getElementsByTagName('link')
+        websitedata.title = document.getElementsByTagName('title')[0].innerText
+        const metas = document.getElementsByTagName('meta')
         const icons = []
+
+        for (let i = 0; i < metas.length; i++) {
+          if (metas[i].getAttribute('name') === 'description') {
+            websitedata.description = metas[i].getAttribute('content')
+          }
+        }
 
         for (let i = 0; i < links.length; i++) {
           const link = links[i]
@@ -324,14 +390,14 @@ export default {
                   // This is of course assuming the script is executing in the browser
                   // Node.js is a different story! As I would be using cheerio.js for parsing the html instead of document.
                   // Also you would use the response.headers object for Node.js below.
-                  console.log('link: ' + this.url)
+                  console.log('link: ' + this.website)
                   let finalBase = ''
-                  if (this.url.endsWith('/')) {
-                    const baseurl = this.url.split('/')
+                  if (this.website.endsWith('/')) {
+                    const baseurl = this.website.split('/')
                     baseurl.pop()
                     finalBase = baseurl.join('/')
                   } else {
-                    finalBase = this.url
+                    finalBase = this.website
                   }
 
                   let absoluteHref = finalBase
@@ -364,8 +430,9 @@ export default {
             }
           }
         }
-
-        console.log(icons)
+        websitedata.icons = icons
+        this.websitedata = websitedata
+        console.log(websitedata)
       } catch (e) {
         console.log(e)
       }
@@ -374,3 +441,20 @@ export default {
 
 }
 </script>
+<style lang="scss">
+  .iconlist {
+    display: flex;
+    flex-wrap: wrap;
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f1f1f1;
+      border: 4px solid #f1f1f1;
+      margin: 8px;
+      &.selected {
+        border: 4px solid #724c7a;
+      }
+    }
+  }
+</style>

@@ -35,7 +35,7 @@ export default {
   mfa_no_qr: 'If you have problems scanning the QR code, do a manual setup with code: {code}.',
   code: 'Code',
   // Edit / Create tiles
-  application_name: 'Application name',
+  name: 'Name',
   application_type: 'Application type',
   colour: 'Color',
   upload_file: 'Upload File',

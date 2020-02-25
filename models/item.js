@@ -32,7 +32,7 @@ class Item extends Model {
       },
       config: {
         type: DataTypes.TEXT
-      },
+      }/* ,
       tags: {
         type: DataTypes.TEXT,
         set (val) {
@@ -41,7 +41,7 @@ class Item extends Model {
         get () {
           return JSON.parse(this.tags)
         }
-      }
+      } */
     }, {
       sequelize,
       underscored: true,

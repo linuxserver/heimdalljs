@@ -57,6 +57,7 @@ export default {
         return this.$store.state.tiles.create
       },
       set (val) {
+        this.$store.dispatch('tiles/getPossibleApps')
         this.$store.commit('tiles/create', val)
       }
     }

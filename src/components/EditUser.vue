@@ -4,12 +4,12 @@
       <q-scroll-area style="height: 100%;">
         <div id="create" class="create fit">
           <div class="user-details">
-            <div @click="changeavatar = !changeavatar" class="changephoto">
-              <q-icon size="30px" name="photo_camera" />
-              Change Image
-            </div>
             <q-avatar size="220px" style="background: #c1c1c1;" class="user-avatar">
               <div class="avatar-resize"><img :src="this.setavatar"></div>
+              <div @click="changeavatar = !changeavatar" class="changephoto">
+                <q-icon size="30px" name="photo_camera" />
+                Change Image
+              </div>
             </q-avatar>
 
             <div v-if="changeavatar">
