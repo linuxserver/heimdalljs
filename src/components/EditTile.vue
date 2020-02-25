@@ -304,9 +304,24 @@ export default {
       }
       try {
         await this.$store.dispatch('tiles/save', data)
-        console.log('added')
+        await this.$store.dispatch('tiles/getApps')
+        await this.$store.dispatch('app/status')
+        this.$store.commit('tiles/create', false)
+        this.$q.notify({
+          type: 'positive',
+          message: 'Updated',
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
       } catch (e) {
-        console.log(e)
+        this.$q.notify({
+          type: 'negative',
+          message: this.$t(e.response.data.result),
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
       }
     },
     filterFn (val, update) {
@@ -337,11 +352,8 @@ export default {
       this.selectedwebsiteimage = key
     },
     closeCreate () {
-      this.actions = false
-      setTimeout(async function () {
-        await this.$emit('closecreate')
-        this.$store.dispatch('tiles/clear')
-      }.bind(this), 300)
+      this.$emit('closecreate')
+      this.$store.dispatch('tiles/clear')
     },
 
     async getWebsiteData () {

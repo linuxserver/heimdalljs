@@ -2,7 +2,7 @@
   <div class="list-item" :class="{ edit: this.showback === true}">
     <div class="list-item-inner">
       <div class="list-item-front">
-        <div class="icon"><img class="app-icon" :src="'http://heimdallmaster.test/storage/' + this.icon"></div>
+        <div class="icon"><img class="app-icon" :src="this.icon"></div>
         <div class="name">
           {{ this.application.title }}
           <span class="tags">Tags: {{ this.taglist }}</span>

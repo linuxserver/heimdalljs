@@ -218,7 +218,7 @@ export default {
       this.password = newdata.password
       this.multifactorEnabled = newdata.multifactorEnabled
     },
-    create: function (newdata, olddata) {
+    /* create: function (newdata, olddata) {
       if (newdata === true) {
         setTimeout(function () {
           this.actions = true
@@ -226,7 +226,7 @@ export default {
       } else {
         // this.actions = false
       }
-    },
+    }, */
     qrcode: function (newdata, olddata) {
       if (newdata !== null) {
         this.showqrcode = true
@@ -321,11 +321,8 @@ export default {
       }
     },
     closeCreate () {
-      this.actions = false
-      setTimeout(async function () {
-        await this.$emit('closecreate')
-        this.$store.dispatch('users/clear')
-      }.bind(this), 300)
+      this.$emit('closecreate')
+      this.$store.dispatch('users/clear')
     },
     filterFn (val, update) {
       update(() => {
