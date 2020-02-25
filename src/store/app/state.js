@@ -10,6 +10,12 @@ export default function () {
     tab: 'user',
     admin_apps: false,
     admin_users: false,
-    admin_proxies: false
+    admin_proxies: false,
+    settings: {
+      background: null,
+      show_usernames: 'no',
+      language: 'en-US',
+      app_version: null
+    }
   }
 }

@@ -16,9 +16,23 @@ export async function status (context) {
     if (response.data.status === 'setup') {
       context.commit('step', 1)
     }
+    // get settings
+    const settings = await getSettings()
+    context.commit('settings', settings)
+
+    // let mappedsettings = {}
+    /* settings.data.result.map(e => )
+    context.commit('background', settings.data.result.find(e => e.key === 'background_image'))
+    context.commit('show_usernames', settings.data.result.find(e => e.key === 'show_usernames'))
+    context.commit('language', settings.data.result.find(e => e.key === 'language'))
+    console.log(mappedsettings) */
+    // context.commit('show_usernames', response.data.result)
+
     // see if already logged in
     if (response.data.status === 'ok') {
       if (response.data.result !== null) {
+        context.dispatch('tiles/getApps', null, { root: true })
+        context.dispatch('users/getUsers', null, { root: true })
         context.commit('setLoginStatus', 'logged_in')
         context.commit('setUser', response.data.result)
       }
@@ -48,6 +62,15 @@ export async function setupUser (context, data) {
   } catch (e) {
   // axios returned a non-200 response
   }
+}
+
+export async function getSettings (context) {
+  const settings = await axios.get(process.env.BACKEND_LOCATION + 'settings')
+  let result = {}
+  settings.data.result.forEach(setting => {
+    result[setting.key] = setting.value
+  })
+  return result
 }
 
 export async function setDefaults (context, data) {

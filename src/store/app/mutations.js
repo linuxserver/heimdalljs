@@ -40,3 +40,7 @@ export function adminUsers (state, data) {
 export function adminProxies (state, data) {
   state.admin_proxies = data
 }
+
+export function settings (state, data) {
+  state.settings = data
+}

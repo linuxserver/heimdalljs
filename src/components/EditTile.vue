@@ -314,9 +314,8 @@ export default {
       }
       try {
         await this.$store.dispatch('tiles/save', data)
-        await this.$store.dispatch('tiles/getApps')
-        await this.$store.dispatch('app/status')
         this.$store.commit('tiles/create', false)
+        await this.$store.dispatch('app/status')
         this.$q.notify({
           type: 'positive',
           message: 'Updated',

@@ -35,7 +35,7 @@
                 >
                   <q-item-section avatar>
                     <q-avatar size="24px">
-                      <img :src="scope.opt.avatar || 'statics/heimdall-logo-white.svg'" />
+                      <img :src="backend + scope.opt.avatar || 'statics/heimdall-logo-white.svg'" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
@@ -85,11 +85,11 @@ export default {
       return this.$store.state.users.all
     },
     show_usernames () {
-      return this.$store.state.app.users !== null
+      return this.$store.state.app.settings.show_usernames === 'yes'
     },
     mainIcon () {
       if (this.icon !== null) {
-        return '<img class="avatar" src="' + this.icon + '" />'
+        return '<img class="avatar" src="' + process.env.BACKEND_LOCATION + this.icon + '" />'
       }
       return '<img class="avatar" src="statics/heimdall-logo-white.svg" />'
     },
@@ -112,7 +112,8 @@ export default {
       username: null,
       password: '',
       totp: null,
-      isPwd: true
+      isPwd: true,
+      backend: process.env.BACKEND_LOCATION
     }
   },
 
