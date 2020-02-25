@@ -5,7 +5,7 @@
         <div id="create" class="create fit">
           <div class="user-details">
             <div class="buttons">
-              <q-btn unelevated @click="applicationdialog = true" color="grey-5">Application</q-btn>
+              <q-btn unelevated @click="loadApplication" color="grey-5">Application</q-btn>
               <q-btn unelevated @click="websitedialog = true" color="grey-5">Website</q-btn>
               <q-btn unelevated color="grey-5">Docker</q-btn>
             </div>
@@ -277,6 +277,16 @@ export default {
   },
 
   watch: {
+    application: function (newdata, olddata) {
+      // console.log(newdata)
+      this.id = newdata.id
+      this.icon = newdata.icon
+      this.title = newdata.title
+      this.description = newdata.description
+      this.color = newdata.color
+      this.url = newdata.url
+    },
+
     create: function (newdata, olddata) {
       if (newdata === true) {
         setTimeout(function () {
@@ -337,6 +347,10 @@ export default {
         }
       })
     },
+    loadApplication () {
+      this.$store.dispatch('tiles/getPossibleApps')
+      this.applicationdialog = true
+    },
     setApplication () {
       this.title = this.applicationtype.name
       this.description = this.applicationtype.description
@@ -351,9 +365,11 @@ export default {
     selectWebsiteImage (key) {
       this.selectedwebsiteimage = key
     },
-    closeCreate () {
-      this.$emit('closecreate')
-      this.$store.dispatch('tiles/clear')
+    async closeCreate () {
+      await this.$emit('closecreate')
+      setTimeout(function () {
+        this.$store.dispatch('tiles/clear')
+      }.bind(this), 300)
     },
 
     async getWebsiteData () {

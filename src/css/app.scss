@@ -262,12 +262,20 @@ div.create {
     max-width: 900px;
     margin: 50px auto;
     .list-item {
+      margin: 5px;
+      display: flex;
+      background: #ffffff87;
+      padding: 20px;
+      box-shadow: 0 0 10px #0000000f;
+      border-radius: 4px;
+      border-top: 1px solid #fdfdfd;
+      border-bottom: 1px solid #d2d2d2;
+
         align-items: center;
         color: #000000b5;
         font-weight: bold;
         perspective: 1000px;
         min-height: 92px;
-        transition: all 0.6s;
         // position: relative;
         &.edit {
           z-index: 5;
@@ -321,52 +329,6 @@ div.create {
           flex-direction: column;
           padding: 0 15px;
         }
-    }
-    .list-item-inner {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s;
-      transform-style: preserve-3d;
-    }
-    .list-item-front, .list-item-back {
-      position: absolute;
-      left:0;
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      height: 100%;
-      -webkit-backface-visibility: hidden;
-      backface-visibility: hidden;
-      display: flex;
-      border-bottom: 1px solid #0000000f;
-    }
-    .list-item-front {
-        background: #fcfcfc;
-        align-items: center;
-        min-height: 92px;
-    }
-    .list-item-back {
-      background-color: #eaeaea;
-      min-height: 92px;
-      color: #505050;
-      transform: rotateX(180deg);
-      padding: 5px 20px;
-      justify-content: center;
-      .confirmation {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-      }
-      .close {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        cursor: pointer;
-      }
-      .inner {
-      }
     }
 }
 .no-items {

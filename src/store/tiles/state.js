@@ -7,7 +7,10 @@ export default function () {
     edit: {
       id: null,
       icon: null,
-      url: null
+      title: null,
+      description: null,
+      url: null,
+      color: null
     }
   }
 }

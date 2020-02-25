@@ -320,9 +320,11 @@ export default {
         })
       }
     },
-    closeCreate () {
-      this.$emit('closecreate')
-      this.$store.dispatch('users/clear')
+    async closeCreate () {
+      await this.$emit('closecreate')
+      setTimeout(function () {
+        this.$store.dispatch('users/clear')
+      }.bind(this), 300)
     },
     filterFn (val, update) {
       update(() => {
