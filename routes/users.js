@@ -111,7 +111,7 @@ router.put('/:id', upload.single('avatar'), async (req, res, next) => {
     })
   }
 
-  const user = User.findOne({
+  const user = await User.findOne({
     where: {
       id: req.params.id
     }
@@ -146,7 +146,8 @@ router.put('/:id', upload.single('avatar'), async (req, res, next) => {
 
     return res.json({
       status: 'confirm totp',
-      qrcode: qrcode
+      qrcode: qrcode,
+      code: secret.base32
     })
   } else if (user.multifactorEnabled === false && req.body.totp) {
     if (Speakeasy.totp.verify({
