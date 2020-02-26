@@ -5,6 +5,7 @@ const { User } = require('../models/index')
 const config = require('../config/config')
 const path = require('path')
 const Speakeasy = require('speakeasy')
+const axios = require('axios')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -112,6 +113,19 @@ router.get('/status', async (req, res, next) => {
     status: 'ok',
     result: status
   })
+})
+
+router.get('/cors/:url', async (req, res, next) => {
+  // if (!req.user) {
+  //   return res.status(401).json({
+  //     status: 'unauthorized',
+  //     result: null
+  //   })
+  // }
+
+  const response = await axios.get(req.params.url)
+
+  return res.send(response.data)
 })
 
 module.exports = router
