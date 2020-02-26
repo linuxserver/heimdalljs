@@ -116,12 +116,12 @@ router.get('/status', async (req, res, next) => {
 })
 
 router.get('/cors/:url', async (req, res, next) => {
-  // if (!req.user) {
-  //   return res.status(401).json({
-  //     status: 'unauthorized',
-  //     result: null
-  //   })
-  // }
+  if (!req.user) {
+    return res.status(401).json({
+      status: 'unauthorized',
+      result: null
+    })
+  }
 
   const response = await axios.get(req.params.url)
 
