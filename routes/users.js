@@ -41,6 +41,7 @@ router.get('/', async (req, res, next) => {
     result: users.map(user => ({
       id: user.id,
       username: user.username,
+      hasPassword: (user.password !== null),
       avatar: user.avatar,
       publicPage: _.get(user.options, 'publicPage', false)
     }))
