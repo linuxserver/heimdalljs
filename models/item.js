@@ -43,7 +43,7 @@ class Item extends Model {
           this.setDataValue('tags', val)
         },
         get () {
-          return this.tags.split(',')
+          return this.getDataValue('tags').split(',')
         }
       }
     }, {
