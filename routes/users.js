@@ -89,7 +89,7 @@ router.post('/', upload.single('avatar'), async (req, res, next) => {
   })
 })
 
-router.put('/', upload.single('avatar'), async (req, res, next) => {
+router.put('/:id', upload.single('avatar'), async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -102,8 +102,22 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
     delete req.body.level
   }
 
+  // only admins can edit other users
+  if (req.user.id !== req.params.id && req.user.level !== User.ADMIN) {
+    return res.status(401).json({
+      status: 'error',
+      result: 'unauthorized'
+    })
+  }
+
+  const user = User.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+
   if (req.body.currentPassword) {
-    if (!req.user.verifyPassword(req.body.currentPassword)) {
+    if (!user.verifyPassword(req.body.currentPassword)) {
       return res.status(400).json({
         status: 'error',
         result: 'incorrect_password'
@@ -121,11 +135,11 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
   delete req.body.totpSecret
 
   // Begin process to set up and confirm multi-factor authentication
-  if (req.user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
+  if (user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
     const secret = Speakeasy.generateSecret()
     const qrcode = await QRCode.toDataURL(secret.otpauth_url, { scale: 6 })
 
-    req.user.update({
+    user.update({
       totpSecret: secret.base32
     })
 
@@ -133,14 +147,14 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
       status: 'confirm totp',
       qrcode: qrcode
     })
-  } else if (req.user.multifactorEnabled === false && req.body.totp) {
+  } else if (user.multifactorEnabled === false && req.body.totp) {
     if (Speakeasy.totp.verify({
-      secret: req.user.totpSecret,
+      secret: user.totpSecret,
       encoding: 'base32',
-      token: parseInt(req.body.totp, 10),
+      token: parseInt(body.totp, 10),
       window: 0
     })) {
-      req.user.update({ multifactorEnabled: true })
+      user.update({ multifactorEnabled: true })
 
       return res.json({
         status: 'ok'
@@ -151,8 +165,8 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
       status: 'error',
       result: 'invalid_totp'
     })
-  } else if (req.user.multifactorEnabled === true && !!req.body.multifactorEnabled === false) {
-    req.user.update({
+  } else if (user.multifactorEnabled === true && !!req.body.multifactorEnabled === false) {
+    user.update({
       multifactorEnabled: false,
       totpSecret: null
     })
@@ -164,16 +178,16 @@ router.put('/', upload.single('avatar'), async (req, res, next) => {
     const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
     fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
 
-    if (req.user.avatar) {
+    if (user.avatar) {
       try {
-        fs.unlinkSync(path.join(config.uploadDir, req.user.avatar))
+        fs.unlinkSync(path.join(config.uploadDir, user.avatar))
       } catch (e) { }
     }
 
     req.body.avatar = `/avatars/${newAvatar}`
   }
 
-  await req.user.update(req.body)
+  await user.update(req.body)
 
   return res.json({
     status: 'ok'
