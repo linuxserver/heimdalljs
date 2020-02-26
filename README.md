@@ -18,7 +18,7 @@ By default both the server and frontend will be accessible on port 3000
 ```bash
 quasar dev
 ```
-Front end will be accessible on 8080
+Front end will be accessible on port 8080
 
 ### Lint the files
 ```bash
