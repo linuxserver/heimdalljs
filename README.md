@@ -6,7 +6,7 @@ An application management portal
 ```bash
 npm run setup
 ```
-When asketd where the backend server will live, the default `/` will work for most people, however, if you wish to run the app in development mode set it to `http://localhost:3000/`
+When asked where the backend server will live, the default `/` will work for most people, however, if you wish to run the app in development mode set it to `http://localhost:3000/`
 
 ### Run the backend server
 ```bash
