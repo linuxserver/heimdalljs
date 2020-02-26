@@ -153,7 +153,7 @@ router.put('/:id', upload.single('avatar'), async (req, res, next) => {
     if (Speakeasy.totp.verify({
       secret: user.totpSecret,
       encoding: 'base32',
-      token: parseInt(body.totp, 10),
+      token: parseInt(req.body.totp, 10),
       window: 0
     })) {
       user.update({ multifactorEnabled: true })
