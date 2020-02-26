@@ -33,7 +33,7 @@ export function save (context, data) {
       })
   } else {
     return axios
-      .put(process.env.BACKEND_LOCATION + 'users', data.user, {
+      .put(process.env.BACKEND_LOCATION + 'users/' + data.id, data.user, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -44,7 +44,7 @@ export function save (context, data) {
 export function clear (context) {
   context.commit('edit', {
     id: null,
-    icon: null,
+    avatar: null,
     email: null,
     username: null,
     password: '',

@@ -285,6 +285,8 @@ export default {
       this.description = newdata.description
       this.color = newdata.color
       this.url = newdata.url
+      this.applicationtype = newdata.applicationtype
+      this.possibletags = newdata.possibletags
     },
 
     create: function (newdata, olddata) {
@@ -302,12 +304,13 @@ export default {
     async onSubmit (evt) {
       const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
       const formData = new FormData()
-      formData.append('color', this.color)
-      formData.append('applicationType', applicationType)
-      formData.append('title', this.title)
-      formData.append('tags', this.tags)
-      formData.append('url', this.url)
-      formData.append('icon', this.icon)
+      if (this.color !== null) formData.append('color', this.color)
+      if (applicationType !== null) formData.append('applicationType', applicationType)
+      if (this.title !== null) formData.append('title', this.title)
+      if (this.tags !== null) formData.append('tags', this.tags.join(','))
+      if (this.url !== null) formData.append('url', this.url)
+      if (this.icon !== null) formData.append('icon', this.icon)
+      if (this.description !== null) formData.append('description', this.description)
       const data = {
         id: this.id,
         tile: formData
@@ -374,7 +377,7 @@ export default {
     async getWebsiteData () {
       try {
         const websitedata = {}
-        const html = await fetch('https://cors-anywhere.herokuapp.com/' + this.website)
+        const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + encodeURI(this.website))
         // console.log(html)
         const parser = new DOMParser()
         const document = parser.parseFromString(await html.text(), 'text/html')

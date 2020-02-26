@@ -60,6 +60,11 @@ export function clear (context) {
   context.commit('edit', {
     id: null,
     icon: null,
-    url: null
+    title: null,
+    description: '',
+    url: null,
+    color: null,
+    applicationtype: null,
+    possibletags: null
   })
 }

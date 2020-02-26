@@ -1,6 +1,6 @@
 <template>
   <div class="list-item" :class="{ edit: this.showback === true}">
-    <div class="icon"><img class="app-icon" :src="this.application.icon"></div>
+    <div class="icon"><img class="app-icon" :src="appIcon"></div>
     <div class="name">
       {{ this.application.title }}
       <span class="tags">Tags: {{ this.taglist }}</span>
@@ -44,6 +44,9 @@ export default {
         icon: this.icon,
         url: this.url
       }
+    },
+    appIcon () {
+      return process.env.BACKEND_LOCATION + this.application.icon
     }
   },
   data () {

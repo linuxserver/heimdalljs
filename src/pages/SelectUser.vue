@@ -14,7 +14,10 @@
       <q-form @submit="onSubmit" class="">
       <q-page class="flex flex-center" style="padding: 30px;">
         <q-card class="user-signin">
-          <div class="avatar-container flex flex-center" v-html="mainIcon">
+          <div class="menu-avatar avatar-container flex flex-center">
+            <q-avatar size="150px" class="user-avatar">
+              <div class="avatar-resize" v-html="mainIcon"></div>
+            </q-avatar>
           </div>
           <div class="sign-in-container">
             <q-select
@@ -35,7 +38,7 @@
                 >
                   <q-item-section avatar>
                     <q-avatar size="24px">
-                      <img :src="backend + scope.opt.avatar || 'statics/heimdall-logo-white.svg'" />
+                      <img class="selectuseravatar" :src="getIcon(scope.opt.avatar)" />
                     </q-avatar>
                   </q-item-section>
                   <q-item-section>
@@ -50,7 +53,7 @@
               <q-btn @click="selectUser" unelevated color="cyan-5" style="width: 50%;" class="">View public page</q-btn>
               <span class="or"><span>or</span></span>
             </div>
-            <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
+            <q-input v-if="hasPassword" v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
               <template v-slot:append>
                 <q-icon
                   :name="isPwd ? 'visibility_off' : 'visibility'"
@@ -88,14 +91,20 @@ export default {
       return this.$store.state.app.settings.show_usernames === 'yes'
     },
     mainIcon () {
-      if (this.icon !== null) {
-        return '<img class="avatar" src="' + process.env.BACKEND_LOCATION + this.icon + '" />'
+      if (this.selecteduser !== null) {
+        return '<img class="avatar" src="' + this.getIcon(this.selecteduser.avatar) + '" />'
       }
       return '<img class="avatar" src="statics/heimdall-logo-white.svg" />'
     },
     hasPublic () {
       if (this.selecteduser !== null && this.selecteduser.public === true) {
         return true
+      }
+      return false
+    },
+    hasPassword () {
+      if (this.selecteduser !== null) {
+        return this.selecteduser.hasPassword
       }
       return false
     },
@@ -118,6 +127,12 @@ export default {
   },
 
   methods: {
+    getIcon (icon) {
+      if (icon !== null && icon !== 'null') {
+        return this.backend + icon
+      }
+      return 'statics/heimdall-logo-white.svg'
+    },
     selectUser () {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
@@ -208,7 +223,10 @@ export default {
       position: relative;
       z-index: 1;
     }
-
   }
+    .selectuseravatar {
+      padding: 3px;
+      background: #724c7a;
+    }
 
 </style>

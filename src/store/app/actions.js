@@ -66,7 +66,7 @@ export async function setupUser (context, data) {
 
 export async function getSettings (context) {
   const settings = await axios.get(process.env.BACKEND_LOCATION + 'settings')
-  let result = {}
+  const result = {}
   settings.data.result.forEach(setting => {
     result[setting.key] = setting.value
   })
@@ -141,4 +141,5 @@ export function logout (context) {
     expires: 3600
   })
   context.commit('logout')
+  this.$router.push('/')
 }

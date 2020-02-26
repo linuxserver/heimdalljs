@@ -8,9 +8,11 @@ export default function () {
       id: null,
       icon: null,
       title: null,
-      description: null,
+      description: '',
       url: null,
-      color: null
+      color: null,
+      applicationtype: null,
+      possibletags: null
     }
   }
 }

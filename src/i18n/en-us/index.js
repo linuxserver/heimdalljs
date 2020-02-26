@@ -27,6 +27,8 @@ export default {
   proxy: 'proxy | proxies',
   item: 'item | items',
   logout: 'Logout',
+  website: 'Website',
+  title: 'Title',
   no_apps: 'There are currently no applications',
   mfa_header: 'Set up two factor authentication using TOTP',
   mfa_intro: 'Enabling this option will allow you to use an authentication app that supports TOTP Codes, if you don\'t already have one, we recommend either {link1} or {link2}.',

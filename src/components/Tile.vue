@@ -1,7 +1,7 @@
 <template>
   <section class="item-container ui-sortable-handle" :class="{ preview: preview }" :data-id="this.$attrs.id">
     <div class="item" :style="'background-color: ' + bgColor + '; color: ' + textColor + ''">
-      <img class="app-icon" :src="this.application.icon">
+      <img class="app-icon" :src="appIcon">
       <div class="details">
         <div class="title white">{{ application.title }}</div>
       </div>
@@ -22,7 +22,7 @@ export default {
 
   computed: {
     textColor () {
-      const bgColor = this.application.color
+      const bgColor = this.bgColor
       const lightColor = '#ffffff'
       const darkColor = '#000000'
       const color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor
@@ -42,6 +42,9 @@ export default {
     },
     preview () {
       return this.application.preview
+    },
+    appIcon () {
+      return process.env.BACKEND_LOCATION + this.application.icon
     }
   },
 
