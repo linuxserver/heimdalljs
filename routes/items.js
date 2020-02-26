@@ -6,6 +6,8 @@ const upload = multer({ dest: require('../config/config').uploadDir })
 const path = require('path')
 const fs = require('fs')
 const config = require('../config/config')
+const axios = require('axios')
+const FileType = require('file-type')
 
 /* GET users listing. */
 router.get('/', async (req, res, next) => {
@@ -40,6 +42,20 @@ router.post('/', upload.single('icon'), async (req, res, next) => {
     const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
     fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newIcon))
     req.body.icon = `/icons/${newIcon}`
+  } else if (req.body.icon) {
+    try {
+      const iconFile = await axios.get(req.body.icon, { responseType: 'arraybuffer' })
+      const fileType = await FileType.fromBuffer(iconFile.data)
+      const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+
+      fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
+      req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+    } catch (e) {
+      return res.status(500).json({
+        status: 'error',
+        result: 'Failed to retrieve icon image'
+      })
+    }
   }
 
   const item = await Item.create({
@@ -90,6 +106,26 @@ router.put('/:id', upload.single('icon'), async (req, res, next) => {
       try {
         fs.unlinkSync(path.join(config.uploadDir, item.icon))
       } catch (e) { }
+    }
+  } else if (req.body.icon) {
+    try {
+      const iconFile = await axios.get(req.body.icon, { responseType: 'arraybuffer' })
+      const fileType = await FileType.fromBuffer(iconFile.data)
+      const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+
+      fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
+      req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+
+      if (item.icon) {
+        try {
+          fs.unlinkSync(path.join(config.uploadDir, item.icon))
+        } catch (e) { }
+      }
+    } catch (e) {
+      return res.status(500).json({
+        status: 'error',
+        result: 'Failed to retrieve icon image'
+      })
     }
   }
 
