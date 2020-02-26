@@ -32,16 +32,20 @@ class Item extends Model {
       },
       config: {
         type: DataTypes.TEXT
-      }/* ,
+      },
       tags: {
         type: DataTypes.TEXT,
         set (val) {
-          this.setDataValue('tags', JSON.stringify(val))
+          if (typeof val !== 'string') {
+            val = val.join(',')
+          }
+
+          this.setDataValue('tags', val)
         },
         get () {
-          return JSON.parse(this.tags)
+          return this.tags.split(',')
         }
-      } */
+      }
     }, {
       sequelize,
       underscored: true,
