@@ -2,15 +2,23 @@
 
 An application management portal
 
-## Install the dependencies
+## Install
 ```bash
-yarn
+npm run setup
 ```
+When asketd where the backend server will live, the default `/` will work for most people, however, if you wish to run the app in development mode set it to `http://localhost:3000/`
+
+### Run the backend server
+```bash
+npm run server
+```
+By default both the server and frontend will be accessible on port 3000
 
 ### Start the app in development mode (hot-code reloading, error reporting, etc.)
 ```bash
 quasar dev
 ```
+Front end will be accessible on 8080
 
 ### Lint the files
 ```bash
@@ -21,6 +29,3 @@ yarn run lint
 ```bash
 quasar build
 ```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
