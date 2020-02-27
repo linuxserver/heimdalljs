@@ -83,6 +83,33 @@ export async function setDefaults (context, data) {
   context.commit('step', 3)
 }
 
+export async function saveSettings (context, data) {
+  try {
+    const response = await axios.put(process.env.BACKEND_LOCATION + 'settings', data)
+    if (response.data.status === 'ok') {
+      const settings = { ...context.state.settings }
+      const update = Object.assign(settings, data)
+      context.commit('settings', update)
+
+      Notify.create({
+        type: 'positive',
+        message: `Setting updated`,
+        progress: true,
+        position: 'bottom',
+        timeout: 1500
+      })
+    }
+  } catch (e) {
+    Notify.create({
+      type: 'negative',
+      message: `Could not update setting`,
+      progress: true,
+      position: 'bottom',
+      timeout: 1500
+    })
+  }
+}
+
 export function setupComplete (context) {
   LocalStorage.remove('heimdall_setup')
   console.log('finish')

@@ -1,44 +1,102 @@
 <template>
   <q-page class="flex">
-    <div class="page-container">
-      <!--<div class="bg"></div>
-      <div class="add-new">
-        <div class="item">Docker Container</div>
-        <div class="item">Application</div>
-        <div class="item">Link</div>
-      </div>-->
-      <div class="list-items">
-        <div class="no-items" v-if="applications.length < 1">
-          {{ this.$t('no_apps') }}
-          <q-btn style="margin-top:30px;" @click="create = true" unelevated color="brand">Add New</q-btn>
-        </div>
-        <app-item
-          v-else
-          v-for="application in applications"
-          :key="application.id"
-          :application="application"
-        >
-        </app-item>
-      </div>
-    </div>
+    <div class="tab-list">
+      <q-list>
+        <q-item :class="{ active: tab === 'general' }" @click="tab = 'general'" clickable>
+          <q-item-section>
+            <q-item-label>General Settings</q-item-label>
+            <q-item-label caption>Choose general system settings</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item :class="{ active: tab === 'search' }" @click="tab = 'search'" clickable>
+          <q-item-section>
+            <q-item-label>Search settings</q-item-label>
+            <q-item-label caption>Select which search engines to use</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item :class="{ active: tab === 'dashboard' }" @click="tab = 'dashboard'" clickable>
+          <q-item-section>
+            <q-item-label>Dashboard</q-item-label>
+            <q-item-label caption>Settings for the dashboard</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
 
-    <q-dialog v-model="create">
-      <edit-tile :application="createapp"></edit-tile>
-    </q-dialog>
+    </div>
+    <div class="page">
+      <q-tab-panels v-model="tab" animated class="">
+        <q-tab-panel name="general">
+          <q-select
+            outlined
+            :options="languages"
+            :label="this.$t('select_language')"
+            option-value="value"
+            option-label="label"
+            v-model="language"
+            map-options
+          ></q-select>
+
+          <q-select
+            outlined
+            :options="username_options"
+            :label="this.$t('show_usernames')"
+            option-value="value"
+            option-label="label"
+            v-model="show_usernames"
+            map-options
+          ></q-select>
+
+        </q-tab-panel>
+        <q-tab-panel name="search">
+          <h6>Search</h6>
+          <q-select
+            outlined
+            :options="showsearch_options"
+            :label="this.$t('show_search')"
+            option-value="value"
+            option-label="label"
+            v-model="showsearch"
+          ></q-select>
+
+          <h6>Search Providers</h6>
+          <div class="search-providers">
+            <div class="active providers">
+              Active
+              <ul class="">
+                <li>Application</li>
+                <li>Google</li>
+                <li>DuckDuckGo</li>
+                <li>Qwant</li>
+              </ul>
+            </div>
+            <div class="inactive providers">
+              Inactive
+              <ul class="">
+                <li>Bing</li>
+                <li>Startpage</li>
+                <li>NZBHydra</li>
+              </ul>
+            </div>
+          </div>
+          List of providers
+          add a new providers
+          default
+        </q-tab-panel>
+        <q-tab-panel name="dashboard">
+          Background type - image, color, gradient
+        </q-tab-panel>
+      </q-tab-panels>
+    </div>
 
   </q-page>
 </template>
 
 <script>
-import EditTile from 'components/EditTile'
-import AppItem from 'components/AppItem'
 
 export default {
   name: 'Settings',
 
   components: {
-    AppItem,
-    EditTile
   },
 
   props: ['applications', 'allapps'],
@@ -55,6 +113,26 @@ export default {
         icon: 'statics/img/heimdall-icon-small.png'
       }
     },
+    show_usernames: {
+      get () {
+        return this.$store.state.app.settings.show_usernames
+      },
+      set (val) {
+        this.$store.dispatch('app/saveSettings', {
+          show_usernames: val.value
+        })
+      }
+    },
+    language: {
+      get () {
+        return this.$store.state.app.settings.language
+      },
+      set (val) {
+        this.$store.dispatch('app/saveSettings', {
+          language: val.value
+        })
+      }
+    },
     create: {
       get () {
         return this.$store.state.tiles.create
@@ -67,6 +145,38 @@ export default {
 
   data () {
     return {
+      tab: 'general',
+      username_options: [
+        {
+          label: this.$t('username_yes'),
+          value: 'yes'
+        },
+        {
+          label: this.$t('username_no'),
+          value: 'no'
+        }
+      ],
+      showsearch: null,
+      showsearch_options: [
+        {
+          label: this.$t('yes'),
+          value: 'yes'
+        },
+        {
+          label: this.$t('no'),
+          value: 'no'
+        }
+      ],
+      languages: [
+        {
+          value: 'en-us',
+          label: 'English (US)'
+        },
+        {
+          value: 'en-gb',
+          label: 'English (British)'
+        }
+      ]
     }
   },
   methods: {

@@ -601,11 +601,62 @@ div.create {
     }
   }
 
+  .tab-list {
+    margin: 0;
+    width: 100%;
+    max-width: 320px;
+    position: relative;
+    .q-item {
+      padding: 18px 40px;
+      &.active {
+        background: #00000008;
+      }
+    }
+  }
+  .page {
+    background: #ffffff57;
+    flex:1;
+    h6 {
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    .q-tab-panels {
+      background: none;
+      .q-panel > div {
+        padding: 40px;
+      }
+    }
+  }
+
+  .search-providers {
+    display: flex;
+    margin-left: -10px;
+    margin-right: -10px;
+    .providers {
+      flex: 1;
+      margin: 10px;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border: 1px solid #0001;
+      margin: 10px 0;
+      flex: 1;
+      li {
+        padding: 20px;
+        border-bottom: 1px solid #0001;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
   .user-details {
     margin: 0;
     padding: 40px;
     width: 100%;
-    max-width: 340px;
+    max-width: 360px;
     text-align: center;
     position: relative;
     .buttons {
@@ -635,7 +686,7 @@ div.create {
   }
   .user-options {
     flex: 1;
-    margin: 0;
+    margin: 40px 40px 40px 0;
     min-height: calc(100vh - 76px);
     background: #f3f4f4;
     .q-tab-panels {
