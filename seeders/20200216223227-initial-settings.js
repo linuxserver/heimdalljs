@@ -26,6 +26,30 @@ module.exports = {
         value: null,
         created_at: new Date(),
         updated_at: new Date()
+      },
+      {
+        key: 'search_on_dashboard',
+        value: 'no',
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        key: 'search_provider',
+        value: null,
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        key: 'default_tag',
+        value: null,
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        key: 'default_public_page',
+        value: null,
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ])
   },
