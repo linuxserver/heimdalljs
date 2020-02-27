@@ -55,7 +55,8 @@
             :label="this.$t('show_search')"
             option-value="value"
             option-label="label"
-            v-model="showsearch"
+            v-model="search_on_dashboard"
+            map-options
           ></q-select>
 
           <h6>Search Providers</h6>
@@ -133,6 +134,16 @@ export default {
         })
       }
     },
+    search_on_dashboard: {
+      get () {
+        return this.$store.state.app.settings.search_on_dashboard
+      },
+      set (val) {
+        this.$store.dispatch('app/saveSettings', {
+          search_on_dashboard: val.value
+        })
+      }
+    },
     create: {
       get () {
         return this.$store.state.tiles.create
@@ -156,7 +167,6 @@ export default {
           value: 'no'
         }
       ],
-      showsearch: null,
       showsearch_options: [
         {
           label: this.$t('yes'),
