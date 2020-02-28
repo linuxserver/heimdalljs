@@ -282,16 +282,12 @@ export default {
       }
     },
     async onSubmit (evt) {
-      const formData = new FormData()
-      if (this.email !== null) formData.append('email', this.email)
-      formData.append('username', this.username)
-      if (this.password !== '') formData.append('password', this.password)
-      if (this.avatar !== null) formData.append('avatar', this.avatar)
-      /* const formData = {
-        email: this.email,
-        username: this.username,
-        password: this.password
-      } */
+      const formData = {
+        username: this.username
+      }
+      if (this.email !== null) formData.email = this.email
+      if (this.password !== '') formData.password = this.password
+      if (this.avatar !== null) formData.avatar = this.avatar
       const data = {
         id: this.id,
         user: formData

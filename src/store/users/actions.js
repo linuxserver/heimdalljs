@@ -26,18 +26,10 @@ export function save (context, data) {
   if (data.id === null) {
     console.log(data)
     return axios
-      .post(process.env.BACKEND_LOCATION + 'users', data.user, {
-        /* headers: {
-          'Content-Type': 'multipart/form-data'
-        } */
-      })
+      .post(process.env.BACKEND_LOCATION + 'users', data.user)
   } else {
     return axios
-      .put(process.env.BACKEND_LOCATION + 'users/' + data.id, data.user, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      .put(process.env.BACKEND_LOCATION + 'users/' + data.id, data.user)
   }
 }
 

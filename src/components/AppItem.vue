@@ -71,8 +71,9 @@ export default {
       this.showback = false
     },
     async toggleActive () {
-      const formData = new FormData()
-      formData.append('active', this.application.active === false)
+      const formData = {
+        active: (this.application.active === false)
+      }
       const data = {
         id: this.application.id,
         data: formData

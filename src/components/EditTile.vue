@@ -303,18 +303,21 @@ export default {
   methods: {
     async onSubmit (evt) {
       const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
-      const formData = new FormData()
-      if (this.color !== null) formData.append('color', this.color)
-      if (applicationType !== null) formData.append('applicationType', applicationType)
-      if (this.title !== null) formData.append('title', this.title)
-      if (this.tags !== null) formData.append('tags', this.tags.join(','))
-      if (this.url !== null) formData.append('url', this.url)
-      if (this.icon !== null) formData.append('icon', this.icon)
-      if (this.description !== null) formData.append('description', this.description)
+      const formData = {
+        title: this.title
+      }
+      if (this.color !== null) formData.color = this.color
+      if (applicationType !== null) formData.applicationType = applicationType
+      if (this.title !== null) formData.title = this.title
+      if (this.tags !== null) formData.tags = this.tags
+      if (this.url !== null) formData.url = this.url
+      if (this.icon !== null) formData.icon = this.icon
+      if (this.description !== null) formData.description = this.description
       const data = {
         id: this.id,
         tile: formData
       }
+      console.log(data)
       try {
         await this.$store.dispatch('tiles/save', data)
         this.$store.commit('tiles/create', false)

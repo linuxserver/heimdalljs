@@ -20,7 +20,7 @@ import Tile from 'components/Tile'
 export default {
   name: 'PageIndex',
 
-  props: ['filter'],
+  props: ['filter', 'searchfilter'],
 
   components: {
     Tile
@@ -28,10 +28,17 @@ export default {
 
   computed: {
     applications: function () {
+      let tiles = null
       if (this.filter === null) {
-        return this.$store.state.tiles.active
+        tiles = this.$store.state.tiles.active
       } else {
-        return this.$store.state.tiles.active.filter(a => a.tags.map(b => b.id).includes(this.filter))
+        tiles = this.$store.state.tiles.active.filter(a => a.tags.map(b => b.id).includes(this.filter))
+      }
+      console.log(tiles)
+      if (this.searchfilter === null) {
+        return tiles
+      } else {
+        return tiles.filter(v => v.title.toLowerCase().indexOf(this.searchfilter) > -1)
       }
     }
   },

@@ -3,6 +3,7 @@ import { Notify, Cookies, LocalStorage } from 'quasar'
 
 export async function status (context) {
   // Check to see if we are in setup
+  console.log('check status')
   const setup = LocalStorage.getItem('heimdall_setup')
   if (setup !== null) {
     context.commit('status', 'setup')
@@ -18,7 +19,10 @@ export async function status (context) {
     }
     // get settings
     const settings = await getSettings()
-    context.commit('settings', settings)
+    delete settings.search_provider // remove this once working
+    const currentsettings = { ...context.state.settings }
+    const update = Object.assign(currentsettings, settings)
+    context.commit('settings', update)
 
     // let mappedsettings = {}
     /* settings.data.result.map(e => )

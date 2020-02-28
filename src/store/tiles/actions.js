@@ -32,28 +32,16 @@ export function getPossibleApps (context, force = false) {
 export function save (context, data) {
   if (data.id === null) {
     return axios
-      .post(process.env.BACKEND_LOCATION + 'items', data.tile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      .post(process.env.BACKEND_LOCATION + 'items', data.tile)
   } else {
     return axios
-      .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.tile, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.tile)
   }
 }
 
 export function active (context, data) {
   return axios
-    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data)
 }
 
 export function clear (context) {

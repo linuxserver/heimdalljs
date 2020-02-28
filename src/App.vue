@@ -1,13 +1,13 @@
 <template>
   <div id="q-app">
-    <div v-if="status !== 'setup'">
+    <div v-if="status === 'setup'">
+      <setup></setup>
+    </div>
+    <div v-else>
       <div v-if="user === null">
         <select-user></select-user>
       </div>
       <router-view v-else />
-    </div>
-    <div v-else>
-      <setup></setup>
     </div>
   </div>
 </template>
@@ -36,9 +36,9 @@ export default {
     return {
     }
   },
-  mounted () {
+  async mounted () {
     console.log(this.user)
-    this.$store.dispatch('app/status')
+    await this.$store.dispatch('app/status')
     this.$store.dispatch('users/getUsers')
   }
 }
