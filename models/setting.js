@@ -9,16 +9,10 @@ class Setting extends Model {
       value: {
         type: DataTypes.STRING,
         get () {
-          const val = this.getDataValue('value')
-          try {
-            const retval = JSON.parse(val)
-            return retval
-          } catch (e) {
-            return val
-          }
+          return JSON.parse(this.getDataValue('value'))
         },
         set (val) {
-          this.setDataValue('value', typeof val === 'object' ? JSON.stringify(val) : val)
+          this.setDataValue('value', JSON.stringify(val))
         }
       }
     }, {
