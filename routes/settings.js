@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const { User, Setting } = require('../models/index')
 
-/* GET users listing. */
 router.get('/', async (req, res, next) => {
   const settings = await Setting.findAll()
 

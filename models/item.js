@@ -43,7 +43,8 @@ class Item extends Model {
           this.setDataValue('tags', val)
         },
         get () {
-          return this.getDataValue('tags').split(',')
+          const tags = this.getDataValue('tags')
+          return tags ? tags.split(',') : []
         }
       },
       system: {
