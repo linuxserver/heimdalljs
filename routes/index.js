@@ -134,7 +134,7 @@ router.get('/cors/:url*', errorHandler(async (req, res, next) => {
     })
   }
 
-  const response = await axios.get(req.params.url)
+  const response = await axios.get(req.url.replace('/cors/', ''))
 
   return res.send(response.data)
 }))
