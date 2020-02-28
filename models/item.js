@@ -36,15 +36,10 @@ class Item extends Model {
       tags: {
         type: DataTypes.TEXT,
         set (val) {
-          if (typeof val !== 'string') {
-            val = val.join(',')
-          }
-
-          this.setDataValue('tags', val)
+          this.setDataValue(JSON.stringify(val))
         },
         get () {
-          const tags = this.getDataValue('tags')
-          return tags ? tags.split(',') : []
+          return JSON.parse(this.getDataValue('tags'))
         }
       },
       system: {
