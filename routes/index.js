@@ -62,9 +62,6 @@ router.post('/login', async (req, res, next) => {
     updated: user.updatedAt.toString()
   }
 
-  /**
-   * @TODO: centralize signing token into config
-   */
   const token = jwt.sign(payload, config.jwtSecret, {
     expiresIn: 36000
   })
@@ -115,7 +112,7 @@ router.get('/status', async (req, res, next) => {
   })
 })
 
-router.get('/cors/:url', async (req, res, next) => {
+router.get('/cors/:url*', async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'unauthorized',
