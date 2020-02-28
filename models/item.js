@@ -39,7 +39,12 @@ class Item extends Model {
           this.setDataValue('tags', JSON.stringify(val))
         },
         get () {
-          return JSON.parse(this.getDataValue('tags'))
+          const tags = this.getDataValue('tags')
+          if (tags === undefined) {
+            return null
+          }
+
+          return JSON.parse(tags)
         }
       },
       system: {
