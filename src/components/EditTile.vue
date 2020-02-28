@@ -282,6 +282,7 @@ export default {
       this.id = newdata.id
       this.icon = newdata.icon
       this.title = newdata.title
+      this.tags = newdata.tags
       this.description = newdata.description
       this.color = newdata.color
       this.url = newdata.url

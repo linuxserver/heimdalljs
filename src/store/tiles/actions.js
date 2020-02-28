@@ -49,6 +49,7 @@ export function clear (context) {
     id: null,
     icon: null,
     title: null,
+    tags: null,
     description: '',
     url: null,
     color: null,

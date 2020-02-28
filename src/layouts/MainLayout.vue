@@ -73,7 +73,6 @@
           :name="search_provider.query"
         >
         </q-input>
-        <q-btn type="submit">Submit</q-btn>
         </q-form>
         </div>
 
