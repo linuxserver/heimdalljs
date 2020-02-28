@@ -8,15 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'users',
-          key: 'id'
-        },
-        onDelete: 'CASCADE'
-      },
       title: {
         type: Sequelize.STRING,
         allowNull: false
@@ -33,10 +24,6 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING
-      },
-      active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
       },
       order: {
         type: Sequelize.INTEGER,

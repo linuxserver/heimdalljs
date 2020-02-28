@@ -5,9 +5,6 @@ const { Model } = require('sequelize')
 class Item extends Model {
   static init (sequelize, DataTypes) {
     return super.init({
-      userId: {
-        type: DataTypes.INTEGER
-      },
       title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -19,10 +16,6 @@ class Item extends Model {
         allowNull: false
       },
       description: DataTypes.STRING,
-      active: {
-        type: DataTypes.BOOLEAN,
-        default: false
-      },
       order: {
         type: DataTypes.INTEGER,
         default: 0
