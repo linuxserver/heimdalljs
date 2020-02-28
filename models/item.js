@@ -36,7 +36,7 @@ class Item extends Model {
       tags: {
         type: DataTypes.TEXT,
         set (val) {
-          this.setDataValue(JSON.stringify(val))
+          this.setDataValue('tags', JSON.stringify(val))
         },
         get () {
           return JSON.parse(this.getDataValue('tags'))
