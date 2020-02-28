@@ -38,6 +38,22 @@ router.post('/', async (req, res, next) => {
     })
   }
 
+  if (req.body.icon) {
+    try {
+      const iconFile = await axios.get(req.body.icon, { responseType: 'arraybuffer' })
+      const fileType = await FileType.fromBuffer(iconFile.data)
+      const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+
+      fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
+      req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+    } catch (e) {
+      return res.status(500).json({
+        status: 'error',
+        result: 'Failed to retrieve icon image'
+      })
+    }
+  }
+
   const item = await Item.create({
     ...req.body,
     userId: req.user.id
@@ -75,6 +91,28 @@ router.put('/:id', async (req, res, next) => {
       status: 'error',
       result: 'unauthorized'
     })
+  }
+
+  if (req.body.icon) {
+    try {
+      const iconFile = await axios.get(req.body.icon, { responseType: 'arraybuffer' })
+      const fileType = await FileType.fromBuffer(iconFile.data)
+      const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+
+      fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
+      req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+
+      if (item.icon) {
+        try {
+          fs.unlinkSync(path.join(config.uploadDir, item.icon))
+        } catch (e) { }
+      }
+    } catch (e) {
+      return res.status(500).json({
+        status: 'error',
+        result: 'Failed to retrieve icon image'
+      })
+    }
   }
 
   await item.update(req.body)
@@ -150,41 +188,21 @@ router.put('/:id/icon', upload.single('icon'), async (req, res, next) => {
   }
 
   let icon = null
-  if (req.file) {
-    const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
-    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newIcon))
-    icon = `/icons/${newIcon}`
-
-    if (item.icon) {
-      try {
-        fs.unlinkSync(path.join(config.uploadDir, item.icon))
-      } catch (e) { }
-    }
-  } else if (req.body.icon) {
-    try {
-      const iconFile = await axios.get(req.body.icon, { responseType: 'arraybuffer' })
-      const fileType = await FileType.fromBuffer(iconFile.data)
-      const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
-
-      fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
-      icon = `/icons/${randomFilename}.${fileType.ext}`
-
-      if (item.icon) {
-        try {
-          fs.unlinkSync(path.join(config.uploadDir, item.icon))
-        } catch (e) { }
-      }
-    } catch (e) {
-      return res.status(500).json({
-        status: 'error',
-        result: 'Failed to retrieve icon image'
-      })
-    }
-  } else {
+  if (!req.file) {
     return res.status(400).json({
       status: 'error',
       result: 'upload file missing'
     })
+  }
+
+  const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
+  fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newIcon))
+  icon = `/icons/${newIcon}`
+
+  if (item.icon) {
+    try {
+      fs.unlinkSync(path.join(config.uploadDir, item.icon))
+    } catch (e) { }
   }
 
   await item.update({ icon })
