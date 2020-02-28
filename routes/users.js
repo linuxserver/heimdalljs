@@ -48,7 +48,7 @@ router.get('/', async (req, res, next) => {
   })
 })
 
-router.post('/', upload.single('avatar'), async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   const usersCount = await User.count()
 
   // Do we want to prevent user registration unless logged in?
@@ -76,12 +76,6 @@ router.post('/', upload.single('avatar'), async (req, res, next) => {
     })
   }
 
-  if (req.file) {
-    const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
-    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
-    req.body.avatar = `/avatars/${newAvatar}`
-  }
-
   const user = await User.create(req.body)
 
   return res.json({
@@ -90,7 +84,7 @@ router.post('/', upload.single('avatar'), async (req, res, next) => {
   })
 })
 
-router.put('/:id', upload.single('avatar'), async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -182,20 +176,52 @@ router.put('/:id', upload.single('avatar'), async (req, res, next) => {
     return res.json({ status: 'ok' })
   }
 
-  if (req.file) {
-    const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
-    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
+  await user.update(req.body)
 
-    if (user.avatar) {
-      try {
-        fs.unlinkSync(path.join(config.uploadDir, user.avatar))
-      } catch (e) { }
-    }
+  return res.json({
+    status: 'ok'
+  })
+})
 
-    req.body.avatar = `/avatars/${newAvatar}`
+router.put('/:id/avatar', upload.single('avatar'), async (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: 'error',
+      result: 'unauthorized'
+    })
   }
 
-  await user.update(req.body)
+  // only admins can edit other users
+  if (req.user.id !== req.params.id && req.user.level !== User.ADMIN) {
+    return res.status(401).json({
+      status: 'error',
+      result: 'unauthorized'
+    })
+  }
+
+  const user = await User.findOne({
+    where: {
+      id: req.params.id
+    }
+  })
+
+  if (!req.file) {
+    return res.status(400).json({
+      status: 'error',
+      result: 'upload file missing'
+    })
+  }
+
+  const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
+  fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
+
+  if (user.avatar) {
+    try {
+      fs.unlinkSync(path.join(config.uploadDir, user.avatar))
+    } catch (e) { }
+  }
+
+  await user.update({ avatar: `/avatars/${newAvatar}` })
 
   return res.json({
     status: 'ok'
