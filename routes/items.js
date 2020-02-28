@@ -14,7 +14,6 @@ const errorHandler = require('../middleware/error-handler')
  * Retrieve all items belonging to a user
  */
 router.get('/', errorHandler(async (req, res, next) => {
-  JSON.parse(undefined)
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
