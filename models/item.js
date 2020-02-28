@@ -45,6 +45,10 @@ class Item extends Model {
         get () {
           return this.getDataValue('tags').split(',')
         }
+      },
+      system: {
+        type: DataTypes.BOOLEAN,
+        default: false
       }
     }, {
       sequelize,
