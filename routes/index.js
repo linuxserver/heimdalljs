@@ -95,12 +95,12 @@ router.get('/auth', errorHandler(async (req, res, next) => {
     status: 'ok',
     result: req.user.toJSON()
   })
-})
+}))
 
 /**
  * Status endpoint - returns application status
  */
-router.get('/status', async (req, res, next) => {
+router.get('/status', errorHandler(async (req, res, next) => {
   if (!req.user) {
     // If unauthenticated, check to make sure we have a user at all
     const userCount = await User.count({
