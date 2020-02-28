@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Item } = require('../models/index')
+const { Item, User } = require('../models/index')
 const multer = require('multer')
 const upload = multer({ dest: require('../config/config').uploadDir })
 const path = require('path')
@@ -58,6 +58,11 @@ router.post('/', errorHandler(async (req, res, next) => {
         result: 'Failed to retrieve icon image'
       })
     }
+  }
+
+  // Only admins can change 'system' flag
+  if (req.user.level !== User.ADMIN) {
+    delete req.body.system
   }
 
   const item = await Item.create({
@@ -122,6 +127,11 @@ router.put('/:id', errorHandler(async (req, res, next) => {
         result: 'Failed to retrieve icon image'
       })
     }
+  }
+
+  // Only admins can change 'system' flag
+  if (req.user.level !== User.ADMIN) {
+    delete req.body.system
   }
 
   await item.update(req.body)
