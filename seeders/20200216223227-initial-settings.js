@@ -5,13 +5,13 @@ module.exports = {
     await queryInterface.bulkInsert('settings', [
       {
         key: 'language',
-        value: 'en-us',
+        value: JSON.stringify('en-US'),
         created_at: new Date(),
         updated_at: new Date()
       },
       {
         key: 'show_usernames',
-        value: 'yes',
+        value: JSON.stringify('yes'),
         created_at: new Date(),
         updated_at: new Date()
       },
@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         key: 'search_on_dashboard',
-        value: 'no',
+        value: JSON.stringify('no'),
         created_at: new Date(),
         updated_at: new Date()
       },
