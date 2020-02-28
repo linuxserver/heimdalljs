@@ -1,4 +1,4 @@
-'us strict'
+'use strict'
 
 const passport = require('passport')
 

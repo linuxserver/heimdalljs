@@ -7,13 +7,17 @@ const path = require('path')
 const Speakeasy = require('speakeasy')
 const axios = require('axios')
 const Docker = require('dockerode')
+const errorHandler = require('../middleware/error-handler')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.sendfile(path.join(__dirname, '../dist/spa/index.html'))
 })
 
-router.post('/login', async (req, res, next) => {
+/**
+ * Login endpoint
+ */
+router.post('/login', errorHandler(async (req, res, next) => {
   if (req.user) {
     // User is already logged in
     return res.json({
@@ -74,9 +78,12 @@ router.post('/login', async (req, res, next) => {
       token: token
     }
   })
-})
+}))
 
-router.get('/auth', async (req, res, next) => {
+/**
+ * Auth endpoint - returns authentication status
+ */
+router.get('/auth', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'unauthorized',
@@ -90,6 +97,9 @@ router.get('/auth', async (req, res, next) => {
   })
 })
 
+/**
+ * Status endpoint - returns application status
+ */
 router.get('/status', async (req, res, next) => {
   if (!req.user) {
     // If unauthenticated, check to make sure we have a user at all
@@ -111,9 +121,12 @@ router.get('/status', async (req, res, next) => {
     status: 'ok',
     result: status
   })
-})
+}))
 
-router.get('/cors/:url*', async (req, res, next) => {
+/**
+ * CORS Proxy endpoint - used for proxying requests through the app
+ */
+router.get('/cors/:url*', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'unauthorized',
@@ -124,9 +137,12 @@ router.get('/cors/:url*', async (req, res, next) => {
   const response = await axios.get(req.params.url)
 
   return res.send(response.data)
-})
+}))
 
-router.get('/containers', async (req, res, next) => {
+/**
+ * Containers endpoint to retrieve information of docker containers
+ */
+router.get('/containers', errorHandler(async (req, res, next) => {
   if (!req.user || req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'unauthorized',
@@ -148,6 +164,6 @@ router.get('/containers', async (req, res, next) => {
       status: container.Status
     }))
   })
-})
+}))
 
 module.exports = router

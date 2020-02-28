@@ -59,4 +59,12 @@ app.use('/users', usersRouter)
 app.use('/items', itemsRouter)
 app.use('/settings', settingsRouter)
 
+// Our own error handler to make sure everything returns as JSON
+app.use((err, req, res, next) => {
+  return res.status(500).json({
+    status: 'error',
+    result: err.message
+  })
+})
+
 module.exports = app

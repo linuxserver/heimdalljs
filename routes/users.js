@@ -9,9 +9,12 @@ const multer = require('multer')
 const upload = multer({ dest: require('../config/config').uploadDir })
 const fs = require('fs')
 const config = require('../config/config')
+const errorHandler = require('../middleware/error-handler')
 
-/* GET users listing. */
-router.get('/', async (req, res, next) => {
+/**
+ * Retrieve all users
+ */
+router.get('/', errorHandler(async (req, res, next) => {
   const users = await User.findAll()
 
   if (req.user.level === User.ADMIN) {
@@ -46,9 +49,12 @@ router.get('/', async (req, res, next) => {
       publicPage: _.get(user.options, 'publicPage', false)
     }))
   })
-})
+}))
 
-router.post('/', async (req, res, next) => {
+/**
+ * Create a new user
+ */
+router.post('/', errorHandler(async (req, res, next) => {
   const usersCount = await User.count()
 
   // Do we want to prevent user registration unless logged in?
@@ -82,9 +88,12 @@ router.post('/', async (req, res, next) => {
     status: 'ok',
     result: user.toJSON()
   })
-})
+}))
 
-router.put('/:id', async (req, res, next) => {
+/**
+ * Update an existing user record
+ */
+router.put('/:id', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -181,9 +190,12 @@ router.put('/:id', async (req, res, next) => {
   return res.json({
     status: 'ok'
   })
-})
+}))
 
-router.put('/:id/avatar', upload.single('avatar'), async (req, res, next) => {
+/**
+ * Upload an avatar file for a user
+ */
+router.put('/:id/avatar', upload.single('avatar'), errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -226,6 +238,6 @@ router.put('/:id/avatar', upload.single('avatar'), async (req, res, next) => {
   return res.json({
     status: 'ok'
   })
-})
+}))
 
 module.exports = router

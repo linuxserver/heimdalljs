@@ -8,9 +8,13 @@ const fs = require('fs')
 const config = require('../config/config')
 const axios = require('axios')
 const FileType = require('file-type')
+const errorHandler = require('../middleware/error-handler')
 
-/* GET users listing. */
-router.get('/', async (req, res, next) => {
+/**
+ * Retrieve all items belonging to a user
+ */
+router.get('/', errorHandler(async (req, res, next) => {
+  JSON.parse(undefined)
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -28,9 +32,12 @@ router.get('/', async (req, res, next) => {
     status: 'ok',
     result: items.map(item => item.toJSON())
   })
-})
+}))
 
-router.post('/', async (req, res, next) => {
+/**
+ * Create new items
+ */
+router.post('/', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -63,9 +70,12 @@ router.post('/', async (req, res, next) => {
     status: 'ok',
     result: item.toJSON()
   })
-})
+}))
 
-router.put('/:id', async (req, res, next) => {
+/**
+ * Edit items
+ */
+router.put('/:id', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -121,9 +131,12 @@ router.put('/:id', async (req, res, next) => {
     status: 'ok',
     result: item.toJSON()
   })
-})
+}))
 
-router.delete('/:id', async (req, res, next) => {
+/**
+ * Delete an item
+ */
+router.delete('/:id', errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -157,9 +170,12 @@ router.delete('/:id', async (req, res, next) => {
     status: 'ok',
     result: null
   })
-})
+}))
 
-router.put('/:id/icon', upload.single('icon'), async (req, res, next) => {
+/**
+ * Upload an icon file to associate with the item
+ */
+router.put('/:id/icon', upload.single('icon'), errorHandler(async (req, res, next) => {
   if (!req.user) {
     return res.status(401).json({
       status: 'error',
@@ -208,6 +224,6 @@ router.put('/:id/icon', upload.single('icon'), async (req, res, next) => {
   await item.update({ icon })
 
   return res.json({ status: 'ok' })
-})
+}))
 
 module.exports = router
