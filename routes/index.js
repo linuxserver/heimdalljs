@@ -6,6 +6,7 @@ const config = require('../config/config')
 const path = require('path')
 const Speakeasy = require('speakeasy')
 const axios = require('axios')
+const Docker = require('dockerode')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -123,6 +124,30 @@ router.get('/cors/:url*', async (req, res, next) => {
   const response = await axios.get(req.params.url)
 
   return res.send(response.data)
+})
+
+router.get('/containers', async (req, res, next) => {
+  if (!req.user || req.user.level !== User.ADMIN) {
+    return res.status(401).json({
+      status: 'unauthorized',
+      result: null
+    })
+  }
+
+  const docker = new Docker({ socketPath: '/var/run/docker.sock' })
+  const containers = await docker.listContainers({ all: true })
+
+  return res.json({
+    status: 'ok',
+    result: containers.map(container => ({
+      id: container.Id,
+      names: container.Names,
+      image: container.Image,
+      created: container.Created,
+      state: container.State,
+      status: container.Status
+    }))
+  })
 })
 
 module.exports = router
