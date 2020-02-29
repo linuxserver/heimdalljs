@@ -44,7 +44,7 @@ export default {
       return this.application.preview
     },
     appIcon () {
-      if (this.application.icon.startsWith('http')) {
+      if (this.application.icon && this.application.icon.startsWith('http')) {
         return this.application.icon
       }
       return process.env.BACKEND_LOCATION + this.application.icon

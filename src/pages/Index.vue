@@ -32,9 +32,14 @@ export default {
       if (this.filter === null) {
         tiles = this.$store.state.tiles.active
       } else {
-        tiles = this.$store.state.tiles.active.filter(a => a.tags.map(b => b.id).includes(this.filter))
+        console.log('active')
+        console.log(this.$store.state.tiles.active)
+        const notNull = this.$store.state.tiles.active.filter(a => a.tags !== null)
+        console.log('notnull')
+        console.log(notNull)
+        tiles = notNull.filter(a => a.tags.find(name => name === this.filter))
       }
-      console.log(tiles)
+      // console.log(tiles)
       if (this.searchfilter === null) {
         return tiles
       } else {

@@ -22,14 +22,32 @@ export function saveUser (context, data) {
     })
 }
 
-export function save (context, data) {
+export async function save (context, data) {
   if (data.id === null) {
-    console.log(data)
-    return axios
+    const user = await axios
       .post(process.env.BACKEND_LOCATION + 'users', data.user)
+    console.log(user)
+    let media = null
+    if (data.media) {
+      media = await axios
+        .put(process.env.BACKEND_LOCATION + 'users/' + user.data.id + '/avatar', data.media)
+    }
+    return {
+      user: user,
+      media: media
+    }
   } else {
-    return axios
+    const user = await axios
       .put(process.env.BACKEND_LOCATION + 'users/' + data.id, data.user)
+    let media = null
+    if (data.media) {
+      media = await axios
+        .put(process.env.BACKEND_LOCATION + 'users/' + data.id + '/avatar', data.media)
+    }
+    return {
+      user: user,
+      media: media
+    }
   }
 }
 

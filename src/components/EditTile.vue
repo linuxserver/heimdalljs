@@ -3,7 +3,7 @@
     <q-form @submit="onSubmit" class="fit userform">
       <q-scroll-area style="height: 100%;">
         <div id="create" class="create fit">
-          <div class="user-details">
+          <div class="tile-details">
             <div class="buttons">
               <q-btn unelevated @click="loadApplication" color="grey-5">Application</q-btn>
               <q-btn unelevated @click="websitedialog = true" color="grey-5">Website</q-btn>
@@ -95,6 +95,8 @@
                   new-value-mode="add-unique"
                   emit-value
                   use-chips
+                  ref="tags"
+                  @new-value="updateInput"
                   @filter="filterFn"
                 />
 
@@ -204,7 +206,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 import Tile from './Tile'
 export default {
   name: 'EditTile',
@@ -286,7 +288,7 @@ export default {
       this.description = newdata.description
       this.color = newdata.color
       this.url = newdata.url
-      this.applicationtype = newdata.applicationtype
+      this.applicationtype = newdata.applicationType
       this.possibletags = newdata.possibletags
     },
 
@@ -307,16 +309,25 @@ export default {
       const formData = {
         title: this.title
       }
+      const media = new FormData()
+
       if (this.color !== null) formData.color = this.color
       if (applicationType !== null) formData.applicationType = applicationType
       if (this.title !== null) formData.title = this.title
       if (this.tags !== null) formData.tags = this.tags
       if (this.url !== null) formData.url = this.url
-      if (this.icon !== null) formData.icon = this.icon
       if (this.description !== null) formData.description = this.description
+      if (this.icon !== null && this.icon !== this.application.icon) {
+        media.append('icon', this.icon)
+      }
+      if (this.$route.path === '/admin/application') {
+        formData.system = true
+      }
+
       const data = {
         id: this.id,
-        tile: formData
+        tile: formData,
+        media: media
       }
       console.log(data)
       try {
@@ -339,6 +350,12 @@ export default {
           timeout: 1500
         })
       }
+    },
+    updateInput (val, done) {
+      if (done) {
+        done(val.toLowerCase())
+      }
+      // this.$refs.tags.updateInputValue(val.toLowerCase())
     },
     filterFn (val, update) {
       update(() => {
@@ -381,10 +398,11 @@ export default {
     async getWebsiteData () {
       try {
         const websitedata = {}
-        const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + encodeURI(this.website))
+        const html = await axios.get(process.env.BACKEND_LOCATION + 'cors/' + this.website)
+        // const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + this.website)
         // console.log(html)
         const parser = new DOMParser()
-        const document = parser.parseFromString(await html.text(), 'text/html')
+        const document = parser.parseFromString(await html.data, 'text/html')
 
         const links = document.getElementsByTagName('link')
         websitedata.title = document.getElementsByTagName('title')[0].innerText

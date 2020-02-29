@@ -16,6 +16,7 @@
         </q-toolbar-title>
           <div v-if="user !== null">
             <q-chip
+              v-if="tags.length > 0"
               icon="bookmark"
               clickable
               :class="{ active: filter === null }"
@@ -23,14 +24,14 @@
             >All</q-chip>
             <q-chip
               v-for="tag in tags"
-              :key="tag.id"
+              :key="tag"
               icon="bookmark"
               clickable
-              :class="{ active: filter === tag.id }"
-              @click="setFilter(tag.id)"
-            >{{ tag.title }}</q-chip>
+              :class="{ active: filter === tag }"
+              @click="setFilter(tag)"
+            >{{ tag }}</q-chip>
           </div>
-        <div class="searchbox">
+        <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
         <q-form
           @submit="onSubmit"
           :action="search_provider.url"
@@ -106,7 +107,7 @@ export default {
 
   computed: {
     tags () {
-      return this.$store.state.tags.all
+      return this.$store.getters['tiles/tags']
     },
     user () {
       return this.$store.state.app.user
@@ -164,21 +165,20 @@ export default {
   .searchbox {
     display: flex;
     width: auto;
-    border-left: 1px solid #fff1;
+    border-left: 1px solid #0000002e;
     form {
       display: flex;
+      background: #0000002e;
+      border-radius: 5px;
     }
     .q-field {
-      background: #fff1;
-      margin-right: 10px;
       padding: 0 20px;
-      border-radius: 5px;
-      &:last-child {
-        margin-right: 0;
+      &:first-child {
+        padding-right: 0;
       }
     }
     .q-field__label, .q-field__native, .q-field__marginal {
-      color: #adadad;
+      color: #ffffffb0;
     }
     input {
       color: white;

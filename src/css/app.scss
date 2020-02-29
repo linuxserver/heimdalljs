@@ -652,11 +652,11 @@ div.create {
       }
     }
   }
-  .user-details {
+  .user-details, .tile-details {
     margin: 0;
     padding: 40px;
     width: 100%;
-    max-width: 360px;
+    max-width: 320px;
     text-align: center;
     position: relative;
     .buttons {
@@ -683,6 +683,9 @@ div.create {
     .level {
 
     }
+  }
+  .tile-details {
+    max-width: 360px;
   }
   .user-options {
     flex: 1;

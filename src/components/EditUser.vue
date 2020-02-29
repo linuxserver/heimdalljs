@@ -210,7 +210,6 @@ export default {
 
   watch: {
     user: function (newdata, olddata) {
-      // console.log(newdata)
       this.id = newdata.id
       this.avatar = newdata.avatar
       this.email = newdata.email
@@ -285,17 +284,24 @@ export default {
       const formData = {
         username: this.username
       }
+      const media = new FormData()
+
       if (this.email !== null) formData.email = this.email
       if (this.password !== '') formData.password = this.password
-      if (this.avatar !== null) formData.avatar = this.avatar
-      const data = {
+      let data = {
         id: this.id,
         user: formData
       }
+      if (this.avatar !== null && this.avatar !== this.user.avatar) {
+        media.append('avatar', this.avatar)
+        data.media = media
+      }
+
       try {
         await this.$store.dispatch('users/save', data)
         await this.$store.dispatch('users/getUsers')
         await this.$store.dispatch('app/status')
+        this.$store.commit('users/edit', this.$store.state.app.user)
         this.$store.commit('users/create', false)
         this.$q.notify({
           type: 'positive',

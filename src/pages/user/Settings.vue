@@ -1,41 +1,18 @@
 <template>
   <q-page class="flex">
-    <div class="page-container">
-      <div class="list-users flex-center fit">
-        <user
-          v-for="user in users"
-          :key="user.id"
-          :user="user"
-        >
-        </user>
-      </div>
-    </div>
-    <edit-user :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-user>
+    <edit-user class="active"></edit-user>
   </q-page>
 </template>
 
 <script>
-import User from 'components/User'
 import EditUser from 'components/EditUser'
 
 export default {
   name: 'PageIndex',
   components: {
-    User,
     EditUser
   },
   computed: {
-    users: function () {
-      return this.$store.state.users.all
-    },
-    create: {
-      get () {
-        return this.$store.state.users.create
-      },
-      set (val) {
-        this.$store.commit('users/create', val)
-      }
-    }
 
   },
 
@@ -46,8 +23,7 @@ export default {
   },
 
   mounted () {
-    this.$store.commit('app/tab', 'admin')
-    this.$store.commit('app/adminUsers', true)
+    this.$store.commit('users/edit', this.$store.state.app.user)
   },
 
   data () {

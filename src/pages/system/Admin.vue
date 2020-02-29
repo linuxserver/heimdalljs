@@ -14,7 +14,7 @@
         </div>
         <app-item
           v-else
-          v-for="application in applications"
+          v-for="application in systemApps"
           :key="application.id"
           :application="application"
         >
@@ -41,6 +41,9 @@ export default {
   props: ['applications', 'allapps'],
 
   computed: {
+    systemApps () {
+      return this.applications.filter(tile => tile.system === true)
+    },
     createapp () {
       return {
         id: null,
