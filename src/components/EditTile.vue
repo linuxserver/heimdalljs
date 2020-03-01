@@ -7,7 +7,7 @@
             <div class="buttons">
               <q-btn unelevated @click="loadApplication" color="grey-5">Application</q-btn>
               <q-btn unelevated @click="websitedialog = true" color="grey-5">Website</q-btn>
-              <q-btn unelevated color="grey-5">Docker</q-btn>
+              <q-btn unelevated @click="dockerdialog = true" color="grey-5">Docker</q-btn>
             </div>
             <tile
               :application="preview"
@@ -202,6 +202,37 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    <q-dialog v-model="dockerdialog" @show="getDockers">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Available docker containers</div>
+        </q-card-section>
+        <q-card-section style="width: 500px;" class="q-pt-none">
+          <div v-if="dockers.length > 0">
+          <div class="text-h6">Active</div>
+          <div
+            v-for="docker in dockers.filter(d => d.state === 'running')"
+            :key="docker.id"
+          >
+            {{ docker.image }}
+          </div>
+          <div class="text-h6">Inactive</div>
+          <div
+            v-for="docker in dockers.filter(d => d.state !== 'running')"
+            :key="docker.id"
+          >
+            {{ docker.image }}
+          </div>
+          </div>
+          <div v-else>No containers available</div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -221,7 +252,6 @@ export default {
     application () {
       return this.$store.state.tiles.edit
     },
-
     possibleapps () {
       return this.$store.state.tiles.possibleapps
     },
@@ -240,6 +270,9 @@ export default {
         url: this.url,
         preview: true
       }
+    },
+    allTags () {
+      return this.$store.getters['tiles/allTags']
     },
     tagsParse () {
       if (this.application.tags === null) {
@@ -264,7 +297,6 @@ export default {
       icon: null,
       description: '',
       actions: false,
-      possibletags: this.tagsParse,
       submitEmpty: false,
       submitResult: [],
       changeicon: false,
@@ -274,7 +306,9 @@ export default {
       dockerdialog: false,
       websitedata: null,
       selectedwebsiteimage: null,
-      website: null
+      possibletags: [],
+      website: null,
+      dockers: []
     }
   },
 
@@ -289,7 +323,6 @@ export default {
       this.color = newdata.color
       this.url = newdata.url
       this.applicationtype = newdata.applicationType
-      this.possibletags = newdata.possibletags
     },
 
     create: function (newdata, olddata) {
@@ -360,10 +393,10 @@ export default {
     filterFn (val, update) {
       update(() => {
         if (val === '') {
-          this.possibletags = this.application.tags || []
+          this.possibletags = this.allTags || []
         } else {
           const needle = val.toLowerCase()
-          const tags = this.application.tags || []
+          const tags = this.allTags || []
           this.possibletags = tags.filter(
             v => v.toLowerCase().indexOf(needle) > -1
           )
@@ -394,7 +427,10 @@ export default {
         this.$store.dispatch('tiles/clear')
       }.bind(this), 300)
     },
-
+    async getDockers () {
+      const dockers = await axios.get(process.env.BACKEND_LOCATION + 'containers')
+      this.dockers = dockers.data.result
+    },
     async getWebsiteData () {
       try {
         const websitedata = {}

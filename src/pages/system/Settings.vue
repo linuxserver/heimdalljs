@@ -114,6 +114,9 @@ export default {
         icon: 'statics/img/heimdall-icon-small.png'
       }
     },
+    languages () {
+      return this.$store.state.app.languages
+    },
     show_usernames: {
       get () {
         return this.$store.state.app.settings.show_usernames
@@ -175,16 +178,6 @@ export default {
         {
           label: this.$t('no'),
           value: 'no'
-        }
-      ],
-      languages: [
-        {
-          value: 'en-us',
-          label: 'English (US)'
-        },
-        {
-          value: 'en-gb',
-          label: 'English (British)'
         }
       ]
     }

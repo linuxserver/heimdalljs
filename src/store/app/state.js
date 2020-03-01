@@ -11,6 +11,16 @@ export default function () {
     admin_apps: false,
     admin_users: false,
     admin_proxies: false,
+    languages: [
+      {
+        value: 'en-us',
+        label: 'English (US)'
+      },
+      {
+        value: 'en-gb',
+        label: 'English (British)'
+      }
+    ],
     settings: {
       background: null,
       show_usernames: 'no',

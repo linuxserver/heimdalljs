@@ -6,6 +6,14 @@ export function tags (state) {
   })
   return tags
 }
+export function allTags (state) {
+  let tags = []
+  state.all.forEach((tile) => {
+    if (tile.tags === null) return
+    tags = mergeTags(tile.tags, tags)
+  })
+  return tags
+}
 function mergeTags (a, b) {
   return Array.from(new Set(a.concat(b)))
 }

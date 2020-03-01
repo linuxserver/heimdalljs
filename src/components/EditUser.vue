@@ -56,14 +56,8 @@
               <q-tab
                 clickable
                 v-ripple
-                name="search"
-                label="Homepage search"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="background"
-                label="Background Image"
+                name="settings"
+                label="Settings"
               />
             </q-tabs>
 
@@ -93,6 +87,16 @@
                     />
                   </template>
                 </q-input>
+
+                <q-select
+                  outlined
+                  :options="languages"
+                  :label="this.$t('select_language')"
+                  option-value="value"
+                  option-label="label"
+                  v-model="language"
+                  map-options
+                ></q-select>
 
               </q-tab-panel>
 
@@ -135,13 +139,9 @@
 
               </q-tab-panel>
 
-              <q-tab-panel name="search">
-                <div class="text-h6">Search</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </q-tab-panel>
-              <q-tab-panel name="background">
-                <div class="text-h6">Background</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tab-panel name="settings">
+                <div class="text-h6">Settings</div>
+
               </q-tab-panel>
             </q-tab-panels>
 
@@ -153,7 +153,7 @@
           <q-icon name="save" />
           Save
         </q-btn>
-        <q-btn flat @click="closeCreate">
+        <q-btn v-if="$route.path !== '/account/settings'" flat @click="closeCreate">
           <q-icon name="block" />
           Cancel
         </q-btn>
@@ -178,6 +178,9 @@ export default {
     create () {
       return this.$store.state.users.create
     },
+    languages () {
+      return this.$store.state.app.languages
+    },
     setavatar () {
       return (this.user.avatar !== null) ? process.env.BACKEND_LOCATION + this.user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     }
@@ -199,6 +202,10 @@ export default {
       showqrcode: null,
       tab: 'general',
       changeavatar: false,
+      settingtab: 'general',
+      options: {
+        language: null
+      },
       urlvatar: '',
       mfacode: null,
       mfalinks: {
@@ -215,6 +222,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
+      this.settings = newdata.settings
       this.multifactorEnabled = newdata.multifactorEnabled
     },
     /* create: function (newdata, olddata) {
