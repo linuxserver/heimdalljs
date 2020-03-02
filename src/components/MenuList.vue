@@ -44,7 +44,6 @@
         />
         <EssentialLink
           :title="this.$t('settings')"
-          :caption="this.settings + ' ' + this.$tc('setting', this.settings)"
           icon="settings"
           link="/account/settings"
         />
