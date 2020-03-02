@@ -18,10 +18,13 @@ function mergeTags (a, b) {
   return Array.from(new Set(a.concat(b)))
 }
 
-export function possibleApplications (state) {
-  const apps = { ...state.possibleapps }
-  apps.sort((a, b) => {
-    return a.name === b.name ? 0 : +(a.name > b.name) || -1
-  })
+export async function possibleApplications (state) {
+  let apps = []
+  if (state.possibleapps.length > 0) {
+    apps = { ...state.possibleapps }
+    apps.sort((a, b) => {
+      return a.name === b.name ? 0 : +(a.name > b.name) || -1
+    })
+  }
   return apps
 }
