@@ -19,7 +19,20 @@ class User extends Model {
           this.setDataValue('password', bcrypt.hashSync(val, 10))
         }
       },
-      settings: DataTypes.TEXT,
+      settings: {
+        type: DataTypes.TEXT,
+        set (val) {
+          this.setDataValue('settings', JSON.stringify(val))
+        },
+        get () {
+          const settings = this.getDataValue('settings')
+          if (settings === undefined) {
+            return null
+          }
+
+          return JSON.parse(settings)
+        }
+      },
       level: DataTypes.TINYINT,
       totpSecret: DataTypes.STRING,
       multifactorEnabled: DataTypes.BOOLEAN
