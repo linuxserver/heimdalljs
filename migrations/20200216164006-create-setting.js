@@ -13,7 +13,7 @@ module.exports = {
         unique: true
       },
       value: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       created_at: {
         allowNull: false,

@@ -7,7 +7,7 @@ class Setting extends Model {
     return super.init({
       key: DataTypes.STRING,
       value: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         get () {
           return JSON.parse(this.getDataValue('value'))
         },
