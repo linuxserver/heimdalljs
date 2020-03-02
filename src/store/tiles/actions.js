@@ -13,12 +13,12 @@ export function getApps (context) {
 }
 
 export function getPossibleApps (context, force = false) {
-  const key = 'heimdall.possibleapps'
+  const key = 'heimdall.allpossibleapps'
   const possibleapps = LocalStorage.getItem(key)
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios
-      .get('https://apps.heimdall.site/list', { crossdomain: true, withCredentials: false })
+      .get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/applications.json', { crossdomain: true, withCredentials: false })
       .then((response) => {
         // console.log(response.data)
         context.commit('possibleapps', response.data.apps)
