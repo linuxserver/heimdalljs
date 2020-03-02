@@ -57,8 +57,15 @@
               <q-tab
                 clickable
                 v-ripple
-                name="mfa"
-                label="Security"
+                name="enhanced"
+                label="Enhanced"
+              />
+              <q-tab
+                v-if="$route.path === '/admin/application'"
+                clickable
+                v-ripple
+                name="users"
+                label="Users"
               />
             </q-tabs>
 
@@ -102,10 +109,6 @@
 
               </q-tab-panel>
 
-              <q-tab-panel name="mfa">
-
-              </q-tab-panel>
-
               <q-tab-panel name="image">
                 <q-input
                   outlined
@@ -128,6 +131,21 @@
                 </div>
 
               </q-tab-panel>
+              <q-tab-panel v-if="$route.path === '/admin/application'" name="users">
+                Users
+              </q-tab-panel>
+
+              <q-tab-panel name="enhanced">
+                <q-input
+                  outlined
+                  v-model="title"
+                  :label="this.$t('title')"
+                  class="my-input"
+                >
+                </q-input>
+
+              </q-tab-panel>
+
             </q-tab-panels>
 
           </div>
@@ -253,7 +271,7 @@ export default {
       return this.$store.state.tiles.edit
     },
     possibleapps () {
-      return this.$store.state.tiles.possibleapps
+      return this.$store.getters['tiles/possibleApplications']
     },
     taglist () {
       return this.tags.map(a => a.title).join()
