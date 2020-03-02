@@ -94,7 +94,7 @@
                   :label="this.$t('select_language')"
                   option-value="value"
                   option-label="label"
-                  v-model="language"
+                  v-model="settingsLanguage"
                   map-options
                 ></q-select>
 
@@ -203,9 +203,7 @@ export default {
       tab: 'general',
       changeavatar: false,
       settingtab: 'general',
-      options: {
-        language: null
-      },
+      settingsLanguage: null,
       urlvatar: '',
       mfacode: null,
       mfalinks: {
@@ -222,7 +220,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
-      this.settings = newdata.settings
+      this.settingsLanguage = newdata.settingsLanguage
       this.multifactorEnabled = newdata.multifactorEnabled
     },
     /* create: function (newdata, olddata) {
@@ -293,9 +291,13 @@ export default {
         username: this.username
       }
       const media = new FormData()
-
       if (this.email !== null) formData.email = this.email
       if (this.password !== '') formData.password = this.password
+
+      // Settings
+      formData.settings = {}
+      if (this.settingsLanguage !== null) formData.settings.language = this.settingsLanguage.value
+
       let data = {
         id: this.id,
         user: formData
