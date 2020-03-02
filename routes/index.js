@@ -140,6 +140,24 @@ router.get('/cors/:url*', errorHandler(async (req, res, next) => {
 }))
 
 /**
+ * Return http images as an arraybuffer so they can be displayed
+ */
+router.get('/image/:url*', errorHandler(async (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: 'unauthorized',
+      result: null
+    })
+  }
+
+  const response = await axios.get(req.url.replace('/image/', ''), {
+    responseType: 'arraybuffer'
+  })
+
+  return res.send(Buffer.from(response.data, 'binary').toString('base64'))
+}))
+
+/**
  * Containers endpoint to retrieve information of docker containers
  */
 router.get('/containers', errorHandler(async (req, res, next) => {
