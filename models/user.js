@@ -30,6 +30,14 @@ class User extends Model {
     })
   }
 
+  static associate (models) {
+    this.belongsToMany(models.Item, {
+      foreignKey: 'user_id',
+      otherKey: 'item_id',
+      through: models.UserItem
+    })
+  }
+
   static get ADMIN () {
     return ADMIN
   }

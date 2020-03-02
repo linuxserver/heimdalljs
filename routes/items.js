@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Item, User } = require('../models/index')
+const { Item, User, UserItem } = require('../models/index')
 const multer = require('multer')
 const upload = multer({ dest: require('../config/config').uploadDir })
 const path = require('path')
@@ -60,15 +60,34 @@ router.post('/', errorHandler(async (req, res, next) => {
     }
   }
 
-  // Only admins can change 'system' flag
+  // Only admins can change 'system' flag and assign items to other users
   if (req.user.level !== User.ADMIN) {
     delete req.body.system
+    delete req.body.users
   }
 
   const item = await Item.create({
     ...req.body,
     userId: req.user.id
   })
+
+  if (req.body.users === undefined) {
+    req.body.users = [req.user.id]
+  }
+
+  await item.setUsers(req.body.users)
+
+  // Set active flag on association
+  if (req.body.active !== undefined) {
+    await UserItem.update({
+      active: req.body.active
+    }, {
+      where: {
+        user_id: req.body.users,
+        item_id: item.id
+      }
+    })
+  }
 
   return res.json({
     status: 'ok',
@@ -87,11 +106,7 @@ router.put('/:id', errorHandler(async (req, res, next) => {
     })
   }
 
-  const item = await Item.findOne({
-    where: {
-      id: req.params.id
-    }
-  })
+  const item = await Item.findOne({ where: { id: req.params.id } })
 
   if (!item) {
     return res.status(404).json({
@@ -100,7 +115,7 @@ router.put('/:id', errorHandler(async (req, res, next) => {
     })
   }
 
-  if (item.userId !== req.user.id) {
+  if (await !req.user.hasItem(item) && req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
@@ -129,7 +144,7 @@ router.put('/:id', errorHandler(async (req, res, next) => {
     }
   }
 
-  // Only admins can change 'system' flag
+  // Only admins can change 'system' flag and alter user associations
   if (req.user.level !== User.ADMIN) {
     delete req.body.system
   }
@@ -178,6 +193,66 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
   return res.json({
     status: 'ok',
     result: null
+  })
+}))
+
+router.put('/:id/users', errorHandler(async (req, res, next) => {
+  if (!req.user || !req.user.leve !== User.ADMIN) {
+    return res.status(401).json({
+      status: 'error',
+      result: 'unauthorized'
+    })
+  }
+
+  const item = await Item.findOne({ where: { id: req.params.id } })
+  if (!item) {
+    return res.status(404).json({
+      status: 'error',
+      result: null
+    })
+  }
+
+  if (item.system === false) {
+    return res.status(400).json({
+      status: 'error',
+      result: 'not a system item'
+    })
+  }
+
+  await item.setUsers(req.body.user_ids)
+
+  return res.json({
+    status: 'ok'
+  })
+}))
+
+router.delete('/:id/users', errorHandler(async (req, res, next) => {
+  if (!req.user || !req.user.leve !== User.ADMIN) {
+    return res.status(401).json({
+      status: 'error',
+      result: 'unauthorized'
+    })
+  }
+
+  const item = await Item.findOne({ where: { id: req.params.id } })
+  if (!item) {
+    return res.status(404).json({
+      status: 'error',
+      result: null
+    })
+  }
+
+  if (item.system === false) {
+    return res.status(400).json({
+      status: 'error',
+      result: 'not a system item'
+    })
+  }
+
+  await item.removeUsers(req.body.user_ids)
+
+  return res.json({
+    status: 'ok'
   })
 }))
 

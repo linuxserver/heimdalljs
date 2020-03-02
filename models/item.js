@@ -51,6 +51,14 @@ class Item extends Model {
     })
   }
 
+  static associate (models) {
+    this.belongsToMany(models.User, {
+      foreignKey: 'item_id',
+      otherKey: 'user_id',
+      through: models.UserItem
+    })
+  }
+
   toJSON () {
     return this.get()
   }
