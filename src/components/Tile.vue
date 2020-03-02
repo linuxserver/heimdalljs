@@ -11,7 +11,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'Tile',
 
@@ -42,19 +41,30 @@ export default {
     },
     preview () {
       return this.application.preview
-    },
-    appIcon () {
+    }
+  },
+
+  asyncComputed: {
+    async appIcon () {
       if (this.application.icon && this.application.icon.startsWith('http')) {
-        return this.application.icon
+        const mime = require('mime-types')
+        const response = await this.$axios.get(process.env.BACKEND_LOCATION + 'image/' + this.application.icon)
+        const extension = this.application.icon.split('.').pop()
+        const imagetype = mime.lookup(extension)
+        console.log(imagetype)
+        return 'data:' + imagetype + ';base64,' + response.data
       }
       return process.env.BACKEND_LOCATION + this.application.icon
     }
+
   },
 
   data () {
     return {
       icon: this.$attrs.icon || '../img/heimdall-icon-small.png'
     }
+  },
+  methods: {
   }
 }
 </script>
