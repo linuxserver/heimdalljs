@@ -21,11 +21,7 @@ router.get('/', errorHandler(async (req, res, next) => {
     })
   }
 
-  const items = await Item.findAll({
-    where: {
-      userId: req.user.id
-    }
-  })
+  const items = await req.user.getItems()
 
   return res.json({
     status: 'ok',
@@ -66,10 +62,7 @@ router.post('/', errorHandler(async (req, res, next) => {
     delete req.body.users
   }
 
-  const item = await Item.create({
-    ...req.body,
-    userId: req.user.id
-  })
+  const item = await Item.create(req.body)
 
   if (req.body.users === undefined) {
     req.body.users = [req.user.id]
@@ -115,7 +108,7 @@ router.put('/:id', errorHandler(async (req, res, next) => {
     })
   }
 
-  if (await !req.user.hasItem(item) && req.user.level !== User.ADMIN) {
+  if (!await req.user.hasItem(item) && req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
@@ -181,7 +174,7 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
     })
   }
 
-  if (item.userId !== req.user.id) {
+  if (!await user.hasItem(item))
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
@@ -280,7 +273,7 @@ router.put('/:id/icon', upload.single('icon'), errorHandler(async (req, res, nex
     })
   }
 
-  if (item.userId !== req.user.id) {
+  if (!await req.user.hasItem(item))
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
