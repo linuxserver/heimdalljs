@@ -174,7 +174,7 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
     })
   }
 
-  if (!await user.hasItem(item))
+  if (!await req.user.hasItem(item)) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
@@ -273,7 +273,7 @@ router.put('/:id/icon', upload.single('icon'), errorHandler(async (req, res, nex
     })
   }
 
-  if (!await req.user.hasItem(item))
+  if (!await req.user.hasItem(item)) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
