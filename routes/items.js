@@ -144,6 +144,18 @@ router.put('/:id', errorHandler(async (req, res, next) => {
 
   await item.update(req.body)
 
+  // Set active flag on association
+  if (req.body.active !== undefined) {
+    await UserItem.update({
+      active: req.body.active
+    }, {
+      where: {
+        user_id: req.body.users,
+        item_id: item.id
+      }
+    })
+  }
+
   return res.json({
     status: 'ok',
     result: item.toJSON()
