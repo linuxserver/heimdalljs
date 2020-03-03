@@ -122,7 +122,25 @@ export default {
       set (val) {
         this.$store.commit('app/searchProvider', val)
       }
+    },
+    visibility () {
+      let hidden, visibilityChange
+      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+        hidden = 'hidden'
+        visibilityChange = 'visibilitychange'
+      } else if (typeof document.msHidden !== 'undefined') {
+        hidden = 'msHidden'
+        visibilityChange = 'msvisibilitychange'
+      } else if (typeof document.webkitHidden !== 'undefined') {
+        hidden = 'webkitHidden'
+        visibilityChange = 'webkitvisibilitychange'
+      }
+      return {
+        hidden: hidden,
+        visibilityChange: visibilityChange
+      }
     }
+
   },
 
   data () {
@@ -151,7 +169,26 @@ export default {
       // console.log(this.$refs)
       this.$refs.searchForm.$el.submit()
     }
+  },
+  mounted () {
+    console.log('mounted')
+    if (typeof document.addEventListener === 'undefined' || this.visibility.hidden === undefined) {
+      console.log('This browser does not support visibilityChange')
+    } else {
+      document.addEventListener(this.visibility.visibilityChange, function () {
+        if (document[this.visibility.hidden]) {
+          this.$store.dispatch('tiles/stopChecks')
+        } else {
+          this.$store.dispatch('tiles/startChecks')
+        }
+      }.bind(this), false)
+    }
+  },
+  beforeDestory () {
+    document.removeEventListener(this.visibility.visibilityChange)
+    clearTimeout(this.check)
   }
+
 }
 </script>
 <style lang="scss">

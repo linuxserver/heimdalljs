@@ -18,7 +18,7 @@ export function getPossibleApps (context, force = false) {
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios
-      .get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/applications.json', { crossdomain: true, withCredentials: false })
+      .get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/applications.json', { crossdomain: true, withCredentials: true })
       .then((response) => {
         // console.log(response.data)
         context.commit('possibleapps', response.data.apps)
@@ -56,4 +56,12 @@ export function clear (context) {
     applicationtype: null,
     possibletags: null
   })
+}
+
+export function stopChecks (context) {
+  console.log('stop checks')
+}
+
+export function startChecks (context) {
+  console.log('start checks')
 }

@@ -76,13 +76,11 @@
                   outlined
                   v-model="title"
                   :label="this.$t('title')"
-                  class="my-input"
                 >
                 </q-input>
                 <q-input
                   outlined
                   v-model="url"
-                  class="my-input"
                   :label="this.$t('url')"
                 >
                 </q-input>
@@ -114,7 +112,6 @@
                   outlined
                   v-model="color"
                   :label="this.$t('colour')"
-                  class="my-input"
                 >
                   <template v-slot:append>
                     <q-icon name="colorize" class="cursor-pointer">
@@ -136,13 +133,103 @@
               </q-tab-panel>
 
               <q-tab-panel name="enhanced">
-                <q-input
+                <q-select
                   outlined
-                  v-model="title"
-                  :label="this.$t('title')"
-                  class="my-input"
+                  v-model="enhancedType"
+                  :label="this.$t('authtype')"
+                  :options="possibletypes"
+                  option-value="id"
+                  option-label="value"
+                  emit-value
+                  map-options
                 >
-                </q-input>
+                </q-select>
+
+                <div class="enhanced-tab" v-if="enhancedType !== 'disabled'">
+                  <q-tab-panels v-model="enhancedType" animated class="">
+                    <q-tab-panel name="none">
+                      No auth
+                    </q-tab-panel>
+                    <q-tab-panel name="apikey">
+                      <q-input
+                        outlined
+                        v-model="apikey"
+                        :label="this.$t('enter_apikey')"
+                      ></q-input>
+                    </q-tab-panel>
+                    <q-tab-panel name="cookie">
+                      Cookie based
+                    </q-tab-panel>
+                  </q-tab-panels>
+                  <div class="stats">
+                    <div class="stat">
+                      <div class="text-h6">Stat 1</div>
+                      <q-input
+                        outlined
+                        v-model="enhanced1name"
+                        :label="this.$t('name')"
+                      >
+                      </q-input>
+                      <q-input
+                        outlined
+                        v-model="enhanced1url"
+                        :label="this.$t('url')"
+                      >
+                      </q-input>
+                      <q-input
+                        outlined
+                        v-model="enhanced1key"
+                        :label="this.$t('key')"
+                      >
+                      </q-input>
+                      <q-select
+                        outlined
+                        v-model="enhanced1filter"
+                        :label="this.$t('filter')"
+                        :options="filters"
+                        option-value="id"
+                        option-label="value"
+                        map-options
+                        emit-value
+                      >
+                      </q-select>
+
+                    </div>
+                    <div class="stat">
+                      <div class="text-h6">Stat 2</div>
+                      <q-input
+                        outlined
+                        v-model="enhanced2name"
+                        :label="this.$t('name')"
+                      >
+                      </q-input>
+                      <q-input
+                        outlined
+                        v-model="enhanced2url"
+                        :label="this.$t('url')"
+                      >
+                      </q-input>
+                      <q-input
+                        outlined
+                        v-model="enhanced2key"
+                        :label="this.$t('key')"
+                      >
+                      </q-input>
+                      <q-select
+                        outlined
+                        v-model="enhanced2filter"
+                        :label="this.$t('filter')"
+                        :options="filters"
+                        option-value="id"
+                        option-label="value"
+                        map-options
+                      >
+                      </q-select>
+
+                    </div>
+                  </div>
+                  <q-btn @click="test">Test</q-btn>
+                </div>
 
               </q-tab-panel>
 
@@ -257,6 +344,7 @@
 <script>
 import axios from 'axios'
 import Tile from './Tile'
+import EnhancedApps from '../plugins/EnhancedApps'
 export default {
   name: 'EditTile',
 
@@ -279,6 +367,25 @@ export default {
     create () {
       return this.$store.state.tiles.create
     },
+    config () {
+      return {
+        enhancedType: this.enhancedType,
+        url: this.url,
+        apikey: this.apikey,
+        stat1: {
+          name: this.enhanced1name,
+          url: this.enhanced1url,
+          key: this.enhanced1key,
+          filter: this.enhanced1filter
+        },
+        stat2: {
+          name: this.enhanced2name,
+          url: this.enhanced2url,
+          key: this.enhanced2key,
+          filter: this.enhanced2filter
+        }
+      }
+    },
 
     preview () {
       return {
@@ -286,6 +393,7 @@ export default {
         title: this.title,
         icon: this.seticon,
         url: this.url,
+        config: this.config,
         preview: true
       }
     },
@@ -326,7 +434,26 @@ export default {
       selectedwebsiteimage: null,
       possibletags: [],
       website: null,
-      dockers: []
+      dockers: [],
+      enhancedType: 'disabled',
+      apikey: '',
+      enhancedenabled: false,
+      enhanced1name: null,
+      enhanced1url: null,
+      enhanced1key: null,
+      enhanced1filter: null,
+      enhanced2name: null,
+      enhanced2url: null,
+      enhanced2key: null,
+      enhanced2filter: null,
+      possibletypes: EnhancedApps.types().map(e => ({
+        id: e.id,
+        value: this.$t(e.value)
+      })),
+      filters: EnhancedApps.filters().map(e => ({
+        id: e.id,
+        value: this.$t(e.value)
+      }))
     }
   },
 
@@ -355,6 +482,15 @@ export default {
   },
 
   methods: {
+    async test () {
+      const enhanced = new EnhancedApps(this.config)
+      try {
+        const test = await enhanced.test()
+        console.log(test)
+      } catch (e) {
+        console.log(e)
+      }
+    },
     async onSubmit (evt) {
       const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
       const formData = {
@@ -429,6 +565,17 @@ export default {
       this.title = this.applicationtype.name
       this.description = this.applicationtype.description
       this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
+      if (this.applicationtype.enhanced !== 0) {
+        this.enhancedType = this.applicationtype.enhanced.type
+        this.enhanced1name = this.applicationtype.enhanced.stat1.name
+        this.enhanced1url = this.applicationtype.enhanced.stat1.url
+        this.enhanced1key = this.applicationtype.enhanced.stat1.key
+        this.enhanced1filter = this.applicationtype.enhanced.stat1.filter
+        this.enhanced2name = this.applicationtype.enhanced.stat2.name
+        this.enhanced2url = this.applicationtype.enhanced.stat2.url
+        this.enhanced2key = this.applicationtype.enhanced.stat2.key
+        this.enhanced2filter = this.applicationtype.enhanced.stat2.filter
+      }
     },
     setWebsite () {
       this.title = this.websitedata.title

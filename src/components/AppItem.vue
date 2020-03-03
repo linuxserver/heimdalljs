@@ -10,7 +10,7 @@
       Active
       <q-icon
         @click="toggleActive"
-        :name="this.application.active === true ? 'check_box' : 'check_box_outline_blank'"
+        :name="this.application.UserItem.active === true ? 'check_box' : 'check_box_outline_blank'"
       />
     </div>
     <div class="actions">
@@ -72,7 +72,7 @@ export default {
     },
     async toggleActive () {
       const formData = {
-        active: (this.application.active === false)
+        active: (this.application.UserItem.active === false)
       }
       const data = {
         id: this.application.id,

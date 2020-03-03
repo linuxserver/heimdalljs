@@ -736,3 +736,37 @@ div.create {
       height: 100%;
     } */
   }
+
+  .enhanced-tab {
+    
+    .stats {
+      margin-top: 50px;
+      display: flex;
+      .stat {
+        flex: 1;
+      }
+    }
+  }
+.user-options .enhanced-tab .q-tab-panels .q-tab-panel {
+  padding: 1px 0;
+}
+.livestats-container .livestats {
+  margin: 5px 0 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  width: 100%;
+  li {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin: 0;
+    line-height: 1;
+    .title {
+      font-size: 12px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+  }
+}

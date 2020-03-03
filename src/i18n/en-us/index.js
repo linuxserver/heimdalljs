@@ -48,11 +48,25 @@ export default {
   Tags: 'Tags',
   optional: 'Optional',
   totp: '2FA Code',
+  authtype: 'API Authentication type',
+  filter: 'Filter',
+  key: 'Key',
+  none: 'None',
+  size: 'Size',
+  speed: 'Speed',
+  enter_apikey: 'Enter your API key',
+  disabled: 'Disabled',
+  apikey: 'API Key',
+  cookie: 'Cookie based authentication',
+
   // API responses
   invalid_user: 'Invalid username or password',
   invalid_code: 'Invalid multi-factor code',
   not_logged_in: 'You are either not logged in or do not have access to this data',
   unauthorized: 'Unauthorized',
   email_exists: 'Email already exists',
-  incorrect_password: 'Incorrect password'
+  incorrect_password: 'Incorrect password',
+
+  api_test_success: 'Successfully connected to API',
+  api_test_failure: 'Could not connect to API'
 }
