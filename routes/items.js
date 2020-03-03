@@ -76,7 +76,7 @@ router.post('/', errorHandler(async (req, res, next) => {
       active: req.body.active
     }, {
       where: {
-        user_id: req.body.users,
+        user_id: req.body.user_id || req.user.id,
         item_id: item.id
       }
     })
@@ -150,7 +150,7 @@ router.put('/:id', errorHandler(async (req, res, next) => {
       active: req.body.active
     }, {
       where: {
-        user_id: req.user.id,
+        user_id: req.body.user_id || req.user.id,
         item_id: item.id
       }
     })
