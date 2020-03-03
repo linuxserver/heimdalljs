@@ -24,7 +24,18 @@ class Item extends Model {
         type: DataTypes.STRING
       },
       config: {
-        type: DataTypes.TEXT
+        type: DataTypes.TEXT,
+        set (val) {
+          this.setDataValue('config', JSON.stringify(val))
+        },
+        get () {
+          const config = this.getDataValue('config')
+          if (config === undefined) {
+            return null
+          }
+
+          return JSON.parse(config)
+        }
       },
       tags: {
         type: DataTypes.TEXT,
