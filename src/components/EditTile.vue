@@ -408,7 +408,7 @@ export default {
     },
     seticon () {
       if (this.icon) return this.icon
-      return (this.application.icon !== null) ? process.env.BACKEND_LOCATION + this.application.icon : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      return (this.application.icon !== null) ? process.env.BACKEND_LOCATION + this.application.icon : 'statics/heimdall-logo-white.svg'
     }
   },
 
@@ -437,7 +437,6 @@ export default {
       dockers: [],
       enhancedType: 'disabled',
       apikey: '',
-      enhancedenabled: false,
       enhanced1name: null,
       enhanced1url: null,
       enhanced1key: null,
@@ -468,6 +467,16 @@ export default {
       this.color = newdata.color
       this.url = newdata.url
       this.applicationtype = newdata.applicationType
+      this.enhancedType = newdata.config.enhancedType || false
+      this.apikey = newdata.config.apikey || ''
+      this.enhanced1name = newdata.config.stat1.name || null
+      this.enhanced1url = newdata.config.stat1.url || null
+      this.enhanced1key = newdata.config.stat1.key || null
+      this.enhanced1filter = newdata.config.stat1.filter || null
+      this.enhanced2name = newdata.config.stat2.name || null
+      this.enhanced2url = newdata.config.stat2.url || null
+      this.enhanced2key = newdata.config.stat2.key || null
+      this.enhanced2filter = newdata.config.stat2.filter || null
     },
 
     create: function (newdata, olddata) {
@@ -504,8 +513,13 @@ export default {
       if (this.tags !== null) formData.tags = this.tags
       if (this.url !== null) formData.url = this.url
       if (this.description !== null) formData.description = this.description
+      formData.config = this.config
       if (this.icon !== null && this.icon !== this.application.icon) {
-        media.append('icon', this.icon)
+        if (this.icon.startsWith('http')) {
+          formData.icon = this.icon
+        } else {
+          media.append('icon', this.icon)
+        }
       }
       if (this.$route.path === '/admin/application') {
         formData.system = true

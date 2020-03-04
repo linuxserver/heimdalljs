@@ -8,7 +8,7 @@ export function getApps (context) {
     .then((response) => {
       // console.log(response.data)
       context.commit('all', response.data.result)
-      context.commit('active', response.data.result.filter(a => a.active === true))
+      context.commit('active', response.data.result.filter(a => a.UserItem.active === true))
     })
 }
 
@@ -63,5 +63,9 @@ export function stopChecks (context) {
 }
 
 export function startChecks (context) {
-  console.log('start checks')
+  const tiles = context.state.active.filter(t => t.config.enhancedType !== 'disabled')
+  console.log(tiles)
+  for (const tile of tiles) {
+    console.log(tile.title)
+  }
 }

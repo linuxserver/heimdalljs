@@ -18,6 +18,9 @@
         </div>
       </div>
       <a :style="'color: ' + textColor" :title="application.description" class="link white" :href="application.url"><svg class="svg-inline--fa fa-arrow-alt-to-right fa-w-14" aria-hidden="true" data-prefix="fas" data-icon="arrow-alt-to-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M448 88v336c0 13.3-10.7 24-24 24h-24c-13.3 0-24-10.7-24-24V88c0-13.3 10.7-24 24-24h24c13.3 0 24 10.7 24 24zM24 320h136v87.7c0 17.8 21.5 26.7 34.1 14.1l152.2-152.2c7.5-7.5 7.5-19.8 0-27.3L194.1 90.1c-12.6-12.6-34.1-3.7-34.1 14.1V192H24c-13.3 0-24 10.7-24 24v80c0 13.3 10.7 24 24 24z"></path></svg><!-- <i class="fas fa-arrow-alt-to-right"></i> --></a>
+      <div v-if="application.config.enhancedType !== 'disabled'" class="tile-actions">
+        <q-icon @click="refreshData" class="refresh" name="refresh"></q-icon>
+      </div>
     </div>
   </section>
 </template>
@@ -69,6 +72,9 @@ export default {
 
   asyncComputed: {
     async appIcon () {
+      if (this.application.icon === null) {
+        return 'statics/heimdall-logo-white.svg'
+      }
       if (this.application.icon && this.application.icon.startsWith('http')) {
         const mime = require('mime-types')
         const response = await this.$axios.get(process.env.BACKEND_LOCATION + 'image/' + this.application.icon)
@@ -83,7 +89,7 @@ export default {
 
   data () {
     return {
-      icon: this.$attrs.icon || '../img/heimdall-icon-small.png',
+      icon: this.$attrs.icon || 'statics/heimdall-logo-white.svg',
       stat1value: null,
       stat2value: null,
       check: null,
@@ -101,28 +107,25 @@ export default {
 
     },
 
+    async refreshData () {
+      let data = await this.checkForData()
+      this.stat1value = data.stat1
+      this.stat2value = data.stat2
+    },
+
     forceCheck () {
       clearTimeout(this.check)
       this.checkForData()
     },
 
     async checkForData () {
-      clearTimeout(this.check)
       if (this.application.config.enhancedType && this.application.config.enhancedType !== 'disabled') {
         const enhanced = new EnhancedApps(this.application.config)
         const call = await enhanced.call()
-        const current1 = this.stat1value
-        const current2 = this.stat2value
-        this.stat1value = _.get(call.data, this.application.config.stat1.key, null)
-        this.stat2value = _.get(call.data, this.application.config.stat2.key, null)
-
-        if (current1 !== this.stat1value || current2 !== this.stat2value) { // there has been a change so reset timer
-          this.timer = this.increaseby
-        } else {
-          if (this.timer < this.maxTimer) this.timer += 2000
+        return {
+          stat1: _.get(call.data, this.application.config.stat1.key, null),
+          stat2: _.get(call.data, this.application.config.stat2.key, null)
         }
-        console.log(this.timer)
-        if (this.running === true) this.check = setTimeout(this.checkForData, this.timer)
       }
     }
 

@@ -184,9 +184,11 @@ export default {
       }.bind(this), false)
     }
   },
+  updated () {
+    this.$store.dispatch('tiles/startChecks')
+  },
   beforeDestory () {
     document.removeEventListener(this.visibility.visibilityChange)
-    clearTimeout(this.check)
   }
 
 }

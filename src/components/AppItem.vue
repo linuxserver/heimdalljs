@@ -46,6 +46,9 @@ export default {
       }
     },
     appIcon () {
+      if (this.application.icon === null) {
+        return 'statics/heimdall-logo-white.svg'
+      }
       return process.env.BACKEND_LOCATION + this.application.icon
     }
   },
@@ -58,7 +61,7 @@ export default {
       title: this.application.title,
       tags: this.application.tags,
       url: this.application.url,
-      icon: this.application.icon || '../img/heimdall-icon-small.png'
+      icon: this.application.icon || 'statics/heimdall-logo-white.svg'
     }
   },
   methods: {

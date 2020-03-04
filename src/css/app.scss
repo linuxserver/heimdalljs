@@ -750,6 +750,19 @@ div.create {
 .user-options .enhanced-tab .q-tab-panels .q-tab-panel {
   padding: 1px 0;
 }
+.refresh {
+  z-index: 99;
+}
+.tile-actions {
+  position: absolute;
+  top: 0px;
+  left: 0;
+  padding: 4px;
+  background: #000000c7;
+  font-size: 19px;
+  line-height: 1;
+  border-radius: 6px;
+}
 .livestats-container .livestats {
   margin: 5px 0 0;
   padding: 0;
@@ -757,6 +770,7 @@ div.create {
   list-style: none;
   justify-content: space-between;
   width: 100%;
+  font-size: 13px;
   li {
     display: flex;
     flex-direction: column;
@@ -764,7 +778,7 @@ div.create {
     margin: 0;
     line-height: 1;
     .title {
-      font-size: 12px;
+      font-size: 11px;
       text-transform: uppercase;
       opacity: 0.8;
     }
