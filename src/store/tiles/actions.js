@@ -60,12 +60,11 @@ export function clear (context) {
 
 export function stopChecks (context) {
   console.log('stop checks')
+  context.commit('running', false)
 }
 
 export function startChecks (context) {
-  const tiles = context.state.active.filter(t => t.config.enhancedType !== 'disabled')
-  console.log(tiles)
-  for (const tile of tiles) {
-    console.log(tile.title)
-  }
+  // const tiles = context.state.active.filter(t => t.config.enhancedType !== 'disabled')
+  console.log('start checks')
+  context.commit('running', true)
 }

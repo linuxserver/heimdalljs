@@ -14,6 +14,10 @@ export function create (state, data) {
   state.create = data
 }
 
+export function running (state, data) {
+  state.running = data
+}
+
 export function edit (state, data) {
   state.edit = data
 }

@@ -4,6 +4,7 @@ export default function () {
     active: [],
     possibleapps: [],
     create: false,
+    running: false,
     edit: {
       id: null,
       icon: null,

@@ -58,6 +58,9 @@ export default {
     },
     preview () {
       return this.application.preview
+    },
+    running () {
+      return this.$store.state.tiles.running
     }
   },
 
@@ -66,6 +69,15 @@ export default {
       clearTimeout(this.check)
       if (newdata.config.enhancedType !== 'disabled') {
         this.checkVisible()
+      }
+    },
+    running: function (newdata, olddata) {
+      if (newdata === false) {
+        console.log('clear timer')
+        clearTimeout(this.check)
+      }
+      if (olddata === false && newdata === true) {
+        this.timedChecks()
       }
     }
   },
@@ -93,22 +105,29 @@ export default {
       stat1value: null,
       stat2value: null,
       check: null,
-      running: true,
-      increaseby: 1000,
+      active: 1000,
       maxTimer: 30000,
       timer: 5000
 
     }
   },
   methods: {
-    checkVisible () {
-      // from https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
-      // Set the name of the hidden property and the change event for visibility
 
+    async timedChecks () {
+      const current1 = this.stat1value
+      const current2 = this.stat2value
+      const data = await this.checkForData()
+      if (data.stat1 !== current1 || data.stat2 !== current2) { // There has been a change to the data
+        this.timer = this.active
+      } else {
+        if (this.timer < this.maxTimer) this.timer += 2000
+      }
+      clearTimeout(this.check) // Make sure timer is cleared, it should be, but shouldn't hurt to make sure
+      this.check = setTimeout(this.timedChecks, this.timer)
     },
 
     async refreshData () {
-      let data = await this.checkForData()
+      const data = await this.checkForData()
       this.stat1value = data.stat1
       this.stat2value = data.stat2
     },
