@@ -193,6 +193,13 @@
                         emit-value
                       >
                       </q-select>
+                      <q-select
+                        outlined
+                        v-model="enhanced1updateOnChange"
+                        :label="this.$t('update_on_change')"
+                        :options="['Yes', 'No']"
+                      >
+                      </q-select>
 
                     </div>
                     <div class="stat">
@@ -223,6 +230,13 @@
                         option-value="id"
                         option-label="value"
                         map-options
+                      >
+                      </q-select>
+                      <q-select
+                        outlined
+                        v-model="enhanced2updateOnChange"
+                        :label="this.$t('update_on_change')"
+                        :options="['Yes', 'No']"
                       >
                       </q-select>
 
@@ -376,13 +390,15 @@ export default {
           name: this.enhanced1name,
           url: this.enhanced1url,
           key: this.enhanced1key,
-          filter: this.enhanced1filter
+          filter: this.enhanced1filter,
+          updateOnChange: this.enhanced1updateOnChange
         },
         stat2: {
           name: this.enhanced2name,
           url: this.enhanced2url,
           key: this.enhanced2key,
-          filter: this.enhanced2filter
+          filter: this.enhanced2filter,
+          updateOnChange: this.enhanced2updateOnChange
         }
       }
     },
@@ -441,10 +457,12 @@ export default {
       enhanced1url: null,
       enhanced1key: null,
       enhanced1filter: null,
+      enhanced1updateOnChange: 'No',
       enhanced2name: null,
       enhanced2url: null,
       enhanced2key: null,
       enhanced2filter: null,
+      enhanced2updateOnChange: 'No',
       possibletypes: EnhancedApps.types().map(e => ({
         id: e.id,
         value: this.$t(e.value)

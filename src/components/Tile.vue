@@ -105,8 +105,8 @@ export default {
       stat1value: null,
       stat2value: null,
       check: null,
-      active: 1000,
-      maxTimer: 30000,
+      active: 2000,
+      maxTimer: 45000,
       timer: 5000
 
     }
@@ -117,19 +117,27 @@ export default {
       const current1 = this.stat1value
       const current2 = this.stat2value
       const data = await this.checkForData()
-      if (data.stat1 !== current1 || data.stat2 !== current2) { // There has been a change to the data
+      if (data.stat1 !== current1 && this.application.config.stat1.updateOnChange === 'Yes') {
+        this.timer = this.active
+      } else if (data.stat2 !== current2 && this.application.config.stat2.updateOnChange === 'Yes') { // There has been a change to the data
         this.timer = this.active
       } else {
-        if (this.timer < this.maxTimer) this.timer += 2000
+        if (this.timer < this.maxTimer) this.timer += 5000
       }
+      this.stat1value = data.stat1
+      this.stat2value = data.stat2
       clearTimeout(this.check) // Make sure timer is cleared, it should be, but shouldn't hurt to make sure
-      this.check = setTimeout(this.timedChecks, this.timer)
+      if ( // check if update on change is set on at least 1 stat
+        this.application.config.stat1.updateOnChange === 'Yes' ||
+        this.application.config.stat2.updateOnChange === 'Yes'
+      ) {
+        console.log('timer: ' + this.timer)
+        this.check = setTimeout(this.timedChecks, this.timer)
+      }
     },
 
     async refreshData () {
-      const data = await this.checkForData()
-      this.stat1value = data.stat1
-      this.stat2value = data.stat2
+      this.timedChecks()
     },
 
     forceCheck () {
