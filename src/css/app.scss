@@ -757,11 +757,27 @@ div.create {
   position: absolute;
   top: 0px;
   left: 0;
-  padding: 4px;
-  background: #000000c7;
-  font-size: 19px;
+  padding: 7px;
+  background: #000000d9;
+  font-size: 12px;
   line-height: 1;
   border-radius: 6px;
+  width: 80px;
+  height: 90px;
+  display: flex;
+  opacity: 0;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
+  i {
+    font-size: 30px;
+  }
+}
+.item-container .item:hover .tile-actions {
+  opacity: 1;
 }
 .livestats-container .livestats {
   margin: 5px 0 0;
