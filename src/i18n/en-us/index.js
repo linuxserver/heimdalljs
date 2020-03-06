@@ -59,6 +59,8 @@ export default {
   apikey: 'API Key',
   cookie: 'Cookie based authentication',
   update_on_change: 'Update on changes to this stat',
+  updated: 'Updated',
+  refresh_stats: 'Refresh Stats',
   // API responses
   invalid_user: 'Invalid username or password',
   invalid_code: 'Invalid multi-factor code',
