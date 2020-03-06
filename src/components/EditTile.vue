@@ -554,8 +554,8 @@ export default {
         this.$store.commit('tiles/create', false)
         await this.$store.dispatch('app/status')
         this.$q.notify({
+          message: this.$t('updated'),
           type: 'positive',
-          message: 'Updated',
           progress: true,
           position: 'bottom',
           timeout: 1500
