@@ -16,7 +16,7 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        key: 'background_image',
+        key: 'background',
         value: null,
         created_at: new Date(),
         updated_at: new Date()
