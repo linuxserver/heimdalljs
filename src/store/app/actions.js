@@ -149,6 +149,11 @@ export async function firelogin (context, data) {
   return response
 }
 
+export async function unsplash (context) {
+  const settings = await axios.get(process.env.BACKEND_LOCATION + 'cors/https://api.unsplash.com/photos/random?orientation=landscape')
+  return 'background-image: url(' + settings.response.data.urls.full + ')'
+}
+
 export async function login (context, data) {
   // console.log(data)
   const response = await firelogin(context, data)

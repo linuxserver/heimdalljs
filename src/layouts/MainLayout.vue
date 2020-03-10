@@ -143,13 +143,27 @@ export default {
 
   },
 
+  asyncComputed: {
+    async background () {
+      const background = this.$store.state.app.settings.background.type
+      if (background === null || background === 'none') {
+        return ''
+      }
+      if (background === 'unsplash') {
+        const unsplash = await this.$store.dispatch('app/unsplash')
+        console.log('unsplash')
+        console.log(unsplash)
+        return unsplash
+      }
+    }
+  },
+
   data () {
     return {
       leftDrawerOpen: false,
       version: version,
       filter: null,
       searchfilter: null,
-      background: '',
       search: ''
       // background: 'background-image: url(statics/bg/bg11.jpg)'
     }

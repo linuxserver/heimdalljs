@@ -58,6 +58,28 @@ export default function () {
           query: 'q'
         }
       ],
+      background_options: [
+        {
+          value: 'none',
+          label: 'none'
+        },
+        {
+          value: 'background_image',
+          label: 'background_image'
+        },
+        {
+          value: 'color',
+          label: 'color'
+        },
+        {
+          value: 'unsplash',
+          label: 'unsplash'
+        },
+        {
+          value: 'trianglify',
+          label: 'trianglify'
+        }
+      ],
       default_tag: null,
       default_public_page: null
     }

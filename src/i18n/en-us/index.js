@@ -24,6 +24,8 @@ export default {
   user_management: 'User Management',
   proxy_management: 'Proxy Management',
   settings: 'Settings',
+  background_type: 'Background Type',
+  background_image: 'Background Image',
   app: 'App | Apps',
   tag: 'Tag | Tags',
   user: 'User | Users',

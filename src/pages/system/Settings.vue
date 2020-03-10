@@ -84,7 +84,18 @@
           default
         </q-tab-panel>
         <q-tab-panel name="dashboard">
-          Background type - image, color, gradient
+          <q-select
+            outlined
+            :options="background_options.map(e => ({
+              label: $t(e.label),
+              value: e.value
+            }))"
+            :label="this.$t('background_type')"
+            v-model="background"
+            map-options
+            emit-value
+          ></q-select>
+
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -124,6 +135,24 @@ export default {
       set (val) {
         this.$store.dispatch('app/saveSettings', {
           show_usernames: val.value
+        })
+      }
+    },
+    background_options () {
+      return this.$store.state.app.settings.background_options
+    },
+    background: {
+      get () {
+        if (this.$store.state.app.settings.background !== null) {
+          return this.$store.state.app.settings.background.type || null
+        }
+        return null
+      },
+      set (val) {
+        this.$store.dispatch('app/saveSettings', {
+          background: {
+            type: val
+          }
         })
       }
     },
