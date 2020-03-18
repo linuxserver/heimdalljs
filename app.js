@@ -11,6 +11,7 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 const itemsRouter = require('./routes/items')
 const settingsRouter = require('./routes/settings')
+const enhancedRouter = require('./routes/enhanced')
 
 const app = express()
 
@@ -58,6 +59,7 @@ app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)
 app.use('/settings', settingsRouter)
+app.use('/enhanced', enhancedRouter)
 
 // Our own error handler to make sure everything returns as JSON
 app.use((err, req, res, next) => {
