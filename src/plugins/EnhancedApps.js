@@ -2,19 +2,14 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 import { i18n } from 'boot/i18n.js'
 export default class EnhancedApps {
-  constructor (data) {
-    this.data = data
+  constructor (application) {
+    this.data = application.config
+    this.id = application.id
   }
 
   async call () {
-    if (this.data.stat1.url === this.data.stat2.url) { // both urls are the same, so use a single call to get data
-      switch (this.data.enhancedType) {
-        case 'apikey':
-          return this.apikey(this.data.stat1.url)
-      }
-    } else { // separate urls so 2 calls needed
-
-    }
+    const request = await axios.get(process.env.BACKEND_LOCATION + 'enhanced/' + this.id)
+    return request
   }
 
   async test () {
@@ -36,14 +31,6 @@ export default class EnhancedApps {
         timeout: 1500
       })
     }
-  }
-
-  async apikey (url) {
-    url = url.replace(':url:', this.data.url)
-    url = url.replace(':apikey:', this.data.apikey)
-    console.log(url)
-    const request = await axios.get(process.env.BACKEND_LOCATION + 'cors/' + url)
-    return request
   }
 
   static types () {

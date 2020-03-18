@@ -156,11 +156,11 @@ export default {
 
     async checkForData () {
       if (this.application.config.enhancedType && this.application.config.enhancedType !== 'disabled') {
-        const enhanced = new EnhancedApps(this.application.config)
+        const enhanced = new EnhancedApps(this.application)
         const call = await enhanced.call()
         return {
-          stat1: _.get(call.data, this.application.config.stat1.key, null),
-          stat2: _.get(call.data, this.application.config.stat2.key, null)
+          stat1: _.get(call.data.result, this.application.config.stat1.key, null),
+          stat2: _.get(call.data.result, this.application.config.stat2.key, null)
         }
       }
     }
