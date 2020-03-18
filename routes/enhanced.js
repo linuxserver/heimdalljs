@@ -17,7 +17,7 @@ router.get('/:id', errorHandler(async (req, res, next) => {
 
   return res.json({
     status: 'ok',
-    result: response.data
+    result: response
   })
 }))
 

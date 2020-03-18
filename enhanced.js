@@ -6,13 +6,20 @@ class EnhancedApps {
   }
 
   async call () {
-    if (this.data.stat1.url === this.data.stat2.url) { // both urls are the same, so use a single call to get data
-      switch (this.data.enhancedType) {
-        case 'apikey':
-          return this.apikey(this.data.stat1.url)
-      }
-    } else { // separate urls so 2 calls needed
-
+    let stat1 = null
+    let stat2 = null
+    switch (this.data.enhancedType) {
+      case 'apikey':
+        stat1 = await this.apikey(this.data.stat1.url)
+        if (this.data.stat1.url !== this.data.stat2.url) {
+          stat2 = await this.apikey(this.data.stat2.url)
+        } else {
+          stat2 = stat1
+        }
+    }
+    return {
+      stat1: stat1.data,
+      stat2: stat2.data
     }
   }
 
