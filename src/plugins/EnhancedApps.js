@@ -54,6 +54,14 @@ export default class EnhancedApps {
     ]
   }
 
+  filter (value, filter) {
+    switch (filter) {
+      case 'count':
+        return value.length
+    }
+    return value
+  }
+
   static filters () {
     return [
       {
@@ -67,6 +75,10 @@ export default class EnhancedApps {
       {
         id: 'speed',
         value: 'speed'
+      },
+      {
+        id: 'count',
+        value: 'count'
       }
     ]
   }

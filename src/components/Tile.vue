@@ -158,9 +158,12 @@ export default {
       if (this.application.config.enhancedType && this.application.config.enhancedType !== 'disabled') {
         const enhanced = new EnhancedApps(this.application)
         const call = await enhanced.call()
+        // console.log(this.application.config.stat2)
+        const stat1 = (this.application.config.stat1.key !== null) ? _.get(call.data.result.stat1, this.application.config.stat1.key, null) : call.data.result.stat1
+        const stat2 = (this.application.config.stat2.key !== null) ? _.get(call.data.result.stat2, this.application.config.stat2.key, null) : call.data.result.stat2
         return {
-          stat1: _.get(call.data.result, this.application.config.stat1.key, null),
-          stat2: _.get(call.data.result, this.application.config.stat2.key, null)
+          stat1: enhanced.filter(stat1, this.application.config.stat1.filter.id),
+          stat2: enhanced.filter(stat2, this.application.config.stat2.filter.id)
         }
       }
     }
