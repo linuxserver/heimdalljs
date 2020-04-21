@@ -1,6 +1,7 @@
 // app global css in SCSS form
 
 $grey1: #e6e8e8;
+$drawercolor: #464b54;
 $darkborder: #cbccce;
 $brand: #5e3267;
 $brand2: #724c7a;
@@ -156,11 +157,14 @@ body.desktop .q-hoverable:hover > .q-focus-helper {
 .q-drawer--left.q-drawer--bordered {
     // border-right: 2px solid rgb(0, 0, 0);
 }
-
+.tooltip-content {
+  background: rgba(0,0,0,0.7);
+  font-size: 14px;
+}
 .q-drawer {
     //background: linear-gradient(115deg, #7bb1ac, #344765);
     //background: #204158;
-    background: #5e3267;
+    background: $drawercolor;
     .q-drawer__content {
         box-shadow: inset 35px 0px 35px -35px rgba(0,0,0,0.45), inset -35px 0px 35px -35px rgba(0,0,0,0.45);
     }
