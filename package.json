@@ -13,8 +13,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "server": "npm run db:migrate && node ./bin/www",
-    "db:migrate": "npx sequelize-cli db:migrate",
-    "db:seed": "npx sequelize-cli db:seed:all",
+    "db:migrate": "./node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "db:seed": "./node_modules/sequelize-cli/lib/sequelize db:seed:all",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
     "build": "npx quasar build",
