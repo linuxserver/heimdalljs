@@ -87,6 +87,7 @@
 
                 <q-input
                   v-model="description"
+                  :label="this.$t('description')"
                   outlined
                   type="textarea"
                 />
@@ -407,6 +408,7 @@ export default {
       return {
         color: this.color || '#222222',
         title: this.title,
+        description: this.description,
         icon: this.seticon,
         url: this.url,
         config: this.config,

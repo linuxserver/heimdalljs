@@ -7,8 +7,12 @@ export function getApps (context) {
     .get(process.env.BACKEND_LOCATION + 'items', { crossdomain: true })
     .then((response) => {
       // console.log(response.data)
-      context.commit('all', response.data.result)
-      context.commit('active', response.data.result.filter(a => a.UserItem.active === true))
+      context.commit('all', response.data.result.items)
+      context.commit('active', response.data.result.items.filter(a => a.UserItem.active === true))
+      console.log(response.data.result.system)
+      if (response.data.result.system) {
+        context.commit('system', response.data.result.system)
+      }
     })
 }
 

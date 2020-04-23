@@ -2,6 +2,7 @@ export default function () {
   return {
     all: [],
     active: [],
+    system: [],
     possibleapps: [],
     create: false,
     running: false,

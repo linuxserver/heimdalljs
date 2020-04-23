@@ -5,7 +5,7 @@
       {{ this.application.title }}
       <a :href="this.application.url"><span><q-tooltip v-if="application.url !== ''" content-class="tooltip-content" max-width="500px" anchor="bottom middle" self="top middle">{{ application.url }}</q-tooltip>Visit url</span></a>
     </div>
-    <div class="pinned">
+    <div v-if="this.$route.path !== '/admin/application'" class="pinned">
       Active
       <q-icon
         @click="toggleActive"

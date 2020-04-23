@@ -6,6 +6,10 @@ export function active (state, data) {
   state.active = data
 }
 
+export function system (state, data) {
+  state.system = data
+}
+
 export function possibleapps (state, data) {
   state.possibleapps = data
 }

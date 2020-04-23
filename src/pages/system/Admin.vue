@@ -8,7 +8,7 @@
         <div class="item">Link</div>
       </div>-->
       <div class="list-items">
-        <div class="no-items" v-if="applications.length < 1">
+        <div class="no-items" v-if="systemApps.length < 1">
           {{ this.$t('no_apps') }}
           <q-btn style="margin-top:30px;" @click="create = true" unelevated color="brand">Add New</q-btn>
         </div>
@@ -42,7 +42,7 @@ export default {
 
   computed: {
     systemApps () {
-      return this.applications.filter(tile => tile.system === true)
+      return this.$store.state.tiles.system
     },
     createapp () {
       return {

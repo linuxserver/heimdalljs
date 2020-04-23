@@ -55,7 +55,7 @@
           group="admin"
           icon="apps"
           :label="this.$tc('application_management')"
-          :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)"
+          :caption="this.system_tiles + ' ' + this.$tc('app', this.system_tiles)"
           v-model="admin_apps"
         >
         <div class="sub-menu">
@@ -141,6 +141,9 @@ export default {
     },
     active_tiles () {
       return this.$store.state.tiles.all.length
+    },
+    system_tiles () {
+      return this.$store.state.tiles.system.length
     },
     users () {
       return this.$store.state.users.all.length
