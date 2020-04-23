@@ -10,6 +10,7 @@ export default function () {
       id: null,
       icon: null,
       title: null,
+      users: null,
       description: '',
       url: null,
       color: null,

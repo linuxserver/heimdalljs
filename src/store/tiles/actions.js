@@ -44,8 +44,10 @@ export function save (context, data) {
 }
 
 export function saveUsers (context, data) {
-  return axios
-    .put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/users', { users: data.users })
+  if (data.id !== null) {
+    return axios
+      .put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/users', { users: data.users })
+  }
 }
 
 export function active (context, data) {
@@ -64,6 +66,7 @@ export function clear (context) {
     id: null,
     icon: null,
     title: null,
+    users: null,
     tags: null,
     description: '',
     url: null,
