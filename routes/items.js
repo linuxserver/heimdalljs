@@ -22,7 +22,7 @@ router.get('/', errorHandler(async (req, res, next) => {
   }
 
   const items = await req.user.getItems()
-  let allitems = {
+  const allitems = {
     items: items.map(item => item.toJSON())
   }
 
