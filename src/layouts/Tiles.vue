@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Application Management
+          {{ $t('application_management') }}
         </q-toolbar-title>
 
         <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand" @click="createNew">Add New</q-btn>
