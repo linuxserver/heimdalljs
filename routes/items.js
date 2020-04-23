@@ -214,7 +214,7 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
 }))
 
 router.put('/:id/users', errorHandler(async (req, res, next) => {
-  if (!req.user || !req.user.leve !== User.ADMIN) {
+  if (!req.user || req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
@@ -236,7 +236,7 @@ router.put('/:id/users', errorHandler(async (req, res, next) => {
     })
   }
 
-  await item.setUsers(req.body.user_ids)
+  await item.setUsers(req.body.users)
 
   return res.json({
     status: 'ok'
@@ -244,7 +244,7 @@ router.put('/:id/users', errorHandler(async (req, res, next) => {
 }))
 
 router.delete('/:id/users', errorHandler(async (req, res, next) => {
-  if (!req.user || !req.user.leve !== User.ADMIN) {
+  if (!req.user || req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
