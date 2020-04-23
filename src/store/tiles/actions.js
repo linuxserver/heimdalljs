@@ -43,6 +43,11 @@ export function save (context, data) {
   }
 }
 
+export function saveUsers (context, data) {
+  return axios
+    .put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/users', data.users)
+}
+
 export function active (context, data) {
   return axios
     .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data)

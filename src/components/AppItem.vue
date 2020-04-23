@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <div class="icon"><img class="app-icon" :src="appIcon"></div>
+    <div class="icon" :style="'background-color: ' + bgColor + ';'"><img class="app-icon" :src="appIcon"></div>
     <div class="name">
       {{ this.application.title }}
       <a :href="this.application.url"><span><q-tooltip v-if="application.url !== ''" content-class="tooltip-content" max-width="500px" anchor="bottom middle" self="top middle">{{ application.url }}</q-tooltip>Visit url</span></a>
@@ -48,6 +48,12 @@ export default {
     taglist () {
       return null
       // return this.tags.map(a => a.title).join()
+    },
+    bgColor () {
+      if (this.application.color !== 'null' && this.application.color !== null) {
+        return this.application.color
+      }
+      return '#222222'
     },
     preview () {
       return {

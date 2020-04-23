@@ -130,7 +130,22 @@
 
               </q-tab-panel>
               <q-tab-panel v-if="$route.path === '/admin/application'" name="users">
-                Users
+                <q-select
+                  :label="this.$t('users')"
+                  outlined
+                  v-model="users"
+                  multiple
+                  :options="possibleusers"
+                  use-input
+                  new-value-mode="add-unique"
+                  use-chips
+                  option-value="id"
+                  option-label="username"
+                  map-options
+                  emit-value
+                  ref="users"
+                />
+
               </q-tab-panel>
 
               <q-tab-panel name="enhanced">
@@ -376,6 +391,9 @@ export default {
     possibleapps () {
       return this.$store.getters['tiles/possibleApplications']
     },
+    possibleusers () {
+      return this.$store.state.users.all
+    },
     taglist () {
       return this.tags.map(a => a.title).join()
     },
@@ -437,6 +455,7 @@ export default {
       applicationtype: null,
       title: null,
       tags: null,
+      users: null,
       url: null,
       icon: null,
       description: '',
@@ -543,6 +562,7 @@ export default {
       }
       if (this.$route.path === '/admin/application') {
         formData.system = true
+        formData.users = this.users
       }
 
       const data = {
@@ -554,6 +574,14 @@ export default {
       try {
         await this.$store.dispatch('tiles/save', data)
         this.$store.commit('tiles/create', false)
+        if (this.$route.path === '/admin/application') {
+          const userdata = {
+            id: this.id,
+            users: this.users
+          }
+          await this.$store.dispatch('tiles/saveUsers', userdata)
+        }
+
         await this.$store.dispatch('app/status')
         this.$q.notify({
           message: this.$t('updated'),
