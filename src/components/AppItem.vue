@@ -12,7 +12,7 @@
         :name="this.application.UserItem.active === true ? 'check_box' : 'check_box_outline_blank'"
       />
     </div>
-    <div class="actions">
+    <div v-if="this.$route.path === '/admin/application' || application.system !== true" class="actions">
       <q-btn size="12px" unelevated color="primary" @click="editApp">Edit</q-btn>
       <q-btn size="12px" unelevated color="grey-2" text-color="black" @click="deleteApp">Delete</q-btn>
     </div>
