@@ -22,10 +22,22 @@ router.get('/', errorHandler(async (req, res, next) => {
   }
 
   const items = await req.user.getItems()
+  let allitems = {
+    items: items.map(item => item.toJSON())
+  }
+
+  if (req.user.level === User.ADMIN) {
+    const system = await Item.findAll({
+      where: {
+        system: true
+      }
+    })
+    allitems.system = system.map(item => item.toJSON())
+  }
 
   return res.json({
     status: 'ok',
-    result: items.map(item => item.toJSON())
+    result: allitems
   })
 }))
 
