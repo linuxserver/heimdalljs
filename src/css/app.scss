@@ -270,7 +270,7 @@ div.create {
       margin: 5px;
       display: flex;
       background: #ffffff87;
-      padding: 20px;
+      padding: 15px;
       box-shadow: 0 0 10px #0000000f;
       border-radius: 4px;
       border-top: 1px solid #fdfdfd;
@@ -280,29 +280,23 @@ div.create {
         color: #000000b5;
         font-weight: bold;
         perspective: 1000px;
-        min-height: 92px;
+        min-height: 60px;
         // position: relative;
-        &.edit {
-          z-index: 5;
-          .list-item-inner {
-            transform: rotateX(180deg);
-          }
-          .list-item-back {
-            height: auto;
-          }
-        }
         .icon {
-          padding:15px 30px;
+          padding:5px;
+          width: 110px;
+          display: flex;
+          justify-content: center;
           .app-icon {
-            max-width: 60px;
+            max-width: 40px;
+            max-height: 40px;
             display: block;
-            border-radius: 50%;
           }
         }
         .name {
             width: 100%;
             max-width: 300px;
-            padding: 0 15px 0 0;
+            padding: 0 15px 0 15px;
             display: flex;
             flex-direction: column;
             .tags {
@@ -331,7 +325,6 @@ div.create {
         .actions {
           margin-left: auto;
           display: flex;
-          flex-direction: column;
           padding: 0 15px;
         }
     }

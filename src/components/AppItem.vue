@@ -1,10 +1,9 @@
 <template>
-  <div class="list-item" :class="{ edit: this.showback === true}">
+  <div class="list-item">
     <div class="icon"><img class="app-icon" :src="appIcon"></div>
     <div class="name">
       {{ this.application.title }}
-      <span class="tags">Tags: {{ this.taglist }}</span>
-      <a :href="this.application.url">url</a>
+      <a :href="this.application.url"><span><q-tooltip v-if="application.url !== ''" content-class="tooltip-content" max-width="500px" anchor="bottom middle" self="top middle">{{ application.url }}</q-tooltip>Visit url</span></a>
     </div>
     <div class="pinned">
       Active
@@ -14,9 +13,22 @@
       />
     </div>
     <div class="actions">
-      <q-btn size="12px" unelevated color="primary" @click="showBack">Edit</q-btn>
-      <q-btn size="12px" unelevated color="grey-2" text-color="black">Delete</q-btn>
+      <q-btn size="12px" unelevated color="primary" @click="editApp">Edit</q-btn>
+      <q-btn size="12px" unelevated color="grey-2" text-color="black" @click="deleteApp">Delete</q-btn>
     </div>
+    <q-dialog v-model="confirmDelete" persistent>
+      <q-card>
+        <q-card-section class="row items-center">
+          <q-avatar icon="delete_forever" color="negative" text-color="white" />
+          <span class="q-ml-sm">Are you sure you want to delete this app?</span>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
+          <q-btn flat label="Delete" color="primary" @click="onDeleteClick" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -55,7 +67,7 @@ export default {
   data () {
     return {
       edit: false,
-      showback: false,
+      confirmDelete: false,
       color: this.application.colour,
       applicationtype: this.application.appid,
       title: this.application.title,
@@ -65,13 +77,20 @@ export default {
     }
   },
   methods: {
-    showBack: function () {
+    editApp: function () {
       console.log(this.application)
       this.$store.commit('tiles/edit', this.application)
       this.$store.commit('tiles/create', true)
     },
-    hideBack: function () {
-      this.showback = false
+    deleteApp: function () {
+      this.confirmDelete = true
+    },
+    onDeleteClick () {
+      // on OK, it is REQUIRED to
+      let appid = this.application.id
+      this.$store.dispatch('tiles/deleteApp', appid)
+      // then hiding dialog
+      this.confirmDelete = false
     },
     async toggleActive () {
       const formData = {
