@@ -174,7 +174,7 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
   }
 
   const item = await Item.findOne({
-    wheree: {
+    where: {
       id: req.params.id
     }
   })
