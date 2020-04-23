@@ -28,6 +28,9 @@ router.get('/', errorHandler(async (req, res, next) => {
 
   if (req.user.level === User.ADMIN) {
     const system = await Item.findAll({
+      include: [{
+        model: User
+      }],
       where: {
         system: true
       }
