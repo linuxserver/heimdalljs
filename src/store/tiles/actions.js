@@ -44,6 +44,12 @@ export function active (context, data) {
     .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data)
 }
 
+export async function deleteApp (context, id) {
+  await axios
+    .delete(process.env.BACKEND_LOCATION + 'items/' + id)
+  getApps(context)
+}
+
 export function clear (context) {
   context.commit('edit', {
     id: null,
