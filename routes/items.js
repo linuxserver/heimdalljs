@@ -22,7 +22,7 @@ router.get('/', errorHandler(async (req, res, next) => {
   }
 
   const items = await req.user.getItems()
-  let allitems = {
+  const allitems = {
     items: items.map(item => item.toJSON())
   }
 
@@ -214,7 +214,7 @@ router.delete('/:id', errorHandler(async (req, res, next) => {
 }))
 
 router.put('/:id/users', errorHandler(async (req, res, next) => {
-  if (!req.user || !req.user.leve !== User.ADMIN) {
+  if (!req.user || !req.user.level !== User.ADMIN) {
     return res.status(401).json({
       status: 'error',
       result: 'unauthorized'
