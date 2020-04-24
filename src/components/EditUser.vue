@@ -220,7 +220,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
-      this.settingsLanguage = newdata.settingsLanguage
+      this.settingsLanguage = newdata.settings.language
       this.multifactorEnabled = newdata.multifactorEnabled
     },
     /* create: function (newdata, olddata) {

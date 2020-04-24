@@ -8,7 +8,9 @@ export default function () {
       email: null,
       username: null,
       password: '',
-      totp: null
+      totp: null,
+      settingsLanguage: null,
+      multifactorEnabled: false
     }
   }
 }
