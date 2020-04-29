@@ -68,9 +68,9 @@ export default function () {
           label: 'background_image'
         },
         {
-          value: 'color',
-          label: 'color'
-        },
+          value: 'colour',
+          label: 'colour'
+        }/* ,
         {
           value: 'unsplash',
           label: 'unsplash'
@@ -78,7 +78,7 @@ export default function () {
         {
           value: 'trianglify',
           label: 'trianglify'
-        }
+        } */
       ],
       default_tag: null,
       default_public_page: null
