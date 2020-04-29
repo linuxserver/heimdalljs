@@ -64,18 +64,13 @@
             <div class="active providers">
               Active
               <ul class="">
-                <li>Application</li>
-                <li>Google</li>
-                <li>DuckDuckGo</li>
-                <li>Qwant</li>
+                <li v-for="provider in active_search_providers" :key="provider.id">{{ provider.name }}</li>
               </ul>
             </div>
             <div class="inactive providers">
               Inactive
               <ul class="">
-                <li>Bing</li>
-                <li>Startpage</li>
-                <li>NZBHydra</li>
+                <li v-for="provider in inactive_search_providers" :key="provider.id">{{ provider.name }}</li>
               </ul>
             </div>
           </div>
@@ -127,6 +122,17 @@ export default {
     },
     languages () {
       return this.$store.state.app.languages
+    },
+    search_providers () {
+      return this.$store.state.app.settings.search_providers
+    },
+    active_search_providers () {
+      return this.$store.state.app.settings.active_search_providers
+    },
+    inactive_search_providers () {
+      const obj1 = this.$store.state.app.settings.search_providers
+      const obj2 = this.$store.state.app.settings.active_search_providers
+      return obj1.filter(obj => obj2.every(s => s.id !== obj.id))
     },
     show_usernames: {
       get () {

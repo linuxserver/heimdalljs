@@ -28,14 +28,18 @@ export default function () {
       app_version: null,
       search_on_dashboard: 'no',
       search_provider: {
-        id: 'google',
-        url: 'https://www.google.com/search',
-        name: 'Google',
-        method: 'get',
-        target: '_blank',
-        query: 'q'
+        id: 'tiles',
+        name: 'Tiles',
+        target: '_self'
       },
       active_search_providers: [
+        {
+          id: 'tiles',
+          name: 'Tiles',
+          target: '_self'
+        }
+      ],
+      search_providers: [
         {
           id: 'tiles',
           name: 'Tiles',
@@ -45,14 +49,6 @@ export default function () {
           id: 'google',
           url: 'https://www.google.com/search',
           name: 'Google',
-          method: 'get',
-          target: '_blank',
-          query: 'q'
-        },
-        {
-          id: 'bing',
-          url: 'https://www.bing.com/search',
-          name: 'Bing',
           method: 'get',
           target: '_blank',
           query: 'q'
