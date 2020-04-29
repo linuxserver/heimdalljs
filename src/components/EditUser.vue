@@ -53,12 +53,12 @@
                 name="mfa"
                 label="Security"
               />
-              <q-tab
+              <!--<q-tab
                 clickable
                 v-ripple
                 name="settings"
                 label="Settings"
-              />
+              />-->
             </q-tabs>
 
             <q-tab-panels v-model="tab" animated class="">
@@ -88,7 +88,7 @@
                   </template>
                 </q-input>
 
-                <q-select
+                <!--<q-select
                   outlined
                   :options="languages"
                   :label="this.$t('select_language')"
@@ -96,7 +96,7 @@
                   option-label="label"
                   v-model="settingsLanguage"
                   map-options
-                ></q-select>
+                ></q-select>-->
 
               </q-tab-panel>
 
