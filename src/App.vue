@@ -29,6 +29,15 @@ export default {
     },
     user () {
       return this.$store.state.app.user
+    },
+    lang () {
+      return this.$store.state.app.settings.language
+    }
+  },
+
+  watch: {
+    lang (lang) {
+      this.$i18n.locale = lang
     }
   },
 
