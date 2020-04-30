@@ -27,33 +27,9 @@ export default function () {
       language: 'en-US',
       app_version: null,
       search_on_dashboard: 'no',
-      search_provider: {
-        id: 'tiles',
-        name: 'Tiles',
-        target: '_self'
-      },
-      active_search_providers: [
-        {
-          id: 'tiles',
-          name: 'Tiles',
-          target: '_self'
-        }
-      ],
-      search_providers: [
-        {
-          id: 'tiles',
-          name: 'Tiles',
-          target: '_self'
-        },
-        {
-          id: 'google',
-          url: 'https://www.google.com/search',
-          name: 'Google',
-          method: 'get',
-          target: '_blank',
-          query: 'q'
-        }
-      ],
+      search_provider: null,
+      active_search_providers: [],
+      search_providers: [],
       background_options: [
         {
           value: 'none',

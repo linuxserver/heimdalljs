@@ -63,15 +63,15 @@
           <div class="search-providers">
             <div class="active providers">
               Active
-              <ul class="">
+              <draggable tag="ul" group="providers" v-model="active_search_providers">
                 <li v-for="provider in active_search_providers" :key="provider.id">{{ provider.name }}</li>
-              </ul>
+              </draggable>
             </div>
             <div class="inactive providers">
               Inactive
-              <ul class="">
+                <draggable tag="ul" group="providers" v-model="inactive_search_providers">
                 <li v-for="provider in inactive_search_providers" :key="provider.id">{{ provider.name }}</li>
-              </ul>
+                </draggable>
             </div>
           </div>
           List of providers
@@ -99,11 +99,12 @@
 </template>
 
 <script>
-
+import draggable from 'vuedraggable'
 export default {
   name: 'Settings',
 
   components: {
+    draggable
   },
 
   props: ['applications', 'allapps'],
@@ -126,13 +127,28 @@ export default {
     search_providers () {
       return this.$store.state.app.settings.search_providers
     },
-    active_search_providers () {
-      return this.$store.state.app.settings.active_search_providers
+    active_search_providers: {
+      get () {
+        return this.$store.state.app.settings.active_search_providers
+      },
+      set (value) {
+        this.$store.dispatch('app/saveSettings', {
+          active_search_providers: value
+        })
+      }
     },
-    inactive_search_providers () {
-      const obj1 = this.$store.state.app.settings.search_providers
-      const obj2 = this.$store.state.app.settings.active_search_providers
-      return obj1.filter(obj => obj2.every(s => s.id !== obj.id))
+    inactive_search_providers: {
+      get () {
+        const obj1 = this.$store.state.app.settings.search_providers
+        const obj2 = this.$store.state.app.settings.active_search_providers
+        return obj1.filter(obj => obj2.every(s => s.id !== obj.id))
+      },
+      set (value) {
+        /* this.$store.dispatch('app/saveSettings', {
+          active_search_providers: value
+        }) */
+      }
+
     },
     show_usernames: {
       get () {
@@ -225,6 +241,7 @@ export default {
   mounted () {
     this.$store.commit('app/tab', 'admin')
     this.$store.commit('app/adminApps', true)
+    this.$store.dispatch('app/getSearchProviders')
   }
 }
 </script>

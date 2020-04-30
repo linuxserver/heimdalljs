@@ -45,6 +45,10 @@ export function settings (state, data) {
   state.settings = data
 }
 
+export function searchProviders (state, data) {
+  state.settings.search_providers = data
+}
+
 export function searchProvider (state, data) {
   state.settings.search_provider = data
 }

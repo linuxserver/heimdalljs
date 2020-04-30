@@ -259,7 +259,17 @@ div.create {
 		}
 	}
 }
-
+.providers.active {
+  li:first-child {
+    display: flex;
+    justify-content: space-between;
+    &:after {
+      content: "Default";
+      font-size: 12px;
+      font-weight: bold;
+    }
+  }
+}
 .list-items {
     display: flex;
     flex-direction: column;

@@ -19,8 +19,10 @@ export async function status (context) {
     }
     // get settings
     const settings = await getSettings()
-    delete settings.search_provider // remove this once working
     const currentsettings = { ...context.state.settings }
+    if (settings.active_search_providers.length > 0) {
+      settings.search_provider = settings.active_search_providers[0]
+    }
     const update = Object.assign(currentsettings, settings)
     context.commit('settings', update)
 
@@ -77,6 +79,11 @@ export async function getSettings (context) {
   return result
 }
 
+export async function getSearchProviders (context) {
+  const settings = await axios.get(process.env.BACKEND_LOCATION + 'searchproviders')
+  context.commit('searchProviders', settings.data.result)
+}
+
 export async function setDefaults (context, data) {
   // const [ language, show_usernames ] = await Promise.all([
   /* await Promise.all([
@@ -93,6 +100,10 @@ export async function saveSettings (context, data) {
     if (response.data.status === 'ok') {
       const settings = { ...context.state.settings }
       const update = Object.assign(settings, data)
+      if (update.active_search_providers.length > 0) {
+        update.search_provider = update.active_search_providers[0]
+      }
+
       context.commit('settings', update)
 
       Notify.create({

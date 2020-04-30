@@ -33,6 +33,7 @@
           </div>
         <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
         <q-form
+          v-if="search_provider !== null"
           @submit="onSubmit"
           :action="search_provider.url"
           :method="search_provider.method"
