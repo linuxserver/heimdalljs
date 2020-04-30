@@ -34,8 +34,8 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        key: 'search_provider',
-        value: null,
+        key: 'active_search_providers',
+        value: [],
         created_at: new Date(),
         updated_at: new Date()
       },
