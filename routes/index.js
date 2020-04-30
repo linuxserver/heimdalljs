@@ -6,6 +6,7 @@ const config = require('../config/config')
 const path = require('path')
 const Speakeasy = require('speakeasy')
 const axios = require('axios')
+const fs = require('fs')
 const Docker = require('dockerode')
 const errorHandler = require('../middleware/error-handler')
 
@@ -120,6 +121,26 @@ router.get('/status', errorHandler(async (req, res, next) => {
   return res.json({
     status: 'ok',
     result: status
+  })
+}))
+
+/**
+ * searchproviders endpoint - returns all configured search providers
+ */
+router.get('/searchproviders', errorHandler(async (req, res, next) => {
+  if (!req.user) {
+    return res.status(401).json({
+      status: 'unauthorized',
+      result: null
+    })
+  }
+
+  const jsonFile = path.join(__dirname, '../searchproviders.json');
+  const providers = JSON.parse(fs.readFileSync(jsonFile))
+
+  return res.json({
+    status: 'ok',
+    result: providers
   })
 }))
 
