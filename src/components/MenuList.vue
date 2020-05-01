@@ -85,15 +85,15 @@
           :title="this.$tc('user', 0)"
           link="/admin/user"
         />
-        <EssentialLink
+        <!--<EssentialLink
           :title="this.$t('settings')"
           icon="settings"
           link="/admin/user/settings"
-        />
+        />-->
         </div>
         </q-expansion-item>
 
-        <q-expansion-item
+        <!--<q-expansion-item
           group="admin"
           icon="account_tree"
           :label="this.$tc('proxy_management')"
@@ -112,7 +112,7 @@
           link="/admin/proxy/settings"
         />
         </div>
-        </q-expansion-item>
+        </q-expansion-item>-->
 
       </q-tab-panel>
 
