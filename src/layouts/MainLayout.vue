@@ -57,7 +57,6 @@
           use-input
           clearable
           input-debounce="0"
-          :options="options"
           option-value="id"
           option-label="title"
           map-options
@@ -165,7 +164,8 @@ export default {
       version: version,
       filter: null,
       searchfilter: null,
-      search: ''
+      search: '',
+      selectedapp: null
       // background: 'background-image: url(statics/bg/bg11.jpg)'
     }
   },
