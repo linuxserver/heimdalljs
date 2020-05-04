@@ -56,7 +56,7 @@ test('Add/delete new item', async () => {
 
   await item.destroy()
 
-  expect((await Item.count())).toBe(0)
+  expect(await Item.count()).toBe(0)
 })
 
 test('User delete cascade', async () => {

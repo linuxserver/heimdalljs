@@ -12,29 +12,26 @@ export default {
   components: {
     EditUser
   },
-  computed: {
-
-  },
+  computed: {},
 
   methods: {
-    closecreate () {
+    closecreate() {
       this.$store.commit('users/create', false)
     }
   },
 
-  mounted () {
+  mounted() {
     this.$store.commit('users/edit', this.$store.state.app.user)
   },
 
-  data () {
-    return {
-    }
+  data() {
+    return {}
   }
 }
 </script>
 <style lang="scss">
-  .list-users {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.list-users {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

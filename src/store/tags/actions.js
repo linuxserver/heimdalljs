@@ -1,2 +1,1 @@
-export function getTags (context) {
-}
+export function getTags(context) {}

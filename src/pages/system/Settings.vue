@@ -2,26 +2,39 @@
   <q-page class="flex">
     <div class="tab-list">
       <q-list>
-        <q-item :class="{ active: tab === 'general' }" @click="tab = 'general'" clickable>
+        <q-item
+          :class="{ active: tab === 'general' }"
+          @click="tab = 'general'"
+          clickable
+        >
           <q-item-section>
             <q-item-label>General Settings</q-item-label>
             <q-item-label caption>Choose general system settings</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item :class="{ active: tab === 'search' }" @click="tab = 'search'" clickable>
+        <q-item
+          :class="{ active: tab === 'search' }"
+          @click="tab = 'search'"
+          clickable
+        >
           <q-item-section>
             <q-item-label>Search settings</q-item-label>
-            <q-item-label caption>Select which search engines to use</q-item-label>
+            <q-item-label caption
+              >Select which search engines to use</q-item-label
+            >
           </q-item-section>
         </q-item>
-        <q-item :class="{ active: tab === 'dashboard' }" @click="tab = 'dashboard'" clickable>
+        <q-item
+          :class="{ active: tab === 'dashboard' }"
+          @click="tab = 'dashboard'"
+          clickable
+        >
           <q-item-section>
             <q-item-label>Dashboard</q-item-label>
             <q-item-label caption>Settings for the dashboard</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
-
     </div>
     <div class="page">
       <q-tab-panels v-model="tab" animated class="">
@@ -45,7 +58,6 @@
             v-model="show_usernames"
             map-options
           ></q-select>
-
         </q-tab-panel>
         <q-tab-panel name="search">
           <h6>Search</h6>
@@ -63,38 +75,54 @@
           <div class="search-providers">
             <div class="active providers">
               Active
-              <draggable tag="ul" group="providers" v-model="active_search_providers">
-                <li v-for="provider in active_search_providers" :key="provider.id">{{ provider.name }}</li>
+              <draggable
+                tag="ul"
+                group="providers"
+                v-model="active_search_providers"
+              >
+                <li
+                  v-for="provider in active_search_providers"
+                  :key="provider.id"
+                >
+                  {{ provider.name }}
+                </li>
               </draggable>
             </div>
             <div class="inactive providers">
               Inactive
-                <draggable tag="ul" group="providers" v-model="inactive_search_providers">
-                <li v-for="provider in inactive_search_providers" :key="provider.id">{{ provider.name }}</li>
-                </draggable>
+              <draggable
+                tag="ul"
+                group="providers"
+                v-model="inactive_search_providers"
+              >
+                <li
+                  v-for="provider in inactive_search_providers"
+                  :key="provider.id"
+                >
+                  {{ provider.name }}
+                </li>
+              </draggable>
             </div>
           </div>
-          List of providers
-          add a new providers
-          default
+          List of providers add a new providers default
         </q-tab-panel>
         <q-tab-panel name="dashboard">
           <q-select
             outlined
-            :options="background_options.map(e => ({
-              label: $t(e.label),
-              value: e.value
-            }))"
+            :options="
+              background_options.map(e => ({
+                label: $t(e.label),
+                value: e.value
+              }))
+            "
             :label="this.$t('background_type')"
             v-model="background"
             map-options
             emit-value
           ></q-select>
-
         </q-tab-panel>
       </q-tab-panels>
     </div>
-
   </q-page>
 </template>
 
@@ -110,7 +138,7 @@ export default {
   props: ['applications', 'allapps'],
 
   computed: {
-    createapp () {
+    createapp() {
       return {
         id: null,
         color: '',
@@ -121,56 +149,55 @@ export default {
         icon: 'statics/img/heimdall-icon-small.png'
       }
     },
-    languages () {
+    languages() {
       return this.$store.state.app.languages
     },
-    search_providers () {
+    search_providers() {
       return this.$store.state.app.settings.search_providers
     },
     active_search_providers: {
-      get () {
+      get() {
         return this.$store.state.app.settings.active_search_providers
       },
-      set (value) {
+      set(value) {
         this.$store.dispatch('app/saveSettings', {
           active_search_providers: value
         })
       }
     },
     inactive_search_providers: {
-      get () {
+      get() {
         const obj1 = this.$store.state.app.settings.search_providers
         const obj2 = this.$store.state.app.settings.active_search_providers
         return obj1.filter(obj => obj2.every(s => s.id !== obj.id))
       },
-      set (value) {
+      set(value) {
         /* this.$store.dispatch('app/saveSettings', {
           active_search_providers: value
         }) */
       }
-
     },
     show_usernames: {
-      get () {
+      get() {
         return this.$store.state.app.settings.show_usernames
       },
-      set (val) {
+      set(val) {
         this.$store.dispatch('app/saveSettings', {
           show_usernames: val.value
         })
       }
     },
-    background_options () {
+    background_options() {
       return this.$store.state.app.settings.background_options
     },
     background: {
-      get () {
+      get() {
         if (this.$store.state.app.settings.background !== null) {
           return this.$store.state.app.settings.background.type || null
         }
         return null
       },
-      set (val) {
+      set(val) {
         this.$store.dispatch('app/saveSettings', {
           background: {
             type: val
@@ -179,36 +206,36 @@ export default {
       }
     },
     language: {
-      get () {
+      get() {
         return this.$store.state.app.settings.language
       },
-      set (val) {
+      set(val) {
         this.$store.dispatch('app/saveSettings', {
           language: val.value
         })
       }
     },
     search_on_dashboard: {
-      get () {
+      get() {
         return this.$store.state.app.settings.search_on_dashboard
       },
-      set (val) {
+      set(val) {
         this.$store.dispatch('app/saveSettings', {
           search_on_dashboard: val.value
         })
       }
     },
     create: {
-      get () {
+      get() {
         return this.$store.state.tiles.create
       },
-      set (val) {
+      set(val) {
         this.$store.commit('tiles/create', val)
       }
     }
   },
 
-  data () {
+  data() {
     return {
       tab: 'general',
       username_options: [
@@ -238,7 +265,7 @@ export default {
       this.$store.commit('tiles/create', true)
     }
   },
-  mounted () {
+  mounted() {
     this.$store.commit('app/tab', 'admin')
     this.$store.commit('app/adminApps', true)
     this.$store.dispatch('app/getSearchProviders')
@@ -247,11 +274,16 @@ export default {
 </script>
 <style lang="scss">
 .bg {
-  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 88, 94, 0.95),
+      rgba(49, 66, 84, 0.95)
+    ),
+    url('/statics/applications.jpg');
   background-size: cover;
   background-position: center;
   height: 300px;
-  position:fixed;
+  position: fixed;
   top: 75px;
   left: 0;
   right: 0;

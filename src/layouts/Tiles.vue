@@ -15,34 +15,36 @@
           {{ $t('application_management') }}
         </q-toolbar-title>
 
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand" @click="createNew">Add New</q-btn>
-        <div class="searchbox">
-        <q-select
-          borderless
-          color="grey"
-          v-model="selectedapp"
-          use-input
-          clearable
-          input-debounce="0"
-          :options="options"
-          option-value="id"
-          option-label="title"
-          map-options
-          emit-value
-          label="Search..."
-          @filter="filterFn"
+        <q-btn
+          size="15px"
+          style="margin-left: 20px;"
+          unelevated
+          color="brand"
+          @click="createNew"
+          >Add New</q-btn
         >
-        </q-select>
+        <div class="searchbox">
+          <q-select
+            borderless
+            color="grey"
+            v-model="selectedapp"
+            use-input
+            clearable
+            input-debounce="0"
+            :options="options"
+            option-value="id"
+            option-label="title"
+            map-options
+            emit-value
+            label="Search..."
+            @filter="filterFn"
+          >
+          </q-select>
         </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class=""
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="">
       <MenuList></MenuList>
     </q-drawer>
 
@@ -52,17 +54,17 @@
       overlay
       bordered
       content-class="bg-grey-1"
-    > <span @click="rightDrawerOpen = !rightDrawerOpen" class="close">Close</span>
+    >
+      <span @click="rightDrawerOpen = !rightDrawerOpen" class="close"
+        >Close</span
+      >
       <div v-if="tile">
         tiles
       </div>
     </q-drawer>
 
     <q-page-container>
-      <router-view
-        :applications="applications"
-        :allapps="applications"
-      />
+      <router-view :applications="applications" :allapps="applications" />
     </q-page-container>
   </q-layout>
 </template>
@@ -93,7 +95,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
@@ -104,15 +106,17 @@ export default {
     }
   },
   methods: {
-    createNew () {
+    createNew() {
       this.$store.commit('tiles/create', true)
     },
-    filterFn (val, update, abort) {
+    filterFn(val, update, abort) {
       update(() => {
         // this.selectedapp = null
         const needle = val.toLowerCase()
         // console.log('needle: ' + needle)
-        this.options = this.allapplications.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
+        this.options = this.allapplications.filter(
+          v => v.title.toLowerCase().indexOf(needle) > -1
+        )
       })
     }
   }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Notify, Cookies, LocalStorage } from 'quasar'
 
-export async function status (context) {
+export async function status(context) {
   // Check to see if we are in setup
   console.log('check status')
   const setup = LocalStorage.getItem('heimdall_setup')
@@ -46,7 +46,10 @@ export async function status (context) {
   } catch (e) {
     Notify.create({
       type: 'negative',
-      message: `Could not connect to backend server. ` + process.env.BACKEND_LOCATION + 'ping',
+      message:
+        `Could not connect to backend server. ` +
+        process.env.BACKEND_LOCATION +
+        'ping',
       progress: true,
       position: 'top',
       timeout: 1500
@@ -54,11 +57,14 @@ export async function status (context) {
   }
 }
 
-export async function setupUser (context, data) {
+export async function setupUser(context, data) {
   // console.log(data)
   try {
     data.level = 0
-    const saveuser = await axios.post(process.env.BACKEND_LOCATION + 'users', data)
+    const saveuser = await axios.post(
+      process.env.BACKEND_LOCATION + 'users',
+      data
+    )
     console.log(saveuser)
     await firelogin(context, {
       username: data.username,
@@ -66,11 +72,11 @@ export async function setupUser (context, data) {
     })
     context.commit('step', 2)
   } catch (e) {
-  // axios returned a non-200 response
+    // axios returned a non-200 response
   }
 }
 
-export async function getSettings (context) {
+export async function getSettings(context) {
   const settings = await axios.get(process.env.BACKEND_LOCATION + 'settings')
   const result = {}
   settings.data.result.forEach(setting => {
@@ -79,12 +85,14 @@ export async function getSettings (context) {
   return result
 }
 
-export async function getSearchProviders (context) {
-  const settings = await axios.get(process.env.BACKEND_LOCATION + 'searchproviders')
+export async function getSearchProviders(context) {
+  const settings = await axios.get(
+    process.env.BACKEND_LOCATION + 'searchproviders'
+  )
   context.commit('searchProviders', settings.data.result)
 }
 
-export async function setDefaults (context, data) {
+export async function setDefaults(context, data) {
   // const [ language, show_usernames ] = await Promise.all([
   /* await Promise.all([
     axios.put(process.env.BACKEND_LOCATION + 'settings', data.language),
@@ -94,9 +102,12 @@ export async function setDefaults (context, data) {
   context.commit('step', 3)
 }
 
-export async function saveSettings (context, data) {
+export async function saveSettings(context, data) {
   try {
-    const response = await axios.put(process.env.BACKEND_LOCATION + 'settings', data)
+    const response = await axios.put(
+      process.env.BACKEND_LOCATION + 'settings',
+      data
+    )
     if (response.data.status === 'ok') {
       const settings = { ...context.state.settings }
       const update = Object.assign(settings, data)
@@ -125,14 +136,14 @@ export async function saveSettings (context, data) {
   }
 }
 
-export function setupComplete (context) {
+export function setupComplete(context) {
   LocalStorage.remove('heimdall_setup')
   console.log('finish')
   status(context)
   context.dispatch('users/getUsers', null, { root: true })
 }
 
-export async function auth (context) {
+export async function auth(context) {
   try {
     const response = await axios.get(process.env.BACKEND_LOCATION + 'auth')
     if (response.data.status === 'ok') {
@@ -144,13 +155,16 @@ export async function auth (context) {
   }
 }
 
-export function setUser (context, user) {
+export function setUser(context, user) {
   // console.log(data)
   context.commit('setUser', user)
 }
 
-export async function firelogin (context, data) {
-  const response = await axios.post(process.env.BACKEND_LOCATION + 'login', data)
+export async function firelogin(context, data) {
+  const response = await axios.post(
+    process.env.BACKEND_LOCATION + 'login',
+    data
+  )
   if (response.data.result && response.data.result.token) {
     Cookies.set('jwt', response.data.result.token, {
       expires: 3600
@@ -160,12 +174,15 @@ export async function firelogin (context, data) {
   return response
 }
 
-export async function unsplash (context) {
-  const settings = await axios.get(process.env.BACKEND_LOCATION + 'cors/https://api.unsplash.com/photos/random?orientation=landscape')
+export async function unsplash(context) {
+  const settings = await axios.get(
+    process.env.BACKEND_LOCATION +
+      'cors/https://api.unsplash.com/photos/random?orientation=landscape'
+  )
   return 'background-image: url(' + settings.response.data.urls.full + ')'
 }
 
-export async function login (context, data) {
+export async function login(context, data) {
   // console.log(data)
   const response = await firelogin(context, data)
   console.log(response)
@@ -182,7 +199,7 @@ export async function login (context, data) {
   return response
 }
 
-export function logout (context) {
+export function logout(context) {
   // console.log(data)
   Cookies.remove('jwt', {
     expires: 3600
