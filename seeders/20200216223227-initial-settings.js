@@ -35,7 +35,7 @@ module.exports = {
       },
       {
         key: 'active_search_providers',
-        value: [],
+        value: JSON.stringify([]),
         created_at: new Date(),
         updated_at: new Date()
       },
