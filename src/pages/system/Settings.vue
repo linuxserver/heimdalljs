@@ -74,9 +74,6 @@
                 </draggable>
             </div>
           </div>
-          List of providers
-          add a new providers
-          default
         </q-tab-panel>
         <q-tab-panel name="dashboard">
           <q-select
@@ -86,10 +83,74 @@
               value: e.value
             }))"
             :label="this.$t('background_type')"
-            v-model="background"
+            v-model="background_type"
             map-options
             emit-value
           ></q-select>
+          <div class="background_colour_selector" v-if="background_type === 'colour'">
+            <div class="details">
+                <q-input
+                  outlined
+                  v-model="colour1"
+                  :label="this.$t('colour') + ' 1'"
+                >
+                  <template v-slot:append>
+                    <q-icon name="colorize" class="cursor-pointer">
+                      <q-popup-proxy transition-show="scale" transition-hide="scale">
+                        <q-color v-model="colour1" format-model="hexa" />
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+
+                <q-input
+                  outlined
+                  v-model="colour2"
+                  :label="this.$t('colour') + ' 2'"
+                >
+                  <template v-slot:append>
+                    <q-icon name="colorize" class="cursor-pointer">
+                      <q-popup-proxy transition-show="scale" transition-hide="scale">
+                        <q-color v-model="colour2" format-model="hexa" />
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+
+                <q-btn-toggle
+                  v-if="colour2 !== null"
+                  style="margin-bottom: 20px;"
+                  v-model="gradient"
+                  no-caps
+                  rounded
+                  unelevated
+                  toggle-color="primary"
+                  color="white"
+                  text-color="primary"
+                  :options="[
+                    {label: $t('linear'), value: 'linear'},
+                    {label: $t('radial'), value: 'radial'}
+                  ]"
+                />
+
+              <q-select
+                v-if="colour2 !== null && gradient === 'linear'"
+                outlined
+                :options="[0,45,90,135,180,225,270,315,360]"
+                :label="this.$t('Degrees')"
+                v-model="degrees"
+                emit-value
+              ></q-select>
+
+          </div>
+          <div :style="preview" class="preview">
+
+          </div>
+          </div>
+
+          <div v-if="background_type === 'background_image'">
+            background
+          </div>
 
         </q-tab-panel>
       </q-tab-panels>
@@ -163,7 +224,7 @@ export default {
     background_options () {
       return this.$store.state.app.settings.background_options
     },
-    background: {
+    background_type: {
       get () {
         if (this.$store.state.app.settings.background !== null) {
           return this.$store.state.app.settings.background.type || null
@@ -175,6 +236,78 @@ export default {
           background: {
             type: val
           }
+        })
+      }
+    },
+    colour1: {
+      get () {
+        if (this.$store.state.app.settings.background !== null) {
+          return this.$store.state.app.settings.background.colour1 || null
+        }
+        return null
+      },
+      set (val) {
+        const background = this.$store.state.app.settings.background
+        const update = Object.assign(background, {
+          colour1: val
+        })
+        // console.log(update)
+        this.$store.dispatch('app/saveSettings', {
+          update
+        })
+      }
+    },
+    colour2: {
+      get () {
+        if (this.$store.state.app.settings.background !== null) {
+          return this.$store.state.app.settings.background.colour2 || null
+        }
+        return null
+      },
+      set (val) {
+        const background = this.$store.state.app.settings.background
+        const update = Object.assign(background, {
+          colour2: val
+        })
+        // console.log(update)
+        this.$store.dispatch('app/saveSettings', {
+          update
+        })
+      }
+    },
+    gradient: {
+      get () {
+        if (this.$store.state.app.settings.background !== null) {
+          return this.$store.state.app.settings.background.gradient || 'linear'
+        }
+        return 'linear'
+      },
+      set (val) {
+        const background = this.$store.state.app.settings.background
+        const update = Object.assign(background, {
+          gradient: val
+        })
+        // console.log(update)
+        this.$store.dispatch('app/saveSettings', {
+          update
+        })
+      }
+    },
+    degrees: {
+      get () {
+        if (this.$store.state.app.settings.background !== null) {
+          return this.$store.state.app.settings.background.degrees || 0
+        }
+        return 0
+      },
+      set (val) {
+        const background = this.$store.state.app.settings.background
+        const update = Object.assign(background, {
+          degrees: val
+        })
+        // console.log(update)
+        this.$store.dispatch('app/saveSettings', {
+          update
         })
       }
     },
@@ -205,6 +338,9 @@ export default {
       set (val) {
         this.$store.commit('tiles/create', val)
       }
+    },
+    preview () {
+      return this.$store.getters['app/getBackground']
     }
   },
 
