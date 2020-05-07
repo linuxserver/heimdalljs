@@ -87,8 +87,8 @@
             map-options
             emit-value
           ></q-select>
-          <div class="background_colour_selector" v-if="background_type === 'colour'">
-            <div class="details">
+          <div class="background_colour_selector">
+            <div class="details" v-if="background_type === 'colour'">
                 <q-input
                   outlined
                   v-model="colour1"
@@ -143,13 +143,18 @@
               ></q-select>
 
           </div>
+          <div class="details" v-if="background_type === 'background_image'">
+              <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
+                <template v-slot:prepend>
+                  <q-icon name="attach_file" />
+                </template>
+              </q-file>
+
+          </div>
+
           <div :style="preview" class="preview">
 
           </div>
-          </div>
-
-          <div v-if="background_type === 'background_image'">
-            background
           </div>
 
         </q-tab-panel>
