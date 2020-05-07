@@ -2,6 +2,11 @@
 // so you can safely delete all default props below
 
 export default {
+  heimdall_setup: 'Heimdall Setup',
+  setup_admin_user: 'Setup admin user',
+  save: 'Save',
+  continue: 'Continue',
+  finish: 'Finish',
   select_language: 'Select language',
   select_system_defaults: 'Select system defaults',
   select_personal_settings: 'Select personal settings',
