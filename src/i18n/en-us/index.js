@@ -60,6 +60,7 @@ export default {
   filter: 'Filter',
   key: 'Key',
   none: 'None',
+  default: 'Default',
   size: 'Size',
   speed: 'Speed',
   enter_apikey: 'Enter your API key',
