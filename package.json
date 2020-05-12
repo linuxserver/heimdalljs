@@ -13,11 +13,11 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "server": "npm run db:migrate && node ./bin/www",
-    "db:migrate": "./node_modules/sequelize-cli/lib/sequelize db:migrate",
-    "db:seed": "./node_modules/sequelize-cli/lib/sequelize db:seed:all",
+    "db:migrate": "node ./node_modules/sequelize-cli/lib/sequelize db:migrate",
+    "db:seed": "node ./node_modules/sequelize-cli/lib/sequelize db:seed:all",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
-    "build": "./node_modules/@quasar/cli/bin/quasar build",
+    "build": "node ./node_modules/@quasar/cli/bin/quasar build",
     "setup": "npm install && node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
