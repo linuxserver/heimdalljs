@@ -17,7 +17,7 @@
     "db:seed": "./node_modules/sequelize-cli/lib/sequelize db:seed:all",
     "pretest": "NODE_ENV=test npm run db:migrate",
     "test": "jest",
-    "build": "npx quasar build",
+    "build": "./node_modules/@quasar/cli/bin/quasar build",
     "setup": "npm install && node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed"
   },
   "dependencies": {
