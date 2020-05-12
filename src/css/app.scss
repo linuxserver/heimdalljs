@@ -344,6 +344,16 @@ div.create {
     }
   }
 }
+.background_colour_selector {
+  display: flex;
+  .details {
+    flex: 1;
+    margin-right: 20px;
+  }
+  .preview {
+    flex: 1;
+  }
+}
 .no-items {
   background: #f5f5f5;
   display: flex;

@@ -33,7 +33,7 @@ export default function () {
       background_options: [
         {
           value: 'none',
-          label: 'none'
+          label: 'default'
         },
         {
           value: 'background_image',

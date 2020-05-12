@@ -3,7 +3,7 @@
     <q-header bordered>
       <q-toolbar>
         <q-toolbar-title>
-          Heimdall Setup
+          {{ $t('heimdall_setup') }}
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
@@ -14,23 +14,28 @@
           <q-stepper v-model="step" vertical color="primary" animated>
             <q-step
               :name="1"
-              title="Setup admin user"
+              :title="$t('setup_admin_user')"
               icon="contact_mail"
               :done="step > 1"
             >
               <q-input
                 outlined
                 v-model="username"
-                label="Username"
+                :label="$t('username')"
                 class="my-input"
               >
               </q-input>
-              <q-input outlined v-model="email" label="Email" class="my-input">
+              <q-input
+                outlined
+                v-model="email"
+                :label="$t('email')"
+                class="my-input"
+              >
               </q-input>
               <q-input
                 outlined
                 v-model="password"
-                label="Password"
+                :label="$t('password')"
                 :type="isPwd ? 'password' : 'text'"
               >
                 <template v-slot:append>
@@ -43,7 +48,7 @@
               </q-input>
 
               <q-stepper-navigation>
-                <q-btn @click="saveUser" color="primary" label="Save" />
+                <q-btn @click="saveUser" color="primary" :label="$t('save')" />
               </q-stepper-navigation>
             </q-step>
 
@@ -72,7 +77,11 @@
               ></q-select>
 
               <q-stepper-navigation>
-                <q-btn @click="saveSettings" color="primary" label="Continue" />
+                <q-btn
+                  @click="saveSettings"
+                  color="primary"
+                  :label="$t('continue')"
+                />
               </q-stepper-navigation>
             </q-step>
 
@@ -84,7 +93,7 @@
               Setup is complete!
 
               <q-stepper-navigation>
-                <q-btn @click="finish" color="primary" label="Finish" />
+                <q-btn @click="finish" color="primary" :label="$t('finish')" />
               </q-stepper-navigation>
             </q-step>
           </q-stepper>

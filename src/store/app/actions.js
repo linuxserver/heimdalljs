@@ -104,17 +104,16 @@ export async function setDefaults(context, data) {
 
 export async function saveSettings(context, data) {
   try {
+    const settings = { ...context.state.settings }
+    const update = Object.assign(settings, data)
     const response = await axios.put(
       process.env.BACKEND_LOCATION + 'settings',
-      data
+      update
     )
     if (response.data.status === 'ok') {
-      const settings = { ...context.state.settings }
-      const update = Object.assign(settings, data)
       if (update.active_search_providers.length > 0) {
         update.search_provider = update.active_search_providers[0]
       }
-
       context.commit('settings', update)
 
       Notify.create({

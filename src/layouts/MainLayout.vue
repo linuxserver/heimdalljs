@@ -141,16 +141,13 @@ export default {
 
   asyncComputed: {
     async background() {
-      const background = this.$store.state.app.settings.background.type
-      if (background === null || background === 'none') {
-        return ''
-      }
-      if (background === 'unsplash') {
+      return this.$store.getters['app/getBackground']
+      /* if (background === 'unsplash') {
         const unsplash = await this.$store.dispatch('app/unsplash')
         console.log('unsplash')
         console.log(unsplash)
         return unsplash
-      }
+      } */
     }
   },
 
