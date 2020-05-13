@@ -144,7 +144,7 @@
 
           </div>
           <div class="details" v-if="background_type === 'background_image'">
-              <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
+              <q-file outlined v-model="backgroundimage" accept="image/*" @input="changeBackgroundImage" :label="this.$t('upload_file')">
                 <template v-slot:prepend>
                   <q-icon name="attach_file" />
                 </template>
@@ -352,6 +352,7 @@ export default {
   data () {
     return {
       tab: 'general',
+      backgroundimage: null,
       username_options: [
         {
           label: this.$t('username_yes'),
@@ -377,6 +378,9 @@ export default {
   methods: {
     addApp: function () {
       this.$store.commit('tiles/create', true)
+    },
+    changeBackgroundImage: function () {
+      console.log(this.backgroundimage)
     }
   },
   mounted () {
