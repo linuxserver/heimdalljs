@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.bulkInsert('settings', [
       {
         key: 'language',
-        value: JSON.stringify('en-US'),
+        value: JSON.stringify('en-us'),
         created_at: new Date(),
         updated_at: new Date()
       },
