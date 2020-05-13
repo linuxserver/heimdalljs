@@ -17,14 +17,82 @@ export default function () {
         label: 'English (US)'
       },
       {
+        value: 'ar',
+        label: 'العربية (Arabic)'
+      },
+      {
+        value: 'cs',
+        label: 'čeština (Czech)'
+      },
+      {
+        value: 'de',
+        label: 'Deutsch (German)'
+      },
+      {
         value: 'en-gb',
         label: 'English (British)'
+      },
+      {
+        value: 'es',
+        label: 'Español (Spanish)'
+      },
+      {
+        value: 'fr',
+        label: 'français (French)'
+      },
+      {
+        value: 'it',
+        label: 'Italiano (Italian)'
+      },
+      {
+        value: 'ja',
+        label: '日本語 (Japanese)'
+      },
+      {
+        value: 'nl',
+        label: 'Nederlands (Dutch)'
+      },
+      {
+        value: 'no',
+        label: 'Norsk (Norwegian)'
+      },
+      {
+        value: 'pl',
+        label: 'język polski (German)'
+      },
+      {
+        value: 'pt',
+        label: 'Português (Portuguese)'
+      },
+      {
+        value: 'ro',
+        label: 'Română (Romanian)'
+      },
+      {
+        value: 'ru',
+        label: 'русский (Russian)'
+      },
+      {
+        value: 'sv',
+        label: 'Svenska (Swedish)'
+      },
+      {
+        value: 'tr',
+        label: 'Türkçe (Turkish)'
+      },
+      {
+        value: 'uk',
+        label: 'Українська (Ukrainian)'
+      },
+      {
+        value: 'zh-Hans',
+        label: '中文 (Chinese)'
       }
     ],
     settings: {
       background: null,
       show_usernames: 'no',
-      language: 'en-US',
+      language: 'en-us',
       app_version: null,
       search_on_dashboard: 'no',
       search_provider: null,
