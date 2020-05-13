@@ -64,7 +64,7 @@ export async function setupUser (context, data) {
       username: data.username,
       password: data.password
     })
-    context.commit('step', 2)
+    context.commit('step', 3)
   } catch (e) {
   // axios returned a non-200 response
   }
@@ -91,7 +91,7 @@ export async function setDefaults (context, data) {
     axios.put(process.env.BACKEND_LOCATION + 'settings', data.show_usernames)
   ]) */
   axios.put(process.env.BACKEND_LOCATION + 'settings', data)
-  context.commit('step', 3)
+  context.commit('step', 2)
 }
 
 export async function saveSettings (context, data) {
