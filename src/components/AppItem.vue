@@ -14,12 +14,12 @@
             anchor="bottom middle"
             self="top middle"
             >{{ application.url }}</q-tooltip
-          >Visit url</span
+          >{{ $t('visit_url') }}</span
         ></a
       >
     </div>
     <div v-if="this.$route.path !== '/admin/application'" class="pinned">
-      Active
+      {{ $t('active') }}
       <q-icon
         @click="toggleActive"
         :name="
@@ -35,28 +35,28 @@
       "
       class="actions"
     >
-      <q-btn size="12px" unelevated color="primary" @click="editApp"
-        >Edit</q-btn
-      >
+      <q-btn size="12px" unelevated color="primary" @click="editApp">{{
+        $t('edit')
+      }}</q-btn>
       <q-btn
         size="12px"
         unelevated
         color="grey-2"
         text-color="black"
         @click="deleteApp"
-        >Delete</q-btn
+        >{{ $t('delete') }}</q-btn
       >
     </div>
     <q-dialog v-model="confirmDelete" persistent>
       <q-card>
         <q-card-section class="row items-center">
           <q-avatar icon="delete_forever" color="negative" text-color="white" />
-          <span class="q-ml-sm">Are you sure you want to delete this app?</span>
+          <span class="q-ml-sm">{{ $t('confirm_delete') }}</span>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn flat label="Delete" color="primary" @click="onDeleteClick" />
+          <q-btn flat :label="$t('cancel')" color="primary" v-close-popup />
+          <q-btn flat :label="$t('delete')" color="primary" @click="onDeleteClick" />
         </q-card-actions>
       </q-card>
     </q-dialog>

@@ -21,7 +21,7 @@
           unelevated
           color="brand"
           @click="createNew"
-          >Add New</q-btn
+          >{{ $t('add_new') }}</q-btn
         >
         <div class="searchbox">
           <q-select
@@ -36,7 +36,7 @@
             option-label="title"
             map-options
             emit-value
-            label="Search..."
+            :label="$t('search') + '...'"
             @filter="filterFn"
           >
           </q-select>
@@ -46,21 +46,6 @@
 
     <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="">
       <MenuList></MenuList>
-    </q-drawer>
-
-    <q-drawer
-      v-model="rightDrawerOpen"
-      side="right"
-      overlay
-      bordered
-      content-class="bg-grey-1"
-    >
-      <span @click="rightDrawerOpen = !rightDrawerOpen" class="close"
-        >Close</span
-      >
-      <div v-if="tile">
-        tiles
-      </div>
     </q-drawer>
 
     <q-page-container>
