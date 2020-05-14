@@ -346,14 +346,9 @@ export default {
     },
     preview () {
       return this.$store.getters['app/getBackground']
-    }
-  },
-
-  data () {
-    return {
-      tab: 'general',
-      backgroundimage: null,
-      username_options: [
+    },
+    username_options () {
+      return [
         {
           label: this.$t('username_yes'),
           value: 'yes'
@@ -362,8 +357,10 @@ export default {
           label: this.$t('username_no'),
           value: 'no'
         }
-      ],
-      showsearch_options: [
+      ]
+    },
+    showsearch_options () {
+      return [
         {
           label: this.$t('yes'),
           value: 'yes'
@@ -373,6 +370,14 @@ export default {
           value: 'no'
         }
       ]
+    }
+
+  },
+
+  data () {
+    return {
+      tab: 'general',
+      backgroundimage: null
     }
   },
   methods: {
