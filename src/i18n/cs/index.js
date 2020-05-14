@@ -43,7 +43,7 @@ export default {
     logout: 'Odhlásit se',
     website: 'Webová stránka',
     title: 'Hlava 1 – Celkem',
-    description: 'L 343, 22.12.2009, s. 1).',
+    description: 'Popis',
     no_apps: 'V současné době nejsou žádné aplikace',
     mfa_header: 'Nastavit dvoufázové ověřování pomocí TOTP',
     mfa_intro: 'Povolení této možnosti vám umožní použít ověřovací aplikaci, která podporuje TOTP kódy, pokud již nějakou nemáte, doporučujeme buď {link1} nebo {link2}.',
