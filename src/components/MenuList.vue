@@ -23,7 +23,7 @@
       </div>
       <div class="drawer-user-details">
         <div class="name">{{ username }}</div>
-        <div @click="logout" class="logout">Logout</div>
+        <div @click="logout" class="logout">{{ $t('logout') }}</div>
       </div>
     </div>
 

@@ -10,7 +10,7 @@
       <div class="list-items">
         <div class="no-items" v-if="applications.length < 1">
           {{ this.$t('no_apps') }}
-          <q-btn style="margin-top:30px;" @click="create = true" unelevated color="brand">Add New</q-btn>
+          <q-btn style="margin-top:30px;" @click="create = true" unelevated color="brand">{{ $t('add_new') }}</q-btn>
         </div>
         <app-item
           v-else

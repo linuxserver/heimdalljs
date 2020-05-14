@@ -21,7 +21,7 @@
               clickable
               :class="{ active: filter === null }"
               @click="setFilter(null)"
-            >All</q-chip>
+            >{{ $t('all') }}</q-chip>
             <q-chip
               v-for="tag in tags"
               :key="tag"
@@ -61,7 +61,7 @@
           option-label="title"
           map-options
           emit-value
-          label="Search..."
+          :label="$t('search') + '...'"
           @filter="filterFn"
 
         >
@@ -70,7 +70,7 @@
           v-else
           v-model="search"
           borderless
-          label="Search..."
+          :label="$t('search') + '...'"
           :name="search_provider.query"
         >
         </q-input>
