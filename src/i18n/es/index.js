@@ -4,8 +4,13 @@ export default {
   heimdall_setup: 'Heimdall Setup',
   setup_admin_user: 'Configurar usuario admin',
   save: 'Guardar',
+  cancel: 'Cancelar',
   continue: 'Continuar',
+  lookup: 'Búsqueda',
   finish: 'Finalizar',
+  edit: 'Editar',
+  delete: 'Eliminar',
+  confirm_delete: '௾stá seguro que desea eliminar esta aplicación?',
   select_language: 'Seleccionar idioma',
   select_system_defaults: 'Seleccione los valores predeterminados del sistema',
   select_personal_settings: 'Seleccionar configuración personal',
@@ -25,6 +30,7 @@ export default {
   dashboard: 'Tablero',
   application: 'Aplicación | Aplicaciones',
   application_management: 'Gestión de aplicaciones',
+  manage_apps: 'Administrar aplicaciones',
   user_management: 'Gestión de usuario',
   proxy_management: 'Gestión de proxy',
   settings: 'Ajustes',
@@ -46,7 +52,7 @@ export default {
   mfa_above_qr:
     'Para activar, escanea el código QR con tu aplicación de autenticación.',
   mfa_below_qr:
-    'Después de escanear el código, introduce el código de seis didget de tu aplicación para verificar la configuración.',
+    'Después de escanear el código, introduce el código de seis dígitos de tu aplicación para verificar la configuración.',
   mfa_no_qr:
     'Si tiene problemas para escanear el código QR, haga una configuración manual con el código: {code}.',
   code: 'Código',
@@ -81,5 +87,25 @@ export default {
   email_exists: 'El correo electrónico ya existe',
   incorrect_password: 'Contraseña incorrecta',
   api_test_success: 'Conectado correctamente a la API',
-  api_test_failure: 'No se pudo conectar a la API'
+  api_test_failure: 'No se pudo conectar a la API',
+  // End API responses
+  add_new: 'Añadir nuevo',
+  search: 'Buscar',
+  search_providers: 'Buscar proveedores',
+  general: 'General',
+  general_settings: 'Configuración General',
+  general_settings_more: 'Elegir ajustes generales del sistema',
+  search_settings: 'Ajustes de búsqueda',
+  search_settings_more: 'Seleccione qué motores de búsqueda usar',
+  dashboard_more: 'Configuración del panel de control',
+  active: 'Activo',
+  inactive: 'Inactivo',
+  appearance: 'Apariencia',
+  enhanced: 'Mejorado',
+  profile: 'Perfil',
+  security: 'Seguridad',
+  change_image: 'Cambiar imagen',
+  enter_website: 'Introduzca la dirección del sitio web',
+  visit_url: 'Visitar URL',
+  all: 'Todos'
 }

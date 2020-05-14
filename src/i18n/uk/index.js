@@ -4,8 +4,13 @@ export default {
   heimdall_setup: 'Heimdall Setup',
   setup_admin_user: 'Налаштування користувача',
   save: 'Зберегти',
+  cancel: 'Скасувати',
   continue: 'Продовжити',
+  lookup: 'Пошук',
   finish: 'Закінчити',
+  edit: 'Редагувати',
+  delete: 'Видалити',
+  confirm_delete: 'Ви впевнені, що ви хочете видалити цю програму?',
   select_language: 'Вибрати мову',
   select_system_defaults: 'Виберіть системні налаштування',
   select_personal_settings: 'Виберіть персональні налаштування',
@@ -25,6 +30,7 @@ export default {
   dashboard: 'Приладна дошка',
   application: 'Додаток | Додатки',
   application_management: 'Управління додатками',
+  manage_apps: 'Керування програмами',
   user_management: 'Керування користувачами',
   proxy_management: 'Управління Проксі',
   settings: 'Налаштування',
@@ -46,7 +52,7 @@ export default {
   mfa_above_qr:
     'Щоб активувати, скануйте QR-код за допомогою програми автентифікації.',
   mfa_below_qr:
-    'Після сканування коду введіть шість didget коду з вашого застосунку, щоб перевірити налаштування.',
+    'Після сканування коду введіть шестизначний код з вашого додатку, щоб перевірити налаштування.',
   mfa_no_qr:
     'Якщо у вас виникли проблеми з скануванням QR-коду, зробіть ручну налаштування з кодом: {code}.',
   code: 'Код',
@@ -81,5 +87,25 @@ export default {
   email_exists: 'Такий email вже існує',
   incorrect_password: 'Неправильний пароль',
   api_test_success: 'API успішно підключено',
-  api_test_failure: 'Не вдалося підключитися до API'
+  api_test_failure: 'Не вдалося підключитися до API',
+  // End API responses
+  add_new: 'Додати новий',
+  search: 'Пошук',
+  search_providers: 'Пошукові служби',
+  general: 'Загальні налаштування',
+  general_settings: 'Загальні налаштування',
+  general_settings_more: 'Виберіть загальні налаштування системи',
+  search_settings: 'Параметри пошуку',
+  search_settings_more: 'Виберіть, які пошукові системи використовувати',
+  dashboard_more: 'Налаштування для панелі інструментів',
+  active: 'Активний',
+  inactive: 'Неактивний',
+  appearance: 'Зовнішній вигляд',
+  enhanced: 'Підвищений',
+  profile: 'Анкета',
+  security: 'Безпека',
+  change_image: 'Змінити зображення',
+  enter_website: 'Введіть адресу веб-сайту',
+  visit_url: 'Перейти за URL',
+  all: 'Всі'
 }

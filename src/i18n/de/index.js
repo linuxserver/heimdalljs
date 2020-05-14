@@ -4,8 +4,13 @@ export default {
   heimdall_setup: 'Heimdall Setup',
   setup_admin_user: 'Admin-Benutzer einrichten',
   save: 'Speichern',
+  cancel: 'Abbrechen',
   continue: 'Weiter',
+  lookup: 'Suchen',
   finish: 'Beenden',
+  edit: 'Bearbeiten',
+  delete: 'Löschen',
+  confirm_delete: 'Sind Sie sicher, dass Sie diese App löschen möchten?',
   select_language: 'Sprache auswählen',
   select_system_defaults: 'Systemeinstellungen auswählen',
   select_personal_settings: 'Persönliche Einstellungen auswählen',
@@ -25,6 +30,7 @@ export default {
   dashboard: 'Dashboard',
   application: 'Anwendung | Anwendungen',
   application_management: 'Anwendungsverwaltung',
+  manage_apps: 'Anwendungen verwalten',
   user_management: 'Benutzerverwaltung',
   proxy_management: 'Proxy-Management',
   settings: 'Einstellungen',
@@ -46,7 +52,7 @@ export default {
   mfa_above_qr:
     'Zum Aktivieren scannen Sie den QR-Code mit Ihrer Authentifizierungs-App.',
   mfa_below_qr:
-    'Nach dem Scannen des Codes geben Sie den sechs didget-Code Ihrer App ein, um das Setup zu überprüfen.',
+    'Nach dem Scannen des Codes geben Sie den sechsstelligen Code Ihrer App ein, um das Setup zu überprüfen.',
   mfa_no_qr:
     'Wenn Sie Probleme beim Scannen des QR-Codes haben, führen Sie eine manuelle Einrichtung mit dem Code {code} durch.',
   code: 'Code',
@@ -82,5 +88,26 @@ export default {
   email_exists: 'E-Mail existiert bereits',
   incorrect_password: 'Falsches Passwort',
   api_test_success: 'Erfolgreich mit API verbunden',
-  api_test_failure: 'Keine Verbindung zur API möglich'
+  api_test_failure: 'Keine Verbindung zur API möglich',
+  // End API responses
+  add_new: 'Neu',
+  search: 'Suchen',
+  search_providers: 'Suchanbieter',
+  general: 'Allgemein',
+  general_settings: 'Allgemeine Einstellungen',
+  general_settings_more: 'Allgemeine Systemeinstellungen auswählen',
+  search_settings: 'Sucheinstellungen',
+  search_settings_more:
+    'Wählen Sie, welche Suchmaschinen verwendet werden sollen',
+  dashboard_more: 'Einstellungen für das Dashboard',
+  active: 'Aktiv',
+  inactive: 'Inaktiv',
+  appearance: 'Erscheinung',
+  enhanced: 'Verbessert',
+  profile: 'Profil',
+  security: 'Sicherheit',
+  change_image: 'Bild ändern',
+  enter_website: 'Website-Adresse eingeben',
+  visit_url: 'URL besuchen',
+  all: 'Alle'
 }

@@ -23,6 +23,7 @@ export default {
   no: 'لا',
   email: 'البريد الإلكتروني',
   avatar: 'الرمزية',
+  username: 'اسم المستخدم',
   password: 'كلمة المرور',
   failed: 'فشل الإجراء',
   success: 'تم العمل بنجاح',

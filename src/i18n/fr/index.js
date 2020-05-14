@@ -4,8 +4,13 @@ export default {
   heimdall_setup: 'Heimdall Setup',
   setup_admin_user: "Configuration de l'utilisateur admin",
   save: 'Enregistrer',
+  cancel: 'Abandonner',
   continue: 'Continuer',
+  lookup: 'Recherche',
   finish: 'Terminer',
+  edit: 'Editer',
+  delete: 'Supprimez',
+  confirm_delete: 'Êtes-vous sûr de vouloir supprimer cette application ?',
   select_language: 'Sélectionner la langue',
   select_system_defaults: 'Sélectionner les valeurs par défaut du système',
   select_personal_settings: 'Sélectionnez les paramètres personnels',
@@ -25,6 +30,7 @@ export default {
   dashboard: 'Tableau de bord',
   application: 'Application | Applications',
   application_management: 'Gestion des applications',
+  manage_apps: 'Gérer les applications',
   user_management: 'Gestion des utilisateurs',
   proxy_management: 'Gestion des Proxy',
   settings: 'Réglages',
@@ -46,7 +52,7 @@ export default {
   mfa_above_qr:
     "Pour activer, scannez le code QR avec votre application d'authentification.",
   mfa_below_qr:
-    'Après avoir scanné le code, entrez le code à six didget de votre application pour vérifier la configuration.',
+    'Après avoir scanné le code, entrez le code à six chiffres de votre application pour vérifier la configuration.',
   mfa_no_qr:
     'Si vous avez des problèmes pour scanner le code QR, faites une configuration manuelle avec le code : {code}.',
   code: 'Code',
@@ -82,5 +88,25 @@ export default {
   email_exists: "L'adresse e-mail existe déjà",
   incorrect_password: 'Mot de passe incorrect',
   api_test_success: "Connexion réussie à l'API",
-  api_test_failure: "Impossible de se connecter à l'API"
+  api_test_failure: "Impossible de se connecter à l'API",
+  // End API responses
+  add_new: 'Ajouter un nouveau',
+  search: 'Chercher',
+  search_providers: 'Fournisseurs de recherche',
+  general: 'Généraux',
+  general_settings: 'Paramètres généraux',
+  general_settings_more: 'Choisir les paramètres généraux du système',
+  search_settings: 'Paramètres de recherche',
+  search_settings_more: 'Sélectionnez les moteurs de recherche à utiliser',
+  dashboard_more: 'Paramètres du tableau de bord',
+  active: 'Actif',
+  inactive: 'Inactif',
+  appearance: 'Apparence',
+  enhanced: 'Amélioré',
+  profile: 'Profil',
+  security: 'Sécurité',
+  change_image: "Changer l'image",
+  enter_website: "Entrez l'adresse du site web",
+  visit_url: "Visiter l'URL",
+  all: 'Tous'
 }
