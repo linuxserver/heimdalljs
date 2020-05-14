@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          User Management
+          {{ $t('user_management') }}
         </q-toolbar-title>
 
         <q-btn
@@ -21,7 +21,7 @@
           unelevated
           color="brand2"
           @click="createNew"
-          >Add New</q-btn
+          >{{ $t('add_new') }}</q-btn
         >
         <div class="searchbox">
           <q-select
@@ -36,7 +36,7 @@
             option-label="title"
             map-options
             emit-value
-            label="Search..."
+            :label="$t('search') + '...'"
             @filter="filterFn"
           >
           </q-select>

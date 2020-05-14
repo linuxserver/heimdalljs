@@ -56,7 +56,12 @@
 
         <q-card-actions align="right">
           <q-btn flat :label="$t('cancel')" color="primary" v-close-popup />
-          <q-btn flat :label="$t('delete')" color="primary" @click="onDeleteClick" />
+          <q-btn
+            flat
+            :label="$t('delete')"
+            color="primary"
+            @click="onDeleteClick"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>

@@ -12,7 +12,7 @@
               <div class="avatar-resize"><img :src="this.setavatar" /></div>
               <div @click="changeavatar = !changeavatar" class="changephoto">
                 <q-icon size="30px" name="photo_camera" />
-                Change Image
+                {{ $t('change_image') }}
               </div>
             </q-avatar>
 
@@ -43,13 +43,13 @@
               align="justify"
               inline-label
             >
-              <q-tab clickable v-ripple name="general" label="Profile" />
-              <q-tab clickable v-ripple name="mfa" label="Security" />
+              <q-tab clickable v-ripple name="general" :label="$t('profile')" />
+              <q-tab clickable v-ripple name="mfa" :label="$t('security')" />
               <!--<q-tab
                 clickable
                 v-ripple
                 name="settings"
-                label="Settings"
+                :label="$t('settings')"
               />-->
             </q-tabs>
 
@@ -105,7 +105,7 @@
                       <p v-html="$t('mfa_no_qr', { code: mfacode })"></p>
                       <q-input outlined v-model="totp" :label="this.$t('code')">
                       </q-input>
-                      <q-btn @click="sendTotp">Submit</q-btn>
+                      <q-btn @click="sendTotp">{{ $t('submit') }}</q-btn>
                     </div>
                   </div>
                 </div>
@@ -124,7 +124,7 @@
               </q-tab-panel>
 
               <q-tab-panel name="settings">
-                <div class="text-h6">Settings</div>
+                <div class="text-h6">{{ $t('settings') }}</div>
               </q-tab-panel>
             </q-tab-panels>
           </div>
@@ -133,7 +133,7 @@
       <div class="useractions" :class="{ active: actions }">
         <q-btn type="submit" flat>
           <q-icon name="save" />
-          Save
+          {{ $t('save') }}
         </q-btn>
         <q-btn
           v-if="$route.path !== '/account/settings'"
@@ -141,7 +141,7 @@
           @click="closeCreate"
         >
           <q-icon name="block" />
-          Cancel
+          {{ $t('cancel') }}
         </q-btn>
       </div>
     </q-form>

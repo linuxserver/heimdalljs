@@ -108,5 +108,8 @@ export default {
   change_image: 'Change Image',
   enter_website: 'Enter website address',
   visit_url: 'Visit URL',
-  all: 'All'
+  all: 'All',
+  degrees: 'Degrees',
+  linear: 'Linear',
+  radial: 'Radial'
 }

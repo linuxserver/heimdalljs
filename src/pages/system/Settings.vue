@@ -8,8 +8,10 @@
           clickable
         >
           <q-item-section>
-            <q-item-label>General Settings</q-item-label>
-            <q-item-label caption>Choose general system settings</q-item-label>
+            <q-item-label>{{ $t('general_settings') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('general_settings_more')
+            }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item
@@ -18,10 +20,10 @@
           clickable
         >
           <q-item-section>
-            <q-item-label>Search settings</q-item-label>
-            <q-item-label caption
-              >Select which search engines to use</q-item-label
-            >
+            <q-item-label>{{ $t('search_settings') }}</q-item-label>
+            <q-item-label caption>{{
+              $t('search_settings_more')
+            }}</q-item-label>
           </q-item-section>
         </q-item>
         <q-item
@@ -30,8 +32,8 @@
           clickable
         >
           <q-item-section>
-            <q-item-label>Dashboard</q-item-label>
-            <q-item-label caption>Settings for the dashboard</q-item-label>
+            <q-item-label>{{ $t('dashboard') }}</q-item-label>
+            <q-item-label caption>{{ $t('dashboard_more') }}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -60,7 +62,7 @@
           ></q-select>
         </q-tab-panel>
         <q-tab-panel name="search">
-          <h6>Search</h6>
+          <h6>{{ $t('search') }}</h6>
           <q-select
             outlined
             :options="showsearch_options"
@@ -71,10 +73,10 @@
             map-options
           ></q-select>
 
-          <h6>Search Providers</h6>
+          <h6>{{ $t('search_providers') }}</h6>
           <div class="search-providers">
             <div class="active providers">
-              Active
+              {{ $t('active') }}
               <draggable
                 tag="ul"
                 group="providers"
@@ -89,7 +91,7 @@
               </draggable>
             </div>
             <div class="inactive providers">
-              Inactive
+              {{ $t('inactive') }}
               <draggable
                 tag="ul"
                 group="providers"
@@ -175,7 +177,7 @@
                 v-if="colour2 !== null && gradient === 'linear'"
                 outlined
                 :options="[0, 45, 90, 135, 180, 225, 270, 315, 360]"
-                :label="this.$t('Degrees')"
+                :label="this.$t('degrees')"
                 v-model="degrees"
                 emit-value
               ></q-select>

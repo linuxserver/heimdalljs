@@ -5,15 +5,14 @@
         <div id="create" class="create fit">
           <div class="tile-details">
             <div class="buttons">
-              <q-btn unelevated @click="loadApplication" color="grey-5"
-                >Application</q-btn
-              >
-              <q-btn unelevated @click="websitedialog = true" color="grey-5"
-                >Website</q-btn
-              >
-              <q-btn unelevated @click="dockerdialog = true" color="grey-5"
-                >Docker</q-btn
-              >
+              <q-btn unelevated @click="loadApplication" color="grey-5">{{
+                $tc('application')
+              }}</q-btn>
+              <q-btn unelevated @click="websitedialog = true" color="grey-5">{{
+                $t('website')
+              }}</q-btn>
+              <!--<q-btn unelevated @click="dockerdialog = true" color="grey-5"
+                >Docker</q-btn>-->
             </div>
             <tile :application="preview"></tile>
 
@@ -44,15 +43,25 @@
               align="justify"
               inline-label
             >
-              <q-tab clickable v-ripple name="general" label="General" />
-              <q-tab clickable v-ripple name="image" label="Look" />
-              <q-tab clickable v-ripple name="enhanced" label="Enhanced" />
+              <q-tab clickable v-ripple name="general" :label="$t('general')" />
+              <q-tab
+                clickable
+                v-ripple
+                name="image"
+                :label="$t('appearance')"
+              />
+              <q-tab
+                clickable
+                v-ripple
+                name="enhanced"
+                :label="$t('enhanced')"
+              />
               <q-tab
                 v-if="$route.path === '/admin/application'"
                 clickable
                 v-ripple
                 name="users"
-                label="Users"
+                :label="$tc('user')"
               />
             </q-tabs>
 
@@ -243,11 +252,11 @@
       <div class="useractions" :class="{ active: actions }">
         <q-btn type="submit" flat>
           <q-icon name="save" />
-          Save
+          {{ $t('save') }}
         </q-btn>
         <q-btn flat @click="closeCreate">
           <q-icon name="block" />
-          Cancel
+          {{ $t('cancel') }}
         </q-btn>
       </div>
     </q-form>
