@@ -131,7 +131,7 @@ export default {
     },
     onDeleteClick() {
       // on OK, it is REQUIRED to
-      let appid = this.application.id
+      const appid = this.application.id
       this.$store.dispatch('tiles/deleteApp', appid)
       // then hiding dialog
       this.confirmDelete = false

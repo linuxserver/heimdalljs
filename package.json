@@ -12,6 +12,7 @@
     "build": "npm run format:write && quasar build",
     "db:migrate": "sequelize db:migrate",
     "db:seed": "sequelize db:seed:all",
+    "dev": "quasar dev",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
     "lint": "eslint --ext .js,.vue src",

@@ -189,13 +189,13 @@ export default {
     } else {
       document.addEventListener(
         this.visibility.visibilityChange,
-        function () {
+        () => {
           if (document[this.visibility.hidden]) {
             this.$store.dispatch('tiles/stopChecks')
           } else {
             this.$store.dispatch('tiles/startChecks')
           }
-        }.bind(this),
+        },
         false
       )
     }
