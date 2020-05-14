@@ -14,68 +14,69 @@
         <q-toolbar-title>
           Heimdall
         </q-toolbar-title>
-          <div v-if="user !== null">
-            <q-chip
-              v-if="tags.length > 0"
-              icon="bookmark"
-              clickable
-              :class="{ active: filter === null }"
-              @click="setFilter(null)"
-            >{{ $t('all') }}</q-chip>
-            <q-chip
-              v-for="tag in tags"
-              :key="tag"
-              icon="bookmark"
-              clickable
-              :class="{ active: filter === tag }"
-              @click="setFilter(tag)"
-            >{{ tag }}</q-chip>
-          </div>
+        <div v-if="user !== null">
+          <q-chip
+            v-if="tags.length > 0"
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === null }"
+            @click="setFilter(null)"
+            >{{ $t('all') }}</q-chip
+          >
+          <q-chip
+            v-for="tag in tags"
+            :key="tag"
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === tag }"
+            @click="setFilter(tag)"
+            >{{ tag }}</q-chip
+          >
+        </div>
         <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
-        <q-form
-          v-if="search_provider !== null"
-          @submit="onSubmit"
-          :action="search_provider.url"
-          :method="search_provider.method"
-          :target="search_provider.target"
-          ref="searchForm"
-        >
-        <q-select
-          borderless
-          v-model="search_provider"
-          input-debounce="0"
-          :options="settings.active_search_providers"
-          option-value="id"
-          option-label="name"
-        >
-        </q-select>
-        <q-select
-          v-if="search_provider.id === 'tiles'"
-          borderless
-          color="white"
-          v-model="selectedapp"
-          use-input
-          clearable
-          input-debounce="0"
-          option-value="id"
-          option-label="title"
-          map-options
-          emit-value
-          :label="$t('search') + '...'"
-          @filter="filterFn"
-
-        >
-        </q-select>
-        <q-input
-          v-else
-          v-model="search"
-          borderless
-          :label="$t('search') + '...'"
-          :name="search_provider.query"
-        >
-        </q-input>
-        <input type="submit" hidden />
-        </q-form>
+          <q-form
+            v-if="search_provider !== null"
+            @submit="onSubmit"
+            :action="search_provider.url"
+            :method="search_provider.method"
+            :target="search_provider.target"
+            ref="searchForm"
+          >
+            <q-select
+              borderless
+              v-model="search_provider"
+              input-debounce="0"
+              :options="settings.active_search_providers"
+              option-value="id"
+              option-label="name"
+            >
+            </q-select>
+            <q-select
+              v-if="search_provider.id === 'tiles'"
+              borderless
+              color="white"
+              v-model="selectedapp"
+              use-input
+              clearable
+              input-debounce="0"
+              option-value="id"
+              option-label="title"
+              map-options
+              emit-value
+              :label="$t('search') + '...'"
+              @filter="filterFn"
+            >
+            </q-select>
+            <q-input
+              v-else
+              v-model="search"
+              borderless
+              :label="$t('search') + '...'"
+              :name="search_provider.query"
+            >
+            </q-input>
+            <input type="submit" hidden />
+          </q-form>
         </div>
       </q-toolbar>
     </q-header>
@@ -188,7 +189,7 @@ export default {
     } else {
       document.addEventListener(
         this.visibility.visibilityChange,
-        function() {
+        function () {
           if (document[this.visibility.hidden]) {
             this.$store.dispatch('tiles/stopChecks')
           } else {

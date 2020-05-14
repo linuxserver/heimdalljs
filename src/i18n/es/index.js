@@ -41,10 +41,14 @@ export default {
   description: 'Descripción',
   no_apps: 'Actualmente no hay aplicaciones',
   mfa_header: 'Configurar autenticación de doble factor usando TOTP',
-  mfa_intro: 'Habilitar esta opción le permitirá usar una aplicación de autenticación que soporte códigos TOTP, si aún no tienes uno, recomendamos {link1} o {link2}.',
-  mfa_above_qr: 'Para activar, escanea el código QR con tu aplicación de autenticación.',
-  mfa_below_qr: 'Después de escanear el código, introduce el código de seis didget de tu aplicación para verificar la configuración.',
-  mfa_no_qr: 'Si tiene problemas para escanear el código QR, haga una configuración manual con el código: {code}.',
+  mfa_intro:
+    'Habilitar esta opción le permitirá usar una aplicación de autenticación que soporte códigos TOTP, si aún no tienes uno, recomendamos {link1} o {link2}.',
+  mfa_above_qr:
+    'Para activar, escanea el código QR con tu aplicación de autenticación.',
+  mfa_below_qr:
+    'Después de escanear el código, introduce el código de seis didget de tu aplicación para verificar la configuración.',
+  mfa_no_qr:
+    'Si tiene problemas para escanear el código QR, haga una configuración manual con el código: {code}.',
   code: 'Código',
   // Edit / Create tiles
   name: 'Nombre',

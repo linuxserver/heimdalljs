@@ -33,18 +33,23 @@ export default {
   app: 'Uygulama | Uygulamalar',
   tag: 'Etiket | Etiketler',
   user: 'Kullanıcı | Kullanıcılar',
-  proxy: 'Proxy | Proxy\'ler',
+  proxy: "Proxy | Proxy'ler",
   item: 'Öğe | Öğeler',
   logout: 'Çıkış',
   website: 'Web Sitesi',
   title: 'Başlık',
   description: 'Açıklama',
   no_apps: 'Hiç uygulama yok',
-  mfa_header: 'Zaman-tabanlı bir kerelik şifre - TOTP ile iki faktörlü kimlik doğrula',
-  mfa_intro: 'Bu seçeneği etkinleştirmek, TOTP kodlarını destekleyen bir kimlik doğrulama uygulaması kullanmanıza olanak tanır; henüz yoksa, {link1} veya {link2} öneririz.',
-  mfa_above_qr: 'Etkinleştirmek için kimlik doğrulama uygulamanızla QR kodunu tarayın.',
-  mfa_below_qr: 'Kodu taradıktan sonra, kurulumu doğrulamak için uygulamanızdan altı haneli kodu girin.',
-  mfa_no_qr: 'QR kodunu tararken sorun yaşıyorsanız, kodla kurulum yapın: {code}.',
+  mfa_header:
+    'Zaman-tabanlı bir kerelik şifre - TOTP ile iki faktörlü kimlik doğrula',
+  mfa_intro:
+    'Bu seçeneği etkinleştirmek, TOTP kodlarını destekleyen bir kimlik doğrulama uygulaması kullanmanıza olanak tanır; henüz yoksa, {link1} veya {link2} öneririz.',
+  mfa_above_qr:
+    'Etkinleştirmek için kimlik doğrulama uygulamanızla QR kodunu tarayın.',
+  mfa_below_qr:
+    'Kodu taradıktan sonra, kurulumu doğrulamak için uygulamanızdan altı haneli kodu girin.',
+  mfa_no_qr:
+    'QR kodunu tararken sorun yaşıyorsanız, kodla kurulum yapın: {code}.',
   code: 'Kod',
   // Edit / Create tiles
   name: 'İsim',

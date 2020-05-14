@@ -19,16 +19,17 @@
       </q-tabs>
       <q-separator />
 
-    <div class="user_account">
-      <img class="bg-image" :src="avatar" />
-      <div class="menu-avatar">
-        <q-avatar size="120px" class="user-avatar">
-          <div class="avatar-resize"><img :src="avatar"></div>
-        </q-avatar>
-      </div>
-      <div class="drawer-user-details">
-        <div class="name">{{ username }}</div>
-        <div @click="logout" class="logout">{{ $t('logout') }}</div>
+      <div class="user_account">
+        <img class="bg-image" :src="avatar" />
+        <div class="menu-avatar">
+          <q-avatar size="120px" class="user-avatar">
+            <div class="avatar-resize"><img :src="avatar" /></div>
+          </q-avatar>
+        </div>
+        <div class="drawer-user-details">
+          <div class="name">{{ username }}</div>
+          <div @click="logout" class="logout">{{ $t('logout') }}</div>
+        </div>
       </div>
 
       <q-separator />

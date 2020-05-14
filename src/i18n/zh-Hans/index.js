@@ -41,10 +41,12 @@ export default {
   description: '描述',
   no_apps: '目前没有应用程序',
   mfa_header: '使用 TOTP 设置两步验证',
-  mfa_intro: '启用此选项将允许您使用支持TOTP Codes的身份验证应用 如果你还没有一个，我们建议 {link1} 或 {link2}。',
+  mfa_intro:
+    '启用此选项将允许您使用支持TOTP Codes的身份验证应用 如果你还没有一个，我们建议 {link1} 或 {link2}。',
   mfa_above_qr: '要激活，用您的身份验证应用扫描二维码。',
   mfa_below_qr: '扫描代码后，请从您的应用中输入6个didget 代码来验证设置。',
-  mfa_no_qr: '如果您在扫描二维码时遇到问题，请使用以下代码进行手动设置： {code}。',
+  mfa_no_qr:
+    '如果您在扫描二维码时遇到问题，请使用以下代码进行手动设置： {code}。',
   code: '代码',
   // Edit / Create tiles
   name: '名称',

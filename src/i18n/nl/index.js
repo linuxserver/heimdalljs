@@ -33,7 +33,7 @@ export default {
   app: 'Toepassing | Toepassingen',
   tag: 'Tags taggen',
   user: 'Gebruikersaanduiding Gebruikers',
-  proxy: 'Proxy\'s-Proxy\'s-Proxyprofielen',
+  proxy: "Proxy's-Proxy's-Proxyprofielen",
   item: 'Objekenvoorwerpen, voorwerpen',
   logout: 'Afmelden',
   website: 'website',
@@ -41,10 +41,14 @@ export default {
   description: 'Beschrijving',
   no_apps: 'Er zijn momenteel geen applicaties',
   mfa_header: 'tweestapsverificatie instellen met TOTP',
-  mfa_intro: 'Door deze optie in te schakelen, kunt u een authenticatie-app gebruiken die TOTP-codes ondersteunt, als je er nog geen hebt, raden we {link1} of {link2} aan.',
-  mfa_above_qr: 'Scan de QR-code met uw authenticatie-app om deze te activeren.',
-  mfa_below_qr: 'Na het scannen van de code, voer de zes didget code van uw app in om de instellingen te verifiëren.',
-  mfa_no_qr: 'Als je problemen hebt met het scannen van de QR-code, doe dan een handmatige setup met code: {code}.',
+  mfa_intro:
+    'Door deze optie in te schakelen, kunt u een authenticatie-app gebruiken die TOTP-codes ondersteunt, als je er nog geen hebt, raden we {link1} of {link2} aan.',
+  mfa_above_qr:
+    'Scan de QR-code met uw authenticatie-app om deze te activeren.',
+  mfa_below_qr:
+    'Na het scannen van de code, voer de zes didget code van uw app in om de instellingen te verifiëren.',
+  mfa_no_qr:
+    'Als je problemen hebt met het scannen van de QR-code, doe dan een handmatige setup met code: {code}.',
   code: 'Code',
   // Edit / Create tiles
   name: 'naam',

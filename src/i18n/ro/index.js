@@ -41,10 +41,14 @@ export default {
   description: 'Descriere',
   no_apps: 'În acest moment nu există aplicații',
   mfa_header: 'Setați autentificarea în doi pași folosind TOTP',
-  mfa_intro: 'Activarea acestei opțiuni vă va permite să utilizați o aplicație de autentificare care acceptă codurile TOTP, dacă nu ai deja unul, îți recomandăm ori {link1} sau {link2}.',
-  mfa_above_qr: 'Pentru activare, scanați codul QR cu aplicația dvs. de autentificare.',
-  mfa_below_qr: 'Dupa scanarea codului, introdu codul din sase pentru a verifica configurarea.',
-  mfa_no_qr: 'Dacă aveți probleme cu scanarea codului QR, faceți o configurare manuală cu codul {code}.',
+  mfa_intro:
+    'Activarea acestei opțiuni vă va permite să utilizați o aplicație de autentificare care acceptă codurile TOTP, dacă nu ai deja unul, îți recomandăm ori {link1} sau {link2}.',
+  mfa_above_qr:
+    'Pentru activare, scanați codul QR cu aplicația dvs. de autentificare.',
+  mfa_below_qr:
+    'Dupa scanarea codului, introdu codul din sase pentru a verifica configurarea.',
+  mfa_no_qr:
+    'Dacă aveți probleme cu scanarea codului QR, faceți o configurare manuală cu codul {code}.',
   code: 'Cod',
   // Edit / Create tiles
   name: 'Nume',

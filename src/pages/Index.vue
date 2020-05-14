@@ -2,7 +2,9 @@
   <q-page class="flex flex-center">
     <div class="noapps" v-if="applications.length === 0">
       {{ $t('no_apps') }}
-      <q-btn style="margin-top: 20px;" unelevated color="cyan-8" to="/account">{{ $t('manage_apps') }}</q-btn>
+      <q-btn style="margin-top: 20px;" unelevated color="cyan-8" to="/account">
+        {{ $t('manage_apps') }}
+      </q-btn>
     </div>
     <Tile
       v-else

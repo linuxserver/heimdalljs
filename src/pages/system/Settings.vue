@@ -417,10 +417,10 @@ export default {
     }
   },
   methods: {
-    addApp: function() {
+    addApp: function () {
       this.$store.commit('tiles/create', true)
     },
-    changeBackgroundImage: function() {
+    changeBackgroundImage: function () {
       console.log(this.backgroundimage)
     }
   },

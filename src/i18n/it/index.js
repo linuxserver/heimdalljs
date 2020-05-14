@@ -40,11 +40,15 @@ export default {
   title: 'Titolo',
   description: 'Descrizione',
   no_apps: 'Al momento non ci sono applicazioni',
-  mfa_header: 'Imposta l\'autenticazione a due fattori utilizzando TOTP',
-  mfa_intro: 'Abilitando questa opzione sarà possibile utilizzare un\'app di autenticazione che supporta i Codici TOTP, se non ne hai già uno, consigliamo {link1} o {link2}.',
-  mfa_above_qr: 'Per attivare, scansiona il codice QR con l\'app di autenticazione.',
-  mfa_below_qr: 'Dopo aver scansionato il codice, inserisci il codice didatta dalla tua app per verificare la configurazione.',
-  mfa_no_qr: 'Se hai problemi nella scansione del codice QR, esegui una configurazione manuale con il codice: {code}.',
+  mfa_header: "Imposta l'autenticazione a due fattori utilizzando TOTP",
+  mfa_intro:
+    "Abilitando questa opzione sarà possibile utilizzare un'app di autenticazione che supporta i Codici TOTP, se non ne hai già uno, consigliamo {link1} o {link2}.",
+  mfa_above_qr:
+    "Per attivare, scansiona il codice QR con l'app di autenticazione.",
+  mfa_below_qr:
+    'Dopo aver scansionato il codice, inserisci il codice didatta dalla tua app per verificare la configurazione.',
+  mfa_no_qr:
+    'Se hai problemi nella scansione del codice QR, esegui una configurazione manuale con il codice: {code}.',
   code: 'Codice',
   // Edit / Create tiles
   name: 'nome',
@@ -72,10 +76,10 @@ export default {
   // API responses
   invalid_user: 'Nome utente o password non validi',
   invalid_code: 'Codice multi-fattore non valido',
-  not_logged_in: 'Non hai effettuato l\'accesso o non hai accesso a questi dati',
+  not_logged_in: "Non hai effettuato l'accesso o non hai accesso a questi dati",
   unauthorized: 'Non autorizzato',
   email_exists: 'Email già esistente',
   incorrect_password: 'Password non corretta',
-  api_test_success: 'Connesso con successo all\'API',
-  api_test_failure: 'Impossibile connettersi all\'API'
+  api_test_success: "Connesso con successo all'API",
+  api_test_failure: "Impossibile connettersi all'API"
 }
