@@ -43,5 +43,29 @@
     "method":"get",
     "target":"_blank",
     "query":"query"
+  },
+  {
+    "id":"swiggle",
+    "url":"https://swiggle.org.uk/",
+    "name":"Swiggle",
+    "method":"get",
+    "target":"_blank",
+    "query":"q"
+  },
+  {
+    "id":"yandex",
+    "url":"https://yandex.com/search/",
+    "name":"Yandex",
+    "method":"get",
+    "target":"_blank",
+    "query":"text"
+  },
+  {
+    "id":"baidu",
+    "url":"https://www.baidu.com/s",
+    "name":"Baidu",
+    "method":"get",
+    "target":"_blank",
+    "query":"wd"
   }
 ]
