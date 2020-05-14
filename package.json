@@ -9,9 +9,11 @@
     "Eric Nemchik <eric@nemchik.com>"
   ],
   "scripts": {
-    "build": "quasar build",
+    "build": "npm run format:write && quasar build",
     "db:migrate": "sequelize db:migrate",
     "db:seed": "sequelize db:seed:all",
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
     "lint": "eslint --ext .js,.vue src",
     "server": "npm run db:migrate && node ./bin/www",
     "setup": "npm install && node ./scripts/install && npm run build && npm run db:migrate && npm run db:seed",
