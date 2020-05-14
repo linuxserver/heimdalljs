@@ -102,5 +102,6 @@ export default {
   security: 'Security',
   change_image: 'Change Image',
   enter_website: 'Enter website address',
-  visit_url: 'Visit URL'
+  visit_url: 'Visit URL',
+  all: 'All'
 }
