@@ -14,9 +14,43 @@
           <q-stepper v-model="step" vertical color="primary" animated>
             <q-step
               :name="1"
+              :title="this.$t('select_system_defaults')"
+              icon="apps"
+              :done="step > 1"
+            >
+              <q-select
+                outlined
+                :options="languages"
+                :label="this.$t('select_language')"
+                option-value="value"
+                option-label="label"
+                v-model="language"
+                map-options
+              ></q-select>
+
+              <q-select
+                outlined
+                :options="username_options"
+                :label="this.$t('show_usernames')"
+                option-value="value"
+                option-label="label"
+                v-model="showusername"
+              ></q-select>
+
+              <q-stepper-navigation>
+                <q-btn
+                  @click="saveSettings"
+                  color="primary"
+                  :label="$t('continue')"
+                />
+              </q-stepper-navigation>
+            </q-step>
+
+            <q-step
+              :name="2"
               :title="$t('setup_admin_user')"
               icon="contact_mail"
-              :done="step > 1"
+              :done="step > 2"
             >
               <q-input
                 outlined
@@ -53,39 +87,6 @@
             </q-step>
 
             <q-step
-              :name="2"
-              :title="this.$t('select_system_defaults')"
-              icon="apps"
-              :done="step > 2"
-            >
-              <q-select
-                outlined
-                :options="languages"
-                :label="this.$t('select_language')"
-                option-value="value"
-                option-label="label"
-                v-model="language"
-              ></q-select>
-
-              <q-select
-                outlined
-                :options="username_options"
-                :label="this.$t('show_usernames')"
-                option-value="value"
-                option-label="label"
-                v-model="showusername"
-              ></q-select>
-
-              <q-stepper-navigation>
-                <q-btn
-                  @click="saveSettings"
-                  color="primary"
-                  :label="$t('continue')"
-                />
-              </q-stepper-navigation>
-            </q-step>
-
-            <q-step
               :name="3"
               :title="this.$t('select_system_defaults')"
               icon="add_comment"
@@ -112,6 +113,31 @@ export default {
   computed: {
     step() {
       return this.$store.state.app.setup.step
+    },
+    languages() {
+      return this.$store.state.app.languages
+    },
+    language: {
+      get() {
+        return this.$store.state.app.settings.language
+      },
+      set(val) {
+        this.$store.dispatch('app/saveSettings', {
+          language: val.value
+        })
+      }
+    },
+    username_options() {
+      return [
+        {
+          label: this.$t('username_yes'),
+          value: 'yes'
+        },
+        {
+          label: this.$t('username_no'),
+          value: 'no'
+        }
+      ]
     }
   },
 
@@ -121,28 +147,7 @@ export default {
       username: '',
       email: '',
       password: '',
-      showusername: null,
-      username_options: [
-        {
-          label: this.$t('username_yes'),
-          value: 'yes'
-        },
-        {
-          label: this.$t('username_no'),
-          value: 'no'
-        }
-      ],
-      language: null,
-      languages: [
-        {
-          value: 'en-us',
-          label: 'English (US)'
-        },
-        {
-          value: 'en-gb',
-          label: 'English (British)'
-        }
-      ]
+      showusername: null
     }
   },
 

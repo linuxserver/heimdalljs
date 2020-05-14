@@ -29,7 +29,8 @@ router.get(
 router.put(
   '/',
   errorHandler(async (req, res, next) => {
-    if (!req.user || req.user.level !== User.ADMIN) {
+    const usersCount = await User.count()
+    if ((!req.user || req.user.level !== User.ADMIN) && usersCount !== 0) {
       return res.status(403).json({
         status: 'error',
         result: 'unauthorized'

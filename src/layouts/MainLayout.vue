@@ -75,6 +75,7 @@
               :name="search_provider.query"
             >
             </q-input>
+            <input type="submit" hidden />
           </q-form>
         </div>
       </q-toolbar>
@@ -188,7 +189,7 @@ export default {
     } else {
       document.addEventListener(
         this.visibility.visibilityChange,
-        function () {
+        function() {
           if (document[this.visibility.hidden]) {
             this.$store.dispatch('tiles/stopChecks')
           } else {

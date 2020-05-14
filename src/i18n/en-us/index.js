@@ -19,7 +19,6 @@ export default {
   no: 'No',
   email: 'Email',
   avatar: 'Avatar',
-  username: 'Username',
   password: 'Password',
   failed: 'Action failed',
   success: 'Action was successful',
@@ -46,7 +45,7 @@ export default {
     "Enabling this option will allow you to use an authentication app that supports TOTP Codes, if you don't already have one, we recommend either {link1} or {link2}.",
   mfa_above_qr: 'To activate, scan the QR code with  your authentication app.',
   mfa_below_qr:
-    'After scanning the code, enter the six didget code from your app to verify the setup.',
+    'After scanning the code, enter the six digit code from your app to verify the setup.',
   mfa_no_qr:
     'If you have problems scanning the QR code, do a manual setup with code: {code}.',
   code: 'Code',

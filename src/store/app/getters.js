@@ -1,6 +1,6 @@
 export function getBackground(state) {
   const background = state.settings.background
-  if (background.type === null || background.type === 'none') {
+  if (background === null || background.type === null || background.type === 'none') {
     return ''
   }
   if (background.type === 'colour') {

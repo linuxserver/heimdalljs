@@ -181,7 +181,13 @@
               ></q-select>
             </div>
             <div class="details" v-if="background_type === 'background_image'">
-              <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
+              <q-file
+                outlined
+                v-model="backgroundimage"
+                accept="image/*"
+                @input="changeBackgroundImage"
+                :label="this.$t('upload_file')"
+              >
                 <template v-slot:prepend>
                   <q-icon name="attach_file" />
                 </template>
@@ -377,13 +383,9 @@ export default {
     },
     preview() {
       return this.$store.getters['app/getBackground']
-    }
-  },
-
-  data() {
-    return {
-      tab: 'general',
-      username_options: [
+    },
+    username_options() {
+      return [
         {
           label: this.$t('username_yes'),
           value: 'yes'
@@ -392,8 +394,10 @@ export default {
           label: this.$t('username_no'),
           value: 'no'
         }
-      ],
-      showsearch_options: [
+      ]
+    },
+    showsearch_options() {
+      return [
         {
           label: this.$t('yes'),
           value: 'yes'
@@ -405,9 +409,19 @@ export default {
       ]
     }
   },
+
+  data() {
+    return {
+      tab: 'general',
+      backgroundimage: null
+    }
+  },
   methods: {
-    addApp: function () {
+    addApp: function() {
       this.$store.commit('tiles/create', true)
+    },
+    changeBackgroundImage: function() {
+      console.log(this.backgroundimage)
     }
   },
   mounted() {
