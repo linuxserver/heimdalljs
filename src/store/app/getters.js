@@ -1,4 +1,4 @@
-export function getBackground (state) {
+export function getBackground(state) {
   const background = state.settings.background
   if (background === null || background.type === null || background.type === 'none') {
     return ''
@@ -12,9 +12,27 @@ export function getBackground (state) {
       return 'background: ' + colour1
     } else {
       if (gradient === 'radial') {
-        return 'background: ' + colour1 + '; background:radial-gradient(circle, ' + colour1 + ' 0%, ' + colour2 + ' 100%);'
+        return (
+          'background: ' +
+          colour1 +
+          '; background:radial-gradient(circle, ' +
+          colour1 +
+          ' 0%, ' +
+          colour2 +
+          ' 100%);'
+        )
       } else {
-        return 'background: ' + colour1 + '; background:linear-gradient(' + degrees + 'deg, ' + colour1 + ' 0%, ' + colour2 + ' 100%);'
+        return (
+          'background: ' +
+          colour1 +
+          '; background:linear-gradient(' +
+          degrees +
+          'deg, ' +
+          colour1 +
+          ' 0%, ' +
+          colour2 +
+          ' 100%);'
+        )
       }
     }
   }

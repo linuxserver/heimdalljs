@@ -21,8 +21,10 @@
         </app-item>
       </div>
     </div>
-    <edit-tile :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-tile>
-
+    <edit-tile
+      :class="{ active: create === true }"
+      v-on:closecreate="closecreate"
+    ></edit-tile>
   </q-page>
 </template>
 
@@ -41,7 +43,7 @@ export default {
   props: ['applications', 'allapps'],
 
   computed: {
-    createapp () {
+    createapp() {
       return {
         id: null,
         color: '',
@@ -53,28 +55,27 @@ export default {
       }
     },
     create: {
-      get () {
+      get() {
         return this.$store.state.tiles.create
       },
-      set (val) {
+      set(val) {
         this.$store.commit('tiles/create', val)
       }
     }
   },
 
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   methods: {
     addApp: function () {
       this.$store.commit('tiles/create', true)
     },
-    closecreate () {
+    closecreate() {
       this.$store.commit('tiles/create', false)
     }
   },
-  mounted () {
+  mounted() {
     // this.$store.commit('app/tab', 'admin')
     // this.$store.commit('app/adminApps', true)
   }
@@ -82,11 +83,16 @@ export default {
 </script>
 <style lang="scss">
 .bg {
-  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 88, 94, 0.95),
+      rgba(49, 66, 84, 0.95)
+    ),
+    url('/statics/applications.jpg');
   background-size: cover;
   background-position: center;
   height: 300px;
-  position:fixed;
+  position: fixed;
   top: 75px;
   left: 0;
   right: 0;

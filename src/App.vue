@@ -24,28 +24,27 @@ export default {
   },
 
   computed: {
-    status () {
+    status() {
       return this.$store.state.app.status
     },
-    user () {
+    user() {
       return this.$store.state.app.user
     },
-    lang () {
+    lang() {
       return this.$store.state.app.settings.language
     }
   },
 
   watch: {
-    lang (lang) {
+    lang(lang) {
       this.$i18n.locale = lang
     }
   },
 
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
-  async mounted () {
+  async mounted() {
     console.log(this.user)
     await this.$store.dispatch('app/status')
     this.$store.dispatch('users/getUsers')

@@ -39,18 +39,18 @@ app.use(auth.authorize)
  * Handle CORS
  */
 const cors = require('cors')
-app.use(cors({
-  credentials: true,
-  ...env === 'development' && { origin: 'http://localhost:8080' }
-}))
+app.use(
+  cors({
+    credentials: true,
+    ...(env === 'development' && { origin: 'http://localhost:8080' })
+  })
+)
 
 // Create upload directories
-for (const subdir of [
-  'avatars',
-  'icons',
-  'backgrounds'
-]) {
-  fs.mkdirSync(path.resolve(path.join(config.uploadDir, subdir)), { recursive: true })
+for (const subdir of ['avatars', 'icons', 'backgrounds']) {
+  fs.mkdirSync(path.resolve(path.join(config.uploadDir, subdir)), {
+    recursive: true
+  })
 }
 
 app.use(express.static(path.join(__dirname, './dist/spa/')))

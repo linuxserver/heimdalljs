@@ -12,9 +12,5 @@
       "vue$": ["node_modules/vue/dist/vue.esm.js"]
     }
   },
-  "exclude": [
-    "dist",
-    ".quasar",
-    "node_modules"
-  ]
+  "exclude": ["dist", ".quasar", "node_modules"]
 }

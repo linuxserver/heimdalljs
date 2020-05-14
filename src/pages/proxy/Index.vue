@@ -1,7 +1,6 @@
 <template>
   <q-page class="flex">
-    <div class="page-container">
-    </div>
+    <div class="page-container"></div>
   </q-page>
 </template>
 

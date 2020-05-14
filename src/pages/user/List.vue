@@ -2,15 +2,13 @@
   <q-page class="flex">
     <div class="page-container">
       <div class="list-users fit">
-        <user
-          v-for="user in users"
-          :key="user.id"
-          :user="user"
-        >
-        </user>
+        <user v-for="user in users" :key="user.id" :user="user"> </user>
       </div>
     </div>
-    <edit-user :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-user>
+    <edit-user
+      :class="{ active: create === true }"
+      v-on:closecreate="closecreate"
+    ></edit-user>
   </q-page>
 </template>
 
@@ -29,38 +27,36 @@ export default {
       return this.$store.state.users.all
     },
     create: {
-      get () {
+      get() {
         return this.$store.state.users.create
       },
-      set (val) {
+      set(val) {
         this.$store.commit('users/create', val)
       }
     }
-
   },
 
   methods: {
-    closecreate () {
+    closecreate() {
       this.$store.commit('users/create', false)
     }
   },
 
-  mounted () {
+  mounted() {
     this.$store.commit('app/tab', 'admin')
     this.$store.commit('app/adminUsers', true)
   },
 
-  data () {
-    return {
-    }
+  data() {
+    return {}
   }
 }
 </script>
 <style lang="scss">
-  .list-users {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    padding: 40px 0;
-  }
+.list-users {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 40px 0;
+}
 </style>

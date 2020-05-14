@@ -77,15 +77,10 @@
         <input type="submit" hidden />
         </q-form>
         </div>
-
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-      content-class=""
-    >
+    <q-drawer v-model="leftDrawerOpen" bordered content-class="">
       <menu-list></menu-list>
     </q-drawer>
 
@@ -107,26 +102,27 @@ export default {
   },
 
   computed: {
-    tags () {
+    tags() {
       return this.$store.getters['tiles/tags']
     },
-    user () {
+    user() {
       return this.$store.state.app.user
     },
-    settings () {
+    settings() {
       return this.$store.state.app.settings
     },
     search_provider: {
-      get () {
+      get() {
         return this.$store.state.app.settings.search_provider
       },
-      set (val) {
+      set(val) {
         this.$store.commit('app/searchProvider', val)
       }
     },
-    visibility () {
+    visibility() {
       let hidden, visibilityChange
-      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+      if (typeof document.hidden !== 'undefined') {
+        // Opera 12.10 and Firefox 18 and later support
         hidden = 'hidden'
         visibilityChange = 'visibilitychange'
       } else if (typeof document.msHidden !== 'undefined') {
@@ -141,11 +137,10 @@ export default {
         visibilityChange: visibilityChange
       }
     }
-
   },
 
   asyncComputed: {
-    async background () {
+    async background() {
       return this.$store.getters['app/getBackground']
       /* if (background === 'unsplash') {
         const unsplash = await this.$store.dispatch('app/unsplash')
@@ -156,7 +151,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       version: version,
@@ -169,41 +164,47 @@ export default {
   },
 
   methods: {
-    setFilter (tag) {
+    setFilter(tag) {
       this.filter = tag
     },
-    filterFn (val, update, abort) {
+    filterFn(val, update, abort) {
       update(() => {
         // this.selectedapp = null
         this.searchfilter = val.toLowerCase()
       })
     },
-    onSubmit () {
+    onSubmit() {
       // console.log(this.$refs)
       this.$refs.searchForm.$el.submit()
     }
   },
-  mounted () {
+  mounted() {
     console.log('mounted')
-    if (typeof document.addEventListener === 'undefined' || this.visibility.hidden === undefined) {
+    if (
+      typeof document.addEventListener === 'undefined' ||
+      this.visibility.hidden === undefined
+    ) {
       console.log('This browser does not support visibilityChange')
     } else {
-      document.addEventListener(this.visibility.visibilityChange, function () {
-        if (document[this.visibility.hidden]) {
-          this.$store.dispatch('tiles/stopChecks')
-        } else {
-          this.$store.dispatch('tiles/startChecks')
-        }
-      }.bind(this), false)
+      document.addEventListener(
+        this.visibility.visibilityChange,
+        function() {
+          if (document[this.visibility.hidden]) {
+            this.$store.dispatch('tiles/stopChecks')
+          } else {
+            this.$store.dispatch('tiles/startChecks')
+          }
+        }.bind(this),
+        false
+      )
     }
   },
-  updated () {
+  updated() {
     this.$store.dispatch('tiles/startChecks')
   },
-  beforeDestory () {
+  beforeDestory() {
     document.removeEventListener(this.visibility.visibilityChange)
   }
-
 }
 </script>
 <style lang="scss">
@@ -229,7 +230,9 @@ export default {
         padding-right: 0;
       }
     }
-    .q-field__label, .q-field__native, .q-field__marginal {
+    .q-field__label,
+    .q-field__native,
+    .q-field__marginal {
       color: #ffffffb0;
     }
     input {

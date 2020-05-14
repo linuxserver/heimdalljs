@@ -1,11 +1,11 @@
 const axios = require('axios')
 
 class EnhancedApps {
-  constructor (data) {
+  constructor(data) {
     this.data = data
   }
 
-  async call () {
+  async call() {
     let stat1 = null
     let stat2 = null
     switch (this.data.enhancedType) {
@@ -23,7 +23,7 @@ class EnhancedApps {
     }
   }
 
-  async apikey (url) {
+  async apikey(url) {
     url = url.replace(':url:', this.data.url)
     url = url.replace(':apikey:', this.data.apikey)
     const response = await axios.get(url)

@@ -1,0 +1,17 @@
+{
+  "arrowParens": "avoid",
+  "proseWrap": "never",
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": [".prettierrc,", ".stylintrc"],
+      "options": { "parser": "json" }
+    },
+    {
+      "files": [".sequelizerc", "bin/www"],
+      "options": { "parser": "babel" }
+    }
+  ]
+}

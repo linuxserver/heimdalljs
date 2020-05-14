@@ -34,7 +34,9 @@ export default {
       } else {
         console.log('active')
         console.log(this.$store.state.tiles.active)
-        const notNull = this.$store.state.tiles.active.filter(a => a.tags !== null)
+        const notNull = this.$store.state.tiles.active.filter(
+          a => a.tags !== null
+        )
         console.log('notnull')
         console.log(notNull)
         tiles = notNull.filter(a => a.tags.find(name => name === this.filter))
@@ -43,36 +45,36 @@ export default {
       if (this.searchfilter === null) {
         return tiles
       } else {
-        return tiles.filter(v => v.title.toLowerCase().indexOf(this.searchfilter) > -1)
+        return tiles.filter(
+          v => v.title.toLowerCase().indexOf(this.searchfilter) > -1
+        )
       }
     }
   },
 
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
-  mounted () {
-  }
+  mounted() {}
 }
 </script>
 <style lang="scss">
-  .noapps {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 360px;
-    margin: 30px;
-    padding: 30px;
-    height: 100%;
-    max-height: 200px;
-    min-height: 200px;
-    background: #00000075;
-    color: white;
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    font-size: 16px;
-    border: 4px solid #ffffffd4;
-  }
+.noapps {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 360px;
+  margin: 30px;
+  padding: 30px;
+  height: 100%;
+  max-height: 200px;
+  min-height: 200px;
+  background: #00000075;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 4px solid #ffffffd4;
+}
 </style>

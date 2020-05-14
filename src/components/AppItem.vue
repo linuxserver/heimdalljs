@@ -1,20 +1,51 @@
 <template>
   <div class="list-item">
-    <div class="icon" :style="'background-color: ' + bgColor + ';'"><img class="app-icon" :src="appIcon"></div>
+    <div class="icon" :style="'background-color: ' + bgColor + ';'">
+      <img class="app-icon" :src="appIcon" />
+    </div>
     <div class="name">
       {{ this.application.title }}
-      <a :href="this.application.url"><span><q-tooltip v-if="application.url !== ''" content-class="tooltip-content" max-width="500px" anchor="bottom middle" self="top middle">{{ application.url }}</q-tooltip>Visit url</span></a>
+      <a :href="this.application.url"
+        ><span
+          ><q-tooltip
+            v-if="application.url !== ''"
+            content-class="tooltip-content"
+            max-width="500px"
+            anchor="bottom middle"
+            self="top middle"
+            >{{ application.url }}</q-tooltip
+          >Visit url</span
+        ></a
+      >
     </div>
     <div v-if="this.$route.path !== '/admin/application'" class="pinned">
       Active
       <q-icon
         @click="toggleActive"
-        :name="this.application.UserItem.active === true ? 'check_box' : 'check_box_outline_blank'"
+        :name="
+          this.application.UserItem.active === true
+            ? 'check_box'
+            : 'check_box_outline_blank'
+        "
       />
     </div>
-    <div v-if="this.$route.path === '/admin/application' || application.system !== true" class="actions">
-      <q-btn size="12px" unelevated color="primary" @click="editApp">Edit</q-btn>
-      <q-btn size="12px" unelevated color="grey-2" text-color="black" @click="deleteApp">Delete</q-btn>
+    <div
+      v-if="
+        this.$route.path === '/admin/application' || application.system !== true
+      "
+      class="actions"
+    >
+      <q-btn size="12px" unelevated color="primary" @click="editApp"
+        >Edit</q-btn
+      >
+      <q-btn
+        size="12px"
+        unelevated
+        color="grey-2"
+        text-color="black"
+        @click="deleteApp"
+        >Delete</q-btn
+      >
     </div>
     <q-dialog v-model="confirmDelete" persistent>
       <q-card>
@@ -36,26 +67,28 @@
 export default {
   name: 'AppItem',
   props: ['application'],
-  components: {
-  },
+  components: {},
   computed: {
-    possibleapps () {
+    possibleapps() {
       return this.$store.state.tiles.possibleapps
     },
-    possibletags () {
+    possibletags() {
       return this.$store.state.tags.all
     },
-    taglist () {
+    taglist() {
       return null
       // return this.tags.map(a => a.title).join()
     },
-    bgColor () {
-      if (this.application.color !== 'null' && this.application.color !== null) {
+    bgColor() {
+      if (
+        this.application.color !== 'null' &&
+        this.application.color !== null
+      ) {
         return this.application.color
       }
       return '#222222'
     },
-    preview () {
+    preview() {
       return {
         color: this.color,
         title: this.title,
@@ -63,14 +96,14 @@ export default {
         url: this.url
       }
     },
-    appIcon () {
+    appIcon() {
       if (this.application.icon === null) {
         return 'statics/heimdall-logo-white.svg'
       }
       return process.env.BACKEND_LOCATION + this.application.icon
     }
   },
-  data () {
+  data() {
     return {
       edit: false,
       confirmDelete: false,
@@ -91,16 +124,16 @@ export default {
     deleteApp: function () {
       this.confirmDelete = true
     },
-    onDeleteClick () {
+    onDeleteClick() {
       // on OK, it is REQUIRED to
       let appid = this.application.id
       this.$store.dispatch('tiles/deleteApp', appid)
       // then hiding dialog
       this.confirmDelete = false
     },
-    async toggleActive () {
+    async toggleActive() {
       const formData = {
-        active: (this.application.UserItem.active === false)
+        active: this.application.UserItem.active === false
       }
       const data = {
         id: this.application.id,
@@ -112,5 +145,4 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-</style>
+<style lang="scss"></style>

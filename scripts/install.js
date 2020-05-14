@@ -1,4 +1,4 @@
-(async () => {
+;(async () => {
   const fs = require('fs')
   const path = require('path')
   const inquirer = require('inquirer')
@@ -76,7 +76,10 @@
 
   const config = {
     BACKEND_LOCATION: backendUrl.answer,
-    JWT_SECRET: crypto.createHash('sha1').update((new Date()).valueOf().toString() + Math.random().toString()).digest('hex'),
+    JWT_SECRET: crypto
+      .createHash('sha1')
+      .update(new Date().valueOf().toString() + Math.random().toString())
+      .digest('hex'),
     DB_TYPE: dbType.answer,
     DB_STORAGE: dbInfo.storage || '',
     DB_HOST: dbInfo.host || '',
@@ -86,5 +89,10 @@
     DB_PASSWORD: dbInfo.password || ''
   }
 
-  fs.writeFileSync(path.join(__dirname, '../.env'), Object.keys(config).map(key => `${key}=${config[key]}`).join('\n'))
+  fs.writeFileSync(
+    path.join(__dirname, '../.env'),
+    Object.keys(config)
+      .map(key => `${key}=${config[key]}`)
+      .join('\n')
+  )
 })()
