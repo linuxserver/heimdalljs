@@ -74,6 +74,7 @@
           :name="search_provider.query"
         >
         </q-input>
+        <input type="submit" hidden />
         </q-form>
         </div>
 
