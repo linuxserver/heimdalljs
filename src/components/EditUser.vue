@@ -286,7 +286,7 @@ export default {
       if (this.settingsLanguage !== null)
         formData.settings.language = this.settingsLanguage.value
 
-      let data = {
+      const data = {
         id: this.id,
         user: formData
       }
@@ -322,12 +322,9 @@ export default {
     },
     async closeCreate() {
       await this.$emit('closecreate')
-      setTimeout(
-        function () {
-          this.$store.dispatch('users/clear')
-        }.bind(this),
-        300
-      )
+      setTimeout(() => {
+        this.$store.dispatch('users/clear')
+      }, 300)
     },
     filterFn(val, update) {
       update(() => {

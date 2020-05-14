@@ -514,12 +514,9 @@ export default {
 
     create: function (newdata, olddata) {
       if (newdata === true) {
-        setTimeout(
-          function () {
-            this.actions = true
-          }.bind(this),
-          350
-        )
+        setTimeout(() => {
+          this.actions = true
+        }, 350)
       } else {
         // this.actions = false
       }
@@ -652,12 +649,9 @@ export default {
     },
     async closeCreate() {
       await this.$emit('closecreate')
-      setTimeout(
-        function () {
-          this.$store.dispatch('tiles/clear')
-        }.bind(this),
-        300
-      )
+      setTimeout(() => {
+        this.$store.dispatch('tiles/clear')
+      }, 300)
     },
     async getDockers() {
       const dockers = await axios.get(
