@@ -5,13 +5,17 @@
         <div id="create" class="create fit">
           <div class="tile-details">
             <div class="buttons">
-              <q-btn unelevated @click="loadApplication" color="grey-5">Application</q-btn>
-              <q-btn unelevated @click="websitedialog = true" color="grey-5">Website</q-btn>
-              <q-btn unelevated @click="dockerdialog = true" color="grey-5">Docker</q-btn>
+              <q-btn unelevated @click="loadApplication" color="grey-5"
+                >Application</q-btn
+              >
+              <q-btn unelevated @click="websitedialog = true" color="grey-5"
+                >Website</q-btn
+              >
+              <q-btn unelevated @click="dockerdialog = true" color="grey-5"
+                >Docker</q-btn
+              >
             </div>
-            <tile
-              :application="preview"
-            ></tile>
+            <tile :application="preview"></tile>
 
             <div v-if="changeicon">
               <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
@@ -29,11 +33,9 @@
                   <q-icon name="http" />
                 </template>
               </q-input>
-
             </div>
             <div class="name"></div>
             <div class="email"></div>
-
           </div>
           <div class="user-options">
             <q-tabs
@@ -42,24 +44,9 @@
               align="justify"
               inline-label
             >
-              <q-tab
-                clickable
-                v-ripple
-                name="general"
-                label="General"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="image"
-                label="Look"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="enhanced"
-                label="Enhanced"
-              />
+              <q-tab clickable v-ripple name="general" label="General" />
+              <q-tab clickable v-ripple name="image" label="Look" />
+              <q-tab clickable v-ripple name="enhanced" label="Enhanced" />
               <q-tab
                 v-if="$route.path === '/admin/application'"
                 clickable
@@ -71,18 +58,9 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-
-                <q-input
-                  outlined
-                  v-model="title"
-                  :label="this.$t('title')"
-                >
+                <q-input outlined v-model="title" :label="this.$t('title')">
                 </q-input>
-                <q-input
-                  outlined
-                  v-model="url"
-                  :label="this.$t('url')"
-                >
+                <q-input outlined v-model="url" :label="this.$t('url')">
                 </q-input>
 
                 <q-input
@@ -105,31 +83,31 @@
                   @new-value="updateInput"
                   @filter="filterFn"
                 />
-
               </q-tab-panel>
 
               <q-tab-panel name="image">
-                <q-input
-                  outlined
-                  v-model="color"
-                  :label="this.$t('colour')"
-                >
+                <q-input outlined v-model="color" :label="this.$t('colour')">
                   <template v-slot:append>
                     <q-icon name="colorize" class="cursor-pointer">
-                      <q-popup-proxy transition-show="scale" transition-hide="scale">
+                      <q-popup-proxy
+                        transition-show="scale"
+                        transition-hide="scale"
+                      >
                         <q-color v-model="color" format-model="hexa" />
                       </q-popup-proxy>
                     </q-icon>
                   </template>
                 </q-input>
                 <div class="icon-container">
-                    <div class="upload-btn-wrapper">
-                       <q-file outlined ref="icon" v-model="icon" label="Icon" />
-                    </div>
+                  <div class="upload-btn-wrapper">
+                    <q-file outlined ref="icon" v-model="icon" label="Icon" />
+                  </div>
                 </div>
-
               </q-tab-panel>
-              <q-tab-panel v-if="$route.path === '/admin/application'" name="users">
+              <q-tab-panel
+                v-if="$route.path === '/admin/application'"
+                name="users"
+              >
                 <q-select
                   :label="this.$t('users')"
                   outlined
@@ -145,7 +123,6 @@
                   emit-value
                   ref="users"
                 />
-
               </q-tab-panel>
 
               <q-tab-panel name="enhanced">
@@ -216,7 +193,6 @@
                         :options="['Yes', 'No']"
                       >
                       </q-select>
-
                     </div>
                     <div class="stat">
                       <div class="text-h6">Stat 2</div>
@@ -255,16 +231,12 @@
                         :options="['Yes', 'No']"
                       >
                       </q-select>
-
                     </div>
                   </div>
                   <q-btn @click="test">Test</q-btn>
                 </div>
-
               </q-tab-panel>
-
             </q-tab-panels>
-
           </div>
         </div>
       </q-scroll-area>
@@ -299,7 +271,13 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn unelevated label="Set" @click="setApplication" color="primary" v-close-popup />
+          <q-btn
+            unelevated
+            label="Set"
+            @click="setApplication"
+            color="primary"
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -328,12 +306,18 @@
               <img :src="icon" />
             </div>
           </div>
-
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
+          <q-btn
+            unelevated
+            v-if="websitedata !== null"
+            label="Set"
+            @click="setWebsite"
+            color="primary"
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -344,27 +328,34 @@
         </q-card-section>
         <q-card-section style="width: 500px;" class="q-pt-none">
           <div v-if="dockers.length > 0">
-          <div class="text-h6">Active</div>
-          <div
-            v-for="docker in dockers.filter(d => d.state === 'running')"
-            :key="docker.id"
-          >
-            {{ docker.image }}
-          </div>
-          <div class="text-h6">Inactive</div>
-          <div
-            v-for="docker in dockers.filter(d => d.state !== 'running')"
-            :key="docker.id"
-          >
-            {{ docker.image }}
-          </div>
+            <div class="text-h6">Active</div>
+            <div
+              v-for="docker in dockers.filter(d => d.state === 'running')"
+              :key="docker.id"
+            >
+              {{ docker.image }}
+            </div>
+            <div class="text-h6">Inactive</div>
+            <div
+              v-for="docker in dockers.filter(d => d.state !== 'running')"
+              :key="docker.id"
+            >
+              {{ docker.image }}
+            </div>
           </div>
           <div v-else>No containers available</div>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
+          <q-btn
+            unelevated
+            v-if="websitedata !== null"
+            label="Set"
+            @click="setWebsite"
+            color="primary"
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -385,22 +376,22 @@ export default {
   },
 
   computed: {
-    application () {
+    application() {
       return this.$store.state.tiles.edit
     },
-    possibleapps () {
+    possibleapps() {
       return this.$store.getters['tiles/possibleApplications']
     },
-    possibleusers () {
+    possibleusers() {
       return this.$store.state.users.all
     },
-    taglist () {
+    taglist() {
       return this.tags.map(a => a.title).join()
     },
-    create () {
+    create() {
       return this.$store.state.tiles.create
     },
-    config () {
+    config() {
       return {
         enhancedType: this.enhancedType,
         url: this.url,
@@ -422,7 +413,7 @@ export default {
       }
     },
 
-    preview () {
+    preview() {
       return {
         color: this.color || '#222222',
         title: this.title,
@@ -433,22 +424,24 @@ export default {
         preview: true
       }
     },
-    allTags () {
+    allTags() {
       return this.$store.getters['tiles/allTags']
     },
-    tagsParse () {
+    tagsParse() {
       if (this.application.tags === null) {
         return []
       }
       return JSON.parse(this.application.tags)
     },
-    seticon () {
+    seticon() {
       if (this.icon) return this.icon
-      return (this.application.icon !== null) ? process.env.BACKEND_LOCATION + this.application.icon : 'statics/heimdall-logo-white.svg'
+      return this.application.icon !== null
+        ? process.env.BACKEND_LOCATION + this.application.icon
+        : 'statics/heimdall-logo-white.svg'
     }
   },
 
-  data () {
+  data() {
     return {
       id: null,
       color: null,
@@ -521,9 +514,12 @@ export default {
 
     create: function (newdata, olddata) {
       if (newdata === true) {
-        setTimeout(function () {
-          this.actions = true
-        }.bind(this), 350)
+        setTimeout(
+          function () {
+            this.actions = true
+          }.bind(this),
+          350
+        )
       } else {
         // this.actions = false
       }
@@ -531,7 +527,7 @@ export default {
   },
 
   methods: {
-    async test () {
+    async test() {
       const enhanced = new EnhancedApps(this.config)
       try {
         const test = await enhanced.test()
@@ -540,8 +536,9 @@ export default {
         console.log(e)
       }
     },
-    async onSubmit (evt) {
-      const applicationType = (this.applicationtype !== null) ? this.applicationtype.appid : null
+    async onSubmit(evt) {
+      const applicationType =
+        this.applicationtype !== null ? this.applicationtype.appid : null
       const formData = {
         title: this.title
       }
@@ -601,13 +598,13 @@ export default {
         })
       }
     },
-    updateInput (val, done) {
+    updateInput(val, done) {
       if (done) {
         done(val.toLowerCase())
       }
       // this.$refs.tags.updateInputValue(val.toLowerCase())
     },
-    filterFn (val, update) {
+    filterFn(val, update) {
       update(() => {
         if (val === '') {
           this.possibletags = this.allTags || []
@@ -620,14 +617,18 @@ export default {
         }
       })
     },
-    loadApplication () {
+    loadApplication() {
       this.$store.dispatch('tiles/getPossibleApps')
       this.applicationdialog = true
     },
-    setApplication () {
+    setApplication() {
       this.title = this.applicationtype.name
       this.description = this.applicationtype.description
-      this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
+      this.icon =
+        'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' +
+        this.applicationtype.name +
+        '/' +
+        this.applicationtype.icon
       if (this.applicationtype.enhanced !== 0) {
         this.enhancedType = this.applicationtype.enhanced.type
         this.enhanced1name = this.applicationtype.enhanced.stat1.name
@@ -640,29 +641,36 @@ export default {
         this.enhanced2filter = this.applicationtype.enhanced.stat2.filter
       }
     },
-    setWebsite () {
+    setWebsite() {
       this.title = this.websitedata.title
       this.description = this.websitedata.description
       this.icon = this.websitedata.icons[this.selectedwebsiteimage]
       this.url = this.website
     },
-    selectWebsiteImage (key) {
+    selectWebsiteImage(key) {
       this.selectedwebsiteimage = key
     },
-    async closeCreate () {
+    async closeCreate() {
       await this.$emit('closecreate')
-      setTimeout(function () {
-        this.$store.dispatch('tiles/clear')
-      }.bind(this), 300)
+      setTimeout(
+        function () {
+          this.$store.dispatch('tiles/clear')
+        }.bind(this),
+        300
+      )
     },
-    async getDockers () {
-      const dockers = await axios.get(process.env.BACKEND_LOCATION + 'containers')
+    async getDockers() {
+      const dockers = await axios.get(
+        process.env.BACKEND_LOCATION + 'containers'
+      )
       this.dockers = dockers.data.result
     },
-    async getWebsiteData () {
+    async getWebsiteData() {
       try {
         const websitedata = {}
-        const html = await axios.get(process.env.BACKEND_LOCATION + 'cors/' + this.website)
+        const html = await axios.get(
+          process.env.BACKEND_LOCATION + 'cors/' + this.website
+        )
         // const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + this.website)
         // console.log(html)
         const parser = new DOMParser()
@@ -754,23 +762,22 @@ export default {
       }
     }
   }
-
 }
 </script>
 <style lang="scss">
-  .iconlist {
+.iconlist {
+  display: flex;
+  flex-wrap: wrap;
+  .icon {
     display: flex;
-    flex-wrap: wrap;
-    .icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #f1f1f1;
-      border: 4px solid #f1f1f1;
-      margin: 8px;
-      &.selected {
-        border: 4px solid #724c7a;
-      }
+    justify-content: center;
+    align-items: center;
+    background: #f1f1f1;
+    border: 4px solid #f1f1f1;
+    margin: 8px;
+    &.selected {
+      border: 4px solid #724c7a;
     }
   }
+}
 </style>

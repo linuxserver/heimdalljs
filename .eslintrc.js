@@ -15,21 +15,20 @@ module.exports = {
     // consider switching to `plugin:vue/strongly-recommended` or `plugin:vue/recommended` for stricter rules.
     'standard',
     'plugin:vue/essential',
-    '@vue/standard'
+    '@vue/standard',
+    'plugin:prettier/recommended'
   ],
 
   // required to lint *.vue files
-  plugins: [
-    'vue'
-  ],
+  plugins: ['vue'],
 
   globals: {
-    'ga': true, // Google Analytics
-    'cordova': true,
-    '__statics': true,
-    'process': true,
-    'Capacitor': true,
-    'chrome': true
+    ga: true, // Google Analytics
+    cordova: true,
+    __statics: true,
+    process: true,
+    Capacitor: true,
+    chrome: true
   },
 
   // add your custom rules here
@@ -49,9 +48,9 @@ module.exports = {
     'import/no-unresolved': 'off',
     'import/no-extraneous-dependencies': 'off',
     'prefer-promise-reject-errors': 'off',
-    "no-var": 1,
-    "prefer-const": 1,
-    "prefer-arrow-callback": 1,
+    'no-var': 1,
+    'prefer-const': 1,
+    'prefer-arrow-callback': 1,
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

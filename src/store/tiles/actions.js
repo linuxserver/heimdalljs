@@ -1,14 +1,17 @@
 import axios from 'axios'
 import { LocalStorage } from 'quasar'
 
-export function getApps (context) {
+export function getApps(context) {
   console.log('get apps')
   axios
     .get(process.env.BACKEND_LOCATION + 'items', { crossdomain: true })
-    .then((response) => {
+    .then(response => {
       // console.log(response.data)
       context.commit('all', response.data.result.items)
-      context.commit('active', response.data.result.items.filter(a => a.UserItem.active === true))
+      context.commit(
+        'active',
+        response.data.result.items.filter(a => a.UserItem.active === true)
+      )
       console.log(response.data.result.system)
       if (response.data.result.system) {
         context.commit('system', response.data.result.system)
@@ -16,14 +19,18 @@ export function getApps (context) {
     })
 }
 
-export function getPossibleApps (context, force = false) {
+export function getPossibleApps(context, force = false) {
   const key = 'heimdall.allpossibleapps'
   const possibleapps = LocalStorage.getItem(key)
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios
-      .get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/applications.json', { crossdomain: true, withCredentials: true })
-      .then((response) => {
+      .get(
+        process.env.BACKEND_LOCATION +
+          'cors/https://apps.heimdall.site/applications.json',
+        { crossdomain: true, withCredentials: true }
+      )
+      .then(response => {
         // console.log(response.data)
         context.commit('possibleapps', response.data.apps)
         LocalStorage.set(key, response.data)
@@ -33,39 +40,40 @@ export function getPossibleApps (context, force = false) {
   }
 }
 
-export function save (context, data) {
+export function save(context, data) {
   if (!data.tile.url.includes('://')) {
     const prefix = 'https://'
     data.tile.url = prefix.concat(data.tile.url)
   }
   if (data.id === null) {
-    return axios
-      .post(process.env.BACKEND_LOCATION + 'items', data.tile)
+    return axios.post(process.env.BACKEND_LOCATION + 'items', data.tile)
   } else {
-    return axios
-      .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.tile)
+    return axios.put(
+      process.env.BACKEND_LOCATION + 'items/' + data.id,
+      data.tile
+    )
   }
 }
 
-export function saveUsers (context, data) {
+export function saveUsers(context, data) {
   if (data.id !== null) {
-    return axios
-      .put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/users', { users: data.users })
+    return axios.put(
+      process.env.BACKEND_LOCATION + 'items/' + data.id + '/users',
+      { users: data.users }
+    )
   }
 }
 
-export function active (context, data) {
-  return axios
-    .put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data)
+export function active(context, data) {
+  return axios.put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.data)
 }
 
-export async function deleteApp (context, id) {
-  await axios
-    .delete(process.env.BACKEND_LOCATION + 'items/' + id)
+export async function deleteApp(context, id) {
+  await axios.delete(process.env.BACKEND_LOCATION + 'items/' + id)
   getApps(context)
 }
 
-export function clear (context) {
+export function clear(context) {
   context.commit('edit', {
     id: null,
     icon: null,
@@ -80,12 +88,12 @@ export function clear (context) {
   })
 }
 
-export function stopChecks (context) {
+export function stopChecks(context) {
   console.log('stop checks')
   context.commit('running', false)
 }
 
-export function startChecks (context) {
+export function startChecks(context) {
   // const tiles = context.state.active.filter(t => t.config.enhancedType !== 'disabled')
   console.log('start checks')
   context.commit('running', true)

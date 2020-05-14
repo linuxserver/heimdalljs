@@ -14,78 +14,74 @@
         <q-toolbar-title>
           Heimdall
         </q-toolbar-title>
-          <div v-if="user !== null">
-            <q-chip
-              v-if="tags.length > 0"
-              icon="bookmark"
-              clickable
-              :class="{ active: filter === null }"
-              @click="setFilter(null)"
-            >All</q-chip>
-            <q-chip
-              v-for="tag in tags"
-              :key="tag"
-              icon="bookmark"
-              clickable
-              :class="{ active: filter === tag }"
-              @click="setFilter(tag)"
-            >{{ tag }}</q-chip>
-          </div>
-        <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
-        <q-form
-          v-if="search_provider !== null"
-          @submit="onSubmit"
-          :action="search_provider.url"
-          :method="search_provider.method"
-          :target="search_provider.target"
-          ref="searchForm"
-        >
-        <q-select
-          borderless
-          v-model="search_provider"
-          input-debounce="0"
-          :options="settings.active_search_providers"
-          option-value="id"
-          option-label="name"
-        >
-        </q-select>
-        <q-select
-          v-if="search_provider.id === 'tiles'"
-          borderless
-          color="white"
-          v-model="selectedapp"
-          use-input
-          clearable
-          input-debounce="0"
-          option-value="id"
-          option-label="title"
-          map-options
-          emit-value
-          label="Search..."
-          @filter="filterFn"
-
-        >
-        </q-select>
-        <q-input
-          v-else
-          v-model="search"
-          borderless
-          label="Search..."
-          :name="search_provider.query"
-        >
-        </q-input>
-        <input type="submit" hidden />
-        </q-form>
+        <div v-if="user !== null">
+          <q-chip
+            v-if="tags.length > 0"
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === null }"
+            @click="setFilter(null)"
+            >All</q-chip
+          >
+          <q-chip
+            v-for="tag in tags"
+            :key="tag"
+            icon="bookmark"
+            clickable
+            :class="{ active: filter === tag }"
+            @click="setFilter(tag)"
+            >{{ tag }}</q-chip
+          >
         </div>
-
+        <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
+          <q-form
+            v-if="search_provider !== null"
+            @submit="onSubmit"
+            :action="search_provider.url"
+            :method="search_provider.method"
+            :target="search_provider.target"
+            ref="searchForm"
+          >
+            <q-select
+              borderless
+              v-model="search_provider"
+              input-debounce="0"
+              :options="settings.active_search_providers"
+              option-value="id"
+              option-label="name"
+            >
+            </q-select>
+            <q-select
+              v-if="search_provider.id === 'tiles'"
+              borderless
+              color="white"
+              v-model="selectedapp"
+              use-input
+              clearable
+              input-debounce="0"
+              option-value="id"
+              option-label="title"
+              map-options
+              emit-value
+              label="Search..."
+              @filter="filterFn"
+            >
+            </q-select>
+            <q-input
+              v-else
+              v-model="search"
+              borderless
+              label="Search..."
+              :name="search_provider.query"
+            >
+            </q-input>
+            <input type="submit" hidden />
+          </q-form>
+        </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      bordered
-      content-class=""
-    >
+    <q-drawer v-model="leftDrawerOpen" bordered content-class="">
       <menu-list></menu-list>
     </q-drawer>
 
@@ -107,26 +103,27 @@ export default {
   },
 
   computed: {
-    tags () {
+    tags() {
       return this.$store.getters['tiles/tags']
     },
-    user () {
+    user() {
       return this.$store.state.app.user
     },
-    settings () {
+    settings() {
       return this.$store.state.app.settings
     },
     search_provider: {
-      get () {
+      get() {
         return this.$store.state.app.settings.search_provider
       },
-      set (val) {
+      set(val) {
         this.$store.commit('app/searchProvider', val)
       }
     },
-    visibility () {
+    visibility() {
       let hidden, visibilityChange
-      if (typeof document.hidden !== 'undefined') { // Opera 12.10 and Firefox 18 and later support
+      if (typeof document.hidden !== 'undefined') {
+        // Opera 12.10 and Firefox 18 and later support
         hidden = 'hidden'
         visibilityChange = 'visibilitychange'
       } else if (typeof document.msHidden !== 'undefined') {
@@ -141,11 +138,10 @@ export default {
         visibilityChange: visibilityChange
       }
     }
-
   },
 
   asyncComputed: {
-    async background () {
+    async background() {
       return this.$store.getters['app/getBackground']
       /* if (background === 'unsplash') {
         const unsplash = await this.$store.dispatch('app/unsplash')
@@ -156,7 +152,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       version: version,
@@ -169,41 +165,47 @@ export default {
   },
 
   methods: {
-    setFilter (tag) {
+    setFilter(tag) {
       this.filter = tag
     },
-    filterFn (val, update, abort) {
+    filterFn(val, update, abort) {
       update(() => {
         // this.selectedapp = null
         this.searchfilter = val.toLowerCase()
       })
     },
-    onSubmit () {
+    onSubmit() {
       // console.log(this.$refs)
       this.$refs.searchForm.$el.submit()
     }
   },
-  mounted () {
+  mounted() {
     console.log('mounted')
-    if (typeof document.addEventListener === 'undefined' || this.visibility.hidden === undefined) {
+    if (
+      typeof document.addEventListener === 'undefined' ||
+      this.visibility.hidden === undefined
+    ) {
       console.log('This browser does not support visibilityChange')
     } else {
-      document.addEventListener(this.visibility.visibilityChange, function () {
-        if (document[this.visibility.hidden]) {
-          this.$store.dispatch('tiles/stopChecks')
-        } else {
-          this.$store.dispatch('tiles/startChecks')
-        }
-      }.bind(this), false)
+      document.addEventListener(
+        this.visibility.visibilityChange,
+        function() {
+          if (document[this.visibility.hidden]) {
+            this.$store.dispatch('tiles/stopChecks')
+          } else {
+            this.$store.dispatch('tiles/startChecks')
+          }
+        }.bind(this),
+        false
+      )
     }
   },
-  updated () {
+  updated() {
     this.$store.dispatch('tiles/startChecks')
   },
-  beforeDestory () {
+  beforeDestory() {
     document.removeEventListener(this.visibility.visibilityChange)
   }
-
 }
 </script>
 <style lang="scss">
@@ -229,7 +231,9 @@ export default {
         padding-right: 0;
       }
     }
-    .q-field__label, .q-field__native, .q-field__marginal {
+    .q-field__label,
+    .q-field__native,
+    .q-field__marginal {
       color: #ffffffb0;
     }
     input {

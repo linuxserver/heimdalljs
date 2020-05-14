@@ -110,7 +110,7 @@ export default function () {
         {
           value: 'colour',
           label: 'colour'
-        }/* ,
+        } /* ,
         {
           value: 'unsplash',
           label: 'unsplash'

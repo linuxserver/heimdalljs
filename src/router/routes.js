@@ -1,11 +1,8 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: '', component: () => import('pages/Index.vue') }
-    ]
+    children: [{ path: '', component: () => import('pages/Index.vue') }]
   },
   {
     path: '/account',
@@ -17,9 +14,7 @@ const routes = [
   {
     path: '/account/settings',
     component: () => import('layouts/User.vue'),
-    children: [
-      { path: '', component: () => import('pages/user/Settings.vue') }
-    ]
+    children: [{ path: '', component: () => import('pages/user/Settings.vue') }]
   },
 
   {
@@ -27,7 +22,10 @@ const routes = [
     component: () => import('layouts/Tiles.vue'),
     children: [
       { path: '', component: () => import('pages/system/Admin.vue') },
-      { path: 'settings', component: () => import('pages/system/Settings.vue') }
+      {
+        path: 'settings',
+        component: () => import('pages/system/Settings.vue')
+      }
     ]
   },
   {

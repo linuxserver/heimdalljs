@@ -3,21 +3,24 @@
 const { Model } = require('sequelize')
 
 class UserItem extends Model {
-  static init (sequelize, DataTypes) {
-    return super.init({
-      active: {
-        type: DataTypes.BOOLEAN,
-        default: false
+  static init(sequelize, DataTypes) {
+    return super.init(
+      {
+        active: {
+          type: DataTypes.BOOLEAN,
+          default: false
+        }
+      },
+      {
+        sequelize,
+        underscored: true,
+        tableName: 'user_items',
+        timestamps: false
       }
-    }, {
-      sequelize,
-      underscored: true,
-      tableName: 'user_items',
-      timestamps: false
-    })
+    )
   }
 
-  toJSON () {
+  toJSON() {
     return this.get()
   }
 }

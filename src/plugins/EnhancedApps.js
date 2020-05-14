@@ -2,17 +2,19 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 import { i18n } from 'boot/i18n.js'
 export default class EnhancedApps {
-  constructor (application) {
+  constructor(application) {
     this.data = application.config
     this.id = application.id
   }
 
-  async call () {
-    const request = await axios.get(process.env.BACKEND_LOCATION + 'enhanced/' + this.id)
+  async call() {
+    const request = await axios.get(
+      process.env.BACKEND_LOCATION + 'enhanced/' + this.id
+    )
     return request
   }
 
-  async test () {
+  async test() {
     try {
       const test = await this.call()
       Notify.create({
@@ -33,7 +35,7 @@ export default class EnhancedApps {
     }
   }
 
-  static types () {
+  static types() {
     return [
       {
         id: 'disabled',
@@ -54,7 +56,7 @@ export default class EnhancedApps {
     ]
   }
 
-  filter (value, filter) {
+  filter(value, filter) {
     switch (filter) {
       case 'count':
         return value.length
@@ -62,7 +64,7 @@ export default class EnhancedApps {
     return value
   }
 
-  static filters () {
+  static filters() {
     return [
       {
         id: 'none',
@@ -83,13 +85,9 @@ export default class EnhancedApps {
     ]
   }
 
-  fields () {
+  fields() {
     if (this.data.type === 1) {
-      return [
-        {
-
-        }
-      ]
+      return [{}]
     }
   }
 }

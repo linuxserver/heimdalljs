@@ -15,42 +15,41 @@
           User Management
         </q-toolbar-title>
 
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand2" @click="createNew">Add New</q-btn>
-        <div class="searchbox">
-        <q-select
-          borderless
-          color="grey"
-          v-model="selecteduser"
-          use-input
-          clearable
-          input-debounce="0"
-          :options="options"
-          option-value="id"
-          option-label="title"
-          map-options
-          emit-value
-          label="Search..."
-          @filter="filterFn"
+        <q-btn
+          size="15px"
+          style="margin-left: 20px;"
+          unelevated
+          color="brand2"
+          @click="createNew"
+          >Add New</q-btn
         >
-        </q-select>
+        <div class="searchbox">
+          <q-select
+            borderless
+            color="grey"
+            v-model="selecteduser"
+            use-input
+            clearable
+            input-debounce="0"
+            :options="options"
+            option-value="id"
+            option-label="title"
+            map-options
+            emit-value
+            label="Search..."
+            @filter="filterFn"
+          >
+          </q-select>
         </div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      content-class=""
-    >
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered content-class="">
       <MenuList settab="admin"></MenuList>
     </q-drawer>
 
     <q-page-container>
-      <router-view
-        :users="users"
-        :allusers="users"
-      />
+      <router-view :users="users" :allusers="users" />
     </q-page-container>
   </q-layout>
 </template>
@@ -70,7 +69,7 @@ export default {
     allusers: function () {
       return this.$store.state.users.all
     },
-    user () {
+    user() {
       return this.$store.state.app.user
     },
     users: function () {
@@ -84,7 +83,7 @@ export default {
     }
   },
 
-  data () {
+  data() {
     return {
       leftDrawerOpen: false,
       rightDrawerOpen: false,
@@ -95,19 +94,19 @@ export default {
   },
 
   methods: {
-    createNew () {
+    createNew() {
       this.$store.commit('users/create', true)
     },
-    filterFn (val, update, abort) {
+    filterFn(val, update, abort) {
       update(() => {
         // this.selecteduser = null
         const needle = val.toLowerCase()
         // console.log('needle: ' + needle)
-        this.options = this.allusers.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
+        this.options = this.allusers.filter(
+          v => v.title.toLowerCase().indexOf(needle) > -1
+        )
       })
     }
-
   }
-
 }
 </script>
