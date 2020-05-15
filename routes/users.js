@@ -149,10 +149,7 @@ router.put(
     delete req.body.totpSecret
 
     // Begin process to set up and confirm multi-factor authentication
-    if (
-      user.multifactorEnabled === false &&
-      !!req.body.multifactorEnabled === true
-    ) {
+    if (user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
       const secret = Speakeasy.generateSecret({ length: 10 })
       const url = Speakeasy.otpauthURL({
         secret: secret.base32,
@@ -191,10 +188,7 @@ router.put(
         status: 'error',
         result: 'invalid_totp'
       })
-    } else if (
-      user.multifactorEnabled === true &&
-      !!req.body.multifactorEnabled === false
-    ) {
+    } else if (user.multifactorEnabled === true && !!req.body.multifactorEnabled === false) {
       user.update({
         multifactorEnabled: false,
         totpSecret: null
@@ -246,13 +240,8 @@ router.put(
       })
     }
 
-    const newAvatar = `${req.file.filename}${path.extname(
-      req.file.originalname
-    )}`
-    fs.renameSync(
-      path.join(req.file.destination, req.file.filename),
-      path.join(config.uploadDir, 'avatars', newAvatar)
-    )
+    const newAvatar = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'avatars', newAvatar))
 
     if (user.avatar) {
       try {

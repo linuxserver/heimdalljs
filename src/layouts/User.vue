@@ -2,44 +2,15 @@
   <q-layout v-if="user.level === 0" view="lHh Lpr lFf">
     <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          icon="menu"
-          aria-label="Menu"
-        />
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu" aria-label="Menu" />
 
         <q-toolbar-title>
           {{ $t('user_management') }}
         </q-toolbar-title>
 
-        <q-btn
-          size="15px"
-          style="margin-left: 20px;"
-          unelevated
-          color="brand2"
-          @click="createNew"
-          >{{ $t('add_new') }}</q-btn
-        >
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand2" @click="createNew">{{ $t('add_new') }}</q-btn>
         <div class="searchbox">
-          <q-select
-            borderless
-            color="grey"
-            v-model="selecteduser"
-            use-input
-            clearable
-            input-debounce="0"
-            :options="options"
-            option-value="id"
-            option-label="title"
-            map-options
-            emit-value
-            :label="$t('search') + '...'"
-            @filter="filterFn"
-          >
-          </q-select>
+          <q-select borderless color="grey" v-model="selecteduser" use-input clearable input-debounce="0" :options="options" option-value="id" option-label="title" map-options emit-value :label="$t('search') + '...'" @filter="filterFn"></q-select>
         </div>
       </q-toolbar>
     </q-header>
@@ -102,9 +73,7 @@ export default {
         // this.selecteduser = null
         const needle = val.toLowerCase()
         // console.log('needle: ' + needle)
-        this.options = this.allusers.filter(
-          v => v.title.toLowerCase().indexOf(needle) > -1
-        )
+        this.options = this.allusers.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
       })
     }
   }

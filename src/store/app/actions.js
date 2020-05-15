@@ -46,10 +46,7 @@ export async function status(context) {
   } catch (e) {
     Notify.create({
       type: 'negative',
-      message:
-        `Could not connect to backend server. ` +
-        process.env.BACKEND_LOCATION +
-        'ping',
+      message: `Could not connect to backend server. ` + process.env.BACKEND_LOCATION + 'ping',
       progress: true,
       position: 'top',
       timeout: 1500
@@ -61,10 +58,7 @@ export async function setupUser(context, data) {
   // console.log(data)
   try {
     data.level = 0
-    const saveuser = await axios.post(
-      process.env.BACKEND_LOCATION + 'users',
-      data
-    )
+    const saveuser = await axios.post(process.env.BACKEND_LOCATION + 'users', data)
     console.log(saveuser)
     await firelogin(context, {
       username: data.username,
@@ -86,9 +80,7 @@ export async function getSettings(context) {
 }
 
 export async function getSearchProviders(context) {
-  const settings = await axios.get(
-    process.env.BACKEND_LOCATION + 'searchproviders'
-  )
+  const settings = await axios.get(process.env.BACKEND_LOCATION + 'searchproviders')
   context.commit('searchProviders', settings.data.result)
 }
 
@@ -105,10 +97,7 @@ export async function setDefaults(context, data) {
 export async function changeBackground(context, data) {
   const currentbackground = { ...context.state.settings.background }
   try {
-    const response = await axios.put(
-      process.env.BACKEND_LOCATION + 'settings/background',
-      data
-    )
+    const response = await axios.put(process.env.BACKEND_LOCATION + 'settings/background', data)
     if (response.data.status === 'ok') {
       const background = {
         location: response.data.location
@@ -140,10 +129,7 @@ export async function saveSettings(context, data) {
   try {
     const settings = { ...context.state.settings }
     const update = Object.assign(settings, data)
-    const response = await axios.put(
-      process.env.BACKEND_LOCATION + 'settings',
-      update
-    )
+    const response = await axios.put(process.env.BACKEND_LOCATION + 'settings', update)
     if (response.data.status === 'ok') {
       if (update.active_search_providers.length > 0) {
         update.search_provider = update.active_search_providers[0]
@@ -194,10 +180,7 @@ export function setUser(context, user) {
 }
 
 export async function firelogin(context, data) {
-  const response = await axios.post(
-    process.env.BACKEND_LOCATION + 'login',
-    data
-  )
+  const response = await axios.post(process.env.BACKEND_LOCATION + 'login', data)
   if (response.data.result && response.data.result.token) {
     Cookies.set('jwt', response.data.result.token, {
       expires: 3600
@@ -208,10 +191,7 @@ export async function firelogin(context, data) {
 }
 
 export async function unsplash(context) {
-  const settings = await axios.get(
-    process.env.BACKEND_LOCATION +
-      'cors/https://api.unsplash.com/photos/random?orientation=landscape'
-  )
+  const settings = await axios.get(process.env.BACKEND_LOCATION + 'cors/https://api.unsplash.com/photos/random?orientation=landscape')
   return 'background-image: url(' + settings.response.data.urls.full + ')'
 }
 

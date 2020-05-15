@@ -5,47 +5,20 @@
     </div>
     <div class="name">
       {{ this.application.title }}
-      <a :href="this.application.url"
-        ><span
-          ><q-tooltip
-            v-if="application.url !== ''"
-            content-class="tooltip-content"
-            max-width="500px"
-            anchor="bottom middle"
-            self="top middle"
-            >{{ application.url }}</q-tooltip
-          >{{ $t('visit_url') }}</span
-        ></a
-      >
+      <a :href="this.application.url">
+        <span>
+          <q-tooltip v-if="application.url !== ''" content-class="tooltip-content" max-width="500px" anchor="bottom middle" self="top middle">{{ application.url }}</q-tooltip>
+          {{ $t('visit_url') }}
+        </span>
+      </a>
     </div>
     <div v-if="this.$route.path !== '/admin/application'" class="pinned">
       {{ $t('active') }}
-      <q-icon
-        @click="toggleActive"
-        :name="
-          this.application.UserItem.active === true
-            ? 'check_box'
-            : 'check_box_outline_blank'
-        "
-      />
+      <q-icon @click="toggleActive" :name="this.application.UserItem.active === true ? 'check_box' : 'check_box_outline_blank'" />
     </div>
-    <div
-      v-if="
-        this.$route.path === '/admin/application' || application.system !== true
-      "
-      class="actions"
-    >
-      <q-btn size="12px" unelevated color="primary" @click="editApp">{{
-        $t('edit')
-      }}</q-btn>
-      <q-btn
-        size="12px"
-        unelevated
-        color="grey-2"
-        text-color="black"
-        @click="deleteApp"
-        >{{ $t('delete') }}</q-btn
-      >
+    <div v-if="this.$route.path === '/admin/application' || application.system !== true" class="actions">
+      <q-btn size="12px" unelevated color="primary" @click="editApp">{{ $t('edit') }}</q-btn>
+      <q-btn size="12px" unelevated color="grey-2" text-color="black" @click="deleteApp">{{ $t('delete') }}</q-btn>
     </div>
     <q-dialog v-model="confirmDelete" persistent>
       <q-card>
@@ -56,12 +29,7 @@
 
         <q-card-actions align="right">
           <q-btn flat :label="$t('cancel')" color="primary" v-close-popup />
-          <q-btn
-            flat
-            :label="$t('delete')"
-            color="primary"
-            @click="onDeleteClick"
-          />
+          <q-btn flat :label="$t('delete')" color="primary" @click="onDeleteClick" />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -85,10 +53,7 @@ export default {
       // return this.tags.map(a => a.title).join()
     },
     bgColor() {
-      if (
-        this.application.color !== 'null' &&
-        this.application.color !== null
-      ) {
+      if (this.application.color !== 'null' && this.application.color !== null) {
         return this.application.color
       }
       return '#222222'

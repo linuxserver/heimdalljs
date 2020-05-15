@@ -18,25 +18,12 @@
               </q-avatar>
             </div>
             <div class="sign-in-container">
-              <q-select
-                v-if="show_usernames"
-                outlined
-                v-model="selecteduser"
-                :options="users"
-                :label="this.$t('select_user')"
-                color="teal"
-                clearable
-                option-value="id"
-                option-label="username"
-              >
+              <q-select v-if="show_usernames" outlined v-model="selecteduser" :options="users" :label="this.$t('select_user')" color="teal" clearable option-value="id" option-label="username">
                 <template v-slot:option="scope">
                   <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
                     <q-item-section avatar>
                       <q-avatar size="24px">
-                        <img
-                          class="selectuseravatar"
-                          :src="getIcon(scope.opt.avatar)"
-                        />
+                        <img class="selectuseravatar" :src="getIcon(scope.opt.avatar)" />
                       </q-avatar>
                     </q-item-section>
                     <q-item-section>
@@ -45,54 +32,18 @@
                   </q-item>
                 </template>
               </q-select>
-              <q-input
-                v-else
-                v-model="username"
-                :label="this.$t('username')"
-                outlined
-              >
-              </q-input>
+              <q-input v-else v-model="username" :label="this.$t('username')" outlined></q-input>
               <div class="public-option" v-if="hasPublic">
-                <q-btn
-                  @click="selectUser"
-                  unelevated
-                  color="cyan-5"
-                  style="width: 50%;"
-                  class=""
-                  >View public page</q-btn
-                >
+                <q-btn @click="selectUser" unelevated color="cyan-5" style="width: 50%;" class="">View public page</q-btn>
                 <span class="or"><span>or</span></span>
               </div>
-              <q-input
-                v-if="hasPassword"
-                v-model="password"
-                :label="this.$t('password')"
-                outlined
-                :type="isPwd ? 'password' : 'text'"
-              >
+              <q-input v-if="hasPassword" v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
                 <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+                  <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                 </template>
               </q-input>
-              <q-input
-                v-if="loginStatus === 'multifactor'"
-                v-model="totp"
-                :label="this.$t('totp')"
-                outlined
-              >
-              </q-input>
-              <q-btn
-                type="submit"
-                unelevated
-                color="cyan-8"
-                style="padding: 10px;"
-                class="full-width"
-                >Login</q-btn
-              >
+              <q-input v-if="loginStatus === 'multifactor'" v-model="totp" :label="this.$t('totp')" outlined></q-input>
+              <q-btn type="submit" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
             </div>
           </q-card>
         </q-page>
@@ -117,11 +68,7 @@ export default {
     },
     mainIcon() {
       if (this.selecteduser !== null) {
-        return (
-          '<img class="avatar" src="' +
-          this.getIcon(this.selecteduser.avatar) +
-          '" />'
-        )
+        return '<img class="avatar" src="' + this.getIcon(this.selecteduser.avatar) + '" />'
       }
       return '<img class="avatar" src="statics/heimdall-logo-white.svg" />'
     },
@@ -166,10 +113,7 @@ export default {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
     async onSubmit(evt) {
-      const username =
-        this.show_usernames === true
-          ? this.selecteduser.username
-          : this.username
+      const username = this.show_usernames === true ? this.selecteduser.username : this.username
       try {
         await this.$store.dispatch('app/login', {
           username: username,

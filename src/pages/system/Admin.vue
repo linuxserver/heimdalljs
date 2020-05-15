@@ -10,27 +10,12 @@
       <div class="list-items">
         <div class="no-items" v-if="systemApps.length < 1">
           {{ this.$t('no_apps') }}
-          <q-btn
-            style="margin-top: 30px;"
-            @click="create = true"
-            unelevated
-            color="brand"
-            >Add New</q-btn
-          >
+          <q-btn style="margin-top: 30px;" @click="create = true" unelevated color="brand">Add New</q-btn>
         </div>
-        <app-item
-          v-else
-          v-for="application in systemApps"
-          :key="application.id"
-          :application="application"
-        >
-        </app-item>
+        <app-item v-else v-for="application in systemApps" :key="application.id" :application="application"></app-item>
       </div>
     </div>
-    <edit-tile
-      :class="{ active: create === true }"
-      v-on:closecreate="closecreate"
-    ></edit-tile>
+    <edit-tile :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-tile>
   </q-page>
 </template>
 
@@ -92,12 +77,7 @@ export default {
 </script>
 <style lang="scss">
 .bg {
-  background-image: linear-gradient(
-      to right,
-      rgba(51, 88, 94, 0.95),
-      rgba(49, 66, 84, 0.95)
-    ),
-    url('/statics/applications.jpg');
+  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
   background-size: cover;
   background-position: center;
   height: 300px;

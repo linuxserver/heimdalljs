@@ -2,35 +2,19 @@
   <q-page class="flex">
     <div class="tab-list">
       <q-list>
-        <q-item
-          :class="{ active: tab === 'general' }"
-          @click="tab = 'general'"
-          clickable
-        >
+        <q-item :class="{ active: tab === 'general' }" @click="tab = 'general'" clickable>
           <q-item-section>
             <q-item-label>{{ $t('general_settings') }}</q-item-label>
-            <q-item-label caption>{{
-              $t('general_settings_more')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('general_settings_more') }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          :class="{ active: tab === 'search' }"
-          @click="tab = 'search'"
-          clickable
-        >
+        <q-item :class="{ active: tab === 'search' }" @click="tab = 'search'" clickable>
           <q-item-section>
             <q-item-label>{{ $t('search_settings') }}</q-item-label>
-            <q-item-label caption>{{
-              $t('search_settings_more')
-            }}</q-item-label>
+            <q-item-label caption>{{ $t('search_settings_more') }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item
-          :class="{ active: tab === 'dashboard' }"
-          @click="tab = 'dashboard'"
-          clickable
-        >
+        <q-item :class="{ active: tab === 'dashboard' }" @click="tab = 'dashboard'" clickable>
           <q-item-section>
             <q-item-label>{{ $t('dashboard') }}</q-item-label>
             <q-item-label caption>{{ $t('dashboard_more') }}</q-item-label>
@@ -41,66 +25,28 @@
     <div class="page">
       <q-tab-panels v-model="tab" animated class="">
         <q-tab-panel name="general">
-          <q-select
-            outlined
-            :options="languages"
-            :label="this.$t('select_language')"
-            option-value="value"
-            option-label="label"
-            v-model="language"
-            map-options
-          ></q-select>
+          <q-select outlined :options="languages" :label="this.$t('select_language')" option-value="value" option-label="label" v-model="language" map-options></q-select>
 
-          <q-select
-            outlined
-            :options="username_options"
-            :label="this.$t('show_usernames')"
-            option-value="value"
-            option-label="label"
-            v-model="show_usernames"
-            map-options
-          ></q-select>
+          <q-select outlined :options="username_options" :label="this.$t('show_usernames')" option-value="value" option-label="label" v-model="show_usernames" map-options></q-select>
         </q-tab-panel>
         <q-tab-panel name="search">
           <h6>{{ $t('search') }}</h6>
-          <q-select
-            outlined
-            :options="showsearch_options"
-            :label="this.$t('show_search')"
-            option-value="value"
-            option-label="label"
-            v-model="search_on_dashboard"
-            map-options
-          ></q-select>
+          <q-select outlined :options="showsearch_options" :label="this.$t('show_search')" option-value="value" option-label="label" v-model="search_on_dashboard" map-options></q-select>
 
           <h6>{{ $t('search_providers') }}</h6>
           <div class="search-providers">
             <div class="active providers">
               {{ $t('active') }}
-              <draggable
-                tag="ul"
-                group="providers"
-                v-model="active_search_providers"
-              >
-                <li
-                  v-for="provider in active_search_providers"
-                  :key="provider.id"
-                >
+              <draggable tag="ul" group="providers" v-model="active_search_providers">
+                <li v-for="provider in active_search_providers" :key="provider.id">
                   {{ provider.name }}
                 </li>
               </draggable>
             </div>
             <div class="inactive providers">
               {{ $t('inactive') }}
-              <draggable
-                tag="ul"
-                group="providers"
-                v-model="inactive_search_providers"
-              >
-                <li
-                  v-for="provider in inactive_search_providers"
-                  :key="provider.id"
-                >
+              <draggable tag="ul" group="providers" v-model="inactive_search_providers">
+                <li v-for="provider in inactive_search_providers" :key="provider.id">
                   {{ provider.name }}
                 </li>
               </draggable>
@@ -123,34 +69,20 @@
           ></q-select>
           <div class="background_colour_selector">
             <div class="details" v-if="background_type === 'colour'">
-              <q-input
-                outlined
-                v-model="colour1"
-                :label="this.$t('colour') + ' 1'"
-              >
+              <q-input outlined v-model="colour1" :label="this.$t('colour') + ' 1'">
                 <template v-slot:append>
                   <q-icon name="colorize" class="cursor-pointer">
-                    <q-popup-proxy
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
+                    <q-popup-proxy transition-show="scale" transition-hide="scale">
                       <q-color v-model="colour1" format-model="hexa" />
                     </q-popup-proxy>
                   </q-icon>
                 </template>
               </q-input>
 
-              <q-input
-                outlined
-                v-model="colour2"
-                :label="this.$t('colour') + ' 2'"
-              >
+              <q-input outlined v-model="colour2" :label="this.$t('colour') + ' 2'">
                 <template v-slot:append>
                   <q-icon name="colorize" class="cursor-pointer">
-                    <q-popup-proxy
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
+                    <q-popup-proxy transition-show="scale" transition-hide="scale">
                       <q-color v-model="colour2" format-model="hexa" />
                     </q-popup-proxy>
                   </q-icon>
@@ -173,23 +105,10 @@
                 ]"
               />
 
-              <q-select
-                v-if="colour2 !== null && gradient === 'linear'"
-                outlined
-                :options="[0, 45, 90, 135, 180, 225, 270, 315, 360]"
-                :label="this.$t('degrees')"
-                v-model="degrees"
-                emit-value
-              ></q-select>
+              <q-select v-if="colour2 !== null && gradient === 'linear'" outlined :options="[0, 45, 90, 135, 180, 225, 270, 315, 360]" :label="this.$t('degrees')" v-model="degrees" emit-value></q-select>
             </div>
             <div class="details" v-if="background_type === 'background_image'">
-              <q-file
-                outlined
-                v-model="backgroundimage"
-                accept="image/*"
-                @input="changeBackgroundImage"
-                :label="this.$t('upload_file')"
-              >
+              <q-file outlined v-model="backgroundimage" accept="image/*" @input="changeBackgroundImage" :label="this.$t('upload_file')">
                 <template v-slot:prepend>
                   <q-icon name="attach_file" />
                 </template>
@@ -442,12 +361,7 @@ export default {
 </script>
 <style lang="scss">
 .bg {
-  background-image: linear-gradient(
-      to right,
-      rgba(51, 88, 94, 0.95),
-      rgba(49, 66, 84, 0.95)
-    ),
-    url('/statics/applications.jpg');
+  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
   background-size: cover;
   background-position: center;
   height: 300px;
