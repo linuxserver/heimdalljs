@@ -163,9 +163,9 @@ export default {
     create() {
       return this.$store.state.users.create
     },
-    languages() {
+    /* languages() {
       return this.$store.state.app.languages
-    },
+    }, */
     setavatar() {
       return this.user.avatar !== null
         ? process.env.BACKEND_LOCATION + this.user.avatar
@@ -207,7 +207,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
-      this.settingsLanguage = newdata.settings.language
+      // this.settingsLanguage = newdata.settings.language
       this.multifactorEnabled = newdata.multifactorEnabled
     },
     /* create: function (newdata, olddata) {
@@ -230,43 +230,52 @@ export default {
 
   methods: {
     async enablesMfa() {
-      const formData = new FormData()
-      formData.append('multifactorEnabled', true)
       const data = {
         id: this.id,
-        user: formData
+        user: {
+          multifactorEnabled: true
+        }
       }
       const save = await this.$store.dispatch('users/save', data)
-      // console.log(save)
-      if (save.data.status === 'confirm totp') {
-        this.qrcode = save.data.qrcode
-        this.mfacode = '<strong>' + save.data.code + '</strong>'
+      console.log(save)
+      if (save.user.data.status === 'confirm totp') {
+        this.qrcode = save.user.data.qrcode
+        this.mfacode = '<strong>' + save.user.data.code + '</strong>'
       }
     },
     async disableMfa() {
-      const formData = new FormData()
-      formData.append('multifactorEnabled', false)
       const data = {
         id: this.id,
-        user: formData
+        user: {
+          multifactorEnabled: false
+        }
       }
       await this.$store.dispatch('users/save', data)
       // console.log(save)
     },
     async sendTotp() {
-      const formData = new FormData()
-      formData.append('totp', this.totp)
       const data = {
         id: this.id,
-        user: formData
+        user: {
+          totp: this.totp
+        }
       }
       const save = await this.$store.dispatch('users/save', data)
       // console.log(save)
-      if (save.data.status === 'ok') {
+      if (save.user.data.status === 'ok') {
         this.showqrcode = false
         this.$q.notify({
           type: 'positive',
           message: 'MFA Enabled',
+          progress: true,
+          position: 'bottom',
+          timeout: 1500
+        })
+      }
+      if (save.user.data.status === 'error') {
+        this.$q.notify({
+          type: 'negative',
+          message: this.$t(save.user.data.result),
           progress: true,
           position: 'bottom',
           timeout: 1500
