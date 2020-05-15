@@ -100,13 +100,18 @@ router.put(
     )
     const background = `/backgrounds/${newBackground}`
 
-    if (setting.value) {
+    if (setting.value && setting.value.location) {
       try {
-        fs.unlinkSync(path.join(config.uploadDir, setting.value))
+        fs.unlinkSync(path.join(config.uploadDir, setting.value.location))
       } catch (e) {}
     }
 
-    await setting.update({ value: background })
+    await setting.update({
+      value: {
+        type: 'background_image',
+        location: background
+      }
+    })
 
     return res.json({ status: 'ok' })
   })
