@@ -55,6 +55,15 @@ export function save(context, data) {
   }
 }
 
+export function saveIcon(context, data) {
+  if (data.id !== null) {
+    return axios.put(
+      process.env.BACKEND_LOCATION + 'items/' + data.id + '/icon',
+      data.media
+    )
+  }
+}
+
 export function saveUsers(context, data) {
   if (data.id !== null) {
     return axios.put(

@@ -109,7 +109,12 @@
                 </q-input>
                 <div class="icon-container">
                   <div class="upload-btn-wrapper">
-                    <q-file outlined ref="icon" v-model="icon" label="Icon" />
+                    <q-file
+                      outlined
+                      ref="icon"
+                      v-model="newicon"
+                      label="Icon"
+                    />
                   </div>
                 </div>
               </q-tab-panel>
@@ -460,6 +465,7 @@ export default {
       users: null,
       url: null,
       icon: null,
+      newicon: null,
       description: '',
       actions: false,
       submitEmpty: false,
@@ -560,10 +566,10 @@ export default {
       if (this.icon !== null && this.icon !== this.application.icon) {
         if (this.icon.startsWith('http')) {
           formData.icon = this.icon
-        } else {
-          media.append('icon', this.icon)
         }
       }
+      console.log('this.newicon')
+      console.log(this.newicon)
       if (this.$route.path === '/admin/application') {
         formData.system = true
         formData.users = this.users
@@ -571,13 +577,20 @@ export default {
 
       const data = {
         id: this.id,
-        tile: formData,
-        media: media
+        tile: formData
       }
       console.log(data)
       try {
-        await this.$store.dispatch('tiles/save', data)
+        const saveditem = await this.$store.dispatch('tiles/save', data)
         this.$store.commit('tiles/create', false)
+        if (this.newicon !== null) {
+          media.append('icon', this.newicon)
+          this.$store.dispatch('tiles/saveIcon', {
+            id: saveditem.data.result.id,
+            media: media
+          })
+        }
+
         if (this.$route.path === '/admin/application') {
           const userdata = {
             id: this.id,

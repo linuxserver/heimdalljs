@@ -135,6 +135,12 @@ export default {
       if (this.application.icon === null) {
         return 'statics/heimdall-logo-white.svg'
       }
+      // Is a file upload
+      if (typeof this.application.icon === 'object') {
+        // work out how to preview the image
+        console.log(this.application.icon)
+      }
+      // Is an image stored online
       if (this.application.icon && this.application.icon.startsWith('http')) {
         const mime = require('mime-types')
         const response = await this.$axios.get(
