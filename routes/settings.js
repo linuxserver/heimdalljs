@@ -98,7 +98,7 @@ router.put(
       path.join(req.file.destination, req.file.filename),
       path.join(config.uploadDir, 'backgrounds', newBackground)
     )
-    const background = `/backgrounds/${newBackground}`
+    const background = `backgrounds/${newBackground}`
 
     if (setting.value && setting.value.location) {
       try {
@@ -106,14 +106,14 @@ router.put(
       } catch (e) {}
     }
 
+    let bg = { ...setting.value }
+    bg.location = background
+
     await setting.update({
-      value: {
-        type: 'background_image',
-        location: background
-      }
+      value: bg
     })
 
-    return res.json({ status: 'ok' })
+    return res.json({ status: 'ok', location: bg.location })
   })
 )
 
