@@ -369,7 +369,7 @@ router.put(
     const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
     fs.renameSync(
       path.join(req.file.destination, req.file.filename),
-      path.join(config.uploadDir, 'avatars', newIcon)
+      path.join(config.uploadDir, 'icons', newIcon)
     )
     icon = `/icons/${newIcon}`
 
