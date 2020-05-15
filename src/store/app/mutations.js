@@ -44,6 +44,9 @@ export function adminProxies(state, data) {
 export function settings(state, data) {
   state.settings = data
 }
+export function background(state, data) {
+  state.settings.background = data
+}
 
 export function searchProviders(state, data) {
   state.settings.search_providers = data

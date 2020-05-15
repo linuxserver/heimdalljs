@@ -30,7 +30,7 @@ h1 {
 #q-app {
   background: $grey1;
 }
-#app {
+#app, .apppreview {
   background-image: url('../statics/bg1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -351,7 +351,21 @@ div.create {
     margin-right: 20px;
   }
   .preview {
-    flex: 1;
+    width:360px;
+    .inner {
+      height: 0;
+      padding-top: 56.25%;
+      position: relative;
+      .canvas {
+        width: 1280px;
+        height: 725px;
+        transform: scale(0.28); 
+        transform-origin: top left;   
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
   }
 }
 .no-items {

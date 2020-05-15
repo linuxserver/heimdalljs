@@ -102,6 +102,40 @@ export async function setDefaults(context, data) {
   context.commit('step', 2)
 }
 
+export async function changeBackground(context, data) {
+  const currentbackground = { ...context.state.settings.background }
+  try {
+    const response = await axios.put(
+      process.env.BACKEND_LOCATION + 'settings/background',
+      data
+    )
+    if (response.data.status === 'ok') {
+      const background = {
+        location: response.data.location
+      }
+      Object.assign(currentbackground, background)
+      context.commit('background', currentbackground)
+      // context.commit('settings', update)
+
+      Notify.create({
+        type: 'positive',
+        message: `Setting updated`,
+        progress: true,
+        position: 'bottom',
+        timeout: 1500
+      })
+    }
+  } catch (e) {
+    Notify.create({
+      type: 'negative',
+      message: `Could not update setting`,
+      progress: true,
+      position: 'bottom',
+      timeout: 1500
+    })
+  }
+}
+
 export async function saveSettings(context, data) {
   try {
     const settings = { ...context.state.settings }

@@ -196,7 +196,11 @@
               </q-file>
             </div>
 
-            <div :style="preview" class="preview"></div>
+            <div class="preview">
+              <div class="inner">
+                <div :style="preview" class="canvas apppreview"></div>
+              </div>
+            </div>
           </div>
         </q-tab-panel>
       </q-tab-panels>
@@ -423,7 +427,10 @@ export default {
       this.$store.commit('tiles/create', true)
     },
     changeBackgroundImage: function () {
-      console.log(this.backgroundimage)
+      const media = new FormData()
+      media.append('background', this.backgroundimage)
+      this.$store.dispatch('app/changeBackground', media)
+      /// console.log(this.backgroundimage)
     }
   },
   mounted() {

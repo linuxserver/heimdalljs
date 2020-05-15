@@ -7,6 +7,14 @@ export function getBackground(state) {
   ) {
     return ''
   }
+  if (background.type === 'background_image') {
+    return (
+      'background-image: url(' +
+      process.env.BACKEND_LOCATION +
+      background.location +
+      ')'
+    )
+  }
   if (background.type === 'colour') {
     const colour1 = background.colour1
     const colour2 = background.colour2
