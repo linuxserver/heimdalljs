@@ -107,5 +107,9 @@ export default {
   all: 'All',
   degrees: 'Degrees',
   linear: 'Linear',
-  radial: 'Radial'
+  radial: 'Radial',
+  mfa_enabled: 'Multi Factor Authentication Enabled',
+  mfa_disabled: 'Multi Factor Authentication Enabled',
+  enable_mfa: 'Enable Multi Factor Authentication',
+  disable_mfa: 'Disable Multi Factor Authentication'
 }

@@ -81,8 +81,15 @@
                 </div>
 
                 <div v-if="showqrcode !== true">
-                  <q-btn v-if="this.multifactorEnabled === false" name="multifactorEnabled" @click="enablesMfa">Enable MFA</q-btn>
-                  <q-btn v-else name="multifactorEnabled" @click="disableMfa">Disable MFA</q-btn>
+                  <q-btn
+                    v-if="this.multifactorEnabled === false"
+                    name="multifactorEnabled"
+                    @click="enablesMfa"
+                    >{{ $t('enable_mfa') }}</q-btn
+                  >
+                  <q-btn v-else name="multifactorEnabled" @click="disableMfa">{{
+                    $t('disable_mfa')
+                  }}</q-btn>
                 </div>
               </q-tab-panel>
 
@@ -222,7 +229,7 @@ export default {
         this.showqrcode = false
         this.$q.notify({
           type: 'positive',
-          message: 'MFA Enabled',
+          message: this.$t('mfa_enabled'),
           progress: true,
           position: 'bottom',
           timeout: 1500

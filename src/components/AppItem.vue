@@ -103,7 +103,7 @@ export default {
     },
     async toggleActive() {
       const formData = {
-        active: this.application.UserItem.active === false
+        active: this.application.UserItem.active !== true
       }
       const data = {
         id: this.application.id,
