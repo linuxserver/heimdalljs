@@ -86,7 +86,7 @@
     "jest": "^25.5.2",
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
-    "prettier-plugin-packagejson": "^2.2.2",
+    "prettier-plugin-packagejson": "^2.2.5",
     "sequelize-cli": "^5.5.1",
     "stylelint": "^13.3.3",
     "stylelint-config-prettier": "^8.0.1",
