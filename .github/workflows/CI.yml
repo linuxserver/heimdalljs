@@ -1,0 +1,25 @@
+name: Heimdall CI
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: yarn run lint
+
+  build:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm i -g @quasar/cli
+      - run: npm install
+      - run: quasar build
