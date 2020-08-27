@@ -83,7 +83,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^5.0.0",
     "husky": "^4.2.5",
-    "jest": "^25.5.2",
+    "jest": "^26.4.2",
     "lint-staged": "^10.2.2",
     "prettier": "^2.0.5",
     "prettier-plugin-packagejson": "^2.2.2",
