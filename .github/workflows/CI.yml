@@ -23,3 +23,8 @@ jobs:
       - run: npm i -g @quasar/cli
       - run: npm install
       - run: quasar build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: heimdall
+          path: dist
+
