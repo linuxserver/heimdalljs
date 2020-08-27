@@ -1,6 +1,14 @@
 # Heimdall (heimdall)
 
-An application management portal
+Heimdall is an application management portal for all your web applications. This version is the JavaScript rewrite of the original PHP version of Heimdall.
+
+## Development Environment Setup
+
+Heimdall is currently built using the latest release of Node.js 14. Having a compatible version of Node, yarn and the `@quasar/cli` package installed is necessary to run the commands listed below. In addition, you will need to run this command in order to resolve the dependencies:
+
+```bash
+npm install
+```
 
 ## Install
 
