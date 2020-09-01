@@ -251,7 +251,7 @@ export default {
     },
     seticon() {
       if (this.icon) return this.icon
-      return this.application.icon !== null ? process.env.BACKEND_LOCATION + this.application.icon : 'statics/heimdall-logo-white.svg'
+      return this.application.icon !== null ? process.env.BACKEND_LOCATION + this.application.icon : '/heimdall-logo-white.svg'
     }
   },
 
