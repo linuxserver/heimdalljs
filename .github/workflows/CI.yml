@@ -15,6 +15,14 @@ jobs:
       - run: npm install
       - run: yarn run lint
 
+  test:
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm install
+      - run: yarn test
+
   build:
     runs-on: ubuntu-latest
     container: node:14
