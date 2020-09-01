@@ -3,20 +3,18 @@ import { LocalStorage } from 'quasar'
 
 export function getApps(context) {
   console.log('get apps')
-  axios
-    .get(process.env.BACKEND_LOCATION + 'items', { crossdomain: true })
-    .then(response => {
-      // console.log(response.data)
-      context.commit('all', response.data.result.items)
-      context.commit(
-        'active',
-        response.data.result.items.filter(a => a.UserItem.active === true)
-      )
-      console.log(response.data.result.system)
-      if (response.data.result.system) {
-        context.commit('system', response.data.result.system)
-      }
-    })
+  axios.get(process.env.BACKEND_LOCATION + 'items', { crossdomain: true }).then(response => {
+    // console.log(response.data)
+    context.commit('all', response.data.result.items)
+    context.commit(
+      'active',
+      response.data.result.items.filter(a => a.UserItem.active === true)
+    )
+    console.log(response.data.result.system)
+    if (response.data.result.system) {
+      context.commit('system', response.data.result.system)
+    }
+  })
 }
 
 export function getPossibleApps(context, force = false) {
@@ -25,11 +23,10 @@ export function getPossibleApps(context, force = false) {
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
     axios
-      .get(
-        process.env.BACKEND_LOCATION +
-          'cors/https://apps.heimdall.site/applications.json',
-        { crossdomain: true, withCredentials: true }
-      )
+      .get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/applications.json', {
+        crossdomain: true,
+        withCredentials: true
+      })
       .then(response => {
         // console.log(response.data)
         context.commit('possibleapps', response.data.apps)
@@ -48,28 +45,19 @@ export function save(context, data) {
   if (data.id === null) {
     return axios.post(process.env.BACKEND_LOCATION + 'items', data.tile)
   } else {
-    return axios.put(
-      process.env.BACKEND_LOCATION + 'items/' + data.id,
-      data.tile
-    )
+    return axios.put(process.env.BACKEND_LOCATION + 'items/' + data.id, data.tile)
   }
 }
 
 export function saveIcon(context, data) {
   if (data.id !== null) {
-    return axios.put(
-      process.env.BACKEND_LOCATION + 'items/' + data.id + '/icon',
-      data.media
-    )
+    return axios.put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/icon', data.media)
   }
 }
 
 export function saveUsers(context, data) {
   if (data.id !== null) {
-    return axios.put(
-      process.env.BACKEND_LOCATION + 'items/' + data.id + '/users',
-      { users: data.users }
-    )
+    return axios.put(process.env.BACKEND_LOCATION + 'items/' + data.id + '/users', { users: data.users })
   }
 }
 

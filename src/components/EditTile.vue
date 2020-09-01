@@ -5,12 +5,8 @@
         <div id="create" class="create fit">
           <div class="tile-details">
             <div class="buttons">
-              <q-btn unelevated @click="loadApplication" color="grey-5">{{
-                $tc('application')
-              }}</q-btn>
-              <q-btn unelevated @click="websitedialog = true" color="grey-5">{{
-                $t('website')
-              }}</q-btn>
+              <q-btn unelevated @click="loadApplication" color="grey-5">{{ $tc('application') }}</q-btn>
+              <q-btn unelevated @click="websitedialog = true" color="grey-5">{{ $t('website') }}</q-btn>
               <!--<q-btn unelevated @click="dockerdialog = true" color="grey-5"
                 >Docker</q-btn>-->
             </div>
@@ -22,12 +18,7 @@
                   <q-icon name="attach_file" />
                 </template>
               </q-file>
-              <q-input
-                outlined
-                v-model="urlavatar"
-                type="url"
-                :label="this.$t('url')"
-              >
+              <q-input outlined v-model="urlavatar" type="url" :label="this.$t('url')">
                 <template v-slot:prepend>
                   <q-icon name="http" />
                 </template>
@@ -37,71 +28,27 @@
             <div class="email"></div>
           </div>
           <div class="user-options">
-            <q-tabs
-              v-model="tab"
-              indicator-color="purple"
-              align="justify"
-              inline-label
-            >
+            <q-tabs v-model="tab" indicator-color="purple" align="justify" inline-label>
               <q-tab clickable v-ripple name="general" :label="$t('general')" />
-              <q-tab
-                clickable
-                v-ripple
-                name="image"
-                :label="$t('appearance')"
-              />
-              <q-tab
-                clickable
-                v-ripple
-                name="enhanced"
-                :label="$t('enhanced')"
-              />
-              <q-tab
-                v-if="$route.path === '/admin/application'"
-                clickable
-                v-ripple
-                name="users"
-                :label="$tc('user')"
-              />
+              <q-tab clickable v-ripple name="image" :label="$t('appearance')" />
+              <q-tab clickable v-ripple name="enhanced" :label="$t('enhanced')" />
+              <q-tab v-if="$route.path === '/admin/application'" clickable v-ripple name="users" :label="$tc('user')" />
             </q-tabs>
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-input outlined v-model="title" :label="this.$t('title')">
-                </q-input>
-                <q-input outlined v-model="url" :label="this.$t('url')">
-                </q-input>
+                <q-input outlined v-model="title" :label="this.$t('title')"></q-input>
+                <q-input outlined v-model="url" :label="this.$t('url')"></q-input>
 
-                <q-input
-                  v-model="description"
-                  :label="this.$t('description')"
-                  outlined
-                  type="textarea"
-                />
-                <q-select
-                  :label="this.$t('Tags')"
-                  outlined
-                  v-model="tags"
-                  multiple
-                  :options="possibletags"
-                  use-input
-                  new-value-mode="add-unique"
-                  emit-value
-                  use-chips
-                  ref="tags"
-                  @new-value="updateInput"
-                  @filter="filterFn"
-                />
+                <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
+                <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
               </q-tab-panel>
 
               <q-tab-panel name="image">
                 <q-input outlined v-model="color" :label="this.$t('colour')">
                   <template v-slot:append>
                     <q-icon name="colorize" class="cursor-pointer">
-                      <q-popup-proxy
-                        transition-show="scale"
-                        transition-hide="scale"
-                      >
+                      <q-popup-proxy transition-show="scale" transition-hide="scale">
                         <q-color v-model="color" format-model="hexa" />
                       </q-popup-proxy>
                     </q-icon>
@@ -109,48 +56,16 @@
                 </q-input>
                 <div class="icon-container">
                   <div class="upload-btn-wrapper">
-                    <q-file
-                      outlined
-                      ref="icon"
-                      v-model="newicon"
-                      label="Icon"
-                    />
+                    <q-file outlined ref="icon" v-model="newicon" label="Icon" />
                   </div>
                 </div>
               </q-tab-panel>
-              <q-tab-panel
-                v-if="$route.path === '/admin/application'"
-                name="users"
-              >
-                <q-select
-                  :label="this.$t('users')"
-                  outlined
-                  v-model="users"
-                  multiple
-                  :options="possibleusers"
-                  use-input
-                  new-value-mode="add-unique"
-                  use-chips
-                  option-value="id"
-                  option-label="username"
-                  map-options
-                  emit-value
-                  ref="users"
-                />
+              <q-tab-panel v-if="$route.path === '/admin/application'" name="users">
+                <q-select :label="this.$t('users')" outlined v-model="users" multiple :options="possibleusers" use-input new-value-mode="add-unique" use-chips option-value="id" option-label="username" map-options emit-value ref="users" />
               </q-tab-panel>
 
               <q-tab-panel name="enhanced">
-                <q-select
-                  outlined
-                  v-model="enhancedType"
-                  :label="this.$t('authtype')"
-                  :options="possibletypes"
-                  option-value="id"
-                  option-label="value"
-                  emit-value
-                  map-options
-                >
-                </q-select>
+                <q-select outlined v-model="enhancedType" :label="this.$t('authtype')" :options="possibletypes" option-value="id" option-label="value" emit-value map-options></q-select>
 
                 <div class="enhanced-tab" v-if="enhancedType !== 'disabled'">
                   <q-tab-panels v-model="enhancedType" animated class="">
@@ -158,11 +73,7 @@
                       No auth
                     </q-tab-panel>
                     <q-tab-panel name="apikey">
-                      <q-input
-                        outlined
-                        v-model="apikey"
-                        :label="this.$t('enter_apikey')"
-                      ></q-input>
+                      <q-input outlined v-model="apikey" :label="this.$t('enter_apikey')"></q-input>
                     </q-tab-panel>
                     <q-tab-panel name="cookie">
                       Cookie based
@@ -171,80 +82,19 @@
                   <div class="stats">
                     <div class="stat">
                       <div class="text-h6">Stat 1</div>
-                      <q-input
-                        outlined
-                        v-model="enhanced1name"
-                        :label="this.$t('name')"
-                      >
-                      </q-input>
-                      <q-input
-                        outlined
-                        v-model="enhanced1url"
-                        :label="this.$t('url')"
-                      >
-                      </q-input>
-                      <q-input
-                        outlined
-                        v-model="enhanced1key"
-                        :label="this.$t('key')"
-                      >
-                      </q-input>
-                      <q-select
-                        outlined
-                        v-model="enhanced1filter"
-                        :label="this.$t('filter')"
-                        :options="filters"
-                        option-value="id"
-                        option-label="value"
-                        map-options
-                        emit-value
-                      >
-                      </q-select>
-                      <q-select
-                        outlined
-                        v-model="enhanced1updateOnChange"
-                        :label="this.$t('update_on_change')"
-                        :options="['Yes', 'No']"
-                      >
-                      </q-select>
+                      <q-input outlined v-model="enhanced1name" :label="this.$t('name')"></q-input>
+                      <q-input outlined v-model="enhanced1url" :label="this.$t('url')"></q-input>
+                      <q-input outlined v-model="enhanced1key" :label="this.$t('key')"></q-input>
+                      <q-select outlined v-model="enhanced1filter" :label="this.$t('filter')" :options="filters" option-value="id" option-label="value" map-options emit-value></q-select>
+                      <q-select outlined v-model="enhanced1updateOnChange" :label="this.$t('update_on_change')" :options="['Yes', 'No']"></q-select>
                     </div>
                     <div class="stat">
                       <div class="text-h6">Stat 2</div>
-                      <q-input
-                        outlined
-                        v-model="enhanced2name"
-                        :label="this.$t('name')"
-                      >
-                      </q-input>
-                      <q-input
-                        outlined
-                        v-model="enhanced2url"
-                        :label="this.$t('url')"
-                      >
-                      </q-input>
-                      <q-input
-                        outlined
-                        v-model="enhanced2key"
-                        :label="this.$t('key')"
-                      >
-                      </q-input>
-                      <q-select
-                        outlined
-                        v-model="enhanced2filter"
-                        :label="this.$t('filter')"
-                        :options="filters"
-                        option-value="id"
-                        option-label="value"
-                        map-options
-                      >
-                      </q-select>
-                      <q-select
-                        outlined
-                        v-model="enhanced2updateOnChange"
-                        :label="this.$t('update_on_change')"
-                        :options="['Yes', 'No']"
-                      >
-                      </q-select>
+                      <q-input outlined v-model="enhanced2name" :label="this.$t('name')"></q-input>
+                      <q-input outlined v-model="enhanced2url" :label="this.$t('url')"></q-input>
+                      <q-input outlined v-model="enhanced2key" :label="this.$t('key')"></q-input>
+                      <q-select outlined v-model="enhanced2filter" :label="this.$t('filter')" :options="filters" option-value="id" option-label="value" map-options></q-select>
+                      <q-select outlined v-model="enhanced2updateOnChange" :label="this.$t('update_on_change')" :options="['Yes', 'No']"></q-select>
                     </div>
                   </div>
                   <q-btn @click="test">Test</q-btn>
@@ -272,26 +122,12 @@
         </q-card-section>
 
         <q-card-section style="width: 500px;" class="q-pt-none">
-          <q-select
-            outlined
-            :options="possibleapps"
-            option-value="appid"
-            option-label="name"
-            map-options
-            :label="this.$t('application_type')"
-            v-model="applicationtype"
-          ></q-select>
+          <q-select outlined :options="possibleapps" option-value="appid" option-label="name" map-options :label="this.$t('application_type')" v-model="applicationtype"></q-select>
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn
-            unelevated
-            label="Set"
-            @click="setApplication"
-            color="primary"
-            v-close-popup
-          />
+          <q-btn unelevated label="Set" @click="setApplication" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -302,21 +138,11 @@
           <div class="text-h6">Enter website address</div>
         </q-card-section>
         <q-card-section style="width: 500px;" class="q-pt-none">
-          <q-input
-            outlined
-            v-model="website"
-            :label="this.$t('website')"
-          ></q-input>
+          <q-input outlined v-model="website" :label="this.$t('website')"></q-input>
           <q-btn flat label="Lookup" @click="getWebsiteData" color="primary" />
 
           <div class="iconlist" v-if="websitedata">
-            <div
-              class="icon"
-              :class="{ selected: key === selectedwebsiteimage }"
-              v-for="(icon, key) in websitedata.icons"
-              :key="key"
-              @click="selectWebsiteImage(key)"
-            >
+            <div class="icon" :class="{ selected: key === selectedwebsiteimage }" v-for="(icon, key) in websitedata.icons" :key="key" @click="selectWebsiteImage(key)">
               <img :src="icon" />
             </div>
           </div>
@@ -324,14 +150,7 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn
-            unelevated
-            v-if="websitedata !== null"
-            label="Set"
-            @click="setWebsite"
-            color="primary"
-            v-close-popup
-          />
+          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -343,17 +162,11 @@
         <q-card-section style="width: 500px;" class="q-pt-none">
           <div v-if="dockers.length > 0">
             <div class="text-h6">Active</div>
-            <div
-              v-for="docker in dockers.filter(d => d.state === 'running')"
-              :key="docker.id"
-            >
+            <div v-for="docker in dockers.filter(d => d.state === 'running')" :key="docker.id">
               {{ docker.image }}
             </div>
             <div class="text-h6">Inactive</div>
-            <div
-              v-for="docker in dockers.filter(d => d.state !== 'running')"
-              :key="docker.id"
-            >
+            <div v-for="docker in dockers.filter(d => d.state !== 'running')" :key="docker.id">
               {{ docker.image }}
             </div>
           </div>
@@ -362,14 +175,7 @@
 
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn
-            unelevated
-            v-if="websitedata !== null"
-            label="Set"
-            @click="setWebsite"
-            color="primary"
-            v-close-popup
-          />
+          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -449,9 +255,7 @@ export default {
     },
     seticon() {
       if (this.icon) return this.icon
-      return this.application.icon !== null
-        ? process.env.BACKEND_LOCATION + this.application.icon
-        : 'statics/heimdall-logo-white.svg'
+      return this.application.icon !== null ? process.env.BACKEND_LOCATION + this.application.icon : 'statics/heimdall-logo-white.svg'
     }
   },
 
@@ -549,8 +353,7 @@ export default {
       }
     },
     async onSubmit(evt) {
-      const applicationType =
-        this.applicationtype !== null ? this.applicationtype.appid : null
+      const applicationType = this.applicationtype !== null ? this.applicationtype.appid : null
       const formData = {
         title: this.title
       }
@@ -630,9 +433,7 @@ export default {
         } else {
           const needle = val.toLowerCase()
           const tags = this.allTags || []
-          this.possibletags = tags.filter(
-            v => v.toLowerCase().indexOf(needle) > -1
-          )
+          this.possibletags = tags.filter(v => v.toLowerCase().indexOf(needle) > -1)
         }
       })
     },
@@ -643,11 +444,7 @@ export default {
     setApplication() {
       this.title = this.applicationtype.name
       this.description = this.applicationtype.description
-      this.icon =
-        'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' +
-        this.applicationtype.name +
-        '/' +
-        this.applicationtype.icon
+      this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
       if (this.applicationtype.enhanced !== 0) {
         this.enhancedType = this.applicationtype.enhanced.type
         this.enhanced1name = this.applicationtype.enhanced.stat1.name
@@ -676,17 +473,13 @@ export default {
       }, 300)
     },
     async getDockers() {
-      const dockers = await axios.get(
-        process.env.BACKEND_LOCATION + 'containers'
-      )
+      const dockers = await axios.get(process.env.BACKEND_LOCATION + 'containers')
       this.dockers = dockers.data.result
     },
     async getWebsiteData() {
       try {
         const websitedata = {}
-        const html = await axios.get(
-          process.env.BACKEND_LOCATION + 'cors/' + this.website
-        )
+        const html = await axios.get(process.env.BACKEND_LOCATION + 'cors/' + this.website)
         // const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + this.website)
         // console.log(html)
         const parser = new DOMParser()
@@ -722,11 +515,7 @@ export default {
                 // Lowercase comparison in case some idiot decides to put the
                 // https or http in caps
                 // Also check for absolute url with no protocol
-                if (
-                  href.toLowerCase().indexOf('https:') === -1 &&
-                  href.toLowerCase().indexOf('http:') === -1 &&
-                  href.indexOf('//') !== 0
-                ) {
+                if (href.toLowerCase().indexOf('https:') === -1 && href.toLowerCase().indexOf('http:') === -1 && href.indexOf('//') !== 0) {
                   // This is of course assuming the script is executing in the browser
                   // Node.js is a different story! As I would be using cheerio.js for parsing the html instead of document.
                   // Also you would use the response.headers object for Node.js below.

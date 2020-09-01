@@ -47,14 +47,10 @@ export default {
   description: 'Opis',
   no_apps: 'Obecnie nie ma żadnych aplikacji',
   mfa_header: 'Skonfiguruj uwierzytelnianie dwuskładnikowe za pomocą TOTP',
-  mfa_intro:
-    'Włączenie tej opcji pozwoli na korzystanie z aplikacji uwierzytelniającej, która obsługuje kody TOTP, jeśli nie masz jeszcze jednego, zalecamy {link1} lub {link2}.',
-  mfa_above_qr:
-    'Aby aktywować, zeskanuj kod QR za pomocą aplikacji uwierzytelniającej.',
-  mfa_below_qr:
-    'Po skanowaniu kodu wprowadź sześciocyfrowy kod z aplikacji, aby zweryfikować konfigurację.',
-  mfa_no_qr:
-    'Jeśli masz problemy ze skanowaniem kodu QR, wykonaj ręczną konfigurację z kodem: {code}.',
+  mfa_intro: 'Włączenie tej opcji pozwoli na korzystanie z aplikacji uwierzytelniającej, która obsługuje kody TOTP, jeśli nie masz jeszcze jednego, zalecamy {link1} lub {link2}.',
+  mfa_above_qr: 'Aby aktywować, zeskanuj kod QR za pomocą aplikacji uwierzytelniającej.',
+  mfa_below_qr: 'Po skanowaniu kodu wprowadź sześciocyfrowy kod z aplikacji, aby zweryfikować konfigurację.',
+  mfa_no_qr: 'Jeśli masz problemy ze skanowaniem kodu QR, wykonaj ręczną konfigurację z kodem: {code}.',
   code: 'Kod',
   // Edit / Create tiles
   name: 'Nazwisko',

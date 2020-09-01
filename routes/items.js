@@ -68,18 +68,9 @@ router.post(
           responseType: 'arraybuffer'
         })
         const fileType = await FileType.fromBuffer(iconFile.data)
-        const randomFilename =
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15)
+        const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-        fs.writeFileSync(
-          path.join(
-            config.uploadDir,
-            'icons',
-            `${randomFilename}.${fileType.ext}`
-          ),
-          iconFile.data
-        )
+        fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
         req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
       } catch (e) {
         return res.status(500).json({
@@ -160,18 +151,9 @@ router.put(
           responseType: 'arraybuffer'
         })
         const fileType = await FileType.fromBuffer(iconFile.data)
-        const randomFilename =
-          Math.random().toString(36).substring(2, 15) +
-          Math.random().toString(36).substring(2, 15)
+        const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
-        fs.writeFileSync(
-          path.join(
-            config.uploadDir,
-            'icons',
-            `${randomFilename}.${fileType.ext}`
-          ),
-          iconFile.data
-        )
+        fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
         req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
 
         if (item.icon) {
@@ -367,10 +349,7 @@ router.put(
     }
 
     const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
-    fs.renameSync(
-      path.join(req.file.destination, req.file.filename),
-      path.join(config.uploadDir, 'icons', newIcon)
-    )
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'icons', newIcon))
     icon = `/icons/${newIcon}`
 
     if (item.icon) {

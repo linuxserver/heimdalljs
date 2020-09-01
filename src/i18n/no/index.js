@@ -47,13 +47,10 @@ export default {
   description: 'Beskrivelse',
   no_apps: 'Det finnes ingen applikasjoner',
   mfa_header: 'Still opp to-faktor autentisering ved hjelp av TOTP',
-  mfa_intro:
-    'Aktivering av dette alternativet lar deg bruke en autentiseringsapp som støtter TOTP-koder, hvis du ikke allerede har en, anbefaler vi enten {link1} eller {link2}.',
+  mfa_intro: 'Aktivering av dette alternativet lar deg bruke en autentiseringsapp som støtter TOTP-koder, hvis du ikke allerede har en, anbefaler vi enten {link1} eller {link2}.',
   mfa_above_qr: 'For å aktivere, skann QR-koden med autentiseringsappen din.',
-  mfa_below_qr:
-    'Etter at du har skannet koden, skriv inn den sekssifrede koden fra appen for å bekrefte oppsettet.',
-  mfa_no_qr:
-    'Hvis du har problemer med å skanne QR-koden, utfør et manuelt oppsett med kode: {code}.',
+  mfa_below_qr: 'Etter at du har skannet koden, skriv inn den sekssifrede koden fra appen for å bekrefte oppsettet.',
+  mfa_no_qr: 'Hvis du har problemer med å skanne QR-koden, utfør et manuelt oppsett med kode: {code}.',
   code: 'Kode',
   // Edit / Create tiles
   name: 'Navn',
@@ -81,8 +78,7 @@ export default {
   // API responses
   invalid_user: 'Ugyldig brukernavn eller passord',
   invalid_code: 'Ugyldig multifaktor-kode',
-  not_logged_in:
-    'Du er enten ikke pålogget eller har ikke tilgang til disse dataene',
+  not_logged_in: 'Du er enten ikke pålogget eller har ikke tilgang til disse dataene',
   unauthorized: 'Uautorisert',
   email_exists: 'E-post finnes allerede',
   incorrect_password: 'Feil passord',

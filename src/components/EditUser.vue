@@ -4,11 +4,7 @@
       <q-scroll-area style="height: 100%;">
         <div id="create" class="create fit">
           <div class="user-details">
-            <q-avatar
-              size="220px"
-              style="background: #c1c1c1;"
-              class="user-avatar"
-            >
+            <q-avatar size="220px" style="background: #c1c1c1;" class="user-avatar">
               <div class="avatar-resize"><img :src="this.setavatar" /></div>
               <div @click="changeavatar = !changeavatar" class="changephoto">
                 <q-icon size="30px" name="photo_camera" />
@@ -22,12 +18,7 @@
                   <q-icon name="attach_file" />
                 </template>
               </q-file>
-              <q-input
-                outlined
-                v-model="urlavatar"
-                type="url"
-                :label="this.$t('url')"
-              >
+              <q-input outlined v-model="urlavatar" type="url" :label="this.$t('url')">
                 <template v-slot:prepend>
                   <q-icon name="http" />
                 </template>
@@ -37,12 +28,7 @@
             <div class="email">{{ user.email }}</div>
           </div>
           <div class="user-options">
-            <q-tabs
-              v-model="tab"
-              indicator-color="purple"
-              align="justify"
-              inline-label
-            >
+            <q-tabs v-model="tab" indicator-color="purple" align="justify" inline-label>
               <q-tab clickable v-ripple name="general" :label="$t('profile')" />
               <q-tab clickable v-ripple name="mfa" :label="$t('security')" />
               <!--<q-tab
@@ -55,28 +41,13 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-input
-                  outlined
-                  v-model="username"
-                  :label="this.$t('username')"
-                >
-                </q-input>
+                <q-input outlined v-model="username" :label="this.$t('username')"></q-input>
 
-                <q-input outlined v-model="email" :label="this.$t('email')">
-                </q-input>
+                <q-input outlined v-model="email" :label="this.$t('email')"></q-input>
 
-                <q-input
-                  v-model="password"
-                  :label="this.$t('password')"
-                  outlined
-                  :type="isPwd ? 'password' : 'text'"
-                >
+                <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
                   <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
+                    <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                   </template>
                 </q-input>
 
@@ -103,8 +74,7 @@
                       <p v-html="$t('mfa_above_qr')"></p>
                       <p v-html="$t('mfa_below_qr')"></p>
                       <p v-html="$t('mfa_no_qr', { code: mfacode })"></p>
-                      <q-input outlined v-model="totp" :label="this.$t('code')">
-                      </q-input>
+                      <q-input outlined v-model="totp" :label="this.$t('code')"></q-input>
                       <q-btn @click="sendTotp">{{ $t('submit') }}</q-btn>
                     </div>
                   </div>
@@ -135,11 +105,7 @@
           <q-icon name="save" />
           {{ $t('save') }}
         </q-btn>
-        <q-btn
-          v-if="$route.path !== '/account/settings'"
-          flat
-          @click="closeCreate"
-        >
+        <q-btn v-if="$route.path !== '/account/settings'" flat @click="closeCreate">
           <q-icon name="block" />
           {{ $t('cancel') }}
         </q-btn>
@@ -167,9 +133,7 @@ export default {
       return this.$store.state.app.languages
     }, */
     setavatar() {
-      return this.user.avatar !== null
-        ? process.env.BACKEND_LOCATION + this.user.avatar
-        : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      return this.user.avatar !== null ? process.env.BACKEND_LOCATION + this.user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     }
   },
 
@@ -193,8 +157,7 @@ export default {
       urlvatar: '',
       mfacode: null,
       mfalinks: {
-        link1:
-          '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
+        link1: '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
         link2: '<a href="https://authy.com/">Authy</a>'
       }
     }
@@ -292,8 +255,7 @@ export default {
 
       // Settings
       formData.settings = {}
-      if (this.settingsLanguage !== null)
-        formData.settings.language = this.settingsLanguage.value
+      if (this.settingsLanguage !== null) formData.settings.language = this.settingsLanguage.value
 
       const data = {
         id: this.id,
@@ -342,9 +304,7 @@ export default {
         } else {
           const needle = val.toLowerCase()
           const tags = this.application.tags || []
-          this.possibletags = tags.filter(
-            v => v.toLowerCase().indexOf(needle) > -1
-          )
+          this.possibletags = tags.filter(v => v.toLowerCase().indexOf(needle) > -1)
         }
       })
     }

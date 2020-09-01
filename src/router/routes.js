@@ -7,9 +7,7 @@ const routes = [
   {
     path: '/account',
     component: () => import('layouts/Tiles.vue'),
-    children: [
-      { path: '', component: () => import('pages/application/Index.vue') }
-    ]
+    children: [{ path: '', component: () => import('pages/application/Index.vue') }]
   },
   {
     path: '/account/settings',
@@ -39,9 +37,7 @@ const routes = [
   {
     path: '/admin/settings',
     component: () => import('layouts/User.vue'),
-    children: [
-      { path: '', component: () => import('pages/settings/Index.vue') }
-    ]
+    children: [{ path: '', component: () => import('pages/settings/Index.vue') }]
   },
   {
     path: '/admin/proxy',

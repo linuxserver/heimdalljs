@@ -2,44 +2,15 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          icon="menu"
-          aria-label="Menu"
-        />
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu" aria-label="Menu" />
 
         <q-toolbar-title>
           {{ $t('application_management') }}
         </q-toolbar-title>
 
-        <q-btn
-          size="15px"
-          style="margin-left: 20px;"
-          unelevated
-          color="brand"
-          @click="createNew"
-          >{{ $t('add_new') }}</q-btn
-        >
+        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand" @click="createNew">{{ $t('add_new') }}</q-btn>
         <div class="searchbox">
-          <q-select
-            borderless
-            color="grey"
-            v-model="selectedapp"
-            use-input
-            clearable
-            input-debounce="0"
-            :options="options"
-            option-value="id"
-            option-label="title"
-            map-options
-            emit-value
-            :label="$t('search') + '...'"
-            @filter="filterFn"
-          >
-          </q-select>
+          <q-select borderless color="grey" v-model="selectedapp" use-input clearable input-debounce="0" :options="options" option-value="id" option-label="title" map-options emit-value :label="$t('search') + '...'" @filter="filterFn"></q-select>
         </div>
       </q-toolbar>
     </q-header>
@@ -99,9 +70,7 @@ export default {
         // this.selectedapp = null
         const needle = val.toLowerCase()
         // console.log('needle: ' + needle)
-        this.options = this.allapplications.filter(
-          v => v.title.toLowerCase().indexOf(needle) > -1
-        )
+        this.options = this.allapplications.filter(v => v.title.toLowerCase().indexOf(needle) > -1)
       })
     }
   }

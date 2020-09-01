@@ -47,14 +47,10 @@ export default {
   description: 'Beschrijving',
   no_apps: 'Er zijn momenteel geen applicaties',
   mfa_header: 'Tweestapsverificatie instellen met TOTP',
-  mfa_intro:
-    'Door deze optie in te schakelen, kunt u een authenticatie-app gebruiken die TOTP-codes ondersteunt, als je er nog geen hebt, raden we {link1} of {link2} aan.',
-  mfa_above_qr:
-    'Scan de QR-code met uw authenticatie-app om deze te activeren.',
-  mfa_below_qr:
-    'Na het scannen van de code, voer de zescijferige code van uw app in om de instellingen te verifiëren.',
-  mfa_no_qr:
-    'Als je problemen hebt met het scannen van de QR-code, doe dan een handmatige setup met code: {code}.',
+  mfa_intro: 'Door deze optie in te schakelen, kunt u een authenticatie-app gebruiken die TOTP-codes ondersteunt, als je er nog geen hebt, raden we {link1} of {link2} aan.',
+  mfa_above_qr: 'Scan de QR-code met uw authenticatie-app om deze te activeren.',
+  mfa_below_qr: 'Na het scannen van de code, voer de zescijferige code van uw app in om de instellingen te verifiëren.',
+  mfa_no_qr: 'Als je problemen hebt met het scannen van de QR-code, doe dan een handmatige setup met code: {code}.',
   code: 'Code',
   // Edit / Create tiles
   name: 'Naam',

@@ -47,14 +47,10 @@ export default {
   description: 'Beschreibung',
   no_apps: 'Derzeit gibt es keine Anwendungen',
   mfa_header: 'Zwei-Faktor-Authentifizierung mithilfe von TOTP einrichten',
-  mfa_intro:
-    'Wenn Sie diese Option aktivieren, können Sie eine Authentifizierungs-App verwenden, die TOTP-Codes unterstützt wenn Sie noch keine haben, empfehlen wir entweder {link1} oder {link2}.',
-  mfa_above_qr:
-    'Zum Aktivieren scannen Sie den QR-Code mit Ihrer Authentifizierungs-App.',
-  mfa_below_qr:
-    'Nach dem Scannen des Codes geben Sie den sechsstelligen Code Ihrer App ein, um das Setup zu überprüfen.',
-  mfa_no_qr:
-    'Wenn Sie Probleme beim Scannen des QR-Codes haben, führen Sie eine manuelle Einrichtung mit dem Code {code} durch.',
+  mfa_intro: 'Wenn Sie diese Option aktivieren, können Sie eine Authentifizierungs-App verwenden, die TOTP-Codes unterstützt wenn Sie noch keine haben, empfehlen wir entweder {link1} oder {link2}.',
+  mfa_above_qr: 'Zum Aktivieren scannen Sie den QR-Code mit Ihrer Authentifizierungs-App.',
+  mfa_below_qr: 'Nach dem Scannen des Codes geben Sie den sechsstelligen Code Ihrer App ein, um das Setup zu überprüfen.',
+  mfa_no_qr: 'Wenn Sie Probleme beim Scannen des QR-Codes haben, führen Sie eine manuelle Einrichtung mit dem Code {code} durch.',
   code: 'Code',
   // Edit / Create tiles
   name: 'Name',
@@ -82,8 +78,7 @@ export default {
   // API responses
   invalid_user: 'Ungültiger Benutzername oder Passwort',
   invalid_code: 'Ungültiger Multi-Faktor-Code',
-  not_logged_in:
-    'Sie sind entweder nicht eingeloggt oder haben keinen Zugriff auf diese Daten',
+  not_logged_in: 'Sie sind entweder nicht eingeloggt oder haben keinen Zugriff auf diese Daten',
   unauthorized: 'Nicht autorisiert',
   email_exists: 'E-Mail existiert bereits',
   incorrect_password: 'Falsches Passwort',
@@ -97,8 +92,7 @@ export default {
   general_settings: 'Allgemeine Einstellungen',
   general_settings_more: 'Allgemeine Systemeinstellungen auswählen',
   search_settings: 'Sucheinstellungen',
-  search_settings_more:
-    'Wählen Sie, welche Suchmaschinen verwendet werden sollen',
+  search_settings_more: 'Wählen Sie, welche Suchmaschinen verwendet werden sollen',
   dashboard_more: 'Einstellungen für das Dashboard',
   active: 'Aktiv',
   inactive: 'Inaktiv',

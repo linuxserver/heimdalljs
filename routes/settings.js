@@ -91,13 +91,8 @@ router.put(
       })
     }
 
-    const newBackground = `${req.file.filename}${path.extname(
-      req.file.originalname
-    )}`
-    fs.renameSync(
-      path.join(req.file.destination, req.file.filename),
-      path.join(config.uploadDir, 'backgrounds', newBackground)
-    )
+    const newBackground = `${req.file.filename}${path.extname(req.file.originalname)}`
+    fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'backgrounds', newBackground))
     const background = `backgrounds/${newBackground}`
 
     if (setting.value && setting.value.location) {

@@ -6,13 +6,7 @@
         {{ $t('manage_apps') }}
       </q-btn>
     </div>
-    <Tile
-      v-else
-      v-for="application in applications"
-      :key="application.id"
-      v-bind="application"
-      :application="application"
-    />
+    <Tile v-else v-for="application in applications" :key="application.id" v-bind="application" :application="application" />
   </q-page>
 </template>
 
@@ -36,9 +30,7 @@ export default {
       } else {
         console.log('active')
         console.log(this.$store.state.tiles.active)
-        const notNull = this.$store.state.tiles.active.filter(
-          a => a.tags !== null
-        )
+        const notNull = this.$store.state.tiles.active.filter(a => a.tags !== null)
         console.log('notnull')
         console.log(notNull)
         tiles = notNull.filter(a => a.tags.find(name => name === this.filter))
@@ -47,9 +39,7 @@ export default {
       if (this.searchfilter === null) {
         return tiles
       } else {
-        return tiles.filter(
-          v => v.title.toLowerCase().indexOf(this.searchfilter) > -1
-        )
+        return tiles.filter(v => v.title.toLowerCase().indexOf(this.searchfilter) > -1)
       }
     }
   },
