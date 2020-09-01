@@ -89,7 +89,7 @@
     "prettier-plugin-packagejson": "^2.2.5",
     "sequelize-cli": "^5.5.1",
     "stylelint": "^13.7.0",
-    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-prettier": "^1.1.2"
   },
   "engines": {
