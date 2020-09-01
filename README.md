@@ -4,7 +4,7 @@ Heimdall is an application management portal for all your web applications. This
 
 ## Development Environment Setup
 
-Heimdall is currently built using the latest release of Node.js 14. Having a compatible version of Node, yarn and the `@quasar/cli` package installed is necessary to run the commands listed below. In addition, you will need to run this command in order to resolve the dependencies:
+Building Heimdall requires a modern release of Node.js (the CI environment uses Node.js 14). Having a compatible version of Node, yarn and the `@quasar/cli` package installed is necessary to run the commands listed below. In addition, you will need to run this command in order to resolve the dependencies:
 
 ```bash
 npm install
