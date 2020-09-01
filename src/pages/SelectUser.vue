@@ -2,15 +2,13 @@
   <q-layout view="lHh Lpr lFf">
     <q-header bordered>
       <q-toolbar>
-        <q-toolbar-title>
-          Heimdall
-        </q-toolbar-title>
+        <q-toolbar-title>Heimdall</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
     <q-page-container id="app">
       <q-form @submit="onSubmit" class="">
-        <q-page class="flex flex-center" style="padding: 30px;">
+        <q-page class="flex flex-center" style="padding: 30px">
           <q-card class="user-signin">
             <div class="menu-avatar avatar-container flex flex-center">
               <q-avatar size="150px" class="user-avatar">
@@ -34,7 +32,7 @@
               </q-select>
               <q-input v-else v-model="username" :label="this.$t('username')" outlined></q-input>
               <div class="public-option" v-if="hasPublic">
-                <q-btn @click="selectUser" unelevated color="cyan-5" style="width: 50%;" class="">View public page</q-btn>
+                <q-btn @click="selectUser" unelevated color="cyan-5" style="width: 50%" class="">View public page</q-btn>
                 <span class="or"><span>or</span></span>
               </div>
               <q-input v-if="hasPassword" v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
@@ -43,7 +41,7 @@
                 </template>
               </q-input>
               <q-input v-if="loginStatus === 'multifactor'" v-model="totp" :label="this.$t('totp')" outlined></q-input>
-              <q-btn type="submit" unelevated color="cyan-8" style="padding: 10px;" class="full-width">Login</q-btn>
+              <q-btn type="submit" unelevated color="cyan-8" style="padding: 10px" class="full-width">Login</q-btn>
             </div>
           </q-card>
         </q-page>

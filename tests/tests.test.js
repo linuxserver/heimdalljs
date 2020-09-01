@@ -34,7 +34,7 @@ test('Delete a user', async () => {
 
   await user.destroy()
 
-  expect((await User.findAll({ where: { email: 'admin@example.com' }})).length).toBe(0)
+  expect((await User.findAll({ where: { email: 'admin@example.com' } })).length).toBe(0)
 })
 
 test('Uniqueness of email', async () => {

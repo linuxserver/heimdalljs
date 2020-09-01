@@ -1,10 +1,10 @@
 <template>
   <div class="userdetails fit">
     <q-form @submit="onSubmit" class="fit userform">
-      <q-scroll-area style="height: 100%;">
+      <q-scroll-area style="height: 100%">
         <div id="create" class="create fit">
           <div class="user-details">
-            <q-avatar size="220px" style="background: #c1c1c1;" class="user-avatar">
+            <q-avatar size="220px" style="background: #c1c1c1" class="user-avatar">
               <div class="avatar-resize"><img :src="this.setavatar" /></div>
               <div @click="changeavatar = !changeavatar" class="changephoto">
                 <q-icon size="30px" name="photo_camera" />
@@ -63,7 +63,7 @@
               </q-tab-panel>
 
               <q-tab-panel name="mfa">
-                <h5 style="margin-top: 0;">{{ $t('mfa_header') }}</h5>
+                <h5 style="margin-top: 0">{{ $t('mfa_header') }}</h5>
                 <p v-html="$t('mfa_intro', mfalinks)"></p>
 
                 <div v-if="showqrcode">

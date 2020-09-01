@@ -8,7 +8,7 @@
           {{ $t('application_management') }}
         </q-toolbar-title>
 
-        <q-btn size="15px" style="margin-left: 20px;" unelevated color="brand" @click="createNew">{{ $t('add_new') }}</q-btn>
+        <q-btn size="15px" style="margin-left: 20px" unelevated color="brand" @click="createNew">{{ $t('add_new') }}</q-btn>
         <div class="searchbox">
           <q-select borderless color="grey" v-model="selectedapp" use-input clearable input-debounce="0" :options="options" option-value="id" option-label="title" map-options emit-value :label="$t('search') + '...'" @filter="filterFn"></q-select>
         </div>

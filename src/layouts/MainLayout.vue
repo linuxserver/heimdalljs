@@ -4,9 +4,7 @@
       <q-toolbar>
         <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu" aria-label="Menu" />
 
-        <q-toolbar-title>
-          Heimdall
-        </q-toolbar-title>
+        <q-toolbar-title>Heimdall</q-toolbar-title>
         <div v-if="user !== null">
           <q-chip v-if="tags.length > 0" icon="bookmark" clickable :class="{ active: filter === null }" @click="setFilter(null)">{{ $t('all') }}</q-chip>
           <q-chip v-for="tag in tags" :key="tag" icon="bookmark" clickable :class="{ active: filter === tag }" @click="setFilter(tag)">{{ tag }}</q-chip>

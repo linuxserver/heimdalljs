@@ -1,7 +1,7 @@
 <template>
   <div class="userdetails fit">
     <q-form @submit="onSubmit" class="fit userform">
-      <q-scroll-area style="height: 100%;">
+      <q-scroll-area style="height: 100%">
         <div id="create" class="create fit">
           <div class="tile-details">
             <div class="buttons">
@@ -69,15 +69,11 @@
 
                 <div class="enhanced-tab" v-if="enhancedType !== 'disabled'">
                   <q-tab-panels v-model="enhancedType" animated class="">
-                    <q-tab-panel name="none">
-                      No auth
-                    </q-tab-panel>
+                    <q-tab-panel name="none">No auth</q-tab-panel>
                     <q-tab-panel name="apikey">
                       <q-input outlined v-model="apikey" :label="this.$t('enter_apikey')"></q-input>
                     </q-tab-panel>
-                    <q-tab-panel name="cookie">
-                      Cookie based
-                    </q-tab-panel>
+                    <q-tab-panel name="cookie">Cookie based</q-tab-panel>
                   </q-tab-panels>
                   <div class="stats">
                     <div class="stat">
@@ -121,7 +117,7 @@
           <div class="text-h6">Select Application</div>
         </q-card-section>
 
-        <q-card-section style="width: 500px;" class="q-pt-none">
+        <q-card-section style="width: 500px" class="q-pt-none">
           <q-select outlined :options="possibleapps" option-value="appid" option-label="name" map-options :label="this.$t('application_type')" v-model="applicationtype"></q-select>
         </q-card-section>
 
@@ -137,7 +133,7 @@
         <q-card-section>
           <div class="text-h6">Enter website address</div>
         </q-card-section>
-        <q-card-section style="width: 500px;" class="q-pt-none">
+        <q-card-section style="width: 500px" class="q-pt-none">
           <q-input outlined v-model="website" :label="this.$t('website')"></q-input>
           <q-btn flat label="Lookup" @click="getWebsiteData" color="primary" />
 
@@ -159,7 +155,7 @@
         <q-card-section>
           <div class="text-h6">Available docker containers</div>
         </q-card-section>
-        <q-card-section style="width: 500px;" class="q-pt-none">
+        <q-card-section style="width: 500px" class="q-pt-none">
           <div v-if="dockers.length > 0">
             <div class="text-h6">Active</div>
             <div v-for="docker in dockers.filter(d => d.state === 'running')" :key="docker.id">
