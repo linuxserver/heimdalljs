@@ -91,7 +91,7 @@
 
               <q-btn-toggle
                 v-if="colour2 !== null"
-                style="margin-bottom: 20px;"
+                style="margin-bottom: 20px"
                 v-model="gradient"
                 no-caps
                 rounded

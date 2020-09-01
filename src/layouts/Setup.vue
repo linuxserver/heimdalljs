@@ -10,7 +10,7 @@
 
     <q-page-container id="app">
       <q-page class="flex flex-center">
-        <div style="width: 100%; max-width: 600px;" class="q-pa-md">
+        <div style="width: 100%; max-width: 600px" class="q-pa-md">
           <q-stepper v-model="step" vertical color="primary" animated>
             <q-step :name="1" :title="this.$t('select_system_defaults')" icon="apps" :done="step > 1">
               <q-select outlined :options="languages" :label="this.$t('select_language')" option-value="value" option-label="label" v-model="language" map-options></q-select>

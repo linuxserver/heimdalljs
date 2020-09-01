@@ -35,4 +35,3 @@ jobs:
         with:
           name: heimdall
           path: dist
-
