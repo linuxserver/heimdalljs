@@ -35,7 +35,15 @@
     ]
   },
   "browserslist": [
-    "last 1 version, not dead, ie >= 11"
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
   ],
   "dependencies": {
     "@quasar/extras": "^1.9.5",
@@ -43,6 +51,7 @@
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.0.0",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "dockerode": "^3.2.0",
@@ -62,13 +71,13 @@
     "sequelize": "^6.3.4",
     "sequelize-cli": "^5.5.1",
     "speakeasy": "^2.0.0",
-    "vue-async-computed": "^3.9.0",
     "sqlite3": "^5.0.0",
+    "vue-async-computed": "^3.9.0",
     "vue-i18n": "^8.21.0",
     "vuedraggable": "^2.24.1"
   },
   "devDependencies": {
-    "@quasar/app": "^1.8.4",
+    "@quasar/app": "^2.0.0",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
@@ -97,7 +106,5 @@
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   },
-  "capacitorId": "",
-  "cordovaId": "site.heimdall.app",
   "productName": "Heimdall"
 }
