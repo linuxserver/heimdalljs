@@ -60,7 +60,7 @@
     "qrcode": "^1.4.4",
     "quasar": "^1.13.1",
     "sequelize": "^6.3.4",
-    "sequelize-cli": "^5.5.1",
+    "sequelize-cli": "^6.2.0",
     "speakeasy": "^2.0.0",
     "vue-async-computed": "^3.9.0",
     "sqlite3": "^5.0.0",
@@ -87,7 +87,7 @@
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.1",
     "prettier-plugin-packagejson": "^2.2.5",
-    "sequelize-cli": "^5.5.1",
+    "sequelize-cli": "^6.2.0",
     "stylelint": "^13.7.0",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-prettier": "^1.1.2"
