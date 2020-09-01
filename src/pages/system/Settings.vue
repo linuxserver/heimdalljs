@@ -147,7 +147,7 @@ export default {
         title: '',
         tags: [],
         url: '',
-        icon: 'statics/img/heimdall-icon-small.png'
+        icon: '/img/heimdall-icon-small.png'
       }
     },
     languages() {
@@ -361,7 +361,7 @@ export default {
 </script>
 <style lang="scss">
 .bg {
-  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/statics/applications.jpg');
+  background-image: linear-gradient(to right, rgba(51, 88, 94, 0.95), rgba(49, 66, 84, 0.95)), url('/applications.jpg');
   background-size: cover;
   background-position: center;
   height: 300px;
