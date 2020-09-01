@@ -40,6 +40,12 @@ Front end will be accessible on port 8080
 yarn run lint
 ```
 
+### Run unit tests
+
+```bash
+yarn test
+```
+
 ### Build the app for production
 
 ```bash
