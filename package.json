@@ -69,7 +69,7 @@
   },
   "devDependencies": {
     "@quasar/app": "^1.8.4",
-    "@quasar/quasar-app-extension-dotenv": "^1.0.1",
+    "@quasar/quasar-app-extension-dotenv": "^1.0.5",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
