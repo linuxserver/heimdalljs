@@ -99,7 +99,7 @@ export default {
       searchfilter: null,
       search: '',
       selectedapp: null
-      // background: 'background-image: url(statics/bg/bg11.jpg)'
+      // background: 'background-image: url(/bg/bg11.jpg)'
     }
   },
 

@@ -68,7 +68,7 @@ export default {
       if (this.selecteduser !== null) {
         return '<img class="avatar" src="' + this.getIcon(this.selecteduser.avatar) + '" />'
       }
-      return '<img class="avatar" src="statics/heimdall-logo-white.svg" />'
+      return '<img class="avatar" src="/heimdall-logo-white.svg" />'
     },
     hasPublic() {
       if (this.selecteduser !== null && this.selecteduser.public === true) {
@@ -105,7 +105,7 @@ export default {
       if (icon !== null && icon !== 'null') {
         return this.backend + icon
       }
-      return 'statics/heimdall-logo-white.svg'
+      return '/heimdall-logo-white.svg'
     },
     selectUser() {
       this.$store.dispatch('app/setUser', this.selecteduser)

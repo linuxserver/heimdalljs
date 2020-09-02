@@ -91,7 +91,7 @@ export default {
   asyncComputed: {
     async appIcon() {
       if (this.application.icon === null) {
-        return 'statics/heimdall-logo-white.svg'
+        return '/heimdall-logo-white.svg'
       }
       // Is a file upload
       if (typeof this.application.icon === 'object') {
@@ -113,7 +113,7 @@ export default {
 
   data() {
     return {
-      icon: this.$attrs.icon || 'statics/heimdall-logo-white.svg',
+      icon: this.$attrs.icon || '/heimdall-logo-white.svg',
       stat1value: null,
       stat2value: null,
       check: null,
