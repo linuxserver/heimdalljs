@@ -10,6 +10,7 @@ const upload = multer({ dest: require('../config/config').uploadDir })
 const fs = require('fs')
 const config = require('../config/config')
 const errorHandler = require('../middleware/error-handler')
+const uuidAPIKey = require('uuid-apikey')
 
 /**
  * Retrieve all users
@@ -147,6 +148,11 @@ router.put(
      * ALWAYS DELETE totp, this should only be set by the server.
      */
     delete req.body.totpSecret
+
+    // Begin process to set user's API key
+    if (req.body.generateApiKey) {
+      user.update({ apiKey: await uuidAPIKey.create() })
+    }
 
     // Begin process to set up and confirm multi-factor authentication
     if (user.multifactorEnabled === false && !!req.body.multifactorEnabled === true) {
