@@ -26,8 +26,7 @@ export function getPossibleApps(context, force = false) {
   if (possibleapps === null || force === true) {
     axios
       .get(
-        process.env.BACKEND_LOCATION +
-          'cors/https://apps.heimdall.site/applications.json',
+        process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/list',
         { crossdomain: true, withCredentials: true }
       )
       .then(response => {
@@ -41,7 +40,7 @@ export function getPossibleApps(context, force = false) {
 }
 
 export function save(context, data) {
-  if (!data.tile.url.includes('://')) {
+  if (data.tile.url !== undefined && !data.tile.url.includes('://')) {
     const prefix = 'https://'
     data.tile.url = prefix.concat(data.tile.url)
   }

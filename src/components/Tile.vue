@@ -116,7 +116,7 @@ export default {
     application: function (newdata, olddata) {
       clearTimeout(this.check)
       if (newdata.config.enhancedType !== 'disabled') {
-        this.checkVisible()
+        // this.checkVisible()
       }
     },
     running: function (newdata, olddata) {

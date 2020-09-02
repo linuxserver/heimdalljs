@@ -115,5 +115,6 @@ export default {
   mfa_enabled: 'Multi Factor Authentication Enabled',
   mfa_disabled: 'Multi Factor Authentication Enabled',
   enable_mfa: 'Enable Multi Factor Authentication',
-  disable_mfa: 'Disable Multi Factor Authentication'
+  disable_mfa: 'Disable Multi Factor Authentication',
+  required_field: 'Required Field'
 }

@@ -67,9 +67,19 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-input outlined v-model="title" :label="this.$t('title')">
+                <q-input
+                  outlined
+                  v-model="title"
+                  :label="this.$t('title')"
+                  :rules="[val => !!val || this.$t('required_field')]"
+                >
                 </q-input>
-                <q-input outlined v-model="url" :label="this.$t('url')">
+                <q-input
+                  outlined
+                  v-model="url"
+                  :label="this.$t('url')"
+                  :rules="[val => !!val || this.$t('required_field')]"
+                >
                 </q-input>
 
                 <q-input
@@ -608,6 +618,9 @@ export default {
           timeout: 1500
         })
       } catch (e) {
+        // console.log('error')
+        // console.log(e)
+        // console.log(e.response)
         this.$q.notify({
           type: 'negative',
           message: this.$t(e.response.data.result),
@@ -648,16 +661,17 @@ export default {
         this.applicationtype.name +
         '/' +
         this.applicationtype.icon
-      if (this.applicationtype.enhanced !== 0) {
-        this.enhancedType = this.applicationtype.enhanced.type
-        this.enhanced1name = this.applicationtype.enhanced.stat1.name
-        this.enhanced1url = this.applicationtype.enhanced.stat1.url
-        this.enhanced1key = this.applicationtype.enhanced.stat1.key
-        this.enhanced1filter = this.applicationtype.enhanced.stat1.filter
-        this.enhanced2name = this.applicationtype.enhanced.stat2.name
-        this.enhanced2url = this.applicationtype.enhanced.stat2.url
-        this.enhanced2key = this.applicationtype.enhanced.stat2.key
-        this.enhanced2filter = this.applicationtype.enhanced.stat2.filter
+      console.log(this.applicationtype.config)
+      if (this.applicationtype.config !== null) {
+        this.enhancedType = this.applicationtype.config.type
+        this.enhanced1name = this.applicationtype.config.stat1.name
+        this.enhanced1url = this.applicationtype.config.stat1.url
+        this.enhanced1key = this.applicationtype.config.stat1.key
+        this.enhanced1filter = this.applicationtype.config.stat1.filter
+        this.enhanced2name = this.applicationtype.config.stat2.name
+        this.enhanced2url = this.applicationtype.config.stat2.url
+        this.enhanced2key = this.applicationtype.config.stat2.key
+        this.enhanced2filter = this.applicationtype.config.stat2.filter
       }
     },
     setWebsite() {
