@@ -271,6 +271,9 @@ div.create {
     }
   }
 }
+.q-field__label, .q-field__native {
+  z-index: 1;
+}
 .list-items {
   display: flex;
   flex-direction: column;
