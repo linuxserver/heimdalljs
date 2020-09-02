@@ -30,8 +30,9 @@ h1 {
 #q-app {
   background: $grey1;
 }
-#app, .apppreview {
-  background-image: url('../statics/bg1.jpg');
+#app,
+.apppreview {
+  background-image: url('/bg1.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -65,11 +66,7 @@ h1 {
     height: 90px;
     margin: 20px;
     flex: 0 0 280px;
-    background-image: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.25)
-    );
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
     border-radius: 6px;
     padding: 15px;
     padding-right: 55px;
@@ -168,8 +165,7 @@ body.desktop .q-hoverable:hover > .q-focus-helper {
   //background: #204158;
   background: $drawercolor;
   .q-drawer__content {
-    box-shadow: inset 35px 0px 35px -35px rgba(0, 0, 0, 0.45),
-      inset -35px 0px 35px -35px rgba(0, 0, 0, 0.45);
+    box-shadow: inset 35px 0px 35px -35px rgba(0, 0, 0, 0.45), inset -35px 0px 35px -35px rgba(0, 0, 0, 0.45);
   }
   .q-item__label--header {
     font-size: 22px;
@@ -351,7 +347,7 @@ div.create {
     margin-right: 20px;
   }
   .preview {
-    width:360px;
+    width: 360px;
     .inner {
       height: 0;
       padding-top: 56.25%;
@@ -359,8 +355,8 @@ div.create {
       .canvas {
         width: 1280px;
         height: 725px;
-        transform: scale(0.28); 
-        transform-origin: top left;   
+        transform: scale(0.28);
+        transform-origin: top left;
         position: absolute;
         top: 0;
         left: 0;

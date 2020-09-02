@@ -47,13 +47,10 @@ export default {
   description: 'Beskrivning',
   no_apps: 'Det finns för närvarande inga program',
   mfa_header: 'Ställ in tvåfaktorsautentisering med TOTP',
-  mfa_intro:
-    'Om du aktiverar det här alternativet kan du använda en autentiseringsapp som stöder TOTP-koder, Om du inte redan har en, rekommenderar vi antingen {link1} eller {link2}.',
+  mfa_intro: 'Om du aktiverar det här alternativet kan du använda en autentiseringsapp som stöder TOTP-koder, Om du inte redan har en, rekommenderar vi antingen {link1} eller {link2}.',
   mfa_above_qr: 'För att aktivera, skanna QR-koden med din autentiseringsapp.',
-  mfa_below_qr:
-    'Efter att koden skannats anger du den sexsiffriga koden från din app för att verifiera inställningen.',
-  mfa_no_qr:
-    'Om du har problem med att skanna QR-koden, gör en manuell konfiguration med koden: {code}.',
+  mfa_below_qr: 'Efter att koden skannats anger du den sexsiffriga koden från din app för att verifiera inställningen.',
+  mfa_no_qr: 'Om du har problem med att skanna QR-koden, gör en manuell konfiguration med koden: {code}.',
   code: 'Kod',
   // Edit / Create tiles
   name: 'Namn',
@@ -81,8 +78,7 @@ export default {
   // API responses
   invalid_user: 'Ogiltigt användarnamn eller lösenord',
   invalid_code: 'Ogiltig multifaktorkod',
-  not_logged_in:
-    'Du är antingen inte inloggad eller har inte tillgång till dessa data',
+  not_logged_in: 'Du är antingen inte inloggad eller har inte tillgång till dessa data',
   unauthorized: 'Obehörig',
   email_exists: 'E-postadressen finns redan',
   incorrect_password: 'Felaktigt lösenord',

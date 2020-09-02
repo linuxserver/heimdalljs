@@ -25,6 +25,18 @@ test('Password check', async () => {
   expect(user.verifyPassword('wrong')).toBe(false)
 })
 
+test('Delete a user', async () => {
+  const user = await User.findOne({
+    where: {
+      email: 'admin@example.com'
+    }
+  })
+
+  await user.destroy()
+
+  expect((await User.findAll({ where: { email: 'admin@example.com' } })).length).toBe(0)
+})
+
 test('Uniqueness of email', async () => {
   try {
     await User.create({

@@ -1,5 +1,7 @@
 {
   "arrowParens": "avoid",
+  "htmlWhitespaceSensitivity": "ignore",
+  "printWidth": 99999,
   "proseWrap": "never",
   "semi": false,
   "singleQuote": true,

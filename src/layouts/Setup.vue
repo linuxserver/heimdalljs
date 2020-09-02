@@ -10,74 +10,24 @@
 
     <q-page-container id="app">
       <q-page class="flex flex-center">
-        <div style="width: 100%; max-width: 600px;" class="q-pa-md">
+        <div style="width: 100%; max-width: 600px" class="q-pa-md">
           <q-stepper v-model="step" vertical color="primary" animated>
-            <q-step
-              :name="1"
-              :title="this.$t('select_system_defaults')"
-              icon="apps"
-              :done="step > 1"
-            >
-              <q-select
-                outlined
-                :options="languages"
-                :label="this.$t('select_language')"
-                option-value="value"
-                option-label="label"
-                v-model="language"
-                map-options
-              ></q-select>
+            <q-step :name="1" :title="this.$t('select_system_defaults')" icon="apps" :done="step > 1">
+              <q-select outlined :options="languages" :label="this.$t('select_language')" option-value="value" option-label="label" v-model="language" map-options></q-select>
 
-              <q-select
-                outlined
-                :options="username_options"
-                :label="this.$t('show_usernames')"
-                option-value="value"
-                option-label="label"
-                v-model="showusername"
-              ></q-select>
+              <q-select outlined :options="username_options" :label="this.$t('show_usernames')" option-value="value" option-label="label" v-model="showusername"></q-select>
 
               <q-stepper-navigation>
-                <q-btn
-                  @click="saveSettings"
-                  color="primary"
-                  :label="$t('continue')"
-                />
+                <q-btn @click="saveSettings" color="primary" :label="$t('continue')" />
               </q-stepper-navigation>
             </q-step>
 
-            <q-step
-              :name="2"
-              :title="$t('setup_admin_user')"
-              icon="contact_mail"
-              :done="step > 2"
-            >
-              <q-input
-                outlined
-                v-model="username"
-                :label="$t('username')"
-                class="my-input"
-              >
-              </q-input>
-              <q-input
-                outlined
-                v-model="email"
-                :label="$t('email')"
-                class="my-input"
-              >
-              </q-input>
-              <q-input
-                outlined
-                v-model="password"
-                :label="$t('password')"
-                :type="isPwd ? 'password' : 'text'"
-              >
+            <q-step :name="2" :title="$t('setup_admin_user')" icon="contact_mail" :done="step > 2">
+              <q-input outlined v-model="username" :label="$t('username')" class="my-input"></q-input>
+              <q-input outlined v-model="email" :label="$t('email')" class="my-input"></q-input>
+              <q-input outlined v-model="password" :label="$t('password')" :type="isPwd ? 'password' : 'text'">
                 <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+                  <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                 </template>
               </q-input>
 
@@ -86,11 +36,7 @@
               </q-stepper-navigation>
             </q-step>
 
-            <q-step
-              :name="3"
-              :title="this.$t('select_system_defaults')"
-              icon="add_comment"
-            >
+            <q-step :name="3" :title="this.$t('select_system_defaults')" icon="add_comment">
               Setup is complete!
 
               <q-stepper-navigation>

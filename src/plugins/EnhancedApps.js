@@ -8,9 +8,7 @@ export default class EnhancedApps {
   }
 
   async call() {
-    const request = await axios.get(
-      process.env.BACKEND_LOCATION + 'enhanced/' + this.id
-    )
+    const request = await axios.get(process.env.BACKEND_LOCATION + 'enhanced/' + this.id)
     return request
   }
 

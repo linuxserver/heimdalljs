@@ -1,21 +1,9 @@
 <template>
   <q-scroll-area style="" class="fit">
     <q-list>
-      <q-tabs
-        v-model="activetab"
-        class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-        narrow-indicator
-      >
+      <q-tabs v-model="activetab" class="text-grey" active-color="primary" indicator-color="primary" align="justify" narrow-indicator>
         <q-tab class="bigtab" name="user" label="User" />
-        <q-tab
-          v-if="user.level === 0"
-          class="bigtab"
-          name="admin"
-          label="Admin"
-        />
+        <q-tab v-if="user.level === 0" class="bigtab" name="admin" label="Admin" />
       </q-tabs>
       <q-separator />
 
@@ -35,64 +23,22 @@
       <q-separator />
       <q-tab-panels v-model="activetab" animated>
         <q-tab-panel name="user">
-          <EssentialLink
-            :title="this.$t('dashboard')"
-            :caption="this.tiles + ' ' + this.$tc('app', this.tiles)"
-            icon="dashboard"
-            link="/"
-          />
-          <EssentialLink
-            :title="this.$tc('application')"
-            :caption="
-              this.active_tiles + ' ' + this.$tc('app', this.active_tiles)
-            "
-            icon="apps"
-            link="/account"
-          />
-          <EssentialLink
-            :title="this.$t('settings')"
-            icon="settings"
-            link="/account/settings"
-          />
+          <EssentialLink :title="this.$t('dashboard')" :caption="this.tiles + ' ' + this.$tc('app', this.tiles)" icon="dashboard" link="/" />
+          <EssentialLink :title="this.$tc('application')" :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)" icon="apps" link="/account" />
+          <EssentialLink :title="this.$t('settings')" icon="settings" link="/account/settings" />
         </q-tab-panel>
 
         <q-tab-panel v-if="user.level === 0" name="admin">
-          <q-expansion-item
-            group="admin"
-            icon="apps"
-            :label="this.$tc('application_management')"
-            :caption="
-              this.system_tiles + ' ' + this.$tc('app', this.system_tiles)
-            "
-            v-model="admin_apps"
-          >
+          <q-expansion-item group="admin" icon="apps" :label="this.$tc('application_management')" :caption="this.system_tiles + ' ' + this.$tc('app', this.system_tiles)" v-model="admin_apps">
             <div class="sub-menu">
-              <EssentialLink
-                :title="this.$tc('application')"
-                icon="apps"
-                link="/admin/application"
-              />
-              <EssentialLink
-                :title="this.$t('settings')"
-                icon="settings"
-                link="/admin/application/settings"
-              />
+              <EssentialLink :title="this.$tc('application')" icon="apps" link="/admin/application" />
+              <EssentialLink :title="this.$t('settings')" icon="settings" link="/admin/application/settings" />
             </div>
           </q-expansion-item>
 
-          <q-expansion-item
-            group="admin"
-            icon="supervised_user_circle"
-            :label="this.$tc('user_management')"
-            :caption="this.users + ' ' + this.$tc('user', this.users)"
-            v-model="admin_users"
-          >
+          <q-expansion-item group="admin" icon="supervised_user_circle" :label="this.$tc('user_management')" :caption="this.users + ' ' + this.$tc('user', this.users)" v-model="admin_users">
             <div class="sub-menu">
-              <EssentialLink
-                icon="supervised_user_circle"
-                :title="this.$tc('user', 0)"
-                link="/admin/user"
-              />
+              <EssentialLink icon="supervised_user_circle" :title="this.$tc('user', 0)" link="/admin/user" />
               <!--<EssentialLink
           :title="this.$t('settings')"
           icon="settings"
@@ -171,9 +117,7 @@ export default {
     },
     avatar() {
       const user = this.$store.state.app.user
-      return user.avatar !== null
-        ? process.env.BACKEND_LOCATION + user.avatar
-        : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      return user.avatar !== null ? process.env.BACKEND_LOCATION + user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     },
     activetab: {
       get() {

@@ -2,13 +2,10 @@
   <q-page class="flex">
     <div class="page-container">
       <div class="list-users fit">
-        <user v-for="user in users" :key="user.id" :user="user"> </user>
+        <user v-for="user in users" :key="user.id" :user="user"></user>
       </div>
     </div>
-    <edit-user
-      :class="{ active: create === true }"
-      v-on:closecreate="closecreate"
-    ></edit-user>
+    <edit-user :class="{ active: create === true }" v-on:closecreate="closecreate"></edit-user>
   </q-page>
 </template>
 

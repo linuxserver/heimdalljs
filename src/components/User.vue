@@ -9,21 +9,17 @@
       <div class="name">{{ this.user.username }}</div>
       <span class="email">{{ this.user.email }}</span>
       <div class="extra">
-        <span class="chip"
-          ><span>{{ level }}</span></span
-        >
-        <span v-if="user.multifactorEnabled === true" class="chip"
-          ><span>2FA</span><q-icon class="mfaicon" :name="mfaicon"></q-icon
-        ></span>
+        <span class="chip">
+          <span>{{ level }}</span>
+        </span>
+        <span v-if="user.multifactorEnabled === true" class="chip">
+          <span>2FA</span>
+          <q-icon class="mfaicon" :name="mfaicon"></q-icon>
+        </span>
       </div>
     </div>
     <div class="actions">
-      <q-btn
-        size="12px"
-        unelevated
-        icon="more_vert"
-        @click="showBack()"
-      ></q-btn>
+      <q-btn size="12px" unelevated icon="more_vert" @click="showBack()"></q-btn>
     </div>
   </div>
 </template>
@@ -39,9 +35,7 @@ export default {
   computed: {
     avatar() {
       const user = this.$store.state.users.all.find(o => o.id === this.user.id)
-      return user.avatar !== null
-        ? process.env.BACKEND_LOCATION + user.avatar
-        : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
+      return user.avatar !== null ? process.env.BACKEND_LOCATION + user.avatar : 'https://apps.heimdall.site/img/heimdall-logo-white.svg'
     },
     level() {
       let level = 'User'

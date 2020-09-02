@@ -2,79 +2,18 @@
   <q-layout class="dashboard" view="lHh Lpr lFf">
     <q-header bordered>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="leftDrawerOpen = !leftDrawerOpen"
-          icon="menu"
-          aria-label="Menu"
-        />
+        <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu" aria-label="Menu" />
 
-        <q-toolbar-title>
-          Heimdall
-        </q-toolbar-title>
+        <q-toolbar-title>Heimdall</q-toolbar-title>
         <div v-if="user !== null">
-          <q-chip
-            v-if="tags.length > 0"
-            icon="bookmark"
-            clickable
-            :class="{ active: filter === null }"
-            @click="setFilter(null)"
-            >{{ $t('all') }}</q-chip
-          >
-          <q-chip
-            v-for="tag in tags"
-            :key="tag"
-            icon="bookmark"
-            clickable
-            :class="{ active: filter === tag }"
-            @click="setFilter(tag)"
-            >{{ tag }}</q-chip
-          >
+          <q-chip v-if="tags.length > 0" icon="bookmark" clickable :class="{ active: filter === null }" @click="setFilter(null)">{{ $t('all') }}</q-chip>
+          <q-chip v-for="tag in tags" :key="tag" icon="bookmark" clickable :class="{ active: filter === tag }" @click="setFilter(tag)">{{ tag }}</q-chip>
         </div>
         <div v-if="settings.search_on_dashboard === 'yes'" class="searchbox">
-          <q-form
-            v-if="search_provider !== null"
-            @submit="onSubmit"
-            :action="search_provider.url"
-            :method="search_provider.method"
-            :target="search_provider.target"
-            ref="searchForm"
-          >
-            <q-select
-              borderless
-              v-model="search_provider"
-              input-debounce="0"
-              :options="settings.active_search_providers"
-              option-value="id"
-              option-label="name"
-            >
-            </q-select>
-            <q-select
-              v-if="search_provider.id === 'tiles'"
-              borderless
-              color="white"
-              v-model="selectedapp"
-              use-input
-              clearable
-              input-debounce="0"
-              option-value="id"
-              option-label="title"
-              map-options
-              emit-value
-              :label="$t('search') + '...'"
-              @filter="filterFn"
-            >
-            </q-select>
-            <q-input
-              v-else
-              v-model="search"
-              borderless
-              :label="$t('search') + '...'"
-              :name="search_provider.query"
-            >
-            </q-input>
+          <q-form v-if="search_provider !== null" @submit="onSubmit" :action="search_provider.url" :method="search_provider.method" :target="search_provider.target" ref="searchForm">
+            <q-select borderless v-model="search_provider" input-debounce="0" :options="settings.active_search_providers" option-value="id" option-label="name"></q-select>
+            <q-select v-if="search_provider.id === 'tiles'" borderless color="white" v-model="selectedapp" use-input clearable input-debounce="0" option-value="id" option-label="title" map-options emit-value :label="$t('search') + '...'" @filter="filterFn"></q-select>
+            <q-input v-else v-model="search" borderless :label="$t('search') + '...'" :name="search_provider.query"></q-input>
             <input type="submit" hidden />
           </q-form>
         </div>
@@ -160,7 +99,7 @@ export default {
       searchfilter: null,
       search: '',
       selectedapp: null
-      // background: 'background-image: url(statics/bg/bg11.jpg)'
+      // background: 'background-image: url(/bg/bg11.jpg)'
     }
   },
 
@@ -181,10 +120,7 @@ export default {
   },
   mounted() {
     console.log('mounted')
-    if (
-      typeof document.addEventListener === 'undefined' ||
-      this.visibility.hidden === undefined
-    ) {
+    if (typeof document.addEventListener === 'undefined' || this.visibility.hidden === undefined) {
       console.log('This browser does not support visibilityChange')
     } else {
       document.addEventListener(

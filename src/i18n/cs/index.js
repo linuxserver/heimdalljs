@@ -47,14 +47,10 @@ export default {
   description: 'Popis',
   no_apps: 'V současné době nejsou žádné aplikace',
   mfa_header: 'Nastavit dvoufázové ověřování pomocí TOTP',
-  mfa_intro:
-    'Povolení této možnosti vám umožní použít ověřovací aplikaci, která podporuje TOTP kódy, pokud již nějakou nemáte, doporučujeme buď {link1} nebo {link2}.',
-  mfa_above_qr:
-    'Chcete-li aktivovat, naskenujte QR kód pomocí vaší ověřovací aplikace.',
-  mfa_below_qr:
-    'Po skenování kódu zadejte ze své aplikace šestimístný kód pro ověření nastavení.',
-  mfa_no_qr:
-    'Pokud máte problémy se skenováním QR kódu, proveďte ruční nastavení pomocí kódu: {code}.',
+  mfa_intro: 'Povolení této možnosti vám umožní použít ověřovací aplikaci, která podporuje TOTP kódy, pokud již nějakou nemáte, doporučujeme buď {link1} nebo {link2}.',
+  mfa_above_qr: 'Chcete-li aktivovat, naskenujte QR kód pomocí vaší ověřovací aplikace.',
+  mfa_below_qr: 'Po skenování kódu zadejte ze své aplikace šestimístný kód pro ověření nastavení.',
+  mfa_no_qr: 'Pokud máte problémy se skenováním QR kódu, proveďte ruční nastavení pomocí kódu: {code}.',
   code: 'Kód',
   // Edit / Create tiles
   name: 'Název',

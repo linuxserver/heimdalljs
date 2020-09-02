@@ -47,14 +47,10 @@ export default {
   description: 'Libellé',
   no_apps: "Il n'y a actuellement aucune application",
   mfa_header: "Configurer l'authentification à deux facteurs à l'aide de TOTP",
-  mfa_intro:
-    "Activer cette option vous permettra d'utiliser une application d'authentification qui supporte les codes TOTP, si vous n'en avez pas déjà un, nous vous recommandons soit {link1} soit {link2}.",
-  mfa_above_qr:
-    "Pour activer, scannez le code QR avec votre application d'authentification.",
-  mfa_below_qr:
-    'Après avoir scanné le code, entrez le code à six chiffres de votre application pour vérifier la configuration.',
-  mfa_no_qr:
-    'Si vous avez des problèmes pour scanner le code QR, faites une configuration manuelle avec le code : {code}.',
+  mfa_intro: "Activer cette option vous permettra d'utiliser une application d'authentification qui supporte les codes TOTP, si vous n'en avez pas déjà un, nous vous recommandons soit {link1} soit {link2}.",
+  mfa_above_qr: "Pour activer, scannez le code QR avec votre application d'authentification.",
+  mfa_below_qr: 'Après avoir scanné le code, entrez le code à six chiffres de votre application pour vérifier la configuration.',
+  mfa_no_qr: 'Si vous avez des problèmes pour scanner le code QR, faites une configuration manuelle avec le code : {code}.',
   code: 'Code',
   // Edit / Create tiles
   name: 'Nom',
@@ -76,8 +72,7 @@ export default {
   disabled: 'Désactivé',
   apikey: 'Clé API',
   cookie: 'Authentification basée sur les cookies',
-  update_on_change:
-    'Mettre à jour les modifications apportées à cette statistique',
+  update_on_change: 'Mettre à jour les modifications apportées à cette statistique',
   updated: 'Mis à jour',
   refresh_stats: 'Rafraîchir les statistiques',
   // API responses
