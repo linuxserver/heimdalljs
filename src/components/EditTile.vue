@@ -37,20 +37,8 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-input
-                  outlined
-                  v-model="title"
-                  :label="this.$t('title')"
-                  :rules="[val => !!val || this.$t('required_field')]"
-                >
-                </q-input>
-                <q-input
-                  outlined
-                  v-model="url"
-                  :label="this.$t('url')"
-                  :rules="[val => !!val || this.$t('required_field')]"
-                >
-                </q-input>
+                <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
+                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
 
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />

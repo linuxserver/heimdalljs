@@ -22,12 +22,11 @@ export function getPossibleApps(context, force = false) {
   const possibleapps = LocalStorage.getItem(key)
   // console.log(possibleapps)
   if (possibleapps === null || force === true) {
-    axios.get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/list', { crossdomain: true, withCredentials: true })
-      .then(response => {
-        // console.log(response.data)
-        context.commit('possibleapps', response.data.apps)
-        LocalStorage.set(key, response.data)
-      })
+    axios.get(process.env.BACKEND_LOCATION + 'cors/https://apps.heimdall.site/list', { crossdomain: true, withCredentials: true }).then(response => {
+      // console.log(response.data)
+      context.commit('possibleapps', response.data.apps)
+      LocalStorage.set(key, response.data)
+    })
   } else {
     context.commit('possibleapps', possibleapps.apps)
   }
