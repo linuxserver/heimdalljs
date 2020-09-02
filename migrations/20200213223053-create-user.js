@@ -37,6 +37,11 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      api_key: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        unique: true
       }
     })
   },

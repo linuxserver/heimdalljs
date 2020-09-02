@@ -36,7 +36,8 @@ class User extends Model {
         },
         level: DataTypes.TINYINT,
         totpSecret: DataTypes.STRING,
-        multifactorEnabled: DataTypes.BOOLEAN
+        multifactorEnabled: DataTypes.BOOLEAN,
+        apiKey: DataTypes.STRING
       },
       {
         sequelize,
