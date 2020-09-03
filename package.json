@@ -67,7 +67,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "qrcode": "^1.4.4",
-    "quasar": "^1.13.1",
+    "quasar": "^1.13.2",
     "sequelize": "^6.3.5",
     "sequelize-cli": "^6.2.0",
     "speakeasy": "^2.0.0",
