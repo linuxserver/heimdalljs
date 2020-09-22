@@ -61,7 +61,6 @@ router.post(
         result: 'unauthorized'
       })
     }
-    console.log('test1')
     if (req.body.icon) {
       try {
         const iconFile = await axios.get(req.body.icon, {
@@ -80,12 +79,10 @@ router.post(
       }
     }
 
-    console.log('test2')
     // Only admins can change 'system' flag and assign items to other users
     if (req.user.level !== User.ADMIN) {
       delete req.body.system
       delete req.body.users
-      console.log('test3')
     }
 
     const item = await Item.create(req.body)
@@ -93,7 +90,6 @@ router.post(
     if (req.body.users === undefined || req.body.users === null) {
       req.body.users = [req.user.id]
     }
-    console.log('test4')
     console.log(req.body.users)
     await item.setUsers(req.body.users)
 
