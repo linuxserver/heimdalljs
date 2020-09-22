@@ -87,7 +87,7 @@ router.post(
 
     const item = await Item.create(req.body)
 
-    if (req.body.users === undefined || req.body.users === null) {
+    if (req.body.users === undefined) {
       req.body.users = [req.user.id]
     }
     console.log(req.body.users)
