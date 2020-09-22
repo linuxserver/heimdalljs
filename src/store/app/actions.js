@@ -143,6 +143,8 @@ export async function saveSettings(context, data) {
         position: 'bottom',
         timeout: 1500
       })
+
+      document.title = context.state.settings.page_title
     }
   } catch (e) {
     Notify.create({

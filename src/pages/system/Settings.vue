@@ -28,6 +28,28 @@
           <q-select outlined :options="languages" :label="this.$t('select_language')" option-value="value" option-label="label" v-model="language" map-options></q-select>
 
           <q-select outlined :options="username_options" :label="this.$t('show_usernames')" option-value="value" option-label="label" v-model="show_usernames" map-options></q-select>
+
+          <q-input
+            outlined
+            :label="this.$t('page_title')"
+            :value="page_title"
+            @change="
+              e => {
+                page_title = e.target.value
+              }
+            "
+          ></q-input>
+
+          <q-input
+            outlined
+            :label="this.$t('header_title')"
+            :value="header_title"
+            @change="
+              e => {
+                header_title = e.target.value
+              }
+            "
+          ></q-input>
         </q-tab-panel>
         <q-tab-panel name="search">
           <h6>{{ $t('search') }}</h6>
@@ -129,6 +151,7 @@
 
 <script>
 import draggable from 'vuedraggable'
+
 export default {
   name: 'Settings',
 
@@ -174,8 +197,8 @@ export default {
       },
       set(value) {
         /* this.$store.dispatch('app/saveSettings', {
-          active_search_providers: value
-        }) */
+              active_search_providers: value
+            }) */
       }
     },
     show_usernames: {
@@ -288,6 +311,26 @@ export default {
         })
       }
     },
+    page_title: {
+      get() {
+        return this.$store.state.app.settings.page_title
+      },
+      set(val) {
+        this.$store.dispatch('app/saveSettings', {
+          page_title: val
+        })
+      }
+    },
+    header_title: {
+      get() {
+        return this.$store.state.app.settings.header_title
+      },
+      set(val) {
+        this.$store.dispatch('app/saveSettings', {
+          header_title: val
+        })
+      }
+    },
     search_on_dashboard: {
       get() {
         return this.$store.state.app.settings.search_on_dashboard
@@ -370,6 +413,7 @@ export default {
   left: 0;
   right: 0;
 }
+
 .options {
   height: 100px;
   margin: 0 -40px;
