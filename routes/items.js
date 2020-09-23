@@ -90,7 +90,7 @@ router.post(
     if (req.body.users === undefined) {
       req.body.users = [req.user.id]
     }
-    console.log(req.body.users)
+
     await item.setUsers(req.body.users)
 
     // Set active flag on association
