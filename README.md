@@ -26,13 +26,13 @@ npm run server
 
 By default both the server and frontend will be accessible on port 3000
 
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
+### Start the front end app in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
 quasar dev
 ```
 
-Front end will be accessible on port 8080
+Front end will be accessible on port 8080. Running the app in this way does not include a backend server, so ensure you've run `npm run server` before starting up the front end
 
 ### Lint the files
 
@@ -51,3 +51,14 @@ yarn test
 ```bash
 quasar build
 ```
+
+### Rebuild database tables (in case of schema/data changes)
+
+Install the sequelize-cli, or use npx:
+
+```bash
+sequelize-cli db:seed:undo
+sequelize-cli db:seed:all
+```
+
+Running `sequelize-cli db:seed:all` multiple times will fail currently, as it is attempting to re-insert the same rows multiple times. Clear the data using `db:seed:undo` first.
