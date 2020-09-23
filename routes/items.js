@@ -61,7 +61,6 @@ router.post(
         result: 'unauthorized'
       })
     }
-
     if (req.body.icon) {
       try {
         const iconFile = await axios.get(req.body.icon, {

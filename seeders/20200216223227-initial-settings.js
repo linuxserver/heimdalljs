@@ -50,6 +50,18 @@ module.exports = {
         value: null,
         created_at: new Date(),
         updated_at: new Date()
+      },
+      {
+        key: 'page_title',
+        value: JSON.stringify('Heimdall'),
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        key: 'header_title',
+        value: JSON.stringify('Heimdall'),
+        created_at: new Date(),
+        updated_at: new Date()
       }
     ])
   },

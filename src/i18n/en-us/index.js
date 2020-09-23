@@ -112,5 +112,7 @@ export default {
   mfa_disabled: 'Multi Factor Authentication Enabled',
   enable_mfa: 'Enable Multi Factor Authentication',
   disable_mfa: 'Disable Multi Factor Authentication',
-  required_field: 'Required Field'
+  required_field: 'Required Field',
+  page_title: 'Page Title',
+  header_title: 'Header Title'
 }
