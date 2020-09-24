@@ -116,9 +116,6 @@ export default {
       }
       return '/heimdall-logo-white.svg'
     },
-    getUser() {
-      this.$store.dispatch('app/getUser', this.username)
-    },
     selectUser() {
       this.$store.dispatch('app/setUser', this.selecteduser)
     },
@@ -151,32 +148,26 @@ export default {
   display: flex;
   margin-bottom: 25px;
 }
-
 .avatar-container {
   padding: 30px;
   background: radial-gradient(ellipse at center, #47918a 0%, #0b3161 100%);
 }
-
 .avatar {
   display: block;
   height: 140px !important;
   width: auto;
 }
-
 .user-signin {
   width: 100%;
   max-width: 400px;
 }
-
 .sign-in-container {
   padding: 20px;
   background: #f1f1f1;
 }
-
 .q-field--outlined {
   margin-bottom: 20px;
 }
-
 .or {
   display: flex;
   padding: 10px 0;
@@ -214,7 +205,6 @@ export default {
     z-index: 1;
   }
 }
-
 .selectuseravatar {
   padding: 3px;
   background: #724c7a;
