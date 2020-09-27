@@ -38,8 +38,10 @@
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
 
+                <q-select outlined label="Protocol" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
+                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
+                <q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('Allow self-signed certificates')" />
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
               </q-tab-panel>
@@ -111,6 +113,7 @@
         </q-btn>
       </div>
     </q-form>
+
     <q-dialog v-model="applicationdialog">
       <q-card>
         <q-card-section>
@@ -129,27 +132,9 @@
     </q-dialog>
 
     <q-dialog v-model="websitedialog">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Enter website address</div>
-        </q-card-section>
-        <q-card-section style="width: 500px" class="q-pt-none">
-          <q-input outlined v-model="website" :label="this.$t('website')"></q-input>
-          <q-btn flat label="Lookup" @click="getWebsiteData" color="primary" />
-
-          <div class="iconlist" v-if="websitedata">
-            <div class="icon" :class="{ selected: key === selectedwebsiteimage }" v-for="(icon, key) in websitedata.icons" :key="key" @click="selectWebsiteImage(key)">
-              <img :src="icon" />
-            </div>
-          </div>
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="Cancel" color="primary" v-close-popup />
-          <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
+      <TileWebsiteTest :website="url" :protocol="websiteprotocol" :allowselfsignedcerts="allowselfsignedcerts" @setWebsite="setWebsite"></TileWebsiteTest>
     </q-dialog>
+
     <q-dialog v-model="dockerdialog" @show="getDockers">
       <q-card>
         <q-card-section>
@@ -182,13 +167,16 @@
 import axios from 'axios'
 import Tile from './Tile'
 import EnhancedApps from '../plugins/EnhancedApps'
+import TileWebsiteTest from './TileWebsiteTest'
+
 export default {
   name: 'EditTile',
 
   props: [],
 
   components: {
-    Tile
+    Tile,
+    TileWebsiteTest
   },
 
   computed: {
@@ -212,6 +200,8 @@ export default {
         enhancedType: this.enhancedType,
         url: this.url,
         apikey: this.apikey,
+        allowselfsignedcerts: this.allowselfsignedcerts,
+        websiteprotocol: this.websiteprotocol,
         stat1: {
           name: this.enhanced1name,
           url: this.enhanced1url,
@@ -228,7 +218,6 @@ export default {
         }
       }
     },
-
     preview() {
       return {
         color: this.color || '#222222',
@@ -257,6 +246,7 @@ export default {
 
   data() {
     return {
+      websitedata: null, // TODO: Get rid and move to component TileWebsiteTest
       id: null,
       color: null,
       applicationtype: null,
@@ -267,6 +257,8 @@ export default {
       icon: null,
       newicon: null,
       description: '',
+      allowselfsignedcerts: false,
+      websiteprotocol: 'https',
       actions: false,
       submitEmpty: false,
       submitResult: [],
@@ -275,10 +267,8 @@ export default {
       applicationdialog: false,
       websitedialog: false,
       dockerdialog: false,
-      websitedata: null,
       selectedwebsiteimage: null,
       possibletags: [],
-      website: null,
       dockers: [],
       enhancedType: 'disabled',
       apikey: '',
@@ -305,7 +295,6 @@ export default {
 
   watch: {
     application: function (newdata, olddata) {
-      // console.log(newdata)
       this.id = newdata.id
       this.icon = newdata.icon
       this.title = newdata.title
@@ -316,6 +305,8 @@ export default {
       this.url = newdata.url
       this.applicationtype = newdata.applicationType
       this.enhancedType = newdata.config.enhancedType || false
+      this.websiteprotocol = newdata.config.websiteprotocol || 'https'
+      this.allowselfsignedcerts = newdata.config.allowselfsignedcerts || false
       this.apikey = newdata.config.apikey || ''
       this.enhanced1name = newdata.config.stat1.name || null
       this.enhanced1url = newdata.config.stat1.url || null
@@ -326,7 +317,6 @@ export default {
       this.enhanced2key = newdata.config.stat2.key || null
       this.enhanced2filter = newdata.config.stat2.filter || null
     },
-
     create: function (newdata, olddata) {
       if (newdata === true) {
         setTimeout(() => {
@@ -362,7 +352,11 @@ export default {
       if (this.url !== null) formData.url = this.url
       if (this.description !== null) formData.description = this.description
       formData.config = this.config
-      if (this.icon !== null && this.icon !== this.application.icon) {
+      console.log({
+        config: this.config,
+        icon: this.icon
+      })
+      if (this.icon !== null && this.icon !== undefined && this.icon !== this.application.icon) {
         if (this.icon.startsWith('http')) {
           formData.icon = this.icon
         }
@@ -378,7 +372,6 @@ export default {
         id: this.id,
         tile: formData
       }
-      console.log(data)
       try {
         const saveditem = await this.$store.dispatch('tiles/save', data)
         this.$store.commit('tiles/create', false)
@@ -407,9 +400,6 @@ export default {
           timeout: 1500
         })
       } catch (e) {
-        // console.log('error')
-        // console.log(e)
-        // console.log(e.response)
         this.$q.notify({
           type: 'negative',
           message: this.$t(e.response.data.result),
@@ -457,14 +447,13 @@ export default {
         this.enhanced2filter = this.applicationtype.config.stat2.filter
       }
     },
-    setWebsite() {
-      this.title = this.websitedata.title
-      this.description = this.websitedata.description
-      this.icon = this.websitedata.icons[this.selectedwebsiteimage]
-      this.url = this.website
-    },
-    selectWebsiteImage(key) {
-      this.selectedwebsiteimage = key
+    setWebsite(data) {
+      this.title = data.title
+      this.description = data.description
+      this.icon = data.icon
+      this.url = data.url
+      this.websiteprotocol = data.websiteprotocol
+      this.allowSelfSignedCertificates = data.allowSelfSignedCertificates
     },
     async closeCreate() {
       await this.$emit('closecreate')
@@ -475,96 +464,6 @@ export default {
     async getDockers() {
       const dockers = await axios.get(process.env.BACKEND_LOCATION + 'containers')
       this.dockers = dockers.data.result
-    },
-    async getWebsiteData() {
-      try {
-        const websitedata = {}
-        const html = await axios.get(process.env.BACKEND_LOCATION + 'cors/' + this.website)
-        // const html = await fetch(process.env.BACKEND_LOCATION + 'cors/' + this.website)
-        // console.log(html)
-        const parser = new DOMParser()
-        const document = parser.parseFromString(await html.data, 'text/html')
-
-        const links = document.getElementsByTagName('link')
-        websitedata.title = document.getElementsByTagName('title')[0].innerText
-        const metas = document.getElementsByTagName('meta')
-        const icons = []
-
-        for (let i = 0; i < metas.length; i++) {
-          if (metas[i].getAttribute('name') === 'description') {
-            websitedata.description = metas[i].getAttribute('content')
-          }
-        }
-
-        for (let i = 0; i < links.length; i++) {
-          const link = links[i]
-
-          // Technically it could be null / undefined if someone didn't set it!
-          // People do weird things when building pages!
-          const rel = link.getAttribute('rel')
-          if (rel) {
-            // I don't know why people don't use indexOf more often
-            // It is faster than regex for simple stuff like this
-            // Lowercase comparison for safety
-            if (rel.toLowerCase().indexOf('icon') > -1) {
-              const href = link.getAttribute('href')
-
-              // Make sure href is not null / undefined
-              if (href) {
-                // Relative
-                // Lowercase comparison in case some idiot decides to put the
-                // https or http in caps
-                // Also check for absolute url with no protocol
-                if (href.toLowerCase().indexOf('https:') === -1 && href.toLowerCase().indexOf('http:') === -1 && href.indexOf('//') !== 0) {
-                  // This is of course assuming the script is executing in the browser
-                  // Node.js is a different story! As I would be using cheerio.js for parsing the html instead of document.
-                  // Also you would use the response.headers object for Node.js below.
-                  console.log('link: ' + this.website)
-                  let finalBase = ''
-                  if (this.website.endsWith('/')) {
-                    const baseurl = this.website.split('/')
-                    baseurl.pop()
-                    finalBase = baseurl.join('/')
-                  } else {
-                    finalBase = this.website
-                  }
-
-                  let absoluteHref = finalBase
-
-                  // We already have a forward slash
-                  // On the front of the href
-                  if (href.indexOf('/') === 0) {
-                    absoluteHref += href
-                  } else {
-                    // We don't have a forward slash
-                    // It is really relative!
-                    const path = window.location.pathname.split('/')
-                    path.pop()
-                    const finalPath = path.join('/')
-
-                    absoluteHref += finalPath + '/' + href
-                  }
-
-                  icons.push(absoluteHref)
-                } else if (href.indexOf('//') === 0) {
-                  // Absolute url with no protocol
-                  const absoluteUrl = window.location.protocol + href
-
-                  icons.push(absoluteUrl)
-                } else {
-                  // Absolute
-                  icons.push(href)
-                }
-              }
-            }
-          }
-        }
-        websitedata.icons = icons
-        this.websitedata = websitedata
-        console.log(websitedata)
-      } catch (e) {
-        console.log(e)
-      }
     }
   }
 }
