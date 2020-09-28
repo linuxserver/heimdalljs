@@ -9,6 +9,7 @@ const axios = require('axios')
 const fs = require('fs')
 const Docker = require('dockerode')
 const errorHandler = require('../middleware/error-handler')
+const https = require('https')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -168,10 +169,47 @@ router.get(
         result: null
       })
     }
+    let response
+    try {
+      let targetUrl = `${req.url.replace('/cors/', '')}`
+      response = await axios({
+        url: targetUrl,
+        method: 'GET'
+      })
+      return res.send(response.data)
+    } catch (e) {
+      return res.json({
+        result: e
+      })
+    }
+  })
+)
 
-    const response = await axios.get(req.url.replace('/cors/', ''))
-
-    return res.send(response.data)
+router.post(
+  '/cors',
+  errorHandler(async (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        status: 'unauthorized',
+        result: null
+      })
+    }
+    let response
+    try {
+      const { allowSelfSignedCertificates, targetUrl } = req.body
+      response = await axios({
+        url: targetUrl,
+        method: 'GET',
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: allowSelfSignedCertificates === false
+        })
+      })
+      return res.send(response.data)
+    } catch (e) {
+      return res.json({
+        result: e
+      })
+    }
   })
 )
 

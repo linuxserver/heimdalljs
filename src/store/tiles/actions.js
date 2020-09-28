@@ -33,10 +33,11 @@ export function getPossibleApps(context, force = false) {
 }
 
 export function save(context, data) {
-  if (data.tile.url !== undefined && !data.tile.url.includes('://')) {
+  // Removing as we're storing the protocol separately now
+  /* if (data.tile.url !== undefined && !data.tile.url.includes('://')) {
     const prefix = 'https://'
     data.tile.url = prefix.concat(data.tile.url)
-  }
+  } */
   if (data.id === null) {
     return axios.post(process.env.BACKEND_LOCATION + 'items', data.tile)
   } else {
