@@ -174,12 +174,7 @@ router.get(
       let targetUrl = `${req.url.replace('/cors/', '')}`
       response = await axios({
         url: targetUrl,
-        method: 'GET',
-        httpsAgent: new https.Agent({
-          // Doing this allows us to accept self-signed certs.
-          // Debatable whether we want to do this or not. Option?
-          rejectUnauthorized: false
-        })
+        method: 'GET'
       })
       return res.send(response.data)
     } catch (e) {
