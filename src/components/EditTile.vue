@@ -37,9 +37,9 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
+                <q-checkbox v-model="useritemactive" :label="this.$t('Active')" />
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-
-                <q-select outlined label="Protocol" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
+                <q-select outlined :label="this.$t('protocol')" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
                 <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
                 <q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('Allow self-signed certificates')" />
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
@@ -253,6 +253,7 @@ export default {
       title: null,
       tags: null,
       users: null,
+      useritemactive: null,
       url: null,
       icon: null,
       newicon: null,
@@ -295,27 +296,29 @@ export default {
 
   watch: {
     application: function (newdata, olddata) {
+      console.log(newdata)
       this.id = newdata.id
       this.icon = newdata.icon
       this.title = newdata.title
       this.users = newdata.Users
+      this.useritemactive = (newdata.UserItem && Object.prototype.hasOwnProperty.call(newdata.UserItem, 'active') && newdata.UserItem.active) || false
       this.tags = newdata.tags
       this.description = newdata.description
       this.color = newdata.color
       this.url = newdata.url
       this.applicationtype = newdata.applicationType
-      this.enhancedType = newdata.config.enhancedType || false
-      this.websiteprotocol = newdata.config.websiteprotocol || 'https'
-      this.allowselfsignedcerts = newdata.config.allowselfsignedcerts || false
-      this.apikey = newdata.config.apikey || ''
-      this.enhanced1name = newdata.config.stat1.name || null
-      this.enhanced1url = newdata.config.stat1.url || null
-      this.enhanced1key = newdata.config.stat1.key || null
-      this.enhanced1filter = newdata.config.stat1.filter || null
-      this.enhanced2name = newdata.config.stat2.name || null
-      this.enhanced2url = newdata.config.stat2.url || null
-      this.enhanced2key = newdata.config.stat2.key || null
-      this.enhanced2filter = newdata.config.stat2.filter || null
+      this.enhancedType = (newdata.config && newdata.config.enhancedType) || false
+      this.websiteprotocol = (newdata.config && newdata.config.websiteprotocol) || 'https'
+      this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
+      this.apikey = (newdata.config && newdata.config.apikey) || ''
+      this.enhanced1name = (newdata.config && newdata.config.stat1.name) || null
+      this.enhanced1url = (newdata.config && newdata.config.stat1.url) || null
+      this.enhanced1key = (newdata.config && newdata.config.stat1.key) || null
+      this.enhanced1filter = (newdata.config && newdata.config.stat1.filter) || null
+      this.enhanced2name = (newdata.config && newdata.config.stat2.name) || null
+      this.enhanced2url = (newdata.config && newdata.config.stat2.url) || null
+      this.enhanced2key = (newdata.config && newdata.config.stat2.key) || null
+      this.enhanced2filter = (newdata.config && newdata.config.stat2.filter) || null
     },
     create: function (newdata, olddata) {
       if (newdata === true) {
@@ -352,17 +355,12 @@ export default {
       if (this.url !== null) formData.url = this.url
       if (this.description !== null) formData.description = this.description
       formData.config = this.config
-      console.log({
-        config: this.config,
-        icon: this.icon
-      })
+
       if (this.icon !== null && this.icon !== undefined && this.icon !== this.application.icon) {
         if (this.icon.startsWith('http')) {
           formData.icon = this.icon
         }
       }
-      console.log('this.newicon')
-      console.log(this.newicon)
       if (this.$route.path === '/admin/application') {
         formData.system = true
         formData.users = this.users
@@ -381,6 +379,17 @@ export default {
             id: saveditem.data.result.id,
             media: media
           })
+        }
+
+        try {
+          await this.$store.dispatch('tiles/active', {
+            id: this.application.id,
+            data: {
+              active: this.useritemactive === true
+            }
+          })
+        } catch (e) {
+          console.error(e)
         }
 
         if (this.$route.path === '/admin/application') {
@@ -434,7 +443,6 @@ export default {
       this.title = this.applicationtype.name
       this.description = this.applicationtype.description
       this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
-      // console.log(this.applicationtype.config)
       if (this.applicationtype.config !== null) {
         this.enhancedType = this.applicationtype.config.type
         this.enhanced1name = this.applicationtype.config.stat1.name

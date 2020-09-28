@@ -7,15 +7,18 @@
       <q-select outlined label="Protocol" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
       <q-input outlined v-model="url" :label="this.$t('website')"></q-input>
       <q-checkbox v-show="websiteprotocol === 'https'" v-model="allowSelfSignedCertificates" label="Allow self-signed and/or invalid certificates"></q-checkbox>
-      <q-btn flat label="Lookup" @click="getWebsiteData" :loading="websitetest === 'In Progress'" />
       <div class="iconlist" v-if="websitedata">
         <div class="icon" :class="{ selected: key === selectedwebsiteimage }" v-for="(icon, key) in websitedata.icons" :key="key" @click="selectWebsiteImage(key)">
           <img :src="icon" />
         </div>
       </div>
+      <q-banner v-show="this.lookuperror" class="text-white bg-red">
+        {{ this.$t('Error') + ': ' + this.lookuperror }}
+      </q-banner>
     </q-card-section>
 
     <q-card-actions align="right">
+      <q-btn flat label="Lookup" @click="getWebsiteData" :loading="websitetest === 'In Progress'" />
       <q-btn flat label="Cancel" color="primary" v-close-popup />
       <q-btn unelevated v-if="websitedata !== null" label="Set" @click="setWebsite" color="primary" v-close-popup />
     </q-card-actions>
@@ -52,7 +55,8 @@ export default {
       selected: null,
       websitedata: null,
       allowSelfSignedCertificates: this.allowselfsignedcerts,
-      url: this.website
+      url: this.website,
+      lookuperror: null
     }
   },
 
@@ -71,7 +75,9 @@ export default {
       this.selectedwebsiteimage = key
     },
     async getWebsiteData() {
+      this.websitedata = null
       this.websitetest = 'In Progress'
+      this.lookuperror = null
       let html
       try {
         html = await axios.post(process.env.BACKEND_LOCATION + 'cors', {
@@ -80,8 +86,15 @@ export default {
         })
       } catch (websiteLookupError) {
         this.websitetest = 'Error'
+        this.lookuperror = websiteLookupError
+        return
       }
       this.websitetest = 'Success'
+      if (html && html.data && html.data.result && html.data.result.name === 'Error') {
+        this.websitetest = 'Error'
+        this.lookuperror = html.data.result.message
+        return
+      }
       try {
         const websitedata = {}
         const parser = new DOMParser()
@@ -100,7 +113,6 @@ export default {
 
         for (let i = 0; i < links.length; i++) {
           const link = links[i]
-
           // Technically it could be null / undefined if someone didn't set it!
           // People do weird things when building pages!
           const rel = link.getAttribute('rel')
@@ -121,7 +133,6 @@ export default {
                   // This is of course assuming the script is executing in the browser
                   // Node.js is a different story! As I would be using cheerio.js for parsing the html instead of document.
                   // Also you would use the response.headers object for Node.js below.
-                  console.log('link: ' + this.url)
                   let finalBase = ''
                   if (this.url.endsWith('/')) {
                     const baseurl = this.url.split('/')
@@ -163,9 +174,8 @@ export default {
         }
         websitedata.icons = icons
         this.websitedata = websitedata
-        console.log(websitedata)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     }
   }
