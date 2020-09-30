@@ -28,7 +28,6 @@ class EnhancedApps {
     url = url.replace(':apikey:', this.data.apikey)
     try {
       const response = await axios.get(url)
-      console.log(response)
       return response
     } catch (e) {
       console.error(e)
