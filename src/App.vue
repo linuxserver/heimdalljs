@@ -48,7 +48,6 @@ export default {
     return {}
   },
   async mounted() {
-    console.log(this.user)
     await this.$store.dispatch('app/status')
     this.$store.dispatch('users/getUsers')
     document.title = this.$store.state.app.settings.page_title || 'Loading...'

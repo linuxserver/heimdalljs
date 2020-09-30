@@ -10,7 +10,7 @@
               <!--<q-btn unelevated @click="dockerdialog = true" color="grey-5"
                 >Docker</q-btn>-->
             </div>
-            <tile :application="preview"></tile>
+            <tile :application="preview" :stat1valueinit="stat1value" :stat2valueinit="stat2value"></tile>
 
             <div v-if="changeicon">
               <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
@@ -168,6 +168,7 @@ import axios from 'axios'
 import Tile from './Tile'
 import EnhancedApps from '../plugins/EnhancedApps'
 import TileWebsiteTest from './TileWebsiteTest'
+import _ from 'lodash'
 
 export default {
   name: 'EditTile',
@@ -262,6 +263,8 @@ export default {
       websiteprotocol: 'https',
       actions: false,
       submitEmpty: false,
+      stat1value: null,
+      stat2value: null,
       submitResult: [],
       changeicon: false,
       tab: 'general',
@@ -296,7 +299,6 @@ export default {
 
   watch: {
     application: function (newdata, olddata) {
-      console.log(newdata)
       this.id = newdata.id
       this.icon = newdata.icon
       this.title = newdata.title
@@ -333,12 +335,18 @@ export default {
 
   methods: {
     async test() {
-      const enhanced = new EnhancedApps(this.config)
+      const enhanced = new EnhancedApps({
+        id: this.id,
+        config: this.config
+      })
       try {
         const test = await enhanced.test()
-        console.log(test)
+        const stat1 = this.config.stat1.key !== null ? _.get(test.data.result.stat1, this.config.stat1.key, null) : test.data.result.stat1
+        const stat2 = this.config.stat2.key !== null ? _.get(test.data.result.stat2, this.config.stat2.key, null) : test.data.result.stat2
+        this.stat1value = enhanced.filter(stat1, this.config.stat1.filter)
+        this.stat2value = enhanced.filter(stat2, this.config.stat2.filter)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
     async onSubmit(evt) {

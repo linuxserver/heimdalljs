@@ -6,11 +6,11 @@
         <div class="title white">{{ application.title }}</div>
         <div v-if="application.config.enhancedType !== 'disabled'" class="livestats-container white">
           <ul class="livestats">
-            <li>
+            <li v-if="application.config.stat1.name">
               <span class="title">{{ application.config.stat1.name }}</span>
               <strong>{{ this.stat1value }}</strong>
             </li>
-            <li>
+            <li v-if="application.config.stat2.name">
               <span class="title">{{ application.config.stat2.name }}</span>
               <strong>{{ this.stat2value }}</strong>
             </li>
@@ -38,7 +38,7 @@ import _ from 'lodash'
 export default {
   name: 'Tile',
 
-  props: ['application'],
+  props: ['application', 'stat1valueinit', 'stat2valueinit'],
 
   components: {},
 
@@ -79,11 +79,20 @@ export default {
     },
     running: function (newdata, olddata) {
       if (newdata === false) {
-        console.log('clear timer')
         clearTimeout(this.check)
       }
       if (olddata === false && newdata === true) {
         this.timedChecks()
+      }
+    },
+    stat1valueinit: function (newdata, olddata) {
+      if (!this.stat1value) {
+        this.stat1value = newdata
+      }
+    },
+    stat2valueinit: function (newdata, olddata) {
+      if (!this.stat2value) {
+        this.stat2value = newdata
       }
     }
   },
@@ -114,19 +123,25 @@ export default {
   data() {
     return {
       icon: this.$attrs.icon || '/heimdall-logo-white.svg',
-      stat1value: null,
-      stat2value: null,
+      stat1value: this.stat1valueinit || null,
+      stat2value: this.stat2valueinit || null,
       check: null,
       active: 2000,
       maxTimer: 45000,
       timer: 5000
     }
   },
+  mounted() {
+    this.refreshData()
+  },
   methods: {
     async timedChecks() {
       const current1 = this.stat1value
       const current2 = this.stat2value
       const data = await this.checkForData()
+      if (!data) {
+        return
+      }
       if (data.stat1 !== current1 && this.application.config.stat1.updateOnChange === 'Yes') {
         this.timer = this.active
       } else if (data.stat2 !== current2 && this.application.config.stat2.updateOnChange === 'Yes') {
@@ -167,13 +182,21 @@ export default {
     async checkForData() {
       if (this.application.config.enhancedType && this.application.config.enhancedType !== 'disabled') {
         const enhanced = new EnhancedApps(this.application)
-        const call = await enhanced.call()
-        // console.log(this.application.config.stat2)
+        let call
+        try {
+          call = await enhanced.call()
+        } catch (e) {
+          console.error(e)
+        }
+        if (!call) {
+          return
+        }
+
         const stat1 = this.application.config.stat1.key !== null ? _.get(call.data.result.stat1, this.application.config.stat1.key, null) : call.data.result.stat1
         const stat2 = this.application.config.stat2.key !== null ? _.get(call.data.result.stat2, this.application.config.stat2.key, null) : call.data.result.stat2
         return {
-          stat1: enhanced.filter(stat1, this.application.config.stat1.filter.id),
-          stat2: enhanced.filter(stat2, this.application.config.stat2.filter.id)
+          stat1: enhanced.filter(stat1, this.application.config.stat1.filter),
+          stat2: enhanced.filter(stat2, this.application.config.stat2.filter)
         }
       }
     }

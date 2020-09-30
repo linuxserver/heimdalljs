@@ -11,7 +11,6 @@ export function getUsers(context) {
 
 export function saveUser(context, data) {
   // console.log(data)
-
   axios.post(process.env.BACKEND_LOCATION + 'users', data).then(response => {
     // console.log(response.data)
     // context.commit('all', response.data)
