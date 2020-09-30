@@ -8,7 +8,6 @@ class EnhancedApps {
   async call() {
     let stat1 = null
     let stat2 = null
-    console.log(this.data)
     switch (this.data.enhancedType) {
       case 'apikey':
         stat1 = await this.apikey(this.data.stat1.url)
@@ -32,7 +31,7 @@ class EnhancedApps {
       console.log(response)
       return response
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 }

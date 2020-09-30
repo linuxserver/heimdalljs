@@ -139,7 +139,9 @@ export default {
       const current1 = this.stat1value
       const current2 = this.stat2value
       const data = await this.checkForData()
-      if (!data) return
+      if (!data) {
+        return
+      }
       if (data.stat1 !== current1 && this.application.config.stat1.updateOnChange === 'Yes') {
         this.timer = this.active
       } else if (data.stat2 !== current2 && this.application.config.stat2.updateOnChange === 'Yes') {

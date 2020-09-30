@@ -341,16 +341,12 @@ export default {
       })
       try {
         const test = await enhanced.test()
-        console.log(test)
         const stat1 = this.config.stat1.key !== null ? _.get(test.data.result.stat1, this.config.stat1.key, null) : test.data.result.stat1
         const stat2 = this.config.stat2.key !== null ? _.get(test.data.result.stat2, this.config.stat2.key, null) : test.data.result.stat2
         this.stat1value = enhanced.filter(stat1, this.config.stat1.filter)
         this.stat2value = enhanced.filter(stat2, this.config.stat2.filter)
-        console.log(test)
-        console.log(this.stat1value)
-        console.log(this.stat2value)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
     },
     async onSubmit(evt) {
