@@ -22,6 +22,7 @@ export default class EnhancedApps {
         position: 'bottom',
         timeout: 1500
       })
+      return test
     } catch (e) {
       Notify.create({
         type: 'negative',

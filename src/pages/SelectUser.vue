@@ -83,7 +83,6 @@ export default {
       return false
     },
     loginStatus() {
-      console.log(this.$store.state.app.loginStatus)
       return this.$store.state.app.loginStatus
     }
   },
