@@ -76,6 +76,10 @@
                       <q-input outlined v-model="apikey" :label="this.$t('enter_apikey')"></q-input>
                     </q-tab-panel>
                     <q-tab-panel name="cookie">Cookie based</q-tab-panel>
+                    <q-tab-panel name="basic_auth">
+                      <q-input outlined v-model="basic_auth_user" :label="this.$t('enter_basic_auth_user')"></q-input>
+                      <q-input outlined v-model="basic_auth_password" :label="this.$t('enter_basic_auth_password')"></q-input>
+                    </q-tab-panel>
                   </q-tab-panels>
                   <div class="stats">
                     <div class="stat">
@@ -201,6 +205,8 @@ export default {
         enhancedType: this.enhancedType,
         url: this.url,
         apikey: this.apikey,
+        basic_auth_user: this.basic_auth_user,
+        basic_auth_password: this.basic_auth_password,
         allowselfsignedcerts: this.allowselfsignedcerts,
         websiteprotocol: this.websiteprotocol,
         stat1: {
@@ -276,6 +282,8 @@ export default {
       dockers: [],
       enhancedType: 'disabled',
       apikey: '',
+      basic_auth_user: '',
+      basic_auth_password: '',
       enhanced1name: null,
       enhanced1url: null,
       enhanced1key: null,
@@ -313,6 +321,8 @@ export default {
       this.websiteprotocol = (newdata.config && newdata.config.websiteprotocol) || 'https'
       this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
       this.apikey = (newdata.config && newdata.config.apikey) || ''
+      this.basic_auth_user = (newdata.config && newdata.config.basic_auth_user) || ''
+      this.basic_auth_password = (newdata.config && newdata.config.basic_auth_password) || ''
       this.enhanced1name = (newdata.config && newdata.config.stat1.name) || null
       this.enhanced1url = (newdata.config && newdata.config.stat1.url) || null
       this.enhanced1key = (newdata.config && newdata.config.stat1.key) || null
@@ -350,6 +360,8 @@ export default {
       }
     },
     async onSubmit(evt) {
+      this.stat1value = null
+      this.stat2value = null
       const applicationType = this.applicationtype !== null ? this.applicationtype.appid : null
       const formData = {
         title: this.title
@@ -472,6 +484,8 @@ export default {
       this.allowSelfSignedCertificates = data.allowSelfSignedCertificates
     },
     async closeCreate() {
+      this.stat1value = null
+      this.stat2value = null
       await this.$emit('closecreate')
       setTimeout(() => {
         this.$store.dispatch('tiles/clear')
