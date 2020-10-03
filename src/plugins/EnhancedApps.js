@@ -26,7 +26,7 @@ export default class EnhancedApps {
     } catch (e) {
       Notify.create({
         type: 'negative',
-        message: i18n.t('api_test_failure') + ': ' + e.response.data,
+        message: i18n.t('api_test_failure') + ': ' + JSON.stringify(e.response.data),
         progress: true,
         position: 'bottom',
         timeout: 1500
@@ -51,6 +51,10 @@ export default class EnhancedApps {
       {
         id: 'cookie',
         value: 'cookie'
+      },
+      {
+        id: 'basic_auth',
+        value: 'basic_auth'
       }
     ]
   }

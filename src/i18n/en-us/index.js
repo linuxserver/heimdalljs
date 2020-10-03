@@ -114,5 +114,11 @@ export default {
   disable_mfa: 'Disable Multi Factor Authentication',
   required_field: 'Required Field',
   page_title: 'Page Title',
-  header_title: 'Header Title'
+  header_title: 'Header Title',
+  allow_self_signed_certificates: 'Allow self-signed certificates',
+  basic_auth: 'Basic auth',
+  count: 'Count',
+  protocol: 'Protocol',
+  enter_basic_auth_user: 'Enter your username',
+  enter_basic_auth_password: 'Enter your password'
 }

@@ -86,14 +86,10 @@ export default {
       }
     },
     stat1valueinit: function (newdata, olddata) {
-      if (!this.stat1value) {
-        this.stat1value = newdata
-      }
+      this.stat1value = newdata
     },
     stat2valueinit: function (newdata, olddata) {
-      if (!this.stat2value) {
-        this.stat2value = newdata
-      }
+      this.stat2value = newdata
     }
   },
 

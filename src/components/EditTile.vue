@@ -37,11 +37,11 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-checkbox v-model="useritemactive" :label="this.$t('Active')" />
+                <q-checkbox v-model="useritemactive" :label="this.$t('active')" />
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
                 <q-select outlined :label="this.$t('protocol')" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
                 <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('Allow self-signed certificates')" />
+                <q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" />
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
               </q-tab-panel>
@@ -76,6 +76,14 @@
                       <q-input outlined v-model="apikey" :label="this.$t('enter_apikey')"></q-input>
                     </q-tab-panel>
                     <q-tab-panel name="cookie">Cookie based</q-tab-panel>
+                    <q-tab-panel name="basic_auth">
+                      <q-input outlined v-model="basic_auth_user" :label="this.$t('enter_basic_auth_user')"></q-input>
+                      <q-input outlined v-model="basic_auth_password" :label="this.$t('enter_basic_auth_password')" :type="basic_auth_hide_password ? 'password' : 'text'">
+                        <template v-slot:append>
+                          <q-icon :name="basic_auth_hide_password ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="basic_auth_hide_password = !basic_auth_hide_password" />
+                        </template>
+                      </q-input>
+                    </q-tab-panel>
                   </q-tab-panels>
                   <div class="stats">
                     <div class="stat">
@@ -201,6 +209,8 @@ export default {
         enhancedType: this.enhancedType,
         url: this.url,
         apikey: this.apikey,
+        basic_auth_user: this.basic_auth_user,
+        basic_auth_password: this.basic_auth_password,
         allowselfsignedcerts: this.allowselfsignedcerts,
         websiteprotocol: this.websiteprotocol,
         stat1: {
@@ -276,6 +286,9 @@ export default {
       dockers: [],
       enhancedType: 'disabled',
       apikey: '',
+      basic_auth_user: '',
+      basic_auth_password: '',
+      basic_auth_hide_password: true,
       enhanced1name: null,
       enhanced1url: null,
       enhanced1key: null,
@@ -313,6 +326,8 @@ export default {
       this.websiteprotocol = (newdata.config && newdata.config.websiteprotocol) || 'https'
       this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
       this.apikey = (newdata.config && newdata.config.apikey) || ''
+      this.basic_auth_user = (newdata.config && newdata.config.basic_auth_user) || ''
+      this.basic_auth_password = (newdata.config && newdata.config.basic_auth_password) || ''
       this.enhanced1name = (newdata.config && newdata.config.stat1.name) || null
       this.enhanced1url = (newdata.config && newdata.config.stat1.url) || null
       this.enhanced1key = (newdata.config && newdata.config.stat1.key) || null
@@ -350,6 +365,8 @@ export default {
       }
     },
     async onSubmit(evt) {
+      this.stat1value = null
+      this.stat2value = null
       const applicationType = this.applicationtype !== null ? this.applicationtype.appid : null
       const formData = {
         title: this.title
@@ -472,6 +489,8 @@ export default {
       this.allowSelfSignedCertificates = data.allowSelfSignedCertificates
     },
     async closeCreate() {
+      this.stat1value = null
+      this.stat2value = null
       await this.$emit('closecreate')
       setTimeout(() => {
         this.$store.dispatch('tiles/clear')
