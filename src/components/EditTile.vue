@@ -357,8 +357,8 @@ export default {
   methods: {
     isValidURL(url) {
       try {
-        new URL(url)
-        return true
+        const validUrl = new URL(url)
+        return validUrl !== null
       } catch (e) {
         return false
       }
