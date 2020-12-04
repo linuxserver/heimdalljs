@@ -196,9 +196,9 @@ router.post(
     }
     let response
     try {
-      const { allowSelfSignedCertificates, targetUrl } = req.body
+      const { allowSelfSignedCertificates, url } = req.body
       response = await axios({
-        url: targetUrl,
+        url,
         method: 'GET',
         httpsAgent: new https.Agent({
           rejectUnauthorized: allowSelfSignedCertificates === false

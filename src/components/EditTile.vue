@@ -39,9 +39,8 @@
               <q-tab-panel name="general">
                 <q-checkbox v-model="useritemactive" :label="this.$t('active')" />
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-select outlined :label="this.$t('protocol')" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
-                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" />
+                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"></q-input>
+                <q-checkbox v-model="allowselfsignedcerts" v-show="appurlishttps" :label="this.$t('allow_self_signed_certificates')" />
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
               </q-tab-panel>
@@ -140,7 +139,7 @@
     </q-dialog>
 
     <q-dialog v-model="websitedialog">
-      <TileWebsiteTest :website="url" :protocol="websiteprotocol" :allowselfsignedcerts="allowselfsignedcerts" @setWebsite="setWebsite"></TileWebsiteTest>
+      <TileWebsiteTest :website="url" :allowselfsignedcerts="allowselfsignedcerts" @setWebsite="setWebsite"></TileWebsiteTest>
     </q-dialog>
 
     <q-dialog v-model="dockerdialog" @show="getDockers">
@@ -204,6 +203,16 @@ export default {
     create() {
       return this.$store.state.tiles.create
     },
+    appurlishttps() {
+      if (!this.url) return false
+
+      try {
+        const url = new URL(this.url)
+        return url.protocol === 'https:'
+      } catch (e) {
+        return false
+      }
+    },
     config() {
       return {
         enhancedType: this.enhancedType,
@@ -212,7 +221,6 @@ export default {
         basic_auth_user: this.basic_auth_user,
         basic_auth_password: this.basic_auth_password,
         allowselfsignedcerts: this.allowselfsignedcerts,
-        websiteprotocol: this.websiteprotocol,
         stat1: {
           name: this.enhanced1name,
           url: this.enhanced1url,
@@ -270,7 +278,6 @@ export default {
       newicon: null,
       description: '',
       allowselfsignedcerts: false,
-      websiteprotocol: 'https',
       actions: false,
       submitEmpty: false,
       stat1value: null,
@@ -323,7 +330,6 @@ export default {
       this.url = newdata.url
       this.applicationtype = newdata.applicationType
       this.enhancedType = (newdata.config && newdata.config.enhancedType) || false
-      this.websiteprotocol = (newdata.config && newdata.config.websiteprotocol) || 'https'
       this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
       this.apikey = (newdata.config && newdata.config.apikey) || ''
       this.basic_auth_user = (newdata.config && newdata.config.basic_auth_user) || ''
@@ -349,6 +355,15 @@ export default {
   },
 
   methods: {
+    isValidURL(url) {
+      try {
+        const validUrl = new URL(url)
+        console.log(validUrl)
+        return true
+      } catch (e) {
+        return false
+      }
+    },
     async test() {
       const enhanced = new EnhancedApps({
         id: this.id,
@@ -420,7 +435,9 @@ export default {
         if (this.$route.path === '/admin/application') {
           const userdata = {
             id: this.id,
-            users: this.users
+            users: this.users.map(user => {
+              return user && user.UserItem ? user.UserItem.user_id : user
+            })
           }
           await this.$store.dispatch('tiles/saveUsers', userdata)
         }
@@ -485,7 +502,6 @@ export default {
       this.description = data.description
       this.icon = data.icon
       this.url = data.url
-      this.websiteprotocol = data.websiteprotocol
       this.allowSelfSignedCertificates = data.allowSelfSignedCertificates
     },
     async closeCreate() {

@@ -120,5 +120,6 @@ export default {
   count: 'Count',
   protocol: 'Protocol',
   enter_basic_auth_user: 'Enter your username',
-  enter_basic_auth_password: 'Enter your password'
+  enter_basic_auth_password: 'Enter your password',
+  invalid_input_url: 'Please provide a full URL including protocol, such as https://'
 }

@@ -4,9 +4,8 @@
       <div class="text-h6">Enter website address</div>
     </q-card-section>
     <q-card-section style="width: 500px" class="q-pt-none">
-      <q-select outlined label="Protocol" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
-      <q-input outlined v-model="url" :label="this.$t('website')"></q-input>
-      <q-checkbox v-show="websiteprotocol === 'https'" v-model="allowSelfSignedCertificates" label="Allow self-signed and/or invalid certificates"></q-checkbox>
+      <q-input outlined v-model="url" :label="this.$t('website')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"></q-input>
+      <q-checkbox v-show="appurlishttps" v-model="allowSelfSignedCertificates" label="Allow self-signed and/or invalid certificates"></q-checkbox>
       <div class="iconlist" v-if="websitedata">
         <div class="icon" :class="{ selected: key === selectedwebsiteimage }" v-for="(icon, key) in websitedata.icons" :key="key" @click="selectWebsiteImage(key)">
           <img :src="icon" />
@@ -45,12 +44,22 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    appurlishttps() {
+      if (!this.url) return false
+
+      try {
+        const url = new URL(this.url)
+        return url.protocol === 'https:'
+      } catch (e) {
+        return false
+      }
+    }
+  },
 
   data() {
     return {
       websitetest: false,
-      websiteprotocol: this.protocol,
       selectedwebsiteimage: null,
       selected: null,
       websitedata: null,
@@ -61,13 +70,21 @@ export default {
   },
 
   methods: {
+    isValidURL(url) {
+      try {
+        const validUrl = new URL(url)
+        console.log(validUrl)
+        return true
+      } catch (e) {
+        return false
+      }
+    },
     setWebsite() {
       this.$emit('setWebsite', {
         title: this.websitedata.title,
         description: this.websitedata.description,
         icon: this.websitedata.icons[this.selectedwebsiteimage],
         url: this.url,
-        websiteprotocol: this.websiteprotocol,
         allowSelfSignedCertificates: this.allowSelfSignedCertificates
       })
     },
@@ -81,7 +98,7 @@ export default {
       let html
       try {
         html = await axios.post(process.env.BACKEND_LOCATION + 'cors', {
-          url: `${this.websiteprotocol}://${this.url}`,
+          url: `${this.url}`,
           allowSelfSignedCertificates: this.allowSelfSignedCertificates
         })
       } catch (websiteLookupError) {
