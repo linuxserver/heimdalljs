@@ -4,7 +4,7 @@
       <div class="text-h6">Enter website address</div>
     </q-card-section>
     <q-card-section style="width: 500px" class="q-pt-none">
-      <q-input outlined v-model="url" :label="this.$t('website')"></q-input>
+      <q-input outlined v-model="url" :label="this.$t('website')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"></q-input>
       <q-checkbox v-show="websiteprotocol === 'https'" v-model="allowSelfSignedCertificates" label="Allow self-signed and/or invalid certificates"></q-checkbox>
       <div class="iconlist" v-if="websitedata">
         <div class="icon" :class="{ selected: key === selectedwebsiteimage }" v-for="(icon, key) in websitedata.icons" :key="key" @click="selectWebsiteImage(key)">
@@ -66,6 +66,14 @@ export default {
   },
 
   methods: {
+    isValidURL(url) {
+      try {
+        const validUrl = new URL(url)
+        return validUrl !== null
+      } catch (e) {
+        return false
+      }
+    },
     setWebsite() {
       this.$emit('setWebsite', {
         title: this.websitedata.title,

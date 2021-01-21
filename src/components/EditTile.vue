@@ -39,7 +39,7 @@
               <q-tab-panel name="general">
                 <q-checkbox v-model="useritemactive" :label="this.$t('active')" />
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field')]"><q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" /></q-input>
+                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"><q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" /></q-input>
 
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
@@ -354,6 +354,14 @@ export default {
   },
 
   methods: {
+    isValidURL(url) {
+      try {
+        const validUrl = new URL(url)
+        return validUrl !== null
+      } catch (e) {
+        return false
+      }
+    },
     async test() {
       const enhanced = new EnhancedApps({
         id: this.id,
@@ -425,7 +433,9 @@ export default {
         if (this.$route.path === '/admin/application') {
           const userdata = {
             id: this.id,
-            users: this.users
+            users: this.users.map(user => {
+              return user && user.UserItem ? user.UserItem.user_id : user
+            })
           }
           await this.$store.dispatch('tiles/saveUsers', userdata)
         }

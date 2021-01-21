@@ -72,7 +72,7 @@ class User extends Model {
 
   toJSON() {
     const retval = this.get()
-    retval.hasPasssword = retval.password !== null
+    retval.hasPassword = retval.password !== null
     delete retval.password
 
     return retval
