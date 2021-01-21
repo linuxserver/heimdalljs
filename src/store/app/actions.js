@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Notify, Cookies, LocalStorage } from 'quasar'
+import { Notify, LocalStorage } from 'quasar'
 
 export async function status(context) {
   // Check to see if we are in setup
@@ -183,11 +183,6 @@ export function setUser(context, user) {
 
 export async function firelogin(context, data) {
   const response = await axios.post(process.env.BACKEND_LOCATION + 'login', data)
-  if (response.data.result && response.data.result.token) {
-    Cookies.set('jwt', response.data.result.token, {
-      expires: 3600
-    })
-  }
 
   return response
 }
@@ -200,11 +195,13 @@ export async function unsplash(context) {
 export async function login(context, data) {
   // console.log(data)
   const response = await firelogin(context, data)
-  console.log(response)
   switch (response.data.status) {
     case 'ok':
       auth(context)
       context.commit('setLoginStatus', 'logged_in')
+      if (this.$router.currentRoute.query && this.$router.currentRoute.query.forward) {
+        window.location.replace(this.$router.currentRoute.query.forward)
+      }
       break
     case 'multifactor':
       context.commit('setLoginStatus', 'multifactor')
@@ -214,11 +211,9 @@ export async function login(context, data) {
   return response
 }
 
-export function logout(context) {
+export async function logout(context) {
   // console.log(data)
-  Cookies.remove('jwt', {
-    expires: 3600
-  })
+  await axios.get(process.env.BACKEND_LOCATION + 'logout')
   context.commit('logout')
   this.$router.push('/')
 }
