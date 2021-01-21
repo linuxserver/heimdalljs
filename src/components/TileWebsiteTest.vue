@@ -4,7 +4,6 @@
       <div class="text-h6">Enter website address</div>
     </q-card-section>
     <q-card-section style="width: 500px" class="q-pt-none">
-      <q-select outlined label="Protocol" v-model="websiteprotocol" :options="['https', 'http']"></q-select>
       <q-input outlined v-model="url" :label="this.$t('website')"></q-input>
       <q-checkbox v-show="websiteprotocol === 'https'" v-model="allowSelfSignedCertificates" label="Allow self-signed and/or invalid certificates"></q-checkbox>
       <div class="iconlist" v-if="websitedata">
@@ -45,12 +44,18 @@ export default {
 
   components: {},
 
-  computed: {},
+  computed: {
+    websiteprotocol() {
+      if (this.url !== null && this.url.indexOf('://') > -1) {
+        return this.url.split('://')[0]
+      }
+      return null
+    }
+  },
 
   data() {
     return {
       websitetest: false,
-      websiteprotocol: this.protocol,
       selectedwebsiteimage: null,
       selected: null,
       websitedata: null,
