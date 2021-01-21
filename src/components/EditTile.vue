@@ -125,7 +125,10 @@
     <q-dialog v-model="applicationdialog">
       <q-card>
         <q-card-section>
-          <div class="text-h6">Select Application</div>
+          <div class="text-h6">
+            Select Application
+            <q-btn flat @click="refreshApps"><q-icon name="refresh" /></q-btn>
+          </div>
         </q-card-section>
 
         <q-card-section style="width: 500px" class="q-pt-none">
@@ -442,6 +445,9 @@ export default {
           timeout: 1500
         })
       }
+    },
+    refreshApps() {
+      this.$store.dispatch('tiles/getPossibleApps', true)
     },
     updateInput(val, done) {
       if (done) {
