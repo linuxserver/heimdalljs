@@ -131,7 +131,18 @@
         </q-card-section>
 
         <q-card-section style="width: 500px" class="q-pt-none">
-          <q-select outlined :options="possibleapps" option-value="appid" option-label="name" :label="this.$t('application_type')" v-model="applicationtype"></q-select>
+          <q-select outlined :options="possibleapps" option-value="appid" option-label="name" :label="this.$t('application_type')" v-model="applicationtype">
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps" v-on="scope.itemEvents">
+                <q-item-section avatar>
+                  <q-icon v-if="scope.opt.enhanced === true && scope.opt.config !== undefined" name="grade" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label v-html="scope.opt.name" />
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
         </q-card-section>
 
         <q-card-actions align="right">
