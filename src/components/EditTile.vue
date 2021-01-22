@@ -8,7 +8,7 @@
               <q-btn unelevated @click="loadApplication" color="grey-5">{{ $tc('application') }}</q-btn>
               <q-btn unelevated @click="websitedialog = true" color="grey-5">{{ $t('website') }}</q-btn>
               <!--<q-btn unelevated @click="dockerdialog = true" color="grey-5"
-                >Docker</q-btn>-->
+              >Docker</q-btn>-->
             </div>
             <tile :application="preview" :stat1valueinit="stat1value" :stat2valueinit="stat2value"></tile>
 
@@ -62,7 +62,7 @@
                 </div>
               </q-tab-panel>
               <q-tab-panel v-if="$route.path === '/admin/application'" name="users">
-                <q-select :label="this.$t('users')" outlined v-model="users" multiple :options="possibleusers" use-input new-value-mode="add-unique" use-chips option-value="id" option-label="username" map-options emit-value ref="users" />
+                <q-select :label="this.$t('user')" outlined v-model="users" multiple :options="possibleusers" use-input new-value-mode="add-unique" use-chips option-value="id" option-label="username" map-options emit-value ref="users" />
               </q-tab-panel>
 
               <q-tab-panel name="enhanced">
@@ -421,23 +421,26 @@ export default {
 
         try {
           await this.$store.dispatch('tiles/active', {
-            id: this.application.id,
+            id: saveditem.data.result.id,
             data: {
               active: this.useritemactive === true
             }
           })
         } catch (e) {
           console.error(e)
+          throw e
         }
 
         if (this.$route.path === '/admin/application') {
-          const userdata = {
-            id: this.id,
-            users: this.users.map(user => {
-              return user && user.UserItem ? user.UserItem.user_id : user
-            })
+          if (this.users) {
+            const userdata = {
+              id: this.id,
+              users: this.users.map(user => {
+                return user && user.UserItem ? user.UserItem.user_id : user
+              })
+            }
+            await this.$store.dispatch('tiles/saveUsers', userdata)
           }
-          await this.$store.dispatch('tiles/saveUsers', userdata)
         }
 
         await this.$store.dispatch('app/status')
@@ -451,7 +454,7 @@ export default {
       } catch (e) {
         this.$q.notify({
           type: 'negative',
-          message: this.$t(e.response.data.result),
+          message: this.$t(e.response ? e.response.data.result : e),
           progress: true,
           position: 'bottom',
           timeout: 1500
