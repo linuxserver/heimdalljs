@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { i18n } from 'boot/i18n.js'
 import { Notify, LocalStorage } from 'quasar'
 
 export async function status(context) {
@@ -20,7 +21,7 @@ export async function status(context) {
     // get settings
     const settings = await getSettings()
     const currentsettings = { ...context.state.settings }
-    if (settings.active_search_providers.length > 0) {
+    if (settings.active_search_providers && settings.active_search_providers.length > 0) {
       settings.search_provider = settings.active_search_providers[0]
     }
     const update = Object.assign(currentsettings, settings)
@@ -44,9 +45,10 @@ export async function status(context) {
       }
     }
   } catch (e) {
+    console.log(e)
     Notify.create({
       type: 'negative',
-      message: `Could not connect to backend server. ` + process.env.BACKEND_LOCATION + 'ping',
+      message: i18n.t('api_test_failure') + ' - ' + process.env.BACKEND_LOCATION + 'ping',
       progress: true,
       position: 'top',
       timeout: 1500
@@ -117,7 +119,7 @@ export async function changeBackground(context, data) {
   } catch (e) {
     Notify.create({
       type: 'negative',
-      message: `Could not update setting`,
+      message: i18n.t('update_setting_failure'),
       progress: true,
       position: 'bottom',
       timeout: 1500
@@ -138,7 +140,7 @@ export async function saveSettings(context, data) {
 
       Notify.create({
         type: 'positive',
-        message: `Setting updated`,
+        message: i18n.t('updated'),
         progress: true,
         position: 'bottom',
         timeout: 1500
@@ -149,7 +151,7 @@ export async function saveSettings(context, data) {
   } catch (e) {
     Notify.create({
       type: 'negative',
-      message: `Could not update setting`,
+      message: i18n.t('update_setting_failure'),
       progress: true,
       position: 'bottom',
       timeout: 1500

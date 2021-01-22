@@ -85,6 +85,7 @@ export default {
   incorrect_password: 'Incorrect password',
   api_test_success: 'Successfully connected to API',
   api_test_failure: 'Could not connect to API',
+  update_setting_failure: 'Could not update setting',
   // End API responses
   add_new: 'Add New',
   search: 'Search',
