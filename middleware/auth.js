@@ -9,6 +9,15 @@ module.exports = {
         req.user = null
       }
 
+      if (user && !req.originalUrl.match(/\/logout/)) {
+        // Extend the tokens life while the user is browsing
+        const token = user.generateJWT()
+        res.cookie('jwt', token, {
+          domain: `.${req.host.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
+          maxAge: 3600000
+        })
+      }
+
       req.user = user
       next()
     })(req, res, next)
