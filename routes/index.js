@@ -86,7 +86,7 @@ router.get(
   '/logout',
   errorHandler(async (req, res, next) => {
     res.clearCookie('jwt', {
-      domain: `.${req.host.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
+      domain: `.${req.host.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
     })
 
     return res.json({
@@ -215,9 +215,9 @@ router.post(
     }
     let response
     try {
-      const { allowSelfSignedCertificates, targetUrl } = req.body
+      const { allowSelfSignedCertificates, url } = req.body
       response = await axios({
-        url: targetUrl,
+        url,
         method: 'GET',
         httpsAgent: new https.Agent({
           rejectUnauthorized: allowSelfSignedCertificates === false
