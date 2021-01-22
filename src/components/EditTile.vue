@@ -131,7 +131,7 @@
         </q-card-section>
 
         <q-card-section style="width: 500px" class="q-pt-none">
-          <q-select outlined :options="possibleapps" option-value="appid" option-label="name" map-options :label="this.$t('application_type')" v-model="applicationtype"></q-select>
+          <q-select outlined :options="possibleapps" option-value="appid" option-label="name" :label="this.$t('application_type')" v-model="applicationtype"></q-select>
         </q-card-section>
 
         <q-card-actions align="right">
