@@ -94,7 +94,7 @@ export default {
       let html
       try {
         html = await axios.post(process.env.BACKEND_LOCATION + 'cors', {
-          url: `${this.websiteprotocol}://${this.url}`,
+          url: `${this.url}`,
           allowSelfSignedCertificates: this.allowSelfSignedCertificates
         })
       } catch (websiteLookupError) {

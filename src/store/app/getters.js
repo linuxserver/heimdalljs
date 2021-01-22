@@ -3,7 +3,7 @@ export function getBackground(state) {
   if (background === null || background.type === null || background.type === 'none') {
     return ''
   }
-  if (background.type === 'background_image') {
+  if (background.type === 'background_image' && background.location !== undefined) {
     return 'background-image: url(' + process.env.BACKEND_LOCATION + background.location + ')'
   }
   if (background.type === 'colour') {

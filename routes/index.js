@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const jwt = require('jsonwebtoken')
 const { User } = require('../models/index')
-const config = require('../config/config')
 const path = require('path')
 const Speakeasy = require('speakeasy')
 const axios = require('axios')
@@ -65,14 +63,10 @@ router.post(
       }
     }
 
-    const payload = {
-      id: user.id,
-      username: user.username,
-      updated: user.updatedAt.toString()
-    }
-
-    const token = jwt.sign(payload, config.jwtSecret, {
-      expiresIn: 36000
+    const token = user.generateJWT()
+    res.cookie('jwt', token, {
+      domain: `.${req.host.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
+      maxAge: 3600000
     })
 
     return res.json({
@@ -86,12 +80,37 @@ router.post(
 )
 
 /**
+ * Login endpoint
+ */
+router.get(
+  '/logout',
+  errorHandler(async (req, res, next) => {
+    res.clearCookie('jwt', {
+      domain: `.${req.host.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+    })
+
+    return res.json({
+      status: 'ok',
+      result: null
+    })
+  })
+)
+
+/**
  * Auth endpoint - returns authentication status
  */
 router.get(
   '/auth',
   errorHandler(async (req, res, next) => {
     if (!req.user) {
+      if (req.query.redirect && req.headers['x-forwarded-proto'] && req.headers['x-forwarded-host'] && req.headers['x-forwarded-uri']) {
+        const forwardUrl = `${req.headers['x-forwarded-proto']}://${req.headers['x-forwarded-host']}${req.headers['x-forwarded-uri']}`
+        const redirect = new URL(req.query.redirect)
+        redirect.searchParams.append('forward', forwardUrl)
+
+        return res.redirect(`${redirect.origin}/#/${redirect.search}`)
+      }
+
       return res.status(401).json({
         status: 'unauthorized',
         result: null
@@ -196,9 +215,9 @@ router.post(
     }
     let response
     try {
-      const { allowSelfSignedCertificates, targetUrl } = req.body
+      const { allowSelfSignedCertificates, url } = req.body
       response = await axios({
-        url: targetUrl,
+        url,
         method: 'GET',
         httpsAgent: new https.Agent({
           rejectUnauthorized: allowSelfSignedCertificates === false

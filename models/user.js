@@ -2,6 +2,8 @@
 
 const { Model } = require('sequelize')
 const bcrypt = require('bcrypt')
+const config = require('../config/config')
+const jwt = require('jsonwebtoken')
 
 const ADMIN = 0
 const USER = 1
@@ -70,10 +72,23 @@ class User extends Model {
     return bcrypt.compareSync(check, this.password)
   }
 
+  generateJWT() {
+    const payload = {
+      id: this.id,
+      username: this.username,
+      updated: this.updatedAt.toString()
+    }
+
+    return jwt.sign(payload, config.jwtSecret, {
+      expiresIn: 3600000
+    })
+  }
+
   toJSON() {
     const retval = this.get()
     retval.hasPassword = retval.password !== null
     delete retval.password
+    delete retval.totpSecret
 
     return retval
   }

@@ -29,13 +29,6 @@ app.use(passport.initialize())
 require('./passport')(passport)
 
 /**
- * Authentication middleware to attach the currently logged
- * in user to the request
- */
-const auth = require('./middleware/auth')
-app.use(auth.authorize)
-
-/**
  * Handle CORS
  */
 const cors = require('cors')
@@ -55,6 +48,14 @@ for (const subdir of ['avatars', 'icons', 'backgrounds']) {
 
 app.use(express.static(path.join(__dirname, './dist/spa/')))
 app.use(express.static(config.uploadDir))
+
+/**
+ * Authentication middleware to attach the currently logged
+ * in user to the request
+ */
+const auth = require('./middleware/auth')
+app.use(auth.authorize)
+
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 app.use('/items', itemsRouter)
