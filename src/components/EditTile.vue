@@ -11,7 +11,7 @@
               >Docker</q-btn>-->
             </div>
             <tile :application="preview" :stat1valueinit="stat1value" :stat2valueinit="stat2value"></tile>
-
+            <q-checkbox v-model="useritemactive" :label="this.$t('active')" />
             <div v-if="changeicon">
               <q-file outlined v-model="avatar" :label="this.$t('upload_file')">
                 <template v-slot:prepend>
@@ -37,7 +37,6 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-checkbox v-model="useritemactive" :label="this.$t('active')" />
                 <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
                 <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"><q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" /></q-input>
 
@@ -282,7 +281,7 @@ export default {
       title: null,
       tags: null,
       users: null,
-      useritemactive: null,
+      useritemactive: false,
       url: null,
       icon: null,
       newicon: null,
