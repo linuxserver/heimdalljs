@@ -8,30 +8,30 @@ class EnhancedApps {
   async call() {
     let stat1 = null
     let stat2 = null
+    let reuse = true
+    if (this.data.stat1.url !== this.data.stat2.url && this.data.stat2.url) {
+      reuse = false
+    }
     switch (this.data.enhancedType) {
       case 'apikey':
         stat1 = await this.apikey(this.data.stat1.url)
-        if (this.data.stat1.url !== this.data.stat2.url && this.data.stat2.url) {
-          stat2 = await this.apikey(this.data.stat2.url)
-        } else {
-          stat2 = stat1
-        }
+        if (!reuse) stat2 = await this.apikey(this.data.stat2.url)
         break
       case 'basic_auth':
         stat1 = await this.basicauth(this.data.stat1.url)
-        if (this.data.stat1.url !== this.data.stat2.url && this.data.stat2.url) {
-          stat2 = await this.basicauth(this.data.stat2.url)
-        } else {
-          stat2 = stat1
-        }
+        if (!reuse) stat2 = await this.basicauth(this.data.stat2.url)
         break
       case 'none':
+        stat1 = await this.noauth(this.data.stat1.url)
+        if (!reuse) stat2 = await this.noauth(this.data.stat2.url)
         break
       case 'cookie':
         break
       default:
         console.error(`unrecognized enhanced type for ${JSON.stringify(this)}`)
     }
+
+    if (reuse) stat2 = stat1
 
     return {
       stat1: stat1.data.result || stat1.data,
@@ -59,6 +59,16 @@ class EnhancedApps {
           password: this.data.basic_auth_password
         }
       })
+      return response
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  async noauth(url) {
+    url = url.replace(':url:', this.data.url)
+    try {
+      const response = await axios.get(url)
       return response
     } catch (e) {
       console.error(e)
