@@ -29,3 +29,10 @@ export function possibleApplications(state) {
   }
   return apps
 }
+
+export function enhancedApplications(state) {
+  const possible = possibleApplications(state)
+  const result = possible.filter(application => application.enhanced === true && application.config !== undefined)
+
+  return result
+}

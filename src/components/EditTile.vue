@@ -142,8 +142,14 @@
               </q-item>
             </template>
           </q-select>
-        </q-card-section>
+          <div class="">
+            Enhanced Apps:
+            <strong style="margin-right: 30px">{{ enhancedapps.length }}</strong>
 
+            Standard Apps:
+            <strong>{{ possibleapps.length - enhancedapps.length }}</strong>
+          </div>
+        </q-card-section>
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
           <q-btn unelevated label="Set" @click="setApplication" color="primary" v-close-popup />
@@ -206,6 +212,9 @@ export default {
     },
     possibleapps() {
       return this.$store.getters['tiles/possibleApplications']
+    },
+    enhancedapps() {
+      return this.$store.getters['tiles/enhancedApplications']
     },
     websiteprotocol() {
       if (this.url !== null && this.url.indexOf('://') > -1) {
