@@ -65,10 +65,9 @@ router.post(
 
     const token = user.generateJWT()
     res.cookie('jwt', token, {
-      domain: `.${req.host.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
+      domain: `.${req.hostname.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
       maxAge: 3600000
     })
-
     return res.json({
       status: 'ok',
       result: {
@@ -86,7 +85,7 @@ router.get(
   '/logout',
   errorHandler(async (req, res, next) => {
     res.clearCookie('jwt', {
-      domain: `.${req.host.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+      domain: `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
     })
 
     return res.json({
