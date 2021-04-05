@@ -77,7 +77,7 @@
     "vuedraggable": "^2.24.1"
   },
   "devDependencies": {
-    "@quasar/app": "^2.1.0",
+    "@quasar/app": "^2.2.4",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
