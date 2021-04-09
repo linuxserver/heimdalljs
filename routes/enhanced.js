@@ -37,7 +37,7 @@ router.post(
       })
   
     } catch (e) {
-      //console.log(e)
+      console.error(e)
       return res.status(e.response.status).json({
         status: 'error',
         result: e.response.data

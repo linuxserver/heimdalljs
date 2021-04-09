@@ -83,6 +83,7 @@
                       </q-input>
                     </q-tab-panel>
                   </q-tab-panels>
+                  <div class=""><q-input outlined v-model="additional_headers" :label="this.$t('Additional_headers')" type="textarea"></q-input></div>
                   <div class="stats">
                     <div class="stat">
                       <div class="text-h6">Stat 1</div>
@@ -239,6 +240,7 @@ export default {
         basic_auth_user: this.basic_auth_user,
         basic_auth_password: this.basic_auth_password,
         allowselfsignedcerts: this.allowselfsignedcerts,
+        additional_headers: this.additional_headers,
         stat1: {
           name: this.enhanced1name,
           url: this.enhanced1url,
@@ -314,6 +316,7 @@ export default {
       basic_auth_user: '',
       basic_auth_password: '',
       basic_auth_hide_password: true,
+      additional_headers: '',
       enhanced1name: null,
       enhanced1url: null,
       enhanced1key: null,
@@ -350,6 +353,7 @@ export default {
       this.enhancedType = (newdata.config && newdata.config.enhancedType) || false
       this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
       this.apikey = (newdata.config && newdata.config.apikey) || ''
+      this.additional_headers = (newdata.config && newdata.config.additional_headers) || ''
       this.basic_auth_user = (newdata.config && newdata.config.basic_auth_user) || ''
       this.basic_auth_password = (newdata.config && newdata.config.basic_auth_password) || ''
       this.enhanced1name = (newdata.config && newdata.config.stat1.name) || null
@@ -510,6 +514,7 @@ export default {
       this.icon = 'https://raw.githubusercontent.com/linuxserver/Heimdall-Apps/master/' + this.applicationtype.name + '/' + this.applicationtype.icon
       if (this.applicationtype.config !== null) {
         this.enhancedType = this.applicationtype.config.type
+        this.additional_headers = JSON.stringify(this.applicationtype.config.additional_headers)
         this.enhanced1name = this.applicationtype.config.stat1.name
         this.enhanced1url = this.applicationtype.config.stat1.url
         this.enhanced1key = this.applicationtype.config.stat1.key
