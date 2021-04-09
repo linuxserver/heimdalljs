@@ -66,12 +66,16 @@ export default class EnhancedApps {
     return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i]
   }
 
-  filter(value, filter) {
-    switch (filter) {
+  filter(value, stat) {
+    switch (stat.filter) {
       case 'count':
         return value.length
       case 'size':
         return this.humanFileSize(value)
+      case 'filter':
+        return value.filter(val => {
+          return val[stat.filterBy].toString() === stat.filterByValue.toString()
+        }).length
     }
     return value
   }
@@ -93,6 +97,10 @@ export default class EnhancedApps {
       {
         id: 'count',
         value: 'count'
+      },
+      {
+        id: 'filter',
+        value: 'filter'
       }
     ]
   }

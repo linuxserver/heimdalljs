@@ -8,7 +8,7 @@ class EnhancedApps {
     this.config = {
       httpsAgent: this.agent
     }
-    if(this.data.additional_headers !== '') {
+    if('additional_headers' in this.data && this.data.additional_headers !== '') {
       this.config.headers = JSON.parse(this.data.additional_headers)
     }
   }

@@ -91,6 +91,8 @@
                       <q-input outlined v-model="enhanced1url" :label="this.$t('url')"></q-input>
                       <q-input outlined v-model="enhanced1key" :label="this.$t('key')"></q-input>
                       <q-select outlined v-model="enhanced1filter" :label="this.$t('filter')" :options="filters" option-value="id" option-label="value" map-options emit-value></q-select>
+                      <q-input v-show="enhanced1filter === 'filter'" :label="this.$t('filter_by')" outlined v-model="enhanced1filterby"></q-input>
+                      <q-input v-show="enhanced1filter === 'filter'" :label="this.$t('filter_by_value')" outlined v-model="enhanced1filterbyvalue"></q-input>
                       <q-select outlined v-model="enhanced1updateOnChange" :label="this.$t('update_on_change')" :options="['Yes', 'No']"></q-select>
                     </div>
                     <div class="stat">
@@ -99,6 +101,8 @@
                       <q-input outlined v-model="enhanced2url" :label="this.$t('url')"></q-input>
                       <q-input outlined v-model="enhanced2key" :label="this.$t('key')"></q-input>
                       <q-select outlined v-model="enhanced2filter" :label="this.$t('filter')" :options="filters" option-value="id" option-label="value" map-options></q-select>
+                      <q-input v-show="enhanced2filter === 'filter'" :label="this.$t('filter_by')" outlined v-model="enhanced2filterby"></q-input>
+                      <q-input v-show="enhanced2filter === 'filter'" :label="this.$t('filter_by_value')" outlined v-model="enhanced2filterbyvalue"></q-input>
                       <q-select outlined v-model="enhanced2updateOnChange" :label="this.$t('update_on_change')" :options="['Yes', 'No']"></q-select>
                     </div>
                   </div>
@@ -246,6 +250,8 @@ export default {
           url: this.enhanced1url,
           key: this.enhanced1key,
           filter: this.enhanced1filter,
+          filterBy: this.enhanced1filterby,
+          filterByValue: this.enhanced1filterbyvalue,
           updateOnChange: this.enhanced1updateOnChange
         },
         stat2: {
@@ -253,6 +259,8 @@ export default {
           url: this.enhanced2url,
           key: this.enhanced2key,
           filter: this.enhanced2filter,
+          filterBy: this.enhanced2filterby,
+          filterByValue: this.enhanced2filterbyvalue,
           updateOnChange: this.enhanced2updateOnChange
         }
       }
@@ -321,11 +329,15 @@ export default {
       enhanced1url: null,
       enhanced1key: null,
       enhanced1filter: null,
+      enhanced1filterby: null,
+      enhanced1filterbyvalue: null,
       enhanced1updateOnChange: 'No',
       enhanced2name: null,
       enhanced2url: null,
       enhanced2key: null,
       enhanced2filter: null,
+      enhanced2filterby: null,
+      enhanced2filterbyvalue: null,
       enhanced2updateOnChange: 'No',
       possibletypes: EnhancedApps.types().map(e => ({
         id: e.id,
@@ -360,10 +372,14 @@ export default {
       this.enhanced1url = (newdata.config && newdata.config.stat1.url) || null
       this.enhanced1key = (newdata.config && newdata.config.stat1.key) || null
       this.enhanced1filter = (newdata.config && newdata.config.stat1.filter) || null
+      this.enhanced1filterby = (newdata.config && newdata.config.stat1.filterBy) || null
+      this.enhanced1filterbyvalue = (newdata.config && newdata.config.stat1.filterByValue) || null
       this.enhanced2name = (newdata.config && newdata.config.stat2.name) || null
       this.enhanced2url = (newdata.config && newdata.config.stat2.url) || null
       this.enhanced2key = (newdata.config && newdata.config.stat2.key) || null
       this.enhanced2filter = (newdata.config && newdata.config.stat2.filter) || null
+      this.enhanced2filterby = (newdata.config && newdata.config.stat2.filterBy) || null
+      this.enhanced2filterbyvalue = (newdata.config && newdata.config.stat2.filterByValue) || null
     },
     create: function (newdata, olddata) {
       if (newdata === true) {
@@ -392,10 +408,11 @@ export default {
       })
       try {
         const test = await enhanced.test()
-        const stat1 = this.config.stat1.key !== null ? _.get(test.data.result.stat1, this.config.stat1.key, null) : test.data.result.stat1
-        const stat2 = this.config.stat2.key !== null ? _.get(test.data.result.stat2, this.config.stat2.key, null) : test.data.result.stat2
-        this.stat1value = enhanced.filter(stat1, this.config.stat1.filter)
-        this.stat2value = enhanced.filter(stat2, this.config.stat2.filter)
+
+        const stat1 = this.config.stat1.key !== null && this.config.stat1.key !== '' ? _.get(test.data.result.stat1, this.config.stat1.key, null) : test.data.result.stat1
+        const stat2 = this.config.stat2.key !== null && this.config.stat2.key !== '' ? _.get(test.data.result.stat2, this.config.stat2.key, null) : test.data.result.stat2
+        this.stat1value = enhanced.filter(stat1, this.config.stat1)
+        this.stat2value = enhanced.filter(stat2, this.config.stat2)
       } catch (e) {
         console.error(e)
       }
@@ -519,10 +536,14 @@ export default {
         this.enhanced1url = this.applicationtype.config.stat1.url
         this.enhanced1key = this.applicationtype.config.stat1.key
         this.enhanced1filter = this.applicationtype.config.stat1.filter
+        this.enhanced1filterby = this.applicationtype.config.stat1.filterBy
+        this.enhanced1filterbyvalue = this.applicationtype.config.stat1.filterByValue
         this.enhanced2name = this.applicationtype.config.stat2.name
         this.enhanced2url = this.applicationtype.config.stat2.url
         this.enhanced2key = this.applicationtype.config.stat2.key
         this.enhanced2filter = this.applicationtype.config.stat2.filter
+        this.enhanced2filterby = this.applicationtype.config.stat2.filterBy
+        this.enhanced2filterbyvalue = this.applicationtype.config.stat2.filterByValue
       }
     },
     setWebsite(data) {

@@ -187,12 +187,11 @@ export default {
         if (!call) {
           return
         }
-
-        const stat1 = this.application.config.stat1.key !== null ? _.get(call.data.result.stat1, this.application.config.stat1.key, null) : call.data.result.stat1
-        const stat2 = this.application.config.stat2.key !== null ? _.get(call.data.result.stat2, this.application.config.stat2.key, null) : call.data.result.stat2
+        const stat1 = this.application.config.stat1.key !== null && this.application.config.stat1.key !== '' ? _.get(call.data.result.stat1, this.application.config.stat1.key, null) : call.data.result.stat1
+        const stat2 = this.application.config.stat2.key !== null && this.application.config.stat2.key !== '' ? _.get(call.data.result.stat2, this.application.config.stat2.key, null) : call.data.result.stat2
         return {
-          stat1: enhanced.filter(stat1, this.application.config.stat1.filter),
-          stat2: enhanced.filter(stat2, this.application.config.stat2.filter)
+          stat1: enhanced.filter(stat1, this.application.config.stat1),
+          stat2: enhanced.filter(stat2, this.application.config.stat2)
         }
       }
     }
