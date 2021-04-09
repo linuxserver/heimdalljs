@@ -14,7 +14,8 @@ export default class EnhancedApps {
 
   async test() {
     try {
-      const test = await this.call()
+      // console.log(this.data)
+      const test = await axios.post(process.env.BACKEND_LOCATION + 'enhanced/test', this.data)
       Notify.create({
         type: 'positive',
         message: i18n.t('api_test_success') + ': ' + JSON.stringify(test.data),
@@ -24,9 +25,10 @@ export default class EnhancedApps {
       })
       return test
     } catch (e) {
+      console.log(e.response)
       Notify.create({
         type: 'negative',
-        message: i18n.t('api_test_failure') + ': ' + JSON.stringify(e.response.data),
+        message: i18n.t('api_test_failure') + ': ' + JSON.stringify(e.response.data.result),
         progress: true,
         position: 'bottom',
         timeout: 1500

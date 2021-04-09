@@ -15,9 +15,13 @@ class EnhancedApps {
     let method_name = this.data.enhancedType
 
     if (typeof this[`${method_name}`] === 'function') {
-      stat1 = await this[`${method_name}`](this.data.stat1.url)
-      if (reuse) stat2 = stat1
-      else stat2 = await this[`${method_name}`](this.data.stat2.url)
+      try {
+        stat1 = await this[`${method_name}`](this.data.stat1.url)
+        if (reuse) stat2 = stat1
+        else stat2 = await this[`${method_name}`](this.data.stat2.url)
+      } catch(e) {
+        throw e
+      }
     } else {
       console.error(`unrecognized enhanced type for ${JSON.stringify(this)}`)
     }
@@ -35,7 +39,7 @@ class EnhancedApps {
       const response = await axios.get(url)
       return response
     } catch (e) {
-      console.error(e)
+      throw e
     }
   }
 
@@ -50,7 +54,7 @@ class EnhancedApps {
       })
       return response
     } catch (e) {
-      console.error(e)
+      throw e
     }
   }
 
@@ -60,7 +64,7 @@ class EnhancedApps {
       const response = await axios.get(url)
       return response
     } catch (e) {
-      console.error(e)
+      throw e
     }
   }
 
@@ -71,7 +75,7 @@ class EnhancedApps {
       const response = await axios.get(url)
       return response
     } catch (e) {
-      console.error(e)
+      throw e
     }
   }
 }
