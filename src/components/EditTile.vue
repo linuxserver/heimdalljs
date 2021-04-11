@@ -106,7 +106,10 @@
                       <q-select outlined v-model="enhanced2updateOnChange" :label="this.$t('update_on_change')" :options="['Yes', 'No']"></q-select>
                     </div>
                   </div>
-                  <q-btn @click="test">Test</q-btn>
+                  <div class="stats">
+                    <q-btn color="primary" @click="test">Test</q-btn>
+                    <q-btn style="margin-left: auto" @click="loadConfig">Export Config</q-btn>
+                  </div>
                 </div>
               </q-tab-panel>
             </q-tab-panels>
@@ -158,6 +161,21 @@
         <q-card-actions align="right">
           <q-btn flat label="Cancel" color="primary" v-close-popup />
           <q-btn unelevated label="Set" @click="setApplication" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+
+    <q-dialog v-model="configdialog">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">JSON Config</div>
+        </q-card-section>
+
+        <q-card-section style="width: 500px" class="q-pt-none">
+          <textarea style="width: 100%; min-height: 300px" v-model="jsonConfig"></textarea>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn flat label="Cancel" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -226,6 +244,23 @@ export default {
         return this.url.split('://')[0]
       }
       return null
+    },
+    jsonConfig() {
+      const config = {
+        type: this.config.enhancedType,
+        addition_headers: this.config.addition_headers,
+        stat1: this.config.stat1,
+        stat2: this.config.stat2
+      }
+      if (config.stat1.filter !== 'filter') {
+        delete config.stat1.filterBy
+        delete config.stat1.filterByValue
+      }
+      if (config.stat2.filter !== 'filter') {
+        delete config.stat2.filterBy
+        delete config.stat2.filterByValue
+      }
+      return JSON.stringify(config, null, 4)
     },
     possibleusers() {
       return this.$store.state.users.all
@@ -314,6 +349,7 @@ export default {
       changeicon: false,
       tab: 'general',
       applicationdialog: false,
+      configdialog: false,
       websitedialog: false,
       dockerdialog: false,
       selectedwebsiteimage: null,
@@ -524,6 +560,9 @@ export default {
     loadApplication() {
       this.$store.dispatch('tiles/getPossibleApps')
       this.applicationdialog = true
+    },
+    loadConfig() {
+      this.configdialog = true
     },
     setApplication() {
       this.title = this.applicationtype.name
