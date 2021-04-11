@@ -20,6 +20,12 @@
             <q-item-label caption>{{ $t('dashboard_more') }}</q-item-label>
           </q-item-section>
         </q-item>
+        <q-item :class="{ active: tab === 'miscellaneous_settings' }" @click="tab = 'miscellaneous_settings'" clickable>
+          <q-item-section>
+            <q-item-label>{{ $t('miscellaneous_settings') }}</q-item-label>
+            <q-item-label caption>{{ $t('miscellaneous_settings_more') }}</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </div>
     <div class="page">
@@ -143,6 +149,12 @@
               </div>
             </div>
           </div>
+        </q-tab-panel>
+        <q-tab-panel name="miscellaneous">
+          <q-item-section>
+            <q-item-label>{{ $t('miscellaneous_settings') }}</q-item-label>
+            <q-item-label caption>{{ $t('miscellaneous_settings_more') }}</q-item-label>
+          </q-item-section>
         </q-tab-panel>
       </q-tab-panels>
     </div>
