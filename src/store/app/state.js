@@ -98,6 +98,21 @@ export default function () {
       search_provider: null,
       active_search_providers: [],
       search_providers: [],
+      open_tab: '0',
+      open_tabs: [
+        {
+          value: '0',
+          label: 'Same tab'
+        },
+        {
+          value: '1',
+          label: 'New tab'
+        },
+        {
+          value: '2',
+          label: 'Current tab'
+        }
+      ],
       background_options: [
         {
           value: 'none',

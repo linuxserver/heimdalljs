@@ -20,7 +20,7 @@
             <q-item-label caption>{{ $t('dashboard_more') }}</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item :class="{ active: tab === 'miscellaneous_settings' }" @click="tab = 'miscellaneous_settings'" clickable>
+        <q-item :class="{ active: tab === 'miscellaneous' }" @click="tab = 'miscellaneous'" clickable>
           <q-item-section>
             <q-item-label>{{ $t('miscellaneous_settings') }}</q-item-label>
             <q-item-label caption>{{ $t('miscellaneous_settings_more') }}</q-item-label>
@@ -151,10 +151,7 @@
           </div>
         </q-tab-panel>
         <q-tab-panel name="miscellaneous">
-          <q-item-section>
-            <q-item-label>{{ $t('miscellaneous_settings') }}</q-item-label>
-            <q-item-label caption>{{ $t('miscellaneous_settings_more') }}</q-item-label>
-          </q-item-section>
+          <q-select outlined :options="open_tabs" :label="this.$t('link_open')" option-value="value" option-label="label" v-model="open_tab" map-options></q-select>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -188,6 +185,9 @@ export default {
     languages() {
       return this.$store.state.app.languages
     },
+    open_tabs() {
+      return this.$store.state.app.settings.open_tabs
+    },
     search_providers() {
       return this.$store.state.app.settings.search_providers
     },
@@ -211,6 +211,16 @@ export default {
         /* this.$store.dispatch('app/saveSettings', {
               active_search_providers: value
             }) */
+      }
+    },
+    open_tab: {
+      get() {
+        return this.$store.state.app.settings.open_tab
+      },
+      set(val) {
+        this.$store.dispatch('app/saveSettings', {
+          open_tab: val.value
+        })
       }
     },
     show_usernames: {

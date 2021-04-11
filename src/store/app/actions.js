@@ -137,6 +137,7 @@ export async function saveSettings(context, data) {
         update.search_provider = update.active_search_providers[0]
       }
       context.commit('settings', update)
+      console.log(data)
 
       Notify.create({
         type: 'positive',
