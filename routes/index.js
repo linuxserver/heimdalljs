@@ -64,7 +64,7 @@ router.post(
     }
 
     const token = user.generateJWT()
-    const domain = (req.hostname === 'localhost') ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+    const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
     res.cookie('jwt', token, {
       domain: domain,
       maxAge: 3600000
@@ -85,8 +85,9 @@ router.post(
 router.get(
   '/logout',
   errorHandler(async (req, res, next) => {
+    const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
     res.clearCookie('jwt', {
-      domain: `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+      domain: domain // Set cookie on top level domain for auth proxying
     })
 
     return res.json({
