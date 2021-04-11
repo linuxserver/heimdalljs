@@ -2,6 +2,9 @@
 
 const { Model } = require('sequelize')
 
+const SAME_TAB = 0
+const NEW_TAB = 1
+const CURRENT_TAB = 2
 class Item extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
@@ -55,6 +58,10 @@ class Item extends Model {
         system: {
           type: DataTypes.BOOLEAN,
           default: false
+        },
+        link_tab: {
+          type: DataTypes.TINYINT,
+          default: 0
         }
       },
       {
@@ -63,6 +70,18 @@ class Item extends Model {
         tableName: 'items'
       }
     )
+  }
+
+  static get NEW_TAB() {
+    return NEW_TAB
+  }
+
+  static get SAME_TAB() {
+    return SAME_TAB
+  }
+
+  static get CURRENT_TAB() {
+    return CURRENT_TAB
   }
 
   static associate(models) {
