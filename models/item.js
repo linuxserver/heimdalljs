@@ -58,7 +58,7 @@ class Item extends Model {
         },
         link_tab: {
           type: DataTypes.STRING,
-          default: null
+          default: 'default'
         }
       },
       {
