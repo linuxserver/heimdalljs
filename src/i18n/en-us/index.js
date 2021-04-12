@@ -122,5 +122,8 @@ export default {
   protocol: 'Protocol',
   enter_basic_auth_user: 'Enter your username',
   enter_basic_auth_password: 'Enter your password',
-  invalid_input_url: 'Please provide a full URL including protocol, such as https://'
+  invalid_input_url: 'Please provide a full URL including protocol, such as https://',
+  miscellaneous_settings: 'Miscellaneous Settings',
+  miscellaneous_settings_more: 'Settings related to opening tabs',
+  link_open: 'Links open in'
 }

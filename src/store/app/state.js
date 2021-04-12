@@ -98,6 +98,21 @@ export default function () {
       search_provider: null,
       active_search_providers: [],
       search_providers: [],
+      default_link_tab: null,
+      default_link_tabs: [
+        {
+          value: 'heimdall',
+          label: 'Same tab'
+        },
+        {
+          value: '_blank',
+          label: 'New tab'
+        },
+        {
+          value: '_self',
+          label: 'Current tab'
+        }
+      ],
       background_options: [
         {
           value: 'none',

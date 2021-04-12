@@ -55,6 +55,10 @@ class Item extends Model {
         system: {
           type: DataTypes.BOOLEAN,
           default: false
+        },
+        linkTab: {
+          type: DataTypes.STRING,
+          default: null
         }
       },
       {

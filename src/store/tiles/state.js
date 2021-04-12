@@ -6,6 +6,25 @@ export default function () {
     possibleapps: [],
     create: false,
     running: false,
+    link_tab: null,
+    link_tabs: [
+      {
+        value: 'heimdall',
+        label: 'Same tab'
+      },
+      {
+        value: '_blank',
+        label: 'New tab'
+      },
+      {
+        value: '_self',
+        label: 'Current tab'
+      },
+      {
+        value: 'default',
+        label: 'Default'
+      }
+    ],
     edit: {
       id: null,
       icon: null,
