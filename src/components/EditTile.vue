@@ -358,7 +358,7 @@ export default {
       dockerdialog: false,
       selectedwebsiteimage: null,
       possibletags: [],
-      link_tab: null,
+      link_tab: 'default',
       dockers: [],
       enhancedType: 'disabled',
       apikey: '',

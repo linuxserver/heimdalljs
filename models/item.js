@@ -56,7 +56,7 @@ class Item extends Model {
           type: DataTypes.BOOLEAN,
           default: false
         },
-        link_tab: {
+        linkTab: {
           type: DataTypes.STRING,
           default: null
         }
@@ -67,18 +67,6 @@ class Item extends Model {
         tableName: 'items'
       }
     )
-  }
-
-  static get NEW_TAB() {
-    return NEW_TAB
-  }
-
-  static get SAME_TAB() {
-    return SAME_TAB
-  }
-
-  static get CURRENT_TAB() {
-    return CURRENT_TAB
   }
 
   static associate(models) {
