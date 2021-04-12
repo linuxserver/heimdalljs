@@ -98,8 +98,8 @@ export default function () {
       search_provider: null,
       active_search_providers: [],
       search_providers: [],
-      link_tab: null,
-      link_tabs: [
+      default_link_tab: null,
+      default_link_tabs: [
         {
           value: 'heimdall',
           label: 'Same tab'

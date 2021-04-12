@@ -475,7 +475,6 @@ export default {
       if (this.url !== null) formData.url = this.url
       if (this.description !== null) formData.description = this.description
       if (this.link_tab !== null) formData.link_tab = this.link_tab.value
-      console.log(this.link_tab)
       formData.config = this.config
 
       if (this.icon !== null && this.icon !== undefined && this.icon !== this.application.icon) {
