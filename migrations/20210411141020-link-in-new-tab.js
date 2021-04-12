@@ -43,8 +43,8 @@ module.exports = {
         default: false
       },
       link_tab: {
-        type: Sequelize.TINYINT,
-        defaultValue: 0
+        type: Sequelize.STRING,
+        default: null
       },
       created_at: {
         allowNull: false,

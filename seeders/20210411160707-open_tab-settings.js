@@ -4,8 +4,8 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('settings', [
       {
-        key: 'open_tab',
-        value: 0,
+        key: 'link_tab',
+        value: '"_self"',
         created_at: new Date(),
         updated_at: new Date()
       }

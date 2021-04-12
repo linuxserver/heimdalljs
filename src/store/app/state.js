@@ -98,18 +98,18 @@ export default function () {
       search_provider: null,
       active_search_providers: [],
       search_providers: [],
-      open_tab: '0',
-      open_tabs: [
+      link_tab: null,
+      link_tabs: [
         {
-          value: '0',
+          value: 'heimdall',
           label: 'Same tab'
         },
         {
-          value: '1',
+          value: '_blank',
           label: 'New tab'
         },
         {
-          value: '2',
+          value: '_self',
           label: 'Current tab'
         }
       ],

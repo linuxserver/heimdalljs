@@ -77,8 +77,7 @@ export function clear(context) {
     url: null,
     color: null,
     applicationtype: null,
-    possibletags: null,
-    open_tab: null
+    possibletags: null
   })
 }
 

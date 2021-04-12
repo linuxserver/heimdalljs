@@ -151,7 +151,7 @@
           </div>
         </q-tab-panel>
         <q-tab-panel name="miscellaneous">
-          <q-select outlined :options="open_tabs" :label="this.$t('link_open')" option-value="value" option-label="label" v-model="open_tab" map-options></q-select>
+          <q-select outlined :options="link_tabs" :label="this.$t('link_open')" v-model="link_tab" map-options></q-select>
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -185,8 +185,8 @@ export default {
     languages() {
       return this.$store.state.app.languages
     },
-    open_tabs() {
-      return this.$store.state.app.settings.open_tabs
+    link_tabs() {
+      return this.$store.state.app.settings.link_tabs
     },
     search_providers() {
       return this.$store.state.app.settings.search_providers
@@ -213,13 +213,13 @@ export default {
             }) */
       }
     },
-    open_tab: {
+    link_tab: {
       get() {
-        return this.$store.state.app.settings.open_tab
+        return this.$store.state.app.settings.link_tab
       },
       set(val) {
         this.$store.dispatch('app/saveSettings', {
-          open_tab: val.value
+          link_tab: val.value
         })
       }
     },

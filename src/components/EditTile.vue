@@ -42,7 +42,7 @@
 
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
-                <q-select outlined :options="open_tabs" :label="this.$t('link_open')" v-model="link_tab" emit-value map-options></q-select>
+                <q-select outlined :options="link_tabs" :label="this.$t('link_open')" v-model="link_tab" map-options></q-select>
               </q-tab-panel>
 
               <q-tab-panel name="image">
@@ -269,8 +269,8 @@ export default {
     taglist() {
       return this.tags.map(a => a.title).join()
     },
-    open_tabs() {
-      return this.$store.state.tiles.open_tabs
+    link_tabs() {
+      return this.$store.state.tiles.link_tabs
     },
     create() {
       return this.$store.state.tiles.create
@@ -474,7 +474,7 @@ export default {
       if (this.tags !== null) formData.tags = this.tags
       if (this.url !== null) formData.url = this.url
       if (this.description !== null) formData.description = this.description
-      if (this.link_tab !== null) formData.link_tab = this.link_tab
+      if (this.link_tab !== null) formData.link_tab = this.link_tab.value
       console.log(this.link_tab)
       formData.config = this.config
 

@@ -7,21 +7,21 @@ export default function () {
     create: false,
     running: false,
     link_tab: null,
-    open_tabs: [
+    link_tabs: [
       {
-        value: '0',
+        value: 'heimdall',
         label: 'Same tab'
       },
       {
-        value: '1',
+        value: '_blank',
         label: 'New tab'
       },
       {
-        value: '2',
+        value: '_self',
         label: 'Current tab'
       },
       {
-        value: '3',
+        value: 'default',
         label: 'Default'
       }
     ],

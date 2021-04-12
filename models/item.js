@@ -2,9 +2,6 @@
 
 const { Model } = require('sequelize')
 
-const SAME_TAB = 0
-const NEW_TAB = 1
-const CURRENT_TAB = 2
 class Item extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
@@ -60,8 +57,8 @@ class Item extends Model {
           default: false
         },
         link_tab: {
-          type: DataTypes.TINYINT,
-          default: 0
+          type: DataTypes.STRING,
+          default: null
         }
       },
       {
