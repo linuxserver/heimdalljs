@@ -5,7 +5,7 @@ module.exports = {
     await queryInterface.addColumn('items', 'link_tab', {
       type: Sequelize.STRING,
       after: 'system',
-      defaultValue: null
+      defaultValue: 'default'
     })
   },
 
