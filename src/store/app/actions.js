@@ -218,5 +218,4 @@ export async function logout(context) {
   // console.log(data)
   await axios.get(process.env.BACKEND_LOCATION + 'logout')
   context.commit('logout')
-  this.$router.push('/')
 }

@@ -28,17 +28,26 @@ router.post(
       })
     }
 
+    if (req.body.username === undefined) {
+      return res.status(403).json({
+        status: 'error',
+        result: 'No username provided!'
+      })
+    }
+
     const user = await User.findOne({
       where: {
         username: req.body.username
       }
     })
 
-    if (!user || !user.verifyPassword(req.body.password)) {
-      return res.status(403).json({
-        status: 'error',
-        result: 'invalid_user'
-      })
+    if (req.body.username && req.body.password) {
+      if (!user || !user.verifyPassword(req.body.password)) {
+        return res.status(403).json({
+          status: 'error',
+          result: 'invalid_user'
+        })
+      }
     }
 
     if (user.multifactorEnabled && !req.body.totp) {
