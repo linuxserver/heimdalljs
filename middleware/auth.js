@@ -12,8 +12,9 @@ module.exports = {
       if (user && !req.originalUrl.match(/\/logout/)) {
         // Extend the tokens life while the user is browsing
         const token = user.generateJWT()
+        const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
         res.cookie('jwt', token, {
-          domain: `.${req.host.split('.').slice(-2).join('.')}`, // Set cookie on top level domain for auth proxying
+          domain: domain,
           maxAge: 3600000
         })
       }
