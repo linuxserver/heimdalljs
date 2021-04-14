@@ -50,9 +50,9 @@
                     <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                   </template>
                 </q-input>
+                <q-select outlined v-model="level" :options="permissions" :label="this.$t('user_permissions')" emit-value map-options></q-select>
 
-                <!--<q-select
-                  outlined
+                <!--outlined
                   :options="languages"
                   :label="this.$t('select_language')"
                   option-value="value"
@@ -122,6 +122,9 @@ export default {
     create() {
       return this.$store.state.users.create
     },
+    permissions() {
+      return this.$store.state.users.permissions
+    },
     /* languages() {
       return this.$store.state.app.languages
     }, */
@@ -137,6 +140,7 @@ export default {
       email: null,
       username: null,
       password: '',
+      level: null,
       totp: null,
       isPwd: true,
       actions: false,
@@ -163,6 +167,7 @@ export default {
       this.email = newdata.email
       this.username = newdata.username
       this.password = newdata.password
+      this.level = newdata.level
       // this.settingsLanguage = newdata.settings.language
       this.multifactorEnabled = newdata.multifactorEnabled
     },
@@ -245,7 +250,7 @@ export default {
       const media = new FormData()
       if (this.email !== null) formData.email = this.email
       if (this.password !== '') formData.password = this.password
-
+      if (this.level !== null) formData.level = this.level
       // Settings
       formData.settings = {}
       if (this.settingsLanguage !== null) formData.settings.language = this.settingsLanguage.value
