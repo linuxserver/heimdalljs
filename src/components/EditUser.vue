@@ -45,12 +45,17 @@
 
                 <q-input outlined v-model="email" :label="this.$t('email')"></q-input>
 
-                <q-input v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
+                <q-input :disable="!updatePass" v-model="password" :label="this.$t('password')" outlined :type="isPwd ? 'password' : 'text'">
                   <template v-slot:append>
                     <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
                   </template>
                 </q-input>
-                <q-select outlined v-model="level" :options="permissions" :label="this.$t('user_permissions')" emit-value map-options></q-select>
+                <div class="q-mb-md">
+                  <q-checkbox v-model="updatePass" :label="user.id ? $t('update_pass') : this.$t('create_pass')" @click="updatePass = !updatePass">
+                    <q-tooltip content-style="font-size: 15px" max-width="360px" :offset="[10, 10]">{{ user.id ? $t('update_pass_tooltip') : $t('create_pass_tooltip') }}</q-tooltip>
+                  </q-checkbox>
+                </div>
+                <q-select v-if="currentUser.level === 0" outlined v-model="level" :options="permissions" :label="this.$t('user_permissions')" emit-value map-options></q-select>
 
                 <!--outlined
                   :options="languages"
@@ -116,6 +121,9 @@ export default {
   components: {},
 
   computed: {
+    currentUser() {
+      return this.$store.state.app.user
+    },
     user() {
       return this.$store.state.users.edit
     },
@@ -143,6 +151,7 @@ export default {
       level: null,
       totp: null,
       isPwd: true,
+      updatePass: false,
       actions: false,
       multifactorEnabled: false,
       qrcode: null,
@@ -151,7 +160,7 @@ export default {
       changeavatar: false,
       settingtab: 'general',
       settingsLanguage: null,
-      urlvatar: '',
+      urlavatar: '',
       mfacode: null,
       mfalinks: {
         link1: '<a href="https://support.google.com/accounts/answer/1066447">Google Authenticator</a>',
@@ -249,8 +258,9 @@ export default {
       }
       const media = new FormData()
       if (this.email !== null) formData.email = this.email
-      if (this.password !== '') formData.password = this.password
+      if (this.updatePass !== false) formData.password = this.password
       if (this.level !== null) formData.level = this.level
+      formData.updatePass = this.updatePass
       // Settings
       formData.settings = {}
       if (this.settingsLanguage !== null) formData.settings.language = this.settingsLanguage.value
@@ -268,6 +278,7 @@ export default {
         await this.$store.dispatch('users/save', data)
         await this.$store.dispatch('users/getUsers')
         await this.$store.dispatch('app/status')
+        await this.$store.dispatch('users/clear')
         this.$store.commit('users/edit', this.$store.state.app.user)
         this.$store.commit('users/create', false)
         this.$q.notify({

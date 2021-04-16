@@ -17,10 +17,7 @@ class User extends Model {
         email: DataTypes.STRING,
         avatar: DataTypes.STRING,
         password: {
-          type: DataTypes.STRING,
-          set(val) {
-            this.setDataValue('password', bcrypt.hashSync(val, 10))
-          }
+          type: DataTypes.STRING
         },
         settings: {
           type: DataTypes.TEXT,

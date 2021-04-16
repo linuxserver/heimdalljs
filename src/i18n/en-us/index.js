@@ -126,5 +126,9 @@ export default {
   miscellaneous_settings: 'Miscellaneous Settings',
   miscellaneous_settings_more: 'Settings related to opening tabs',
   link_open: 'Links open in',
-  user_permissions: 'User permissions'
+  user_permissions: 'User permissions',
+  update_pass: 'Update password?',
+  update_pass_tooltip: 'If you want to update the password, tick the box and fill the desired password (For NO password, leave password blank)',
+  create_pass: 'Create password?',
+  create_pass_tooltip: 'If you want password tick the box and fill the desired password, else dont tick the box'
 }

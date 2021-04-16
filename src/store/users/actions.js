@@ -20,10 +20,9 @@ export function saveUser(context, data) {
 export async function save(context, data) {
   if (data.id === null) {
     const user = await axios.post(process.env.BACKEND_LOCATION + 'users', data.user)
-    console.log(user)
     let media = null
     if (data.media) {
-      media = await axios.put(process.env.BACKEND_LOCATION + 'users/' + user.data.id + '/avatar', data.media)
+      media = await axios.put(process.env.BACKEND_LOCATION + 'users/' + user.data.result.id + '/avatar', data.media)
     }
     return {
       user: user,

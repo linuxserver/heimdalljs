@@ -41,12 +41,26 @@ router.post(
       }
     })
 
-    if (req.body.username && req.body.password) {
-      if (!user || !user.verifyPassword(req.body.password)) {
+    if (!user) {
+      return res.status(403).json({
+        status: 'error',
+        result: 'Invalid username or password!'
+      })
+    }
+
+    if (user.password !== null) {
+      if (req.body.password === null || req.body.password === '' || !req.body.password) {
         return res.status(403).json({
           status: 'error',
-          result: 'invalid_user'
+          result: 'Invalid username or password!'
         })
+      } else {
+        if (!user.verifyPassword(req.body.password)) {
+          return res.status(403).json({
+            status: 'error',
+            result: 'Invalid username or password!'
+          })
+        }
       }
     }
 
@@ -89,7 +103,7 @@ router.post(
 )
 
 /**
- * Login endpoint
+ * Logout endpoint
  */
 router.get(
   '/logout',
