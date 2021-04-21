@@ -92,8 +92,6 @@ router.post(
     let pass = null
     if (req.body.password) {
       pass = bcrypt.hashSync(req.body.password, 10)
-    } else {
-      pass = null
     }
 
     const user = await User.create({
