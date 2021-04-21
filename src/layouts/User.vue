@@ -1,5 +1,5 @@
 <template>
-  <q-layout v-if="user.level === 0" view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf">
     <q-header class="bg-grey-1 text-grey-7" bordered>
       <q-toolbar>
         <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" icon="menu" aria-label="Menu" />

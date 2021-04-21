@@ -24,7 +24,7 @@
       <q-tab-panels v-model="activetab" animated>
         <q-tab-panel name="user">
           <EssentialLink :title="this.$t('dashboard')" :caption="this.tiles + ' ' + this.$tc('app', this.tiles)" icon="dashboard" link="/" />
-          <EssentialLink :title="this.$tc('application')" :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)" icon="apps" link="/account" />
+          <EssentialLink v-if="user.level !== 2" :title="this.$tc('application')" :caption="this.active_tiles + ' ' + this.$tc('app', this.active_tiles)" icon="apps" link="/account" />
           <EssentialLink :title="this.$t('settings')" icon="settings" link="/account/settings" />
         </q-tab-panel>
 

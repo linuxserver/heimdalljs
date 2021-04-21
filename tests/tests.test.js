@@ -1,4 +1,5 @@
 const { User, Item } = require('../models/index')
+const bcrypt = require('bcrypt')
 
 beforeAll(async () => {
   await User.destroy({ where: {} })
@@ -8,7 +9,7 @@ test('Creates a user', async () => {
   const user = await User.create({
     username: 'admin',
     email: 'admin@example.com',
-    password: 'admin'
+    password: bcrypt.hashSync('admin', 10)
   })
 
   expect(user.username).toBe('admin')

@@ -55,7 +55,7 @@ router.get(
 router.post(
   '/',
   errorHandler(async (req, res, next) => {
-    if (!req.user) {
+    if (!req.user || req.user.level === User.READ_ONLY) {
       return res.status(401).json({
         status: 'error',
         result: 'unauthorized'
@@ -121,7 +121,7 @@ router.post(
 router.put(
   '/:id',
   errorHandler(async (req, res, next) => {
-    if (!req.user) {
+    if (!req.user || req.user.level === User.READ_ONLY) {
       return res.status(401).json({
         status: 'error',
         result: 'unauthorized'
@@ -203,7 +203,7 @@ router.put(
 router.delete(
   '/:id',
   errorHandler(async (req, res, next) => {
-    if (!req.user) {
+    if (!req.user || req.user.level === User.READ_ONLY) {
       return res.status(401).json({
         status: 'error',
         result: 'unauthorized'

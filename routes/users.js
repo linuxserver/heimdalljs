@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { User, Setting } = require('../models/index')
+const bcrypt = require('bcrypt')
 const _ = require('lodash')
 const Speakeasy = require('speakeasy')
 const QRCode = require('qrcode')
@@ -71,7 +72,7 @@ router.post(
         result: 'unauthorized'
       })
     }
-
+    //Only admins can create users
     if (usersCount > 0 && req.user.level !== User.ADMIN) {
       delete req.body.level
     }
@@ -88,8 +89,18 @@ router.post(
         result: 'username_exists'
       })
     }
+    let pass = null
+    if (req.body.password) {
+      pass = bcrypt.hashSync(req.body.password, 10)
+    }
 
-    const user = await User.create(req.body)
+    const user = await User.create({
+      username: req.body.username,
+      password: pass,
+      email: req.body.email,
+      level: req.body.level,
+      settings: req.body.settings
+    })
 
     return res.json({
       status: 'ok',
@@ -117,7 +128,7 @@ router.put(
     }
 
     // only admins can edit other users
-    if (req.user.id !== req.params.id && req.user.level !== User.ADMIN) {
+    if (req.user.id.toString() !== req.params.id && req.user.level !== User.ADMIN) {
       return res.status(401).json({
         status: 'error',
         result: 'unauthorized'
@@ -130,15 +141,19 @@ router.put(
       }
     })
 
-    if (req.body.currentPassword) {
-      if (!user.verifyPassword(req.body.currentPassword)) {
-        return res.status(400).json({
-          status: 'error',
-          result: 'incorrect_password'
+    if (req.body.updatePass) {
+      if (req.body.password) {
+        let pass = bcrypt.hashSync(req.body.password, 10)
+        user.update({
+          password: pass
+        })
+      } else {
+        user.update({
+          password: null
         })
       }
-    } else {
-      // If we didn't pass up the current password, don't submit a new password
+      delete req.body.password
+    } else if (!req.body.updatePass) {
       delete req.body.password
     }
 
@@ -158,7 +173,6 @@ router.put(
         label: user.username
       })
       const qrcode = await QRCode.toDataURL(url, { scale: 6 })
-
       user.update({
         totpSecret: secret.base32
       })
@@ -177,7 +191,9 @@ router.put(
           window: 0
         })
       ) {
-        user.update({ multifactorEnabled: true })
+        user.update({
+          multifactorEnabled: true
+        })
 
         return res.json({
           status: 'ok'
@@ -196,7 +212,6 @@ router.put(
 
       return res.json({ status: 'ok' })
     }
-
     await user.update(req.body)
 
     return res.json({
@@ -219,8 +234,8 @@ router.put(
       })
     }
 
-    // only admins can edit other users
-    if (req.user.id !== req.params.id && req.user.level !== User.ADMIN) {
+    // users can only change their avatar
+    if (req.user.id.toString() !== req.params.id && req.user.level !== User.ADMIN) {
       return res.status(401).json({
         status: 'error',
         result: 'unauthorized'
