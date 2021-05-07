@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV || 'development'
+// const env = process.env.NODE_ENV || 'development'
 const express = require('express')
 // const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -34,8 +34,9 @@ require('./passport')(passport)
 const cors = require('cors')
 app.use(
   cors({
-    credentials: true,
-    ...(env === 'development' && { origin: 'http://localhost:8080' })
+    // ...(env === 'development' ? { origin: 'http://localhost:8080' } :
+    origin: true,
+    credentials: true
   })
 )
 

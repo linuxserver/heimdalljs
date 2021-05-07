@@ -6,7 +6,7 @@ export default function () {
     possibleapps: [],
     create: false,
     running: false,
-    link_tab: null,
+    link_tab: 'default',
     link_tabs: [
       {
         value: 'heimdall',
@@ -34,7 +34,8 @@ export default function () {
       url: null,
       color: null,
       applicationtype: null,
-      possibletags: null
+      possibletags: null,
+      link_tab: 'default'
     }
   }
 }

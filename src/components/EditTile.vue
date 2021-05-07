@@ -1,6 +1,6 @@
 <template>
   <div class="userdetails fit">
-    <q-form @submit="onSubmit" class="fit userform">
+    <q-form ref="userForm" @submit="onSubmit" class="fit userform">
       <q-scroll-area style="height: 100%">
         <div id="create" class="create fit">
           <div class="tile-details">
@@ -37,8 +37,8 @@
 
             <q-tab-panels v-model="tab" animated class="">
               <q-tab-panel name="general">
-                <q-input outlined v-model="title" :label="this.$t('title')" :rules="[val => !!val || this.$t('required_field')]"></q-input>
-                <q-input outlined v-model="url" :label="this.$t('url')" :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"><q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" /></q-input>
+                <q-input outlined v-model="title" :label="this.$t('title')" lazy-rules :rules="[val => !!val || this.$t('required_field')]"></q-input>
+                <q-input outlined v-model="url" :label="this.$t('url')" lazy-rules :rules="[val => !!val || this.$t('required_field'), val => isValidURL(val) || this.$t('invalid_input_url')]"><q-checkbox v-model="allowselfsignedcerts" v-show="websiteprotocol === 'https'" :label="this.$t('allow_self_signed_certificates')" /></q-input>
 
                 <q-input v-model="description" :label="this.$t('description')" outlined type="textarea" />
                 <q-select :label="this.$t('Tags')" outlined v-model="tags" multiple :options="possibletags" use-input new-value-mode="add-unique" emit-value use-chips ref="tags" @new-value="updateInput" @filter="filterFn" />
@@ -403,8 +403,8 @@ export default {
       this.link_tab = newdata.link_tab
       this.color = newdata.color
       this.url = newdata.url
-      this.applicationtype = newdata.applicationType
-      this.enhancedType = (newdata.config && newdata.config.enhancedType) || false
+      this.applicationtype = newdata.applicationtype
+      this.enhancedType = (newdata.config && newdata.config.enhancedType) || 'disabled'
       this.allowselfsignedcerts = (newdata.config && newdata.config.allowselfsignedcerts) || false
       this.apikey = (newdata.config && newdata.config.apikey) || ''
       this.additional_headers = (newdata.config && newdata.config.additional_headers) || ''
@@ -462,7 +462,7 @@ export default {
     async onSubmit(evt) {
       this.stat1value = null
       this.stat2value = null
-      const applicationType = this.applicationtype !== null ? this.applicationtype.appid : null
+      const applicationType = typeof this.applicationtype === 'object' && this.applicationtype !== null ? this.applicationtype.appid : null
       const formData = {
         title: this.title
       }
@@ -525,7 +525,8 @@ export default {
             await this.$store.dispatch('tiles/saveUsers', userdata)
           }
         }
-
+        await this.$store.dispatch('tiles/clear')
+        this.$refs.userForm.resetValidation()
         await this.$store.dispatch('app/status')
         this.$q.notify({
           message: this.$t('updated'),
@@ -605,6 +606,7 @@ export default {
       await this.$emit('closecreate')
       setTimeout(() => {
         this.$store.dispatch('tiles/clear')
+        this.$refs.userForm.resetValidation()
       }, 300)
     },
     async getDockers() {
