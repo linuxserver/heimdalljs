@@ -55,7 +55,7 @@
                     <q-tooltip content-style="font-size: 15px" max-width="360px" :offset="[10, 10]">{{ user.id ? $t('update_pass_tooltip') : $t('create_pass_tooltip') }}</q-tooltip>
                   </q-checkbox>
                 </div>
-                <q-select v-if="currentUser.level === 0" outlined v-model="level" :options="permissions" :label="this.$t('user_permissions')" emit-value map-options></q-select>
+                <q-select v-if="currentUser.level === 0 && $route.path !== '/account/settings'" outlined v-model="level" :options="permissions" :label="this.$t('user_permissions')" emit-value map-options></q-select>
 
                 <!--outlined
                   :options="languages"
