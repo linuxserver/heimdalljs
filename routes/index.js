@@ -7,6 +7,7 @@ const axios = require('axios')
 const fs = require('fs')
 const Docker = require('dockerode')
 const errorHandler = require('../middleware/error-handler')
+const getRootDomain = require('../src/utils/Helpers')
 const https = require('https')
 
 /* GET home page. */
@@ -87,7 +88,7 @@ router.post(
     }
 
     const token = user.generateJWT()
-    const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+    const domain = getRootDomain(req.protocol + '://' + req.hostname + req.originalUrl) // Set cookie on top level domain for auth proxying
     res.cookie('jwt', token, {
       domain: domain,
       maxAge: 3600000
@@ -108,7 +109,7 @@ router.post(
 router.get(
   '/logout',
   errorHandler(async (req, res, next) => {
-    const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+    const domain = getRootDomain(req.protocol + '://' + req.hostname + req.originalUrl) // Set cookie on top level domain for auth proxying
     res.clearCookie('jwt', {
       domain: domain // Set cookie on top level domain for auth proxying
     })

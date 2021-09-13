@@ -1,6 +1,7 @@
 'use strict'
 
 const passport = require('passport')
+const getRootDomain = require('../src/utils/Helpers')
 
 module.exports = {
   authorize: (req, res, next) => {
@@ -12,7 +13,7 @@ module.exports = {
       if (user && !req.originalUrl.match(/\/logout/)) {
         // Extend the tokens life while the user is browsing
         const token = user.generateJWT()
-        const domain = req.hostname === 'localhost' ? 'localhost' : `.${req.hostname.split('.').slice(-2).join('.')}` // Set cookie on top level domain for auth proxying
+        const domain = getRootDomain(req.protocol + '://' + req.hostname + req.originalUrl) // Set cookie on top level domain for auth proxying
         res.cookie('jwt', token, {
           domain: domain,
           maxAge: 3600000
