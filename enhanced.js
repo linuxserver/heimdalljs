@@ -8,7 +8,7 @@ class EnhancedApps {
     this.config = {
       httpsAgent: this.agent
     }
-    if('additional_headers' in this.data && this.data.additional_headers !== '') {
+    if ('additional_headers' in this.data && this.data.additional_headers !== '') {
       this.config.headers = JSON.parse(this.data.additional_headers)
     }
   }
@@ -21,7 +21,7 @@ class EnhancedApps {
 
     let method_name = this.data.enhancedType
 
-    switch(method_name) {
+    switch (method_name) {
       case 'basic_auth':
         await this.basic_auth()
         break
@@ -34,7 +34,7 @@ class EnhancedApps {
       stat1 = await this.externalCall(url1)
       if (url1 === url2) stat2 = stat1
       else stat2 = await this.externalCall(url2)
-    } catch(e) {
+    } catch (e) {
       throw e
     }
 
@@ -61,7 +61,6 @@ class EnhancedApps {
 
     return url
   }
-
 
   async basic_auth(url) {
     this.config.auth = {

@@ -35,7 +35,6 @@ router.post(
         status: 'ok',
         result: response
       })
-  
     } catch (e) {
       console.error(e)
       return res.status(e.response.status).json({
@@ -43,9 +42,7 @@ router.post(
         result: e.response.data
       })
     }
-
-
   })
 )
-  
+
 module.exports = router
