@@ -1,0 +1,32 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /config/uploads
+
+if [ ! -f "/config/env" ]; then
+    cp /app/heimdall/.env.example /config/env
+    rm -rf /app/heimdall/.env
+    ln -sf /config/env /app/heimdall/.env
+
+    SECRET_KEY=$(date +%s | sha256sum | base64 | head -c 32)
+    sed -i 's|JWT_SECRET=CHANGE_ME|JWT_SECRET='${SECRET_KEY}'|g' /config/env
+    sed -i 's|DB_TYPE=mysql|DB_TYPE=sqlite|g' /config/env
+    sed -i 's|DB_STORAGE=$|DB_STORAGE=/config/app.db|g' /config/env
+    sed -i 's|UPLOAD_DIR=$|UPLOAD_DIR=/config/uploads|g' /config/env
+
+    echo "Running migrations. . ."
+    cd /app/heimdall
+    npm run db:migrate
+    npm run db:seed
+else
+    cd /app/heimdall
+    npm run db:migrate
+fi
+
+# permissions
+echo "Fixing /config permissions. . ."
+chown -R abc:abc \
+    /config
+
+# chown the app directory, but not node_modules
+echo "Fixing app permissions. . ."
+find /app/heimdall -maxdepth 1 ! -name node_modules ! -name heimdall -exec chown -R abc:abc '{}' \;
