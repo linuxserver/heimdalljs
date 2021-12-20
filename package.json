@@ -98,7 +98,7 @@
     "prettier": "^2.5.1",
     "prettier-plugin-packagejson": "^2.2.15",
     "stylelint": "^13.12.0",
-    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-prettier": "^9.0.3",
     "stylelint-prettier": "^1.2.0",
     "workbox-webpack-plugin": "^5.1.4"
   },
