@@ -264,7 +264,7 @@ router.put(
       } catch (e) {}
     }
 
-    await user.update({ avatar: `/avatars/${newAvatar}` })
+    await user.update({ avatar: `avatars/${newAvatar}` })
 
     return res.json({
       status: 'ok'
