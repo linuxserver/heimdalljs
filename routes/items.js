@@ -70,7 +70,7 @@ router.post(
         const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
         fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
-        req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+        req.body.icon = `icons/${randomFilename}.${fileType.ext}`
       } catch (e) {
         return res.status(500).json({
           status: 'error',
@@ -153,7 +153,7 @@ router.put(
         const randomFilename = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
         fs.writeFileSync(path.join(config.uploadDir, 'icons', `${randomFilename}.${fileType.ext}`), iconFile.data)
-        req.body.icon = `/icons/${randomFilename}.${fileType.ext}`
+        req.body.icon = `icons/${randomFilename}.${fileType.ext}`
 
         if (item.icon) {
           try {
@@ -349,7 +349,7 @@ router.put(
 
     const newIcon = `${req.file.filename}${path.extname(req.file.originalname)}`
     fs.renameSync(path.join(req.file.destination, req.file.filename), path.join(config.uploadDir, 'icons', newIcon))
-    icon = `/icons/${newIcon}`
+    icon = `icons/${newIcon}`
 
     if (item.icon) {
       try {
