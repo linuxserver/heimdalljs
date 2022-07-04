@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm install
       - run: yarn run lint
 
@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm install
       - run: yarn test
 
@@ -27,11 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: npm i -g @quasar/cli
       - run: npm install
       - run: quasar build
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: heimdall
           path: dist
