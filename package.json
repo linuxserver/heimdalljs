@@ -74,7 +74,7 @@
     "speakeasy": "^2.0.0",
     "sqlite3": "^5.0.2",
     "vue-async-computed": "^3.9.0",
-    "vue-i18n": "^8.24.3",
+    "vue-i18n": "^9.2.2",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
