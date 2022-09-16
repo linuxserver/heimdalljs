@@ -72,7 +72,7 @@
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0",
     "speakeasy": "^2.0.0",
-    "sqlite3": "^5.0.2",
+    "sqlite3": "^5.1.1",
     "vue-async-computed": "^3.9.0",
     "vue-i18n": "^8.24.3",
     "vuedraggable": "^2.24.3"
